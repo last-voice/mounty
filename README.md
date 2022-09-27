@@ -1,16 +1,19 @@
-# Mounty
+##Magic
+You are in a flight zone, swimming in the water or joined by a friend, who can't fly jet?
+You wanna ride on, but your armor is low and you should repair asap?
+You wanna show of with these awesome mounts, which nobody else has got (except, everybody got it;)?
+You got some favourite mounts for all these occsions and just want to be surprised, which mount will summon next?
 
-## About
+All this can be done with __Mounty #TLV__ and all this will happen _magically_ with just __1 single key__ pressed.
 
-Magically summons the perfect mount in any situation.
+##How to use
+A detailed description is in the making, since then just try to figure it out by yourself:
 
-Chat commands
+/mounty will open the option window
+Use system key bindings to assign your magic key/s
 
-- _/mounty_ - opens the option window
-- Use key bindins to assign keys
+##Coming soon
+- A detailed description
+- Localization
 
-## How to use?
-
-Coming soon ...
-
-Just try yourself since then ;)
+Comments, feedback and questions are welcome!

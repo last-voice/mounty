@@ -1,23 +1,23 @@
 <Bindings>
-	<Binding name="Automatic mount" category="Mounty">
-		MountyKeyHandler()
+	<Binding name="Automatic mount" category="Mounty #TLV">
+		MountyTLVKeyHandler()
 	</Binding>
-	<Binding name="Water mount" category="Mounty">
-		MountyKeyHandler("water")
+	<Binding name="Water mount" category="Mounty #TLV">
+		MountyTLVKeyHandler("water")
 	</Binding>
-	<Binding name="Taxi mount" category="Mounty">
-		MountyKeyHandler("taxi")
+	<Binding name="Taxi mount" category="Mounty #TLV">
+		MountyTLVKeyHandler("taxi")
 	</Binding>
-	<Binding name="Repair mount" category="Mounty">
-		MountyKeyHandler("repair")
+	<Binding name="Repair mount" category="Mounty #TLV">
+		MountyTLVKeyHandler("repair")
 	</Binding>
-	<Binding name="Show off mount" category="Mounty">
-		MountyKeyHandler("showoff")
+	<Binding name="Show off mount" category="Mounty #TLV">
+		MountyTLVKeyHandler("showoff")
 	</Binding>
-	<Binding name="Random mount" category="Mounty">
-		MountyKeyHandler("random")
+	<Binding name="Random mount" category="Mounty #TLV">
+		MountyTLVKeyHandler("random")
 	</Binding>
-	<Binding name="Force dismount" category="Mounty">
-		MountyKeyHandler("forceoff")
+	<Binding name="Force dismount" category="Mounty #TLV">
+		MountyTLVKeyHandler("forceoff")
 	</Binding>
 </Bindings>
