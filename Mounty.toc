@@ -3,6 +3,6 @@
 ## Notes: Selects the perfect mount with magic
 ## Author: the_last_voice
 ## SavedVariablesPerCharacter: MountyData
-## Version: 1.6.1
+## Version: v1.6.2.1
 
 Mounty.lua
