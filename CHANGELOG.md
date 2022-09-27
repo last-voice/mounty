@@ -1,10 +1,10 @@
-##Mounty #TLV changelog
+##Mounty changelog
 
-- v1.6.3
+- v1.6.2.2
 
   - renamed _Mounty_ to _Mounty #TLV_
 
 - v1.6.2.1
 
-  - moved Mounty #TLV to GitHub
+  - moved Mounty to GitHub
   - CHANGELOG.md but txt
