@@ -1,4 +1,4 @@
-# Mounty #TLV
+# Mounty
 
 ## About
 
