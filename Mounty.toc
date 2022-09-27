@@ -1,0 +1,8 @@
+## Interface: 90207
+## Title: Mounty
+## Notes: Selects the perfect mount with magic
+## Author: the_last_voice
+## SavedVariablesPerCharacter: MountyData
+## Version: 1.6.1
+
+Mounty.lua

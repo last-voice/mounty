@@ -1,0 +1,23 @@
+<Bindings>
+	<Binding name="Automatic mount" category="Mounty">
+		MountyKeyHandler()
+	</Binding>
+	<Binding name="Water mount" category="Mounty">
+		MountyKeyHandler("water")
+	</Binding>
+	<Binding name="Taxi mount" category="Mounty">
+		MountyKeyHandler("taxi")
+	</Binding>
+	<Binding name="Repair mount" category="Mounty">
+		MountyKeyHandler("repair")
+	</Binding>
+	<Binding name="Show off mount" category="Mounty">
+		MountyKeyHandler("showoff")
+	</Binding>
+	<Binding name="Random mount" category="Mounty">
+		MountyKeyHandler("random")
+	</Binding>
+	<Binding name="Force dismount" category="Mounty">
+		MountyKeyHandler("forceoff")
+	</Binding>
+</Bindings>
