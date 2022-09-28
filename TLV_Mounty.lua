@@ -268,7 +268,7 @@ function Mounty:MountyKeyHandler(keypress)
     end
 end
 
-function Mounty:MountySetMount(self, button)
+local function MountySetMount(self, button)
 
     local typ = self.MountyTyp
     local index = self.MountyIndex
@@ -325,7 +325,7 @@ function Mounty:MountySetMount(self, button)
     --self:SetTexture("Interface\\Buttons\\UI-EmptySlot-White");
 end
 
-function Mounty:MountyTooltip(self, motion)
+local function MountyTooltip(self, motion)
 
     local typ = self.MountyTyp
     local index = self.MountyIndex
@@ -343,7 +343,7 @@ function Mounty:MountyTooltip(self, motion)
     end
 end
 
-function Mounty:MountyOptionsInit(self, event)
+local function MountyOptionsInit(self, event)
 
     if MountyData.DebugMode == nil then
         MountyData.DebugMode = false
@@ -397,10 +397,10 @@ function Mounty:MountyOptionsInit(self, event)
     self:UnregisterEvent("ADDON_LOADED")
     self:SetScript("OnEvent", nil)
 
-    -- Mounty:MountyOptionsInit = nil
+    MountyOptionsInit = nil
 end
 
-function Mounty:MountyOptionsOnShow()
+local function MountyOptionsOnShow()
 
     MountyOptionsFrame_DebugMode:SetChecked(MountyData.DebugMode)
 
@@ -565,8 +565,8 @@ do
             MountyOptionsFrame_Buttons[t][i]:GetDisabledTexture():SetTexCoord(0.15, 0.85, 0.15, 0.85);
             MountyOptionsFrame_Buttons[t][i]:SetHighlightTexture("Interface\\Buttons\\YellowOrange64_Radial", "ARTWORK")
             MountyOptionsFrame_Buttons[t][i]:SetPoint("TOPLEFT", 25 + i * 38, top)
-            MountyOptionsFrame_Buttons[t][i]:SetScript("OnMouseUp", self:MountySetMount)
-            MountyOptionsFrame_Buttons[t][i]:SetScript("OnEnter", self:MountyTooltip)
+            MountyOptionsFrame_Buttons[t][i]:SetScript("OnMouseUp", MountySetMount)
+            MountyOptionsFrame_Buttons[t][i]:SetScript("OnEnter", MountyTooltip)
             MountyOptionsFrame_Buttons[t][i]:SetScript("OnLeave", function()
                 GameTooltip:Hide()
             end)
@@ -580,8 +580,8 @@ do
 end
 
 MountyOptionsFrame:RegisterEvent("ADDON_LOADED")
-MountyOptionsFrame:SetScript("OnEvent", Mounty:MountyOptionsInit)
-MountyOptionsFrame:SetScript("OnShow", Mounty:MountyOptionsOnShow)
+MountyOptionsFrame:SetScript("OnEvent", MountyOptionsInit)
+MountyOptionsFrame:SetScript("OnShow", MountyOptionsOnShow)
 
 -- /mounty
 
