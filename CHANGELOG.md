@@ -1,7 +1,11 @@
 ##Mounty changelog
 
+- v1.7.1.1
+
+  - minor: fixed some string constants
+
 - v1.7.1
-  
+
   - first fixes
   - key assignment fixed
 
