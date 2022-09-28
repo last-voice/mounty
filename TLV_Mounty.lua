@@ -565,8 +565,8 @@ do
             MountyOptionsFrame_Buttons[t][i]:GetDisabledTexture():SetTexCoord(0.15, 0.85, 0.15, 0.85);
             MountyOptionsFrame_Buttons[t][i]:SetHighlightTexture("Interface\\Buttons\\YellowOrange64_Radial", "ARTWORK")
             MountyOptionsFrame_Buttons[t][i]:SetPoint("TOPLEFT", 25 + i * 38, top)
-            MountyOptionsFrame_Buttons[t][i]:SetScript("OnMouseUp", Mounty:MountySetMount)
-            MountyOptionsFrame_Buttons[t][i]:SetScript("OnEnter", Mounty:MountyTooltip)
+            MountyOptionsFrame_Buttons[t][i]:SetScript("OnMouseUp", self:MountySetMount)
+            MountyOptionsFrame_Buttons[t][i]:SetScript("OnEnter", self:MountyTooltip)
             MountyOptionsFrame_Buttons[t][i]:SetScript("OnLeave", function()
                 GameTooltip:Hide()
             end)
