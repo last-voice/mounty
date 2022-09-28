@@ -1,0 +1,11 @@
+Mein Add-On Mounty ...
+
+1. Unter "Tastaturbelegung > Mounty" kannst Du Tasten belegen.
+2. Im Chat "/mounty" eingeben, dort beginnt der Spaß.
+
+"Automatisch" funktioniert so:
+Bist Du unter xx % Rüstung, dass wird ein Repair-Mount aufgerufen.
+Sonst: Bist Du in einer Gruppe, kannst Fliegen und der Taxi-Mode ist aktiviert: Taxi-Mount aufrufen.
+Sonst: Bist Du im Wasser, dann wird ein Wasser-Mount aufgerufen.
+Sonst: Kannst Du in der Zone fliegen, wird ein Flug-Mount aufgerufen.
+Sonst: Wird ein Reit-Mount aufgerufen.
