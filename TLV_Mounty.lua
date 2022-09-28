@@ -343,7 +343,9 @@ local function MountyTooltip(self, motion)
     end
 end
 
-local function MountyOptionsInit(self, event)
+local function MountyInit(self, event)
+
+    Mounty:InitOptionsFrame()
 
     if MountyData.DebugMode == nil then
         MountyData.DebugMode = false
@@ -397,45 +399,10 @@ local function MountyOptionsInit(self, event)
     self:UnregisterEvent("ADDON_LOADED")
     self:SetScript("OnEvent", nil)
 
-    MountyOptionsInit = nil
+    MountyInit = nil
 end
 
-local function MountyOptionsOnShow()
-
-    MountyOptionsFrame_DebugMode:SetChecked(MountyData.DebugMode)
-
-    MountyOptionsFrame_TaxiMode:SetChecked(MountyData.TaxiMode)
-    MountyOptionsFrame_DoNotFly:SetChecked(MountyData.DoNotFly)
-    MountyOptionsFrame_Random:SetChecked(MountyData.Random)
-    MountyOptionsFrame_ArmoredMin:SetValue(MountyData.ArmoredMin)
-
-    MountyOptionsFrame_Hello:SetText(MountyData.Hello)
-
-    Mounty:MountyOptionsRenderButtons()
-end
-
-function Mounty:MountyOptionsRenderButtons()
-
-    local spellID
-    local icon
-
-    for t = 1, MountyTypes do
-
-        for i = 1, MountyMounts do
-
-            if (MountyData.Mounts[t][i] == 0) then
-                MountyOptionsFrame_Buttons[t][i]:SetNormalTexture(nil)
-                MountyOptionsFrame_Buttons[t][i]:Disable()
-            else
-                icon = GetSpellTexture(MountyData.Mounts[t][i])
-                MountyOptionsFrame_Buttons[t][i]:SetNormalTexture(icon, "ARTWORK")
-                MountyOptionsFrame_Buttons[t][i]:Enable()
-            end
-        end
-    end
-end
-
-do
+function Mounty:InitOptionsFrame()
 
     local top
     local temp
@@ -446,7 +413,7 @@ do
 
     -- Mounty options
 
-    MountyOptionsFrame = CreateFrame("Frame", "MountyOptionsFrame", UIParent)
+    --    MountyOptionsFrame = CreateFrame("Frame", "MountyOptionsFrame", UIParent)
     MountyOptionsFrame:Hide()
     MountyOptionsFrame:SetWidth(300)
     MountyOptionsFrame:SetHeight(410)
@@ -460,6 +427,7 @@ do
 
     local top = 0
     local control_top_delta = 40
+    local control_top_delta_small = 20
 
     -- Random checkbox
 
@@ -475,10 +443,10 @@ do
 
     -- DoNotFly checkbox
 
-    top = -40
+    top = top - control_top_delta_small
 
     MountyOptionsFrame_DoNotFly = CreateFrame("CheckButton", "MountyOptionsFrame_DoNotFly", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
-    MountyOptionsFrame_DoNotFly:SetPoint("TOPLEFT", 96, top)
+    MountyOptionsFrame_DoNotFly:SetPoint("TOPLEFT", 16, top)
     MountyOptionsFrame_DoNotFlyText:SetText(L["config no flight"])
     MountyOptionsFrame_DoNotFly:SetScript("OnClick", function(self)
         MountyData.DoNotFly = not MountyData.DoNotFly
@@ -487,26 +455,14 @@ do
 
     -- TaxiMode checkbox
 
-    top = -40
+    top = top - control_top_delta_small
 
     MountyOptionsFrame_TaxiMode = CreateFrame("CheckButton", "MountyOptionsFrame_TaxiMode", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
-    MountyOptionsFrame_TaxiMode:SetPoint("TOPLEFT", 256, top)
+    MountyOptionsFrame_TaxiMode:SetPoint("TOPLEFT", 16, top)
     MountyOptionsFrame_TaxiModeText:SetText(L["config taxi"])
     MountyOptionsFrame_TaxiMode:SetScript("OnClick", function(self)
         MountyData.TaxiMode = not MountyData.TaxiMode
         self:SetChecked(MountyData.TaxiMode)
-    end)
-
-    -- DebugMode checkbox
-
-    top = -40
-
-    MountyOptionsFrame_DebugMode = CreateFrame("CheckButton", "MountyOptionsFrame_DebugMode", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
-    MountyOptionsFrame_DebugMode:SetPoint("TOPLEFT", 376, top)
-    MountyOptionsFrame_DebugModeText:SetText(L["config debug"])
-    MountyOptionsFrame_DebugMode:SetScript("OnClick", function(self)
-        MountyData.DebugMode = not MountyData.DebugMode
-        self:SetChecked(MountyData.DebugMode)
     end)
 
     -- Armored slider
@@ -573,15 +529,65 @@ do
         end
     end
 
+    -- DebugMode checkbox
+
+    top = top - control_top_delta
+
+    MountyOptionsFrame_DebugMode = CreateFrame("CheckButton", "MountyOptionsFrame_DebugMode", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    MountyOptionsFrame_DebugMode:SetPoint("TOPLEFT", 16, top)
+    MountyOptionsFrame_DebugModeText:SetText(L["config debug"])
+    MountyOptionsFrame_DebugMode:SetScript("OnClick", function(self)
+        MountyData.DebugMode = not MountyData.DebugMode
+        self:SetChecked(MountyData.DebugMode)
+    end)
+
     -- Add to Blizzard Interface Options
 
     MountyOptionsFrame.name = "Mounty"
     InterfaceOptions_AddCategory(MountyOptionsFrame)
+
 end
 
+local function MountyOptionsRender()
+
+    MountyOptionsFrame_DebugMode:SetChecked(MountyData.DebugMode)
+
+    MountyOptionsFrame_TaxiMode:SetChecked(MountyData.TaxiMode)
+    MountyOptionsFrame_DoNotFly:SetChecked(MountyData.DoNotFly)
+    MountyOptionsFrame_Random:SetChecked(MountyData.Random)
+    MountyOptionsFrame_ArmoredMin:SetValue(MountyData.ArmoredMin)
+
+    MountyOptionsFrame_Hello:SetText(MountyData.Hello)
+
+    Mounty:MountyOptionsRenderButtons()
+end
+
+function Mounty:MountyOptionsRenderButtons()
+
+    local spellID
+    local icon
+
+    for t = 1, MountyTypes do
+
+        for i = 1, MountyMounts do
+
+            if (MountyData.Mounts[t][i] == 0) then
+                MountyOptionsFrame_Buttons[t][i]:SetNormalTexture(nil)
+                MountyOptionsFrame_Buttons[t][i]:Disable()
+            else
+                icon = GetSpellTexture(MountyData.Mounts[t][i])
+                MountyOptionsFrame_Buttons[t][i]:SetNormalTexture(icon, "ARTWORK")
+                MountyOptionsFrame_Buttons[t][i]:Enable()
+            end
+        end
+    end
+end
+
+MountyOptionsFrame = CreateFrame("Frame", "MountyOptionsFrame", UIParent)
+
 MountyOptionsFrame:RegisterEvent("ADDON_LOADED")
-MountyOptionsFrame:SetScript("OnEvent", MountyOptionsInit)
-MountyOptionsFrame:SetScript("OnShow", MountyOptionsOnShow)
+MountyOptionsFrame:SetScript("OnEvent", MountyInit)
+MountyOptionsFrame:SetScript("OnShow", MountyOptionsRender)
 
 -- /mounty
 
@@ -635,6 +641,6 @@ SlashCmdList["MOUNTY"] = function(message)
     else
 
         InterfaceOptionsFrame_OpenToCategory("Mounty");
---        InterfaceOptionsFrame_OpenToCategory("Mounty"); -- Muss 2 x aufgerufen werden ?!
+        InterfaceOptionsFrame_OpenToCategory("Mounty"); -- Muss 2 x aufgerufen werden ?! Bug im Blizzard Code !!
     end
 end

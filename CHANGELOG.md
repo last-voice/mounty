@@ -1,5 +1,11 @@
 ##Mounty changelog
 
+- v1.7
+
+  - Localization deDE
+  - Localization enUS
+  - Refactored code
+
 - v1.6.2.2
 
   - renamed _Mounty_ to _Mounty #TLV_

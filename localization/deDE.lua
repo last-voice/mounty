@@ -32,7 +32,7 @@ L["Taxi!"] = "Taxi!"
 
 L["config options"] = "Optionen"
 L["config random"] = "Zufällig"
-L["config no flight"] = "Nicht fliegen (außer Taxi)"
+L["config no flight"] = "Nicht fliegen (außer wenn Taxi)"
 L["config taxi"] = "Taxi-Modus"
 L["config debug"]= "Debug-Modus"
 L["config repair"] = "Das Repair kommt bei weniger als %d%% Rüstung."

@@ -30,10 +30,10 @@ L["Taxi!"] = "Taxi!"
 
 L["config options"] = "Options"
 L["config random"] = "Random"
-L["config no flight"] = "Don't fly (except taxi)"
+L["config no flight"] = "Don't fly (except if taxi)"
 L["config taxi"] = "Taxi mode"
 L["config debug"] = "Debug mode"
-L["config repair"] = "Repair mount if durability is less than %d%%."
+L["config repair"] = "Summon repair mount if durability is less than %d%%."
 L["config call passenger"] = "How to call a passenger"
 
 L["chat debug"] = "Debug: "
