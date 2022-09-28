@@ -3,7 +3,7 @@
 ## Notes: Selects the perfect mount with magic
 ## Author: the_last_voice
 ## SavedVariablesPerCharacter: MountyData
-## Version: v1.7
+## Version: v1.7.1
 
 localization\enUS.lua
 localization\deDE.lua

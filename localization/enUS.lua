@@ -8,7 +8,7 @@ L["Taxi"] = "Taxi"
 L["Show off"] = "Show off"
 
 L["debug armor"] = "Armor is at"
-L["debug usable"] = "is usable:"
+L["debug usable"] = "is usable: "
 L["debug key pressed"] = "key pressed"
 L["debug key"] = "key: "
 L["debug mounted"] = "is mounted"

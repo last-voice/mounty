@@ -1,5 +1,10 @@
 ##Mounty changelog
 
+- v1.7.1
+  
+  - first fixes
+  - key assignment fixed
+
 - v1.7
 
   - Localization deDE

@@ -185,7 +185,7 @@ function Mounty:MountyMount(category)
     C_MountJournal.SummonByID(mountID)
 end
 
-function Mounty:MountyKeyHandler(keypress)
+function MountyKeyHandler(keypress)
 
     if (keypress == nil) then
         keypress = "auto"
