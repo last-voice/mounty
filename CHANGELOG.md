@@ -1,5 +1,9 @@
 ##Mounty changelog
 
+- v1.7.1.2
+
+  - Fixed: Icons were overlapping labels
+
 - v1.7.1.1
 
   - minor: fixed some string constants
