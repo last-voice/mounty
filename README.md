@@ -15,7 +15,6 @@ A detailed description is in the making, since then just try to figure it out by
 - Use system key bindings to assign your magic key/s.
 
 ##Coming soon
-- A detailed description
-- Localization
+- A detailed howto
 
 Comments, feedback and questions are welcome!
