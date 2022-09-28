@@ -46,5 +46,5 @@ L["chat taxi"] = "Taxi: "
 L["on"] = "an"
 L["off"] = "aus"
 
--- local ABS = select(2, ...)
--- ABS.L = setmetatable(L, {__index = ABS.L})
+local _, Mounty = ...
+Mounty.L = setmetatable(L, {__index = Mounty.L})

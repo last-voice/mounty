@@ -1,30 +1,33 @@
-MountxTLVData = {}
+local _, Mounty = ...
+
+MountyData = {}
 
 -- debugging https://www.wowace.com/projects/rarity/pages/faq/how-to-enable-and-disable-script-errors-lua-errors
 
--- local L = {}
+local Mounty = Mounty
+local L = Mounty.L
 
-local MountxTLVOptionsFrame = nil
-local MountxTLVOptionsFrame_DebugMode = nil
-local MountxTLVOptionsFrame_TaxiMode = nil
-local MountxTLVOptionsFrame_DoNotFly = nil
-local MountxTLVOptionsFrame_Random = nil
-local MountxTLVOptionsFrame_ArmoredMin = nil
-local MountxTLVOptionsFrame_Hello = nil
+local MountyOptionsFrame = nil
+local MountyOptionsFrame_DebugMode = nil
+local MountyOptionsFrame_TaxiMode = nil
+local MountyOptionsFrame_DoNotFly = nil
+local MountyOptionsFrame_Random = nil
+local MountyOptionsFrame_ArmoredMin = nil
+local MountyOptionsFrame_Hello = nil
 
-local MountxTLVOptionsFrame_Buttons = {}
+local MountyOptionsFrame_Buttons = {}
 
-local MountxTLVGround = 1
-local MountxTLVFlying = 2
-local MountxTLVWater = 3
-local MountxTLVRepair = 4
-local MountxTLVTaxi = 5
-local MountxTLVShowOff = 6
+local MountyGround = 1
+local MountyFlying = 2
+local MountyWater = 3
+local MountyRepair = 4
+local MountyTaxi = 5
+local MountyShowOff = 6
 
-local MountxTLVTypes = 6
-local MountxTLVMounts = 10
+local MountyTypes = 6
+local MountyMounts = 10
 
-local MountxTLVTypesLabel = {
+local MountyTypesLabel = {
     [1] = L["Ground"],
     [2] = L["Flying"],
     [3] = L["Water"],
@@ -33,9 +36,9 @@ local MountxTLVTypesLabel = {
     [6] = L["Show off"]
 }
 
-local MountxTLVDebugForce = false
+local MountyDebugForce = false
 
-function MountxTLVChat(msg)
+function Mounty:MountyChat(msg)
 
     if DEFAULT_CHAT_FRAME then
 
@@ -43,14 +46,14 @@ function MountxTLVChat(msg)
     end
 end
 
-function MountxTLVDebug(msg)
+function Mounty:MountyDebug(msg)
 
-    if (MountxTLVData.DebugMode or MountxTLVDebugForce) then
-        MountxTLVChat(msg)
+    if (MountyData.DebugMode or Mounty:MountyDebugForce) then
+        Mounty:MountyChat(msg)
     end
 end
 
-function MountxTLVArmored()
+function Mounty:MountyArmored()
 
     local curTotal = 0
     local maxTotal = 0
@@ -65,100 +68,100 @@ function MountxTLVArmored()
 
     local armored = 100 * curTotal / maxTotal
 
-    MountxTLVDebug(L["debug armor"] .. " |cffa0a0ff" .. armored .. "%|r.")
+    Mounty:MountyDebug(L["debug armor"] .. " |cffa0a0ff" .. armored .. "%|r.")
 
     return armored
 end
 
-function MountxTLVSelect(typ)
+function Mounty:MountySelect(typ)
 
     local ids = {}
     local count = 0
     local usable
 
-    MountxTLVDataGlobal = MountxTLVData
+    MountyDataGlobal = MountyData
 
-    for i = 1, MountxTLVMounts do
+    for i = 1, MountyMounts do
 
-        if (MountxTLVData.Mounts[typ][i] > 0) then
+        if (MountyData.Mounts[typ][i] > 0) then
 
-            mountID = C_MountJournal.GetMountFromSpell(MountxTLVData.Mounts[typ][i])
+            mountID = C_MountJournal.GetMountFromSpell(MountyData.Mounts[typ][i])
             mname, _, _, _, isUsable = C_MountJournal.GetMountInfoByID(mountID)
 
-            MountxTLVDebug(L["debug usable"] .. mname .. " -> " .. tostring(isUsable))
+            Mounty:MountyDebug(L["debug usable"] .. mname .. " -> " .. tostring(isUsable))
 
             if (isUsable) then
                 count = count + 1
-                ids[count] = MountxTLVData.Mounts[typ][i]
+                ids[count] = MountyData.Mounts[typ][i]
             end
         end
     end
 
     if (count > 0) then
 
-        if MountxTLVData.Random then
+        if MountyData.Random then
             picked = math.random(count)
         else
-            if (MountxTLVData.Iterator[typ] < count) then
-                MountxTLVData.Iterator[typ] = MountxTLVData.Iterator[typ] + 1
+            if (MountyData.Iterator[typ] < count) then
+                MountyData.Iterator[typ] = MountyData.Iterator[typ] + 1
             else
-                MountxTLVData.Iterator[typ] = 1
+                MountyData.Iterator[typ] = 1
             end
-            picked = MountxTLVData.Iterator[typ]
+            picked = MountyData.Iterator[typ]
         end
 
-        MountxTLVDebug(L["debug selected"] .. " " .. picked .. " / " .. count)
+        Mounty:MountyDebug(L["debug selected"] .. " " .. picked .. " / " .. count)
 
         return ids[picked]
     end
 
-    MountxTLVDebug(L["debug not found"])
+    Mounty:MountyDebug(L["debug not found"])
     return 0
 end
 
-function MountxTLVMountSpellID(mountID)
+function Mounty:MountyMountSpellID(mountID)
 
     _, spellID = C_MountJournal.GetMountInfoByID(mountID)
 
     return spellID
 end
 
-function MountxTLVMountUsableBySpellID(spellID)
+function Mounty:MountyMountUsableBySpellID(spellID)
 
     mountID = C_MountJournal.GetMountFromSpell(spellID)
     _, _, icon = C_MountJournal.GetMountInfoByID(mountID)
     return icon
 end
 
-function MountxTLVMount(category)
+function Mounty:MountyMount(category)
 
     local mountID = 0
-    local typ = MountxTLVGround
+    local typ = MountyGround
     local spellID = 0
 
     if (category == "fly") then
 
-        typ = MountxTLVFlying
+        typ = MountyFlying
 
     elseif (category == "water") then
 
-        typ = MountxTLVWater
+        typ = MountyWater
 
     elseif (category == "repair") then
 
-        typ = MountxTLVRepair
+        typ = MountyRepair
 
     elseif (category == "taxi") then
 
         if not IsMounted() then
-            SendChatMessage(MountxTLVData.Hello)
+            SendChatMessage(MountyData.Hello)
         end
 
-        typ = MountxTLVTaxi
+        typ = MountyTaxi
 
     elseif (category == "showoff") then
 
-        typ = MountxTLVShowOff
+        typ = MountyShowOff
 
     elseif (category == "random") then
 
@@ -167,29 +170,29 @@ function MountxTLVMount(category)
 
     if (typ > 0) then
 
-        spellID = MountxTLVSelect(typ)
+        spellID = Mounty:MountySelect(typ)
 
         if (spellID > 0) then
             mountID = C_MountJournal.GetMountFromSpell(spellID)
         end
     end
 
-    MountxTLVDebug(L["debug mount category"] .. category)
-    MountxTLVDebug(L["debug mount type"] .. typ)
-    MountxTLVDebug("spellID = " .. spellID)
-    MountxTLVDebug("mountID = " .. mountID)
+    Mounty:MountyDebug(L["debug mount category"] .. category)
+    Mounty:MountyDebug(L["debug mount type"] .. typ)
+    Mounty:MountyDebug("spellID = " .. spellID)
+    Mounty:MountyDebug("mountID = " .. mountID)
 
     C_MountJournal.SummonByID(mountID)
 end
 
-function MountxTLVKeyHandler(keypress)
+function Mounty:MountyKeyHandler(keypress)
 
     if (keypress == nil) then
         keypress = "auto"
     end
 
-    MountxTLVDebug(L["debug key pressed"])
-    MountxTLVDebug(L["debug key"] .. keypress)
+    Mounty:MountyDebug(L["debug key pressed"])
+    Mounty:MountyDebug(L["debug key"] .. keypress)
 
     if keypress == "forceoff" then
 
@@ -201,7 +204,7 @@ function MountxTLVKeyHandler(keypress)
 
     elseif IsMounted() then
 
-        MountxTLVDebug(L["debug mounted"])
+        Mounty:MountyDebug(L["debug mounted"])
 
         if not IsFlying() then
             Dismount()
@@ -212,9 +215,9 @@ function MountxTLVKeyHandler(keypress)
 
     if keypress == "repair" or keypress == "random" or keypress == "showoff" or keypress == "water" or keypress == "taxi" then
 
-        MountxTLVDebug(L["debug special"])
+        Mounty:MountyDebug(L["debug special"])
 
-        MountxTLVMount(keypress)
+        Mounty:MountyMount(keypress)
 
     else
 
@@ -223,10 +226,10 @@ function MountxTLVKeyHandler(keypress)
         local alone = not IsInGroup()
         local flyable = IsFlyableArea()
         local swimming = IsSwimming()
-        local taximode = MountxTLVData.TaxiMode
-        local donotfly = MountxTLVData.DoNotFly
+        local taximode = MountyData.TaxiMode
+        local donotfly = MountyData.DoNotFly
 
-        MountxTLVDebug(L["debug magic"])
+        Mounty:MountyDebug(L["debug magic"])
 
         if (donotfly) then
 
@@ -235,7 +238,7 @@ function MountxTLVKeyHandler(keypress)
 
         local category = "ground"
 
-        if (MountxTLVArmored() < MountxTLVData.ArmoredMin) then
+        if (Mounty:MountyArmored() < MountyData.ArmoredMin) then
 
             category = "repair"
 
@@ -260,61 +263,61 @@ function MountxTLVKeyHandler(keypress)
             category = "taxi"
         end
 
-        MountxTLVDebug(L["debug category"] .. category)
-        MountxTLVMount(category)
+        Mounty:MountyDebug(L["debug category"] .. category)
+        Mounty:MountyMount(category)
     end
 end
 
-function MountxTLVSetMount(self, button)
+function Mounty:MountySetMount(self, button)
 
-    local typ = self.MountxTLVTyp
-    local index = self.MountxTLVIndex
+    local typ = self.MountyTyp
+    local index = self.MountyIndex
 
     if (button == "LeftButton") then
 
-        while (index > 1 and MountxTLVData.Mounts[typ][index - 1] == 0) do
+        while (index > 1 and MountyData.Mounts[typ][index - 1] == 0) do
             index = index - 1
         end
 
         infoType, mountID = GetCursorInfo()
         if (infoType == "mount") then
             ClearCursor()
-            spellID = MountxTLVMountSpellID(mountID)
+            spellID = Mounty:MountyMountSpellID(mountID)
 
             local already = false
 
-            for i = 1, MountxTLVMounts do
-                if (MountxTLVData.Mounts[typ][i] == spellID) then
+            for i = 1, MountyMounts do
+                if (MountyData.Mounts[typ][i] == spellID) then
                     already = true
                 end
             end
 
             if (spellID == 0) then
 
-                MountxTLVDebug(L["debug fail"] .. " (spellID = 0): " .. infoType .. " " .. typ .. " " .. mountID)
+                Mounty:MountyDebug(L["debug fail"] .. " (spellID = 0): " .. infoType .. " " .. typ .. " " .. mountID)
 
             elseif (already) then
 
-                MountxTLVDebug(L["debug fail"] .. " (" .. L["debug already"] .. "): " .. infoType .. " " .. typ .. " " .. mountID .. " " .. spellID)
+                Mounty:MountyDebug(L["debug fail"] .. " (" .. L["debug already"] .. "): " .. infoType .. " " .. typ .. " " .. mountID .. " " .. spellID)
 
             else
 
-                MountyDebug(L["debug saved"] .. infoType .. " " .. typ .. " " .. index .. " " .. mountID .. " " .. spellID)
+                Mounty:MountyDebug(L["debug saved"] .. infoType .. " " .. typ .. " " .. index .. " " .. mountID .. " " .. spellID)
                 MountyData.Mounts[typ][index] = spellID
-                MountyOptionsRenderButtons()
+                Mounty:MountyOptionsRenderButtons()
             end
         end
 
     elseif (button == "RightButton") then
 
-        MountyDebug(L["debug deleted"] .. typ .. " " .. index)
+        Mounty:MountyDebug(L["debug deleted"] .. typ .. " " .. index)
 
         for i = index, MountyMounts - 1 do
             MountyData.Mounts[typ][i] = MountyData.Mounts[typ][i + 1]
         end
         MountyData.Mounts[typ][MountyMounts] = 0
 
-        MountyOptionsRenderButtons()
+        Mounty:MountyOptionsRenderButtons()
     end
 
     GameTooltip:Hide()
@@ -322,7 +325,7 @@ function MountxTLVSetMount(self, button)
     --self:SetTexture("Interface\\Buttons\\UI-EmptySlot-White");
 end
 
-function MountyTooltip(self, motion)
+function Mounty:MountyTooltip(self, motion)
 
     local typ = self.MountyTyp
     local index = self.MountyIndex
@@ -340,7 +343,7 @@ function MountyTooltip(self, motion)
     end
 end
 
-function MountyOptionsInit(self, event)
+function Mounty:MountyOptionsInit(self, event)
 
     if MountyData.DebugMode == nil then
         MountyData.DebugMode = false
@@ -391,13 +394,13 @@ function MountyOptionsInit(self, event)
         end
     end
 
-    self:UnregisterEvent("VARIABLES_LOADED")
+    self:UnregisterEvent("ADDON_LOADED")
     self:SetScript("OnEvent", nil)
 
-    MountyOptionsInit = nil
+    -- Mounty:MountyOptionsInit = nil
 end
 
-function MountyOptionsOnShow()
+function Mounty:MountyOptionsOnShow()
 
     MountyOptionsFrame_DebugMode:SetChecked(MountyData.DebugMode)
 
@@ -408,10 +411,10 @@ function MountyOptionsOnShow()
 
     MountyOptionsFrame_Hello:SetText(MountyData.Hello)
 
-    MountyOptionsRenderButtons()
+    Mounty:MountyOptionsRenderButtons()
 end
 
-function MountyOptionsRenderButtons()
+function Mounty:MountyOptionsRenderButtons()
 
     local spellID
     local icon
@@ -562,8 +565,8 @@ do
             MountyOptionsFrame_Buttons[t][i]:GetDisabledTexture():SetTexCoord(0.15, 0.85, 0.15, 0.85);
             MountyOptionsFrame_Buttons[t][i]:SetHighlightTexture("Interface\\Buttons\\YellowOrange64_Radial", "ARTWORK")
             MountyOptionsFrame_Buttons[t][i]:SetPoint("TOPLEFT", 25 + i * 38, top)
-            MountyOptionsFrame_Buttons[t][i]:SetScript("OnMouseUp", MountySetMount)
-            MountyOptionsFrame_Buttons[t][i]:SetScript("OnEnter", MountyTooltip)
+            MountyOptionsFrame_Buttons[t][i]:SetScript("OnMouseUp", Mounty:MountySetMount)
+            MountyOptionsFrame_Buttons[t][i]:SetScript("OnEnter", Mounty:MountyTooltip)
             MountyOptionsFrame_Buttons[t][i]:SetScript("OnLeave", function()
                 GameTooltip:Hide()
             end)
@@ -576,9 +579,9 @@ do
     InterfaceOptions_AddCategory(MountyOptionsFrame)
 end
 
-MountyOptionsFrame:RegisterEvent("VARIABLES_LOADED")
-MountyOptionsFrame:SetScript("OnEvent", MountyOptionsInit)
-MountyOptionsFrame:SetScript("OnShow", MountyOptionsOnShow)
+MountyOptionsFrame:RegisterEvent("ADDON_LOADED")
+MountyOptionsFrame:SetScript("OnEvent", Mounty:MountyOptionsInit)
+MountyOptionsFrame:SetScript("OnShow", Mounty:MountyOptionsOnShow)
 
 -- /mounty
 
@@ -588,50 +591,50 @@ SlashCmdList["MOUNTY"] = function(message)
     if message == "debug on" then
 
         MountyData.DebugMode = true
-        MountyChat(L["chat debug"] .. "|cff00f000" .. L["on"] .. "|r.")
+        Mounty:MountyChat(L["chat debug"] .. "|cff00f000" .. L["on"] .. "|r.")
 
     elseif message == "debug off" then
 
         MountyData.DebugMode = false
-        MountyChat(L["chat debug"] .. "|cfff00000" .. L["off"] .. "|r.")
+        Mounty:MountyChat(L["chat debug"] .. "|cfff00000" .. L["off"] .. "|r.")
 
     elseif message == "fly on" then
 
         MountyData.DoNotFly = false
-        MountyChat(L["chat fly"] .. "|cff00f000" .. L["on"] .. "|r.")
+        Mounty:MountyChat(L["chat fly"] .. "|cff00f000" .. L["on"] .. "|r.")
 
     elseif message == "fly off" then
 
         MountyData.DoNotFly = true
-        MountyChat(L["chat fly"] .. "|cfff00000" .. L["off"] .. "|r.")
+        Mounty:MountyChat(L["chat fly"] .. "|cfff00000" .. L["off"] .. "|r.")
 
     elseif message == "random on" then
 
         MountyData.Random = false
-        MountyChat(L["chat random"] .. "|cff00f000" .. L["on"] .. "|r.")
+        Mounty:MountyChat(L["chat random"] .. "|cff00f000" .. L["on"] .. "|r.")
 
     elseif message == "random off" then
 
         MountyData.Random = true
-        MountyChat(L["chat random"] .. "|cfff00000" .. L["off"] .. "|r.")
+        Mounty:MountyChat(L["chat random"] .. "|cfff00000" .. L["off"] .. "|r.")
 
     elseif message == "taxi on" then
 
         MountyData.TaxiMode = true
-        MountyChat(L["chat taxi"] .. "|cff00f000" .. L["on"] .. "|r.")
+        Mounty:MountyChat(L["chat taxi"] .. "|cff00f000" .. L["on"] .. "|r.")
 
     elseif message == "taxi off" then
 
         MountyData.TaxiMode = false
-        MountyChat(L["chat taxi"] .. "|cfff00000" .. L["off"] .. "|r.")
+        Mounty:MountyChat(L["chat taxi"] .. "|cfff00000" .. L["off"] .. "|r.")
 
     elseif message ~= "" and message ~= nil then
 
-        MountyMount(message)
+        Mounty:MountyMount(message)
 
     else
 
         InterfaceOptionsFrame_OpenToCategory("Mounty");
-        InterfaceOptionsFrame_OpenToCategory("Mounty"); -- Muss 2 x aufgerufen werden ?!
+--        InterfaceOptionsFrame_OpenToCategory("Mounty"); -- Muss 2 x aufgerufen werden ?!
     end
 end

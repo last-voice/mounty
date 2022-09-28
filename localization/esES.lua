@@ -2,5 +2,5 @@ if( GetLocale() ~= "deDE" ) then return end
 
 local L = {}
 
--- local ABS = select(2, ...)
--- ABS.L = setmetatable(L, {__index = ABS.L})
+local _, Mounty = ...
+Mounty.L = setmetatable(L, {__index = Mounty.L})
