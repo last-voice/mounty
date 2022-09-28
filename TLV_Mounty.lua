@@ -48,7 +48,7 @@ end
 
 function Mounty:MountyDebug(msg)
 
-    if (MountyData.DebugMode or Mounty:MountyDebugForce) then
+    if (MountyData.DebugMode or MountyDebugForce) then
         Mounty:MountyChat(msg)
     end
 end
