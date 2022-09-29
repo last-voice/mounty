@@ -5,7 +5,7 @@ You wanna ride on, but your armor is low and you should repair asap?\
 You wanna show of with these awesome mounts, which nobody else has got (except, everybody got it;)?\
 You got some favourite mounts for all these occasions and just want to be surprised, which mount will summon next?
 
-All this can be done with __Mounty__ and all this will happen _magically_ with just __1 single key__ pressed.
+All this can be done with __Mounty #TLV__ and all this will happen _magically_ with just __1 single key__ pressed.
 
 # What it does
 
@@ -75,7 +75,7 @@ __Mounty #TLV__ will choose the perfect category as describved above. But there 
 
 In this case there is a _fallback_:
 
-It will then select one of your __flying mounts__.  And if there are none, too, it will select one of your __ground mounts__.  And if those are also missing, then there is only one last thing Mounty #TLV can do for you: Randomly summon __any mount out of your whole collection__, preferig your favourites if there are any. 
+It will then select one of your __flying mounts__.  And if there are none, too, it will select one of your __ground mounts__.  And if those are also missing, then there is only one last thing __Mounty #TLV__ can do for you: Randomly summon __any mount out of your whole collection__, preferig your favourites if there are any. 
 
 # How to configure and use
 
