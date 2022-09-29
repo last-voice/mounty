@@ -13,14 +13,14 @@ All this can be done with __Mounty__ and all this will happen _magically_ with j
 
 If you are lucky and got a few mounts in your collection, then it's quite simple to name the right mount to summon in every situation. Depending on the actual circumstances you are in.
 
-__Mounty #TLV__ offers 6 categories for your mounts:
+__Mounty #TLV__ offers __6 categories__ for your mounts:
 
-- __Ground__ - Mounts, which are big fun to ride, always with their feet on the ground.\
-- __Flying__ - These can spread their wings or ignite their rockets to reach for the sky, with you on their back.\
-- __Water__ - There are/were mounts, which could walk on the water. At least there are few, which a faster swimmers than others, so you don't have to hold your breath too long\
-- __Repair__ - You got one of these, haven't you? Or do you still have to run miles to the next anvil, to get bat to 100% durability?\
-- __Taxi__ - A passengers seat for a good friend is perfect for questing, farming and fighting together hand in hand. Especially when your taxi has wings and your friend doesn't know how to fly. He'll never forget your helping wing erm hand.\
-- __Show off__ - You spent hours, days, weeks to get this special one, the mount of your dreams. There will never be a better one. Until tomorrow. But for now, everybody around must see: You got it!
+- __Ground mounts__ - Mounts, which are big fun to ride, always with their feet on the ground.\
+- __Flying mounts__ - These can spread their wings or ignite their rockets to reach for the sky, with you on their back.\
+- __Water mounts__ - There are/were mounts, which could walk on the water. At least there are few, which a faster swimmers than others, so you don't have to hold your breath too long\
+- __Repair mounts__ - You got one of these, haven't you? Or do you still have to run miles to the next anvil, to get bat to 100% durability?\
+- __Taxi mounts__ - A passengers seat for a good friend is perfect for questing, farming and fighting together hand in hand. Especially when your taxi has wings and your friend doesn't know how to fly. He'll never forget your helping wing erm hand.\
+- __Show off mounts__ - You spent hours, days, weeks to get this special one, the mount of your dreams. There will never be a better one. Until tomorrow. But for now, everybody around must see: You got it!
 
 You can assign up to __10 different favourite mounts__ to every category per drag & drop from your mount collection.
 
@@ -55,7 +55,7 @@ All done and all the above didn't come true? Now its time to get back to where i
 
 Magic done. By __Mounty #TLV__.
 
-## The magic in less words
+## The full magic in less words
 ```
 Magic key is pressed ->
 Are you mounted and flying -> Do nothing
