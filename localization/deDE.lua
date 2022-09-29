@@ -18,7 +18,7 @@ L["special key"] = "Sondertaste"
 L["magic key"] = "Magische Taste"
 L["category: "] = "Kategorie: "
 L["selected "] = "ausgewählt "
-L["random not found!"] = "Nicht gefunden!"
+L["No mount found!"] = "Nicht gefunden!"
 
 L["Category: "] = "Kategorie: "
 L["Type: "] = "Typ: "

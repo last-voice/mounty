@@ -36,6 +36,8 @@ local MountyTypesLabel = {
     [6] = L["Show off"]
 }
 
+local MountyFallback = 0
+
 local MountyDebugForce = false
 
 function Mounty:Chat(msg)
@@ -74,9 +76,34 @@ function Mounty:Armored()
 end
 
 function Mounty:Fallback(typ)
+
+    if (typ == MountyFlying) then
+        MountyFallback = MountyFlying
+    end
+
+    if (MountyFallback == MountyFlying) then
+
+        MountyFallback = MountyGround
+
+        Mounty:Debug(L["Fallback: "] .. " > '" .. L["Ground"] .. "'")
+        return MountyGround
+    end
+
+    if (MountyFallback == MountyGround) then
+
+        Mounty:Debug(L["Fallback: "] .. " > '" .. L["Randomm"] .. "'")
+        return 0
+    end
+
+    MountyFallback = MountyFlying
+
+    Mounty:Debug(L["Fallback: "] .. " > '" .. L["Flying"] .. "'")
+    return MountyFlying
 end
 
 function Mounty:Select(typ)
+
+    if (typ == 0) then return 0 end
 
     local ids = {}
     local count = 0
@@ -119,8 +146,9 @@ function Mounty:Select(typ)
         return ids[picked]
     end
 
-    Mounty:Debug(L["random not found!"])
-    return 0
+    Mounty:Debug(L["No mount found!"])
+
+    return Mounty:Select(Mounty:Mounty:Fallback(typ))
 end
 
 function Mounty:MountSpellID(mountID)

@@ -4,7 +4,8 @@
 
   - Better localization
   - Code nicyness
-
+  - Fallbacks for mount types
+  
 - v1.7.1.2
 
   - Fixed: Icons were overlapping labels
