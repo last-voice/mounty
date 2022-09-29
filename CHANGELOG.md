@@ -3,6 +3,7 @@
 - v1.8
 
   - full description (typos included)
+  - minor cosmetics
 
 - v1.7.2.1
 

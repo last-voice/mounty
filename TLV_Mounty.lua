@@ -12,7 +12,7 @@ local MountyOptionsFrame_DebugMode = nil
 local MountyOptionsFrame_TaxiMode = nil
 local MountyOptionsFrame_DoNotFly = nil
 local MountyOptionsFrame_Random = nil
-local MountyOptionsFrame_ArmoredMin = nil
+local MountyOptionsFrame_DurabilityMin = nil
 local MountyOptionsFrame_Hello = nil
 
 local MountyOptionsFrame_Buttons = {}
@@ -55,7 +55,7 @@ function Mounty:Debug(msg)
     end
 end
 
-function Mounty:Armored()
+function Mounty:Durability()
 
     local curTotal = 0
     local maxTotal = 0
@@ -68,11 +68,11 @@ function Mounty:Armored()
         end
     end
 
-    local armored = 100 * curTotal / maxTotal
+    local durability = math.floor((100 * curTotal / maxTotal) + 0.5)
 
-    Mounty:Debug("Durability: |cffa0a0ff" .. armored .. "%|r.")
+    Mounty:Debug("Durability: |cffa0a0ff" .. durability .. "%|r.")
 
-    return armored
+    return durability
 end
 
 function Mounty:Fallback(typ)
@@ -183,7 +183,9 @@ function Mounty:Mount(category)
     elseif (category == "Taxi") then
 
         if not IsMounted() then
-            SendChatMessage(MountyData.Hello)
+            if MountyData.Hello ~= "" then
+                SendChatMessage(MountyData.Hello)
+            end
         end
 
         typ = MountyTaxi
@@ -265,7 +267,7 @@ function MountyKeyHandler(keypress)
 
         local category
 
-        if (Mounty:Armored() < MountyData.ArmoredMin) then
+        if (Mounty:Durability() < MountyData.DurabilityMin) then
 
             category = "Repair"
 
@@ -292,7 +294,6 @@ function MountyKeyHandler(keypress)
         else
 
             category = "Ground"
-
         end
 
         Mounty:Mount(category)
@@ -397,8 +398,8 @@ local function MountyInit(self, event)
         MountyData.Random = false
     end
 
-    if MountyData.ArmoredMin == nil then
-        MountyData.ArmoredMin = 75
+    if MountyData.DurabilityMin == nil then
+        MountyData.DurabilityMin = 75
     end
 
     if MountyData.Hello == nil then
@@ -498,23 +499,6 @@ function Mounty:InitOptionsFrame()
         self:SetChecked(MountyData.TaxiMode)
     end)
 
-    -- Armored slider
-
-    top = top - control_top_delta
-
-    MountyOptionsFrame_ArmoredMin = CreateFrame("Slider", "MountyOptionsFrame_ArmoredMin", MountyOptionsFrame, "OptionsSliderTemplate")
-    MountyOptionsFrame_ArmoredMin:SetWidth(335)
-    MountyOptionsFrame_ArmoredMin:SetHeight(16)
-    MountyOptionsFrame_ArmoredMin:SetPoint("TOPLEFT", 25, top)
-    MountyOptionsFrame_ArmoredMinLow:SetText("50%")
-    MountyOptionsFrame_ArmoredMinHigh:SetText("100%")
-    MountyOptionsFrame_ArmoredMin:SetMinMaxValues(50, 100)
-    MountyOptionsFrame_ArmoredMin:SetValueStep(1)
-    MountyOptionsFrame_ArmoredMin:SetScript("OnValueChanged", function(self, value)
-        MountyOptionsFrame_ArmoredMinText:SetFormattedText(L["Summon repair mount if durability is less than %d%%."], value)
-        MountyData.ArmoredMin = value
-    end)
-
     -- Taxi!
 
     top = top - control_top_delta - 10
@@ -530,6 +514,23 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame_Hello:SetScript("OnEnterPressed", function(self)
         MountyData.Hello = self:GetText()
         self:ClearFocus()
+    end)
+
+    -- Durability slider
+
+    top = top - control_top_delta
+
+    MountyOptionsFrame_DurabilityMin = CreateFrame("Slider", "MountyOptionsFrame_DurabilityMin", MountyOptionsFrame, "OptionsSliderTemplate")
+    MountyOptionsFrame_DurabilityMin:SetWidth(335)
+    MountyOptionsFrame_DurabilityMin:SetHeight(16)
+    MountyOptionsFrame_DurabilityMin:SetPoint("TOPLEFT", 25, top)
+    MountyOptionsFrame_DurabilityMinLow:SetText("50%")
+    MountyOptionsFrame_DurabilityMinHigh:SetText("100%")
+    MountyOptionsFrame_DurabilityMin:SetMinMaxValues(50, 100)
+    MountyOptionsFrame_DurabilityMin:SetValueStep(1)
+    MountyOptionsFrame_DurabilityMin:SetScript("OnValueChanged", function(self, value)
+        MountyOptionsFrame_DurabilityMinText:SetFormattedText(L["Summon repair mount if durability is less than %d%%."], math.floor(value + 0.5))
+        MountyData.DurabilityMin = math.floor(value + 0.5)
     end)
 
     -- Mounts
@@ -605,7 +606,7 @@ local function MountyOptionsRender()
     MountyOptionsFrame_TaxiMode:SetChecked(MountyData.TaxiMode)
     MountyOptionsFrame_DoNotFly:SetChecked(MountyData.DoNotFly)
     MountyOptionsFrame_Random:SetChecked(MountyData.Random)
-    MountyOptionsFrame_ArmoredMin:SetValue(MountyData.ArmoredMin)
+    MountyOptionsFrame_DurabilityMin:SetValue(MountyData.DurabilityMin)
 
     MountyOptionsFrame_Hello:SetText(MountyData.Hello)
 
