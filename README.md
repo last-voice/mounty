@@ -57,17 +57,17 @@ Magic done. By __Mounty #TLV__.
 
 ## The magic in less words
 ```
-Magic key is pressed ->\
-Are you mounted and flying -> __Do nothing__\
-Are you mounted and not flying -> __Dismount__\
-You are not mounted ->\
-Your durability is lower than xx% (see options) -> Summon __repair mount__\
-You are single in a resting area -> Summon __show off mount__\
-You are party member in a resting area, _taxi mode_ is off -> __Summon show off mount__\
-You are party member, _taxi mode_ is on -> __Summon taxi mount__\
-You are in a flight zone and _dont fly mode_ is off -> __Summon fly mount__\
-You can't fly and are swimming -> __Summon water mount__\
-else -> __Summon ground mount__
+Magic key is pressed ->
+Are you mounted and flying -> Do nothing
+Are you mounted and not flying -> Dismount
+You are not mounted ->
+Your durability is lower than xx% (see options) -> Summon repair mount
+You are single in a resting area -> Summon show off mount
+You are party member in a resting area, _taxi mode_ is off -> Summon show off mount
+You are party member, _taxi mode_ is on -> Summon taxi mount
+You are in a flight zone and _dont fly mode_ is off -> Summon fly mount
+You can't fly and are swimming -> Summon water mount
+else -> Summon ground mount
 ```
 ## But there is still more than that
 
@@ -100,11 +100,11 @@ You can also bind some special key to summon a mount of a category of your choic
 
 For example my config is like this:
 
-\# -> Magic key\
-CTRL-# -> Repair mount\
-SHIFT-# -> Taxi mount\
-ALT-# -> Water mount\
-CTRL-Space -> Show off mount\
+\# -> _Magic key_\
+CTRL-# -> _Repair mount_\
+SHIFT-# -> _Taxi mount_\
+ALT-# -> _Water mount_\
+CTRL-Space -> _Show off mount_
 
 # Thank you!
 
