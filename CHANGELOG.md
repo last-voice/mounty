@@ -2,7 +2,7 @@
 
 - v1.7.2.1
 
-  - Magic: Show off mount if in resting arey
+  - Magic: Show off mount if in resting area
 
 - v1.7.2
 
