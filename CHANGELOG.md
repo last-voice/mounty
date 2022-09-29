@@ -4,7 +4,6 @@
 
   - Better localization
   - Code nicyness
-  
 
 - v1.7.1.2
 

@@ -73,8 +73,7 @@ function Mounty:Armored()
     return armored
 end
 
-function Mounty:Fallback(typ) 
-    
+function Mounty:Fallback(typ)
 end
 
 function Mounty:Select(typ)
@@ -82,15 +81,16 @@ function Mounty:Select(typ)
     local ids = {}
     local count = 0
     local usable
+    local picked
 
-    MountyDataGlobal = MountyData
+    -- try MountyDataGlobal = MountyData
 
     for i = 1, MountyMounts do
 
         if (MountyData.Mounts[typ][i] > 0) then
 
-            mountID = C_MountJournal.GetMountFromSpell(MountyData.Mounts[typ][i])
-            mname, _, _, _, isUsable = C_MountJournal.GetMountInfoByID(mountID)
+            local mountID = C_MountJournal.GetMountFromSpell(MountyData.Mounts[typ][i])
+            local mname, _, _, _, isUsable = C_MountJournal.GetMountInfoByID(mountID)
 
             Mounty:Debug(L["is usable: "] .. mname .. " -> " .. tostring(isUsable))
 
@@ -125,15 +125,16 @@ end
 
 function Mounty:MountSpellID(mountID)
 
-    _, spellID = C_MountJournal.GetMountInfoByID(mountID)
+    local _, spellID = C_MountJournal.GetMountInfoByID(mountID)
 
     return spellID
 end
 
 function Mounty:MountUsableBySpellID(spellID)
 
-    mountID = C_MountJournal.GetMountFromSpell(spellID)
-    _, _, icon = C_MountJournal.GetMountInfoByID(mountID)
+    local mountID = C_MountJournal.GetMountFromSpell(spellID)
+    local _, _, icon = C_MountJournal.GetMountInfoByID(mountID)
+
     return icon
 end
 
@@ -261,7 +262,6 @@ function MountyKeyHandler(keypress)
         elseif (not flyable and swimming) then
 
             category = "water"
-
         end
 
         Mounty:Debug(L["category: "] .. category)
@@ -280,10 +280,13 @@ local function MountySetMount(self, button)
             index = index - 1
         end
 
-        infoType, mountID = GetCursorInfo()
+        local infoType, mountID = GetCursorInfo()
+
         if (infoType == "mount") then
+
             ClearCursor()
-            spellID = Mounty:MountSpellID(mountID)
+
+            local spellID = Mounty:MountSpellID(mountID)
 
             local already = false
 
@@ -546,7 +549,6 @@ function Mounty:InitOptionsFrame()
 
     MountyOptionsFrame.name = "Mounty"
     InterfaceOptions_AddCategory(MountyOptionsFrame)
-
 end
 
 local function MountyOptionsRender()
