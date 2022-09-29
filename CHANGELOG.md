@@ -3,6 +3,7 @@
 - v1.7.2
 
   - Better localization
+  - Code nicyness
   
 
 - v1.7.1.2

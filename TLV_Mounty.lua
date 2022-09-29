@@ -38,7 +38,7 @@ local MountyTypesLabel = {
 
 local MountyDebugForce = false
 
-function Mounty:MountyChat(msg)
+function Mounty:Chat(msg)
 
     if DEFAULT_CHAT_FRAME then
 
@@ -46,14 +46,14 @@ function Mounty:MountyChat(msg)
     end
 end
 
-function Mounty:MountyDebug(msg)
+function Mounty:Debug(msg)
 
     if (MountyData.DebugMode or MountyDebugForce) then
-        Mounty:MountyChat(msg)
+        Mounty:Chat(msg)
     end
 end
 
-function Mounty:MountyArmored()
+function Mounty:Armored()
 
     local curTotal = 0
     local maxTotal = 0
@@ -68,12 +68,16 @@ function Mounty:MountyArmored()
 
     local armored = 100 * curTotal / maxTotal
 
-    Mounty:MountyDebug(L["Armor is at"] .. " |cffa0a0ff" .. armored .. "%|r.")
+    Mounty:Debug(L["Armor is at"] .. " |cffa0a0ff" .. armored .. "%|r.")
 
     return armored
 end
 
-function Mounty:MountySelect(typ)
+function Mounty:Fallback(typ) 
+    
+end
+
+function Mounty:Select(typ)
 
     local ids = {}
     local count = 0
@@ -88,7 +92,7 @@ function Mounty:MountySelect(typ)
             mountID = C_MountJournal.GetMountFromSpell(MountyData.Mounts[typ][i])
             mname, _, _, _, isUsable = C_MountJournal.GetMountInfoByID(mountID)
 
-            Mounty:MountyDebug(L["is usable: "] .. mname .. " -> " .. tostring(isUsable))
+            Mounty:Debug(L["is usable: "] .. mname .. " -> " .. tostring(isUsable))
 
             if (isUsable) then
                 count = count + 1
@@ -110,30 +114,30 @@ function Mounty:MountySelect(typ)
             picked = MountyData.Iterator[typ]
         end
 
-        Mounty:MountyDebug(L["selected "] .. " " .. picked .. " / " .. count)
+        Mounty:Debug(L["selected "] .. " " .. picked .. " / " .. count)
 
         return ids[picked]
     end
 
-    Mounty:MountyDebug(L["random not found!"])
+    Mounty:Debug(L["random not found!"])
     return 0
 end
 
-function Mounty:MountyMountSpellID(mountID)
+function Mounty:MountSpellID(mountID)
 
     _, spellID = C_MountJournal.GetMountInfoByID(mountID)
 
     return spellID
 end
 
-function Mounty:MountyMountUsableBySpellID(spellID)
+function Mounty:MountUsableBySpellID(spellID)
 
     mountID = C_MountJournal.GetMountFromSpell(spellID)
     _, _, icon = C_MountJournal.GetMountInfoByID(mountID)
     return icon
 end
 
-function Mounty:MountyMount(category)
+function Mounty:Mount(category)
 
     local mountID = 0
     local typ = MountyGround
@@ -170,17 +174,17 @@ function Mounty:MountyMount(category)
 
     if (typ > 0) then
 
-        spellID = Mounty:MountySelect(typ)
+        spellID = Mounty:Select(typ)
 
         if (spellID > 0) then
             mountID = C_MountJournal.GetMountFromSpell(spellID)
         end
     end
 
-    Mounty:MountyDebug(L["Category: "] .. category)
-    Mounty:MountyDebug(L["Type: "] .. typ)
-    Mounty:MountyDebug("spellID = " .. spellID)
-    Mounty:MountyDebug("mountID = " .. mountID)
+    Mounty:Debug(L["Category: "] .. category)
+    Mounty:Debug(L["Type: "] .. typ)
+    Mounty:Debug("spellID = " .. spellID)
+    Mounty:Debug("mountID = " .. mountID)
 
     C_MountJournal.SummonByID(mountID)
 end
@@ -191,8 +195,8 @@ function MountyKeyHandler(keypress)
         keypress = "auto"
     end
 
-    Mounty:MountyDebug(L["key pressed"])
-    Mounty:MountyDebug(L["key: "] .. keypress)
+    Mounty:Debug(L["key pressed"])
+    Mounty:Debug(L["key: "] .. keypress)
 
     if keypress == "forceoff" then
 
@@ -204,7 +208,7 @@ function MountyKeyHandler(keypress)
 
     elseif IsMounted() then
 
-        Mounty:MountyDebug(L["is mounted"])
+        Mounty:Debug(L["is mounted"])
 
         if not IsFlying() then
             Dismount()
@@ -215,9 +219,9 @@ function MountyKeyHandler(keypress)
 
     if keypress == "repair" or keypress == "random" or keypress == "showoff" or keypress == "water" or keypress == "taxi" then
 
-        Mounty:MountyDebug(L["special key"])
+        Mounty:Debug(L["special key"])
 
-        Mounty:MountyMount(keypress)
+        Mounty:Mount(keypress)
 
     else
 
@@ -229,7 +233,7 @@ function MountyKeyHandler(keypress)
         local taximode = MountyData.TaxiMode
         local donotfly = MountyData.DoNotFly
 
-        Mounty:MountyDebug(L["magic key"])
+        Mounty:Debug(L["magic key"])
 
         if (donotfly) then
 
@@ -238,7 +242,7 @@ function MountyKeyHandler(keypress)
 
         local category = "ground"
 
-        if (Mounty:MountyArmored() < MountyData.ArmoredMin) then
+        if (Mounty:Armored() < MountyData.ArmoredMin) then
 
             category = "repair"
 
@@ -260,8 +264,8 @@ function MountyKeyHandler(keypress)
 
         end
 
-        Mounty:MountyDebug(L["category: "] .. category)
-        Mounty:MountyMount(category)
+        Mounty:Debug(L["category: "] .. category)
+        Mounty:Mount(category)
     end
 end
 
@@ -279,7 +283,7 @@ local function MountySetMount(self, button)
         infoType, mountID = GetCursorInfo()
         if (infoType == "mount") then
             ClearCursor()
-            spellID = Mounty:MountyMountSpellID(mountID)
+            spellID = Mounty:MountSpellID(mountID)
 
             local already = false
 
@@ -291,30 +295,30 @@ local function MountySetMount(self, button)
 
             if (spellID == 0) then
 
-                Mounty:MountyDebug(L["fail"] .. " (spellID = 0): " .. infoType .. " " .. typ .. " " .. mountID)
+                Mounty:Debug(L["fail"] .. " (spellID = 0): " .. infoType .. " " .. typ .. " " .. mountID)
 
             elseif (already) then
 
-                Mounty:MountyDebug(L["fail"] .. " (" .. L["already"] .. "): " .. infoType .. " " .. typ .. " " .. mountID .. " " .. spellID)
+                Mounty:Debug(L["fail"] .. " (" .. L["already"] .. "): " .. infoType .. " " .. typ .. " " .. mountID .. " " .. spellID)
 
             else
 
-                Mounty:MountyDebug(L["saved: "] .. infoType .. " " .. typ .. " " .. index .. " " .. mountID .. " " .. spellID)
+                Mounty:Debug(L["saved: "] .. infoType .. " " .. typ .. " " .. index .. " " .. mountID .. " " .. spellID)
                 MountyData.Mounts[typ][index] = spellID
-                Mounty:MountyOptionsRenderButtons()
+                Mounty:OptionsRenderButtons()
             end
         end
 
     elseif (button == "RightButton") then
 
-        Mounty:MountyDebug(L["deleted: "] .. typ .. " " .. index)
+        Mounty:Debug(L["deleted: "] .. typ .. " " .. index)
 
         for i = index, MountyMounts - 1 do
             MountyData.Mounts[typ][i] = MountyData.Mounts[typ][i + 1]
         end
         MountyData.Mounts[typ][MountyMounts] = 0
 
-        Mounty:MountyOptionsRenderButtons()
+        Mounty:OptionsRenderButtons()
     end
 
     GameTooltip:Hide()
@@ -556,10 +560,10 @@ local function MountyOptionsRender()
 
     MountyOptionsFrame_Hello:SetText(MountyData.Hello)
 
-    Mounty:MountyOptionsRenderButtons()
+    Mounty:OptionsRenderButtons()
 end
 
-function Mounty:MountyOptionsRenderButtons()
+function Mounty:OptionsRenderButtons()
 
     local spellID
     local icon
@@ -594,46 +598,46 @@ SlashCmdList["MOUNTY"] = function(message)
     if message == "debug on" then
 
         MountyData.DebugMode = true
-        Mounty:MountyChat(L["Debug: "] .. "|cff00f000" .. L["on"] .. "|r.")
+        Mounty:Chat(L["Debug: "] .. "|cff00f000" .. L["on"] .. "|r.")
 
     elseif message == "debug off" then
 
         MountyData.DebugMode = false
-        Mounty:MountyChat(L["Debug: "] .. "|cfff00000" .. L["off"] .. "|r.")
+        Mounty:Chat(L["Debug: "] .. "|cfff00000" .. L["off"] .. "|r.")
 
     elseif message == "fly on" then
 
         MountyData.DoNotFly = false
-        Mounty:MountyChat(L["fly mode: "] .. "|cff00f000" .. L["on"] .. "|r.")
+        Mounty:Chat(L["fly mode: "] .. "|cff00f000" .. L["on"] .. "|r.")
 
     elseif message == "fly off" then
 
         MountyData.DoNotFly = true
-        Mounty:MountyChat(L["fly mode: "] .. "|cfff00000" .. L["off"] .. "|r.")
+        Mounty:Chat(L["fly mode: "] .. "|cfff00000" .. L["off"] .. "|r.")
 
     elseif message == "random on" then
 
         MountyData.Random = false
-        Mounty:MountyChat(L["random: "] .. "|cff00f000" .. L["on"] .. "|r.")
+        Mounty:Chat(L["random: "] .. "|cff00f000" .. L["on"] .. "|r.")
 
     elseif message == "random off" then
 
         MountyData.Random = true
-        Mounty:MountyChat(L["random: "] .. "|cfff00000" .. L["off"] .. "|r.")
+        Mounty:Chat(L["random: "] .. "|cfff00000" .. L["off"] .. "|r.")
 
     elseif message == "taxi on" then
 
         MountyData.TaxiMode = true
-        Mounty:MountyChat(L["taxi: "] .. "|cff00f000" .. L["on"] .. "|r.")
+        Mounty:Chat(L["taxi: "] .. "|cff00f000" .. L["on"] .. "|r.")
 
     elseif message == "taxi off" then
 
         MountyData.TaxiMode = false
-        Mounty:MountyChat(L["taxi: "] .. "|cfff00000" .. L["off"] .. "|r.")
+        Mounty:Chat(L["taxi: "] .. "|cfff00000" .. L["off"] .. "|r.")
 
     elseif message ~= "" and message ~= nil then
 
-        Mounty:MountyMount(message)
+        Mounty:Mount(message)
 
     else
 
