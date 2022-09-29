@@ -8,6 +8,14 @@ L["mode.Taxi"] = "Taxi"
 L["mode.Show off"] = "Show off"
 L["mode.Random"] = "Random"
 
+L["Summon magic mount"] = "Summon magic mount"
+L["Summon water mount"] = "Summon water mount"
+L["Summon taxi mount"] = "Summon taxi mount"
+L["Summon repair mount"] = "Summon repair mount"
+L["Summon show off mount"] = "Summon show off mount"
+L["Summon random mount"] = "Summon random mount"
+L["Force dismount"] = "Force dismount"
+
 L["Taxi!"] = "Taxi!"
 
 L["Options"] = "Options"

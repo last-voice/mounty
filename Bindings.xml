@@ -1,23 +1,23 @@
 <Bindings>
-	<Binding name="Magic mount" category="Mounty">
+	<Binding name="MOUNTY_MAGIC" category="Mounty">
 		MountyKeyHandler()
 	</Binding>
-	<Binding name="Water mount" category="Mounty">
+	<Binding name="MOUNTY_WATER" category="Mounty">
 		MountyKeyHandler("Water")
 	</Binding>
-	<Binding name="Taxi mount" category="Mounty">
+	<Binding name="MOUNTY_TAXI" category="Mounty">
 		MountyKeyHandler("Taxi")
 	</Binding>
-	<Binding name="Repair mount" category="Mounty">
+	<Binding name="MOUNTY_REPAIR" category="Mounty">
 		MountyKeyHandler("Repair")
 	</Binding>
-	<Binding name="Show off mount" category="Mounty">
+	<Binding name="MOUNTY_SHOWOFF" category="Mounty">
 		MountyKeyHandler("showoff")
 	</Binding>
-	<Binding name="Random mount" category="Mounty">
+	<Binding name="MOUNTY_RANDOM" category="Mounty">
 		MountyKeyHandler("random")
 	</Binding>
-	<Binding name="Force dismount" category="Mounty">
+	<Binding name="MOUNTY_DISMOUNT" category="Mounty">
 		MountyKeyHandler("forceoff")
 	</Binding>
 </Bindings>
