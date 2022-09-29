@@ -1,4 +1,4 @@
-# Magic
+# The magic of Mounty #TLV
 
 You are in a flight zone, swimming in the water or joined by a friend, who can't fly jet?\
 You wanna ride on, but your armor is low and you should repair asap?\
