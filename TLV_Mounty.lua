@@ -218,7 +218,7 @@ end
 function MountyKeyHandler(keypress)
 
     if (keypress == nil) then
-        keypress = "auto"
+        keypress = "magic"
     end
 
     Mounty:Debug("Key pressed: " .. keypress)
@@ -239,7 +239,7 @@ function MountyKeyHandler(keypress)
             Dismount()
         end
 
-        if (keypress == "auto") then return end
+        if (keypress == "magic") then return end
     end
 
     if keypress == "Repair" or keypress == "random" or keypress == "showoff" or keypress == "Water" or keypress == "Taxi" then
@@ -250,8 +250,9 @@ function MountyKeyHandler(keypress)
 
     else
 
-        -- auto
+        -- magic
 
+        local resting = not IsResting()
         local alone = not IsInGroup()
         local flyable = IsFlyableArea()
         local swimming = IsSwimming()
