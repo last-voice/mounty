@@ -77,22 +77,18 @@ end
 
 function Mounty:Fallback(typ)
 
-    if (typ == MountyFlying) then
-        MountyFallback = MountyFlying
+    if (MountyFallback == MountyGround) then
+
+        Mounty:Debug(L["Fallback: "] .. " > '" .. L["Randomm"] .. "'")
+        return 0
     end
 
-    if (MountyFallback == MountyFlying) then
+    if (MountyFallback == MountyFlying or typ == MountyFlying) then
 
         MountyFallback = MountyGround
 
         Mounty:Debug(L["Fallback: "] .. " > '" .. L["Ground"] .. "'")
         return MountyGround
-    end
-
-    if (MountyFallback == MountyGround) then
-
-        Mounty:Debug(L["Fallback: "] .. " > '" .. L["Randomm"] .. "'")
-        return 0
     end
 
     MountyFallback = MountyFlying
