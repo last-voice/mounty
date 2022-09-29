@@ -565,8 +565,18 @@ function Mounty:InitOptionsFrame()
 
     top = top - control_top_delta + 4
 
-    temp = MountyOptionsFrame:CreateFontString(nil, "BACKGROUND", "GameFontNormalSmall")
+    temp = CreateFrame("Button", "MountyOptionsFrame_OpenMounts", MountyOptionsFrame)
+    temp:SetSize(16, 16)
+    temp:SetNormalTexture("Interface\\Icons\\Ability_Mount_RidingHorse", "ARTWORK")
+    --    temp:GetDisabledTexture():SetTexCoord(0.15, 0.85, 0.15, 0.85);
+    --    temp:SetHighlightTexture("Interface\\Buttons\\YellowOrange64_Radial", "ARTWORK")
     temp:SetPoint("TOPLEFT", 90, top)
+    temp:SetScript("OnMouseUp", function(self)
+        ToggleCollectionsJournal(1)
+    end)
+
+    temp = MountyOptionsFrame:CreateFontString(nil, "BACKGROUND", "GameFontNormalSmall")
+    temp:SetPoint("TOPLEFT", 112, top - 3)
     temp:SetText(L["Helptext"])
 
     -- DebugMode checkbox

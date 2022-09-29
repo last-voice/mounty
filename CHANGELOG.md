@@ -5,6 +5,7 @@
   - Magic: Show off mount if in resting area
   - Localizes key bindings
   - Optimized option frame
+  - Mounts frame can now easily be opened with new button
 
 - v1.7.2
 
