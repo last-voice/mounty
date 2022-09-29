@@ -263,7 +263,7 @@ function MountyKeyHandler(keypress)
 
         if (donotfly) then flyable = false end
 
-        local category = "Ground"
+        local category
 
         if (Mounty:Armored() < MountyData.ArmoredMin) then
 
@@ -277,21 +277,22 @@ function MountyKeyHandler(keypress)
 
             category = "showoff"
 
-        elseif (alone and flyable) then
-
-            category = "fly"
-
         elseif (not alone and taximode) then
 
             category = "Taxi"
 
-        elseif (not alone and flyable) then
+        elseif (flyable) then
 
             category = "fly"
 
         elseif (not flyable and swimming) then
 
             category = "Water"
+
+        else
+
+            category = "Ground"
+
         end
 
         Mounty:Mount(category)
@@ -343,7 +344,7 @@ local function MountySetMount(self, button)
 
     elseif (button == "RightButton") then
 
-        Mounty:Debug("Mount deleted: " .. typ .. " " .. index)
+        Mounty:Debug("Mount removed: " .. typ .. " " .. index)
 
         for i = index, MountyMounts - 1 do
             MountyData.Mounts[typ][i] = MountyData.Mounts[typ][i + 1]

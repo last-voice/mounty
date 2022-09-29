@@ -1,5 +1,9 @@
 ##Mounty changelog
 
+- v1.8
+
+  - full description (typos included)
+
 - v1.7.2.1
 
   - Magic: Show off mount if in resting area

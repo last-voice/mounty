@@ -28,7 +28,7 @@ L["Debug mode"] = "Debug-Modus (nur englisch)"
 L["Summon repair mount if durability is less than %d%%."] = "Das Repair kommt bei weniger als %d%% Rüstung."
 L["How to call a passenger"] = "So rufst du deinen Passagier"
 
-L["Helptext"] = "Mounts hier reinziehen. Rechtsklick, um Mount zu löschen."
+L["Helptext"] = "Mounts hier reinziehen. Rechtsklick, um Mount zu entfernen."
 
 L["Debug: "] = "Debug: "
 L["fly mode: "] = "Flug-Modus: "
