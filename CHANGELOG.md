@@ -1,5 +1,9 @@
 ##Mounty changelog
 
+- v1.7.2.1
+
+  - Magic: Show off mount if in resting arey
+
 - v1.7.2
 
   - Minor bugs
@@ -7,7 +11,7 @@
   - Better localization
   - Debug english only
   - Fallbacks for mount types
-  
+
 - v1.7.1.2
 
   - Fixed: Icons were overlapping labels

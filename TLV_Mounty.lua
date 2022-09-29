@@ -261,16 +261,21 @@ function MountyKeyHandler(keypress)
 
         Mounty:Debug("Magic key")
 
-        if (donotfly) then
-
-            flyable = false
-        end
+        if (donotfly) then flyable = false end
 
         local category = "Ground"
 
         if (Mounty:Armored() < MountyData.ArmoredMin) then
 
             category = "Repair"
+
+        elseif (resting and alone) then
+
+            category = "showoff"
+
+        elseif (resting and not taximode) then
+
+            category = "showoff"
 
         elseif (alone and flyable) then
 
