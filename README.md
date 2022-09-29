@@ -71,11 +71,11 @@ else -> Summon ground mount
 ```
 ## But there is still more than that
 
-__Mounty #TLV__ will choose the perfect category as describved above. But there might be categories you didn't or couldn't assign any mount to.
+__Mounty #TLV__ will choose the perfect category as describved above. But there might be empty categories you didn't or couldn't assign any mount to.
 
 In this case there is a _fallback_:
 
-It will then select one of your __flying mounts__.  And if there are none, too, it will select one of your __ground mounts__.  And if those are also missing, then there is only one last thing __Mounty #TLV__ can do for you: Randomly summon __any mount out of your whole collection__, preferig your favourites if there are any. 
+If a category is empty, it will then select one of your __flying mounts__.  And if there are none, too, it will select one of your __ground mounts__.  And if those are also missing, then there is only one last thing __Mounty #TLV__ can do for you: Randomly summon __any mount out of your whole collection__, preferig your favourites if there are any. 
 
 # How to configure and use
 
