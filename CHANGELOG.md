@@ -4,6 +4,7 @@
 
   - Magic: Show off mount if in resting area
   - Localizes key bindings
+  - Optimized option frame
 
 - v1.7.2
 

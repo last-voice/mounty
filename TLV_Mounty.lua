@@ -444,6 +444,9 @@ function Mounty:InitOptionsFrame()
     local mountID
     local icon
 
+    local control_top_delta = 40
+    local control_top_delta_small = 20
+
     -- Mounty options
 
     --    MountyOptionsFrame = CreateFrame("Frame", "MountyOptionsFrame", UIParent)
@@ -457,10 +460,6 @@ function Mounty:InitOptionsFrame()
     temp = MountyOptionsFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
     temp:SetPoint("TOPLEFT", 16, -16)
     temp:SetText(L["Options"])
-
-    local top = 0
-    local control_top_delta = 40
-    local control_top_delta_small = 20
 
     -- Random checkbox
 
@@ -562,9 +561,17 @@ function Mounty:InitOptionsFrame()
         end
     end
 
+    -- Helptext
+
+    top = top - control_top_delta + 4
+
+    temp = MountyOptionsFrame:CreateFontString(nil, "BACKGROUND", "GameFontNormalSmall")
+    temp:SetPoint("TOPLEFT", 90, top)
+    temp:SetText(L["Helptext"])
+
     -- DebugMode checkbox
 
-    top = top - control_top_delta
+    top = top - control_top_delta_small
 
     MountyOptionsFrame_DebugMode = CreateFrame("CheckButton", "MountyOptionsFrame_DebugMode", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     MountyOptionsFrame_DebugMode:SetPoint("TOPLEFT", 16, top)

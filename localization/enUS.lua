@@ -26,6 +26,8 @@ L["Debug mode"] = "Debug mode"
 L["Summon repair mount if durability is less than %d%%."] = "Summon repair mount if durability is less than %d%%."
 L["How to call a passenger"] = "How to call a passenger"
 
+L["Helptext"] = "Drag mounts into here. Right click to delete a mount."
+
 L["Debug: "] = "Debug: "
 L["fly mode: "] = "fly mode: "
 L["random: "] = "random: "
