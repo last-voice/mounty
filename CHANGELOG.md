@@ -1,5 +1,9 @@
 ## Mounty changelog
 
+- v1.8.0.1
+
+  - format of README.md
+
 - v1.8
 
   - full description (typos included)
