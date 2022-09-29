@@ -68,7 +68,7 @@ function Mounty:MountyArmored()
 
     local armored = 100 * curTotal / maxTotal
 
-    Mounty:MountyDebug(L["debug armor"] .. " |cffa0a0ff" .. armored .. "%|r.")
+    Mounty:MountyDebug(L["Armor is at"] .. " |cffa0a0ff" .. armored .. "%|r.")
 
     return armored
 end
@@ -88,7 +88,7 @@ function Mounty:MountySelect(typ)
             mountID = C_MountJournal.GetMountFromSpell(MountyData.Mounts[typ][i])
             mname, _, _, _, isUsable = C_MountJournal.GetMountInfoByID(mountID)
 
-            Mounty:MountyDebug(L["debug usable"] .. mname .. " -> " .. tostring(isUsable))
+            Mounty:MountyDebug(L["is usable: "] .. mname .. " -> " .. tostring(isUsable))
 
             if (isUsable) then
                 count = count + 1
@@ -110,12 +110,12 @@ function Mounty:MountySelect(typ)
             picked = MountyData.Iterator[typ]
         end
 
-        Mounty:MountyDebug(L["debug selected"] .. " " .. picked .. " / " .. count)
+        Mounty:MountyDebug(L["selected "] .. " " .. picked .. " / " .. count)
 
         return ids[picked]
     end
 
-    Mounty:MountyDebug(L["debug not found"])
+    Mounty:MountyDebug(L["random not found!"])
     return 0
 end
 
@@ -177,8 +177,8 @@ function Mounty:MountyMount(category)
         end
     end
 
-    Mounty:MountyDebug(L["debug mount category"] .. category)
-    Mounty:MountyDebug(L["debug mount type"] .. typ)
+    Mounty:MountyDebug(L["Category: "] .. category)
+    Mounty:MountyDebug(L["Type: "] .. typ)
     Mounty:MountyDebug("spellID = " .. spellID)
     Mounty:MountyDebug("mountID = " .. mountID)
 
@@ -191,8 +191,8 @@ function MountyKeyHandler(keypress)
         keypress = "auto"
     end
 
-    Mounty:MountyDebug(L["debug key pressed"])
-    Mounty:MountyDebug(L["debug key"] .. keypress)
+    Mounty:MountyDebug(L["key pressed"])
+    Mounty:MountyDebug(L["key: "] .. keypress)
 
     if keypress == "forceoff" then
 
@@ -204,7 +204,7 @@ function MountyKeyHandler(keypress)
 
     elseif IsMounted() then
 
-        Mounty:MountyDebug(L["debug mounted"])
+        Mounty:MountyDebug(L["is mounted"])
 
         if not IsFlying() then
             Dismount()
@@ -215,7 +215,7 @@ function MountyKeyHandler(keypress)
 
     if keypress == "repair" or keypress == "random" or keypress == "showoff" or keypress == "water" or keypress == "taxi" then
 
-        Mounty:MountyDebug(L["debug special"])
+        Mounty:MountyDebug(L["special key"])
 
         Mounty:MountyMount(keypress)
 
@@ -229,7 +229,7 @@ function MountyKeyHandler(keypress)
         local taximode = MountyData.TaxiMode
         local donotfly = MountyData.DoNotFly
 
-        Mounty:MountyDebug(L["debug magic"])
+        Mounty:MountyDebug(L["magic key"])
 
         if (donotfly) then
 
@@ -246,24 +246,21 @@ function MountyKeyHandler(keypress)
 
             category = "fly"
 
-        elseif (not alone and flyable and not taximode) then
-
-            category = "fly"
-
-        elseif (alone and not flyable and swimming) then
-
-            category = "water"
-
-        elseif (not alone and not flyable and swimming and not taximode) then
-
-            category = "water"
-
         elseif (not alone and taximode) then
 
             category = "taxi"
+
+        elseif (not alone and flyable) then
+
+            category = "fly"
+
+        elseif (not flyable and swimming) then
+
+            category = "water"
+
         end
 
-        Mounty:MountyDebug(L["debug category"] .. category)
+        Mounty:MountyDebug(L["category: "] .. category)
         Mounty:MountyMount(category)
     end
 end
@@ -294,15 +291,15 @@ local function MountySetMount(self, button)
 
             if (spellID == 0) then
 
-                Mounty:MountyDebug(L["debug fail"] .. " (spellID = 0): " .. infoType .. " " .. typ .. " " .. mountID)
+                Mounty:MountyDebug(L["fail"] .. " (spellID = 0): " .. infoType .. " " .. typ .. " " .. mountID)
 
             elseif (already) then
 
-                Mounty:MountyDebug(L["debug fail"] .. " (" .. L["debug already"] .. "): " .. infoType .. " " .. typ .. " " .. mountID .. " " .. spellID)
+                Mounty:MountyDebug(L["fail"] .. " (" .. L["already"] .. "): " .. infoType .. " " .. typ .. " " .. mountID .. " " .. spellID)
 
             else
 
-                Mounty:MountyDebug(L["debug saved"] .. infoType .. " " .. typ .. " " .. index .. " " .. mountID .. " " .. spellID)
+                Mounty:MountyDebug(L["saved: "] .. infoType .. " " .. typ .. " " .. index .. " " .. mountID .. " " .. spellID)
                 MountyData.Mounts[typ][index] = spellID
                 Mounty:MountyOptionsRenderButtons()
             end
@@ -310,7 +307,7 @@ local function MountySetMount(self, button)
 
     elseif (button == "RightButton") then
 
-        Mounty:MountyDebug(L["debug deleted"] .. typ .. " " .. index)
+        Mounty:MountyDebug(L["deleted: "] .. typ .. " " .. index)
 
         for i = index, MountyMounts - 1 do
             MountyData.Mounts[typ][i] = MountyData.Mounts[typ][i + 1]
@@ -423,7 +420,7 @@ function Mounty:InitOptionsFrame()
 
     temp = MountyOptionsFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
     temp:SetPoint("TOPLEFT", 16, -16)
-    temp:SetText(L["config options"])
+    temp:SetText(L["Options"])
 
     local top = 0
     local control_top_delta = 40
@@ -435,7 +432,7 @@ function Mounty:InitOptionsFrame()
 
     MountyOptionsFrame_Random = CreateFrame("CheckButton", "MountyOptionsFrame_Random", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     MountyOptionsFrame_Random:SetPoint("TOPLEFT", 16, top)
-    MountyOptionsFrame_RandomText:SetText(L["config random"])
+    MountyOptionsFrame_RandomText:SetText(L["Random"])
     MountyOptionsFrame_Random:SetScript("OnClick", function(self)
         MountyData.Random = not MountyData.Random
         self:SetChecked(MountyData.Random)
@@ -447,7 +444,7 @@ function Mounty:InitOptionsFrame()
 
     MountyOptionsFrame_DoNotFly = CreateFrame("CheckButton", "MountyOptionsFrame_DoNotFly", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     MountyOptionsFrame_DoNotFly:SetPoint("TOPLEFT", 16, top)
-    MountyOptionsFrame_DoNotFlyText:SetText(L["config no flight"])
+    MountyOptionsFrame_DoNotFlyText:SetText(L["Don't fly (except if taxi)"])
     MountyOptionsFrame_DoNotFly:SetScript("OnClick", function(self)
         MountyData.DoNotFly = not MountyData.DoNotFly
         self:SetChecked(MountyData.DoNotFly)
@@ -459,7 +456,7 @@ function Mounty:InitOptionsFrame()
 
     MountyOptionsFrame_TaxiMode = CreateFrame("CheckButton", "MountyOptionsFrame_TaxiMode", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     MountyOptionsFrame_TaxiMode:SetPoint("TOPLEFT", 16, top)
-    MountyOptionsFrame_TaxiModeText:SetText(L["config taxi"])
+    MountyOptionsFrame_TaxiModeText:SetText(L["Taxi mode"])
     MountyOptionsFrame_TaxiMode:SetScript("OnClick", function(self)
         MountyData.TaxiMode = not MountyData.TaxiMode
         self:SetChecked(MountyData.TaxiMode)
@@ -478,7 +475,7 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame_ArmoredMin:SetMinMaxValues(50, 100)
     MountyOptionsFrame_ArmoredMin:SetValueStep(1)
     MountyOptionsFrame_ArmoredMin:SetScript("OnValueChanged", function(self, value)
-        MountyOptionsFrame_ArmoredMinText:SetFormattedText(L["config repair"], value)
+        MountyOptionsFrame_ArmoredMinText:SetFormattedText(L["Summon repair mount if durability is less than %d%%."], value)
         MountyData.ArmoredMin = value
     end)
 
@@ -493,7 +490,7 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame_Hello:SetAutoFocus(false)
     MountyOptionsFrame_Hello:CreateFontString("MountyOptionsFrame_HelloLabel", "BACKGROUND", "GameFontNormalSmall")
     MountyOptionsFrame_HelloLabel:SetPoint("BOTTOMLEFT", MountyOptionsFrame_Hello, "TOPLEFT", 0, 1)
-    MountyOptionsFrame_HelloLabel:SetText(L["config call passenger"])
+    MountyOptionsFrame_HelloLabel:SetText(L["How to call a passenger"])
     MountyOptionsFrame_Hello:SetScript("OnEnterPressed", function(self)
         MountyData.Hello = self:GetText()
         self:ClearFocus()
@@ -535,7 +532,7 @@ function Mounty:InitOptionsFrame()
 
     MountyOptionsFrame_DebugMode = CreateFrame("CheckButton", "MountyOptionsFrame_DebugMode", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     MountyOptionsFrame_DebugMode:SetPoint("TOPLEFT", 16, top)
-    MountyOptionsFrame_DebugModeText:SetText(L["config debug"])
+    MountyOptionsFrame_DebugModeText:SetText(L["Debug mode"])
     MountyOptionsFrame_DebugMode:SetScript("OnClick", function(self)
         MountyData.DebugMode = not MountyData.DebugMode
         self:SetChecked(MountyData.DebugMode)
@@ -597,42 +594,42 @@ SlashCmdList["MOUNTY"] = function(message)
     if message == "debug on" then
 
         MountyData.DebugMode = true
-        Mounty:MountyChat(L["chat debug"] .. "|cff00f000" .. L["on"] .. "|r.")
+        Mounty:MountyChat(L["Debug: "] .. "|cff00f000" .. L["on"] .. "|r.")
 
     elseif message == "debug off" then
 
         MountyData.DebugMode = false
-        Mounty:MountyChat(L["chat debug"] .. "|cfff00000" .. L["off"] .. "|r.")
+        Mounty:MountyChat(L["Debug: "] .. "|cfff00000" .. L["off"] .. "|r.")
 
     elseif message == "fly on" then
 
         MountyData.DoNotFly = false
-        Mounty:MountyChat(L["chat fly"] .. "|cff00f000" .. L["on"] .. "|r.")
+        Mounty:MountyChat(L["fly mode: "] .. "|cff00f000" .. L["on"] .. "|r.")
 
     elseif message == "fly off" then
 
         MountyData.DoNotFly = true
-        Mounty:MountyChat(L["chat fly"] .. "|cfff00000" .. L["off"] .. "|r.")
+        Mounty:MountyChat(L["fly mode: "] .. "|cfff00000" .. L["off"] .. "|r.")
 
     elseif message == "random on" then
 
         MountyData.Random = false
-        Mounty:MountyChat(L["chat random"] .. "|cff00f000" .. L["on"] .. "|r.")
+        Mounty:MountyChat(L["random: "] .. "|cff00f000" .. L["on"] .. "|r.")
 
     elseif message == "random off" then
 
         MountyData.Random = true
-        Mounty:MountyChat(L["chat random"] .. "|cfff00000" .. L["off"] .. "|r.")
+        Mounty:MountyChat(L["random: "] .. "|cfff00000" .. L["off"] .. "|r.")
 
     elseif message == "taxi on" then
 
         MountyData.TaxiMode = true
-        Mounty:MountyChat(L["chat taxi"] .. "|cff00f000" .. L["on"] .. "|r.")
+        Mounty:MountyChat(L["taxi: "] .. "|cff00f000" .. L["on"] .. "|r.")
 
     elseif message == "taxi off" then
 
         MountyData.TaxiMode = false
-        Mounty:MountyChat(L["chat taxi"] .. "|cfff00000" .. L["off"] .. "|r.")
+        Mounty:MountyChat(L["taxi: "] .. "|cfff00000" .. L["off"] .. "|r.")
 
     elseif message ~= "" and message ~= nil then
 

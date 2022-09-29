@@ -1,5 +1,10 @@
 ##Mounty changelog
 
+- v1.7.2
+
+  - Better localization
+  
+
 - v1.7.1.2
 
   - Fixed: Icons were overlapping labels
