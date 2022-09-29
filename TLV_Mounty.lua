@@ -115,7 +115,7 @@ function Mounty:Select(typ)
             local mountID = C_MountJournal.GetMountFromSpell(MountyData.Mounts[typ][i])
             local mname, _, _, _, isUsable = C_MountJournal.GetMountInfoByID(mountID)
 
-            Mounty:Debug("Usable: " .. mname .. " -> " .. tostring(isUsable))
+            Mounty:Debug("Usable: " .. "[" .. mountID .. "] " .. mname .. " -> " .. tostring(isUsable))
 
             if (isUsable) then
                 count = count + 1
@@ -197,6 +197,9 @@ function Mounty:Mount(category)
         typ = 0
     end
 
+    Mounty:Debug("Category: " .. category)
+    Mounty:Debug("Type: " .. typ)
+
     if (typ > 0) then
 
         spellID = Mounty:Select(typ)
@@ -206,10 +209,8 @@ function Mounty:Mount(category)
         end
     end
 
-    Mounty:Debug("Category: " .. category)
-    Mounty:Debug("Type: " .. typ)
-    Mounty:Debug("spellID = " .. spellID)
-    Mounty:Debug("mountID = " .. mountID)
+    Mounty:Debug("mountID: " .. mountID)
+    Mounty:Debug("spellID: " .. spellID)
 
     C_MountJournal.SummonByID(mountID)
 end

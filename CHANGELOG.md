@@ -2,11 +2,11 @@
 
 - v1.7.2
 
-  - Better localization
-  - Code nicyness
-  - Fallbacks for mount types
-  - Debug english only
   - Minor bugs
+  - Code nicyness
+  - Better localization
+  - Debug english only
+  - Fallbacks for mount types
   
 - v1.7.1.2
 
