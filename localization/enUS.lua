@@ -1,31 +1,12 @@
 local L = {}
 
-L["Ground"] = "Ground"
-L["Flying"] = "Flying"
-L["Water"] = "Water"
-L["Repair"] = "Repair"
-L["Taxi"] = "Taxi"
-L["Show off"] = "Show off"
-L["Randomm"] = "Random"
-
-L["Armor is at"] = "Armor is at"
-L["is usable: "] = "is usable: "
-L["key pressed"] = "key pressed"
-L["key: "] = "key: "
-L["is mounted"] = "is mounted"
-L["special key"] = "special key"
-L["magic key"] = "magic key"
-L["category: "] = "category: "
-L["selected "] = "selected "
-L["No mount found!"] = "No mount found!"
-
-L["Category: "] = "Category: "
-L["Type: "] = "Type: "
-
-L["fail"] = "fail"
-L["already"] = "already"
-L["saved: "] = "saved: "
-L["deleted: "] = "deleted: "
+L["[mode]Ground"] = "Ground"
+L["[mode]Flying"] = "Flying"
+L["[mode]Water"] = "Water"
+L["[mode]Repair"] = "Repair"
+L["[mode]Taxi"] = "Taxi"
+L["[mode]Show off"] = "Show off"
+L["[mode]Random"] = "Random"
 
 L["Taxi!"] = "Taxi!"
 

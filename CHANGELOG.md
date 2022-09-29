@@ -5,6 +5,7 @@
   - Better localization
   - Code nicyness
   - Fallbacks for mount types
+  - Debug english only
   
 - v1.7.1.2
 

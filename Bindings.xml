@@ -3,13 +3,13 @@
 		MountyKeyHandler()
 	</Binding>
 	<Binding name="Water mount" category="Mounty">
-		MountyKeyHandler("water")
+		MountyKeyHandler("Water")
 	</Binding>
 	<Binding name="Taxi mount" category="Mounty">
-		MountyKeyHandler("taxi")
+		MountyKeyHandler("Taxi")
 	</Binding>
 	<Binding name="Repair mount" category="Mounty">
-		MountyKeyHandler("repair")
+		MountyKeyHandler("Repair")
 	</Binding>
 	<Binding name="Show off mount" category="Mounty">
 		MountyKeyHandler("showoff")

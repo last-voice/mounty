@@ -28,12 +28,12 @@ local MountyTypes = 6
 local MountyMounts = 10
 
 local MountyTypesLabel = {
-    [1] = L["Ground"],
-    [2] = L["Flying"],
-    [3] = L["Water"],
-    [4] = L["Repair"],
-    [5] = L["Taxi"],
-    [6] = L["Show off"]
+    [1] = L["[mode]Ground"],
+    [2] = L["[mode]Flying"],
+    [3] = L["[mode]Water"],
+    [4] = L["[mode]Repair"],
+    [5] = L["[mode]Taxi"],
+    [6] = L["[mode]Show off"]
 }
 
 local MountyFallback = 0
@@ -70,7 +70,7 @@ function Mounty:Armored()
 
     local armored = 100 * curTotal / maxTotal
 
-    Mounty:Debug(L["Armor is at"] .. " |cffa0a0ff" .. armored .. "%|r.")
+    Mounty:Debug("Durability: |cffa0a0ff" .. armored .. "%|r.")
 
     return armored
 end
@@ -79,7 +79,7 @@ function Mounty:Fallback(typ)
 
     if (MountyFallback == MountyGround) then
 
-        Mounty:Debug(L["Fallback: "] .. " > '" .. L["Randomm"] .. "'")
+        Mounty:Debug("Fallback: '" .. L["[mode]Random"] .. "'")
         return 0
     end
 
@@ -87,13 +87,13 @@ function Mounty:Fallback(typ)
 
         MountyFallback = MountyGround
 
-        Mounty:Debug(L["Fallback: "] .. " > '" .. L["Ground"] .. "'")
+        Mounty:Debug("Fallback: '" .. L["[mode]Ground"] .. "'")
         return MountyGround
     end
 
     MountyFallback = MountyFlying
 
-    Mounty:Debug(L["Fallback: "] .. " > '" .. L["Flying"] .. "'")
+    Mounty:Debug("Fallback: '" .. L["[mode]Flying"] .. "'")
     return MountyFlying
 end
 
@@ -115,7 +115,7 @@ function Mounty:Select(typ)
             local mountID = C_MountJournal.GetMountFromSpell(MountyData.Mounts[typ][i])
             local mname, _, _, _, isUsable = C_MountJournal.GetMountInfoByID(mountID)
 
-            Mounty:Debug(L["is usable: "] .. mname .. " -> " .. tostring(isUsable))
+            Mounty:Debug("Usable: " .. mname .. " -> " .. tostring(isUsable))
 
             if (isUsable) then
                 count = count + 1
@@ -137,14 +137,14 @@ function Mounty:Select(typ)
             picked = MountyData.Iterator[typ]
         end
 
-        Mounty:Debug(L["selected "] .. " " .. picked .. " / " .. count)
+        Mounty:Debug("Selected: " .. picked .. " of " .. count)
 
         return ids[picked]
     end
 
-    Mounty:Debug(L["No mount found!"])
+    Mounty:Debug("No mount found in category!")
 
-    return Mounty:Select(Mounty:Mounty:Fallback(typ))
+    return Mounty:Select(Mounty:Fallback(typ))
 end
 
 function Mounty:MountSpellID(mountID)
@@ -172,15 +172,15 @@ function Mounty:Mount(category)
 
         typ = MountyFlying
 
-    elseif (category == "water") then
+    elseif (category == "[mode]Water") then
 
         typ = MountyWater
 
-    elseif (category == "repair") then
+    elseif (category == "[mode]Repair") then
 
         typ = MountyRepair
 
-    elseif (category == "taxi") then
+    elseif (category == "[mode]Taxi") then
 
         if not IsMounted() then
             SendChatMessage(MountyData.Hello)
@@ -206,8 +206,8 @@ function Mounty:Mount(category)
         end
     end
 
-    Mounty:Debug(L["Category: "] .. category)
-    Mounty:Debug(L["Type: "] .. typ)
+    Mounty:Debug("Category: " .. category)
+    Mounty:Debug("Type: " .. typ)
     Mounty:Debug("spellID = " .. spellID)
     Mounty:Debug("mountID = " .. mountID)
 
@@ -220,8 +220,7 @@ function MountyKeyHandler(keypress)
         keypress = "auto"
     end
 
-    Mounty:Debug(L["key pressed"])
-    Mounty:Debug(L["key: "] .. keypress)
+    Mounty:Debug("Key pressed: " .. keypress)
 
     if keypress == "forceoff" then
 
@@ -233,7 +232,7 @@ function MountyKeyHandler(keypress)
 
     elseif IsMounted() then
 
-        Mounty:Debug(L["is mounted"])
+        Mounty:Debug("You are mounted")
 
         if not IsFlying() then
             Dismount()
@@ -242,9 +241,9 @@ function MountyKeyHandler(keypress)
         if (keypress == "auto") then return end
     end
 
-    if keypress == "repair" or keypress == "random" or keypress == "showoff" or keypress == "water" or keypress == "taxi" then
+    if keypress == "[mode]Repair" or keypress == "random" or keypress == "showoff" or keypress == "[mode]Water" or keypress == "[mode]Taxi" then
 
-        Mounty:Debug(L["special key"])
+        Mounty:Debug("Dedicated key")
 
         Mounty:Mount(keypress)
 
@@ -258,18 +257,18 @@ function MountyKeyHandler(keypress)
         local taximode = MountyData.TaxiMode
         local donotfly = MountyData.DoNotFly
 
-        Mounty:Debug(L["magic key"])
+        Mounty:Debug("Magic key")
 
         if (donotfly) then
 
             flyable = false
         end
 
-        local category = "ground"
+        local category = "[mode]Ground"
 
         if (Mounty:Armored() < MountyData.ArmoredMin) then
 
-            category = "repair"
+            category = "[mode]Repair"
 
         elseif (alone and flyable) then
 
@@ -277,7 +276,7 @@ function MountyKeyHandler(keypress)
 
         elseif (not alone and taximode) then
 
-            category = "taxi"
+            category = "[mode]Taxi"
 
         elseif (not alone and flyable) then
 
@@ -285,10 +284,10 @@ function MountyKeyHandler(keypress)
 
         elseif (not flyable and swimming) then
 
-            category = "water"
+            category = "[mode]Water"
         end
 
-        Mounty:Debug(L["category: "] .. category)
+        Mounty:Debug("Category: " .. category)
         Mounty:Mount(category)
     end
 end
@@ -322,15 +321,15 @@ local function MountySetMount(self, button)
 
             if (spellID == 0) then
 
-                Mounty:Debug(L["fail"] .. " (spellID = 0): " .. infoType .. " " .. typ .. " " .. mountID)
+                Mounty:Debug("Fail: spellID = 0 | " .. infoType .. " " .. typ .. " " .. mountID)
 
             elseif (already) then
 
-                Mounty:Debug(L["fail"] .. " (" .. L["already"] .. "): " .. infoType .. " " .. typ .. " " .. mountID .. " " .. spellID)
+                Mounty:Debug("Fail: Already | " .. infoType .. " " .. typ .. " " .. mountID .. " " .. spellID)
 
             else
 
-                Mounty:Debug(L["saved: "] .. infoType .. " " .. typ .. " " .. index .. " " .. mountID .. " " .. spellID)
+                Mounty:Debug("Mount saved: " .. infoType .. " " .. typ .. " " .. index .. " " .. mountID .. " " .. spellID)
                 MountyData.Mounts[typ][index] = spellID
                 Mounty:OptionsRenderButtons()
             end
@@ -338,7 +337,7 @@ local function MountySetMount(self, button)
 
     elseif (button == "RightButton") then
 
-        Mounty:Debug(L["deleted: "] .. typ .. " " .. index)
+        Mounty:Debug("Mount deleted: " .. typ .. " " .. index)
 
         for i = index, MountyMounts - 1 do
             MountyData.Mounts[typ][i] = MountyData.Mounts[typ][i + 1]
