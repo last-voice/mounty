@@ -6,6 +6,7 @@
   - Code nicyness
   - Fallbacks for mount types
   - Debug english only
+  - Minor bugs
   
 - v1.7.1.2
 

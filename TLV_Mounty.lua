@@ -28,12 +28,12 @@ local MountyTypes = 6
 local MountyMounts = 10
 
 local MountyTypesLabel = {
-    [1] = L["[mode]Ground"],
-    [2] = L["[mode]Flying"],
-    [3] = L["[mode]Water"],
-    [4] = L["[mode]Repair"],
-    [5] = L["[mode]Taxi"],
-    [6] = L["[mode]Show off"]
+    [1] = L["mode.Ground"],
+    [2] = L["mode.Flying"],
+    [3] = L["mode.Water"],
+    [4] = L["mode.Repair"],
+    [5] = L["mode.Taxi"],
+    [6] = L["mode.Show off"]
 }
 
 local MountyFallback = 0
@@ -79,7 +79,7 @@ function Mounty:Fallback(typ)
 
     if (MountyFallback == MountyGround) then
 
-        Mounty:Debug("Fallback: '" .. L["[mode]Random"] .. "'")
+        Mounty:Debug("Fallback: '" .. L["mode.Random"] .. "'")
         return 0
     end
 
@@ -87,13 +87,13 @@ function Mounty:Fallback(typ)
 
         MountyFallback = MountyGround
 
-        Mounty:Debug("Fallback: '" .. L["[mode]Ground"] .. "'")
+        Mounty:Debug("Fallback: '" .. L["mode.Ground"] .. "'")
         return MountyGround
     end
 
     MountyFallback = MountyFlying
 
-    Mounty:Debug("Fallback: '" .. L["[mode]Flying"] .. "'")
+    Mounty:Debug("Fallback: '" .. L["mode.Flying"] .. "'")
     return MountyFlying
 end
 
@@ -172,15 +172,15 @@ function Mounty:Mount(category)
 
         typ = MountyFlying
 
-    elseif (category == "[mode]Water") then
+    elseif (category == "Water") then
 
         typ = MountyWater
 
-    elseif (category == "[mode]Repair") then
+    elseif (category == "Repair") then
 
         typ = MountyRepair
 
-    elseif (category == "[mode]Taxi") then
+    elseif (category == "Taxi") then
 
         if not IsMounted() then
             SendChatMessage(MountyData.Hello)
@@ -241,7 +241,7 @@ function MountyKeyHandler(keypress)
         if (keypress == "auto") then return end
     end
 
-    if keypress == "[mode]Repair" or keypress == "random" or keypress == "showoff" or keypress == "[mode]Water" or keypress == "[mode]Taxi" then
+    if keypress == "Repair" or keypress == "random" or keypress == "showoff" or keypress == "Water" or keypress == "Taxi" then
 
         Mounty:Debug("Dedicated key")
 
@@ -264,11 +264,11 @@ function MountyKeyHandler(keypress)
             flyable = false
         end
 
-        local category = "[mode]Ground"
+        local category = "Ground"
 
         if (Mounty:Armored() < MountyData.ArmoredMin) then
 
-            category = "[mode]Repair"
+            category = "Repair"
 
         elseif (alone and flyable) then
 
@@ -276,7 +276,7 @@ function MountyKeyHandler(keypress)
 
         elseif (not alone and taximode) then
 
-            category = "[mode]Taxi"
+            category = "Taxi"
 
         elseif (not alone and flyable) then
 
@@ -284,10 +284,9 @@ function MountyKeyHandler(keypress)
 
         elseif (not flyable and swimming) then
 
-            category = "[mode]Water"
+            category = "Water"
         end
 
-        Mounty:Debug("Category: " .. category)
         Mounty:Mount(category)
     end
 end
@@ -620,7 +619,11 @@ MountyOptionsFrame:SetScript("OnShow", MountyOptionsRender)
 SLASH_MOUNTY1 = "/mounty"
 SlashCmdList["MOUNTY"] = function(message)
 
-    if message == "debug on" then
+    if message == "magic" then
+
+        MountyKeyHandler()
+
+    elseif message == "debug on" then
 
         MountyData.DebugMode = true
         Mounty:Chat(L["Debug: "] .. "|cff00f000" .. L["on"] .. "|r.")

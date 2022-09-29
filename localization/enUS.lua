@@ -1,12 +1,12 @@
 local L = {}
 
-L["[mode]Ground"] = "Ground"
-L["[mode]Flying"] = "Flying"
-L["[mode]Water"] = "Water"
-L["[mode]Repair"] = "Repair"
-L["[mode]Taxi"] = "Taxi"
-L["[mode]Show off"] = "Show off"
-L["[mode]Random"] = "Random"
+L["mode.Ground"] = "Ground"
+L["mode.Flying"] = "Flying"
+L["mode.Water"] = "Water"
+L["mode.Repair"] = "Repair"
+L["mode.Taxi"] = "Taxi"
+L["mode.Show off"] = "Show off"
+L["mode.Random"] = "Random"
 
 L["Taxi!"] = "Taxi!"
 

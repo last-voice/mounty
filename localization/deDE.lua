@@ -2,13 +2,13 @@ if( GetLocale() ~= "deDE" ) then return end
 
 local L = {}
 
-L["[mode]Ground"] = "Reiten"
-L["[mode]Flying"] = "Fliegen"
-L["[mode]Water"] = "Schwimmen"
-L["[mode]Repair"] = "Reparieren"
-L["[mode]Taxi"] = "Taxi"
-L["[mode]Show off"] = "Angeberei"
-L["[mode]Random"] = "Zufällig"
+L["mode.Ground"] = "Reiten"
+L["mode.Flying"] = "Fliegen"
+L["mode.Water"] = "Schwimmen"
+L["mode.Repair"] = "Reparieren"
+L["mode.Taxi"] = "Taxi"
+L["mode.Show off"] = "Angeberei"
+L["mode.Random"] = "Zufällig"
 
 L["Taxi!"] = "Taxi!"
 
