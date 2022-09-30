@@ -56,6 +56,7 @@ None of the above did come true: Now it's time to get back to where it all start
 Magic done. By __Mounty #TLV__.
 
 ## The full magic in less words
+
 ```
 Magic key is pressed ->
 Are you mounted and flying -> Do nothing
@@ -69,6 +70,7 @@ You are in a flight zone and don't fly mode is off -> Fly mount
 You can't fly and are swimming -> Water mount
 else -> Ground mount
 ```
+
 ## But there is still more than that
 
 __Mounty #TLV__ will choose the perfect category as described above. But there might be empty categories you didn't or couldn't assign any mount to.
@@ -100,11 +102,11 @@ Besides the _magic key_ you can also bind some _special keys_ to summon a mount 
 
 For example, my config is like this:
 
-\# -> _Magic key_\
-CTRL-# -> _Repair mount_\
-SHIFT-# -> _Taxi mount_\
-ALT-# -> _Water mount_\
-CTRL-Space -> _Show off mount_
+- \# -> _Magic key_
+- CTRL-# -> _Repair mount_
+- SHIFT-# -> _Taxi mount_
+- ALT-# -> _Water mount_
+- CTRL-Space -> _Show off mount_
 
 # Thank you!
 
