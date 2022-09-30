@@ -22,7 +22,7 @@ __Mounty #TLV__ offers __6 categories__ for your mounts:
 - __Taxi mounts__ - A passenger's seat for a good friend is perfect for questing, farming, and fighting together hand in hand. Especially when your taxi has wings, and your friend doesn't know how to fly. He'll never forget your helping wing erm hand.\
 - __Show off mounts__ - You spent hours, days, weeks to get this special one, the mount of your dreams. There will never be a better one. Until tomorrow. But for now, everybody around must see: You got it!
 
-You can assign up to __10 different favorite mounts__ to every category per drag & drop from your mount collection.
+You can assign up to __10 different favorite mounts to every category__ per drag & drop from your mount collection.
 
 And you can assign this __one and only magic key__, which does its magic when pressed.
 
