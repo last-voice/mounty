@@ -1,9 +1,16 @@
 # Die Magie von Mounty #TLV
 
+---
+
+ENGLISH? -> The __english README__ can be found here: https://github.com/last-voice/mounty/blob/main/README.md
+
+---
+
 Du bist unter freiem Himmel, schwimmst im offenen Wasser oder bist in Begleitung eines Freundes unterwegs, der noch nicht fliegen kann?\
 Du möchtest wieder los, aber deine Rüstung ist hinüber und sollte so schnell wie möglich repariert werden?\
 Alle anderen sollen staunen und dein einzigartiges Mount sehen, das niemand hat außer du (abgesehen davon, dass es bereits jede:r andere hat)?\
 Für jede Gelegenheit hast du mehrere Lieblings-Mounts und möchtest dich überraschen lassen, welches Mount als nächstes kommt?
+
 Dann ist __Mounty #TLV__ genau das richtige Add-on für dich und mit nur __einem einzigen Tastendruck__ kommt _Magie_ ins Spiel.
 
 # Was macht das Add-on

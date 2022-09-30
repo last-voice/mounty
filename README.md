@@ -1,5 +1,11 @@
 # The magic of Mounty #TLV
 
+---
+
+DEUTSCH? -> Das __deutsche README__ findest Du hier: https://github.com/last-voice/mounty/blob/main/README.de.md
+
+---
+
 You are in a flight zone, swimming in the water or joined by a friend, who can't fly jet?\
 You want to ride on, but your armor is low and you should repair asap?\
 You want to show off with these awesome mounts, which nobody else has got (except, everybody got it;)?\
