@@ -85,12 +85,12 @@ Drag & drop all your favorite mounts into the categories of your choice. Click r
 
 ## Options
 
-__Random__ - If _on_, __Mounty #TLV__ will randomly summon a mount of the selected _category_. If _off_ then it will cycle through one by one.\
-__Don't fly__ - Even if you are in a flight zone and have learned to fly, you will not and stay on the ground. Looking for any reason? If you joined a friend who can't fly yet and you want to help him progress, farm, or quest, then it's quite fair to stay with him and keep eye level. Except ...\
-__Taxi mode__ - You want to help a friend and give him some rides whilst questing and farming together, then turn this on. When in a party and you summon your mount, your taxi mount will arrive. Where to?\
-__How to call ...__ - When your taxi arrives shout, erm speak out this short line of text, so your friend won't let you wait.\
-__Durability threshold__ - When your durability is lower than this, there's always a big hand for summoning your repair mount first. It's another kind of magic.\
-__Debug mode__ - Magic in numbers and letters. See for yourself what __Mounty #TLV__ let's you know via chat messages.
+- __Random__ - If _on_, __Mounty #TLV__ will randomly summon a mount of the selected _category_. If _off_ then it will cycle through one by one.
+- __Don't fly__ - Even if you are in a flight zone and have learned to fly, you will not and stay on the ground. Looking for any reason? If you joined a friend who can't fly yet and you want to help him progress, farm, or quest, then it's quite fair to stay with him and keep eye level. Except ...
+- __Taxi mode__ - You want to help a friend and give him some rides whilst questing and farming together, then turn this on. When in a party and you summon your mount, your taxi mount will arrive. Where to?
+- __How to call ...__ - When your taxi arrives shout, erm speak out this short line of text, so your friend won't let you wait.
+- __Durability threshold__ - When your durability is lower than this, there's always a big hand for summoning your repair mount first. It's another kind of magic.
+- __Debug mode__ - Magic in numbers and letters. See for yourself what __Mounty #TLV__ let's you know via chat messages.
 
 ## Binding keys
 
