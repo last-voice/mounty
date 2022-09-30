@@ -96,7 +96,7 @@ __Debug mode__ - Magic in numbers and letters. See for yourself what __Mounty #T
 
 __Use _system key bindings_ to assign your magic key.__
 
-You can also bind some special key to summon a mount of a category of your choice. No magic than, but pure free will.
+Besides the _magic key_ you can also bind some _special keys_ to summon a mount of a category of your choice. No magic than, but pure free will.
 
 For example, my config is like this:
 
