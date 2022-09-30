@@ -2,6 +2,8 @@
 
 ---
 
+Hier findest Du das Add-on: https://www.curseforge.com/wow/addons/mounty-tlv/
+
 ENGLISH? -> The __english README__ can be found here: https://github.com/last-voice/mounty/blob/main/README.md
 
 ---
