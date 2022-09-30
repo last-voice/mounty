@@ -38,7 +38,7 @@ Und du kannst __diese eine magische Taste__ belegen, die für dich zaubern wird.
 Zwei Grundeinstellungen gibt es:
 
 - _Taxi-Modus ein/aus_: Wer in dieser eingeschaltet ist und du in einer Gruppe bist, - dann werden Taxi-Mounts bevorzugt und deine Freunde aufgefordert, aufzuspringen.
-- _Nicht-fliegen-Modus an/aus_: Deine fliegenden Mounts bleiben im Stall. Ideal wenn du einen Freund begleitest, der immer noch nicht fliegen kann. So bleibt ihr immer auf Augenhöhe und niemand zurück.
+- _Nicht-fliegen-Modus an/aus_: Deine fliegenden Mounts bleiben im Stall, wenn du in einer Gruppe bist. Ideal wenn du einen Freund begleitest, der immer noch nicht fliegen kann. So bleibt ihr immer auf Augenhöhe und niemand zurück.
 
 Am Ende ist es ganz einfach. Wenn du __die magische Taste__ drückst, passiert folgendes:
 
@@ -54,7 +54,9 @@ Du bist im Ruhebereich, in einer Gruppe mit Freunden aber der Taxi-Modus ist aus
 
 Du bist in einer Gruppe mit Freunden und der Taximodus ist eingeschaltet? Mein Freund, wir rufen mein __Taxi-Mount__ und sausen gemeinsam davon. Los geht's!
 
-Du bist in einer Flug-Zone, kannst fliegen, und der Nicht-fliegen-Modus ist nicht eingeschaltet? Breite deine Flügel aus oder starte die Maschinen und hoch hinaus geht es in die Lüfte mit einem deiner liebsten __Flug-Mounts__.
+Du bist in einer Flug-Zone und in keiner Gruppe? Breite deine Flügel aus oder starte die Maschinen und hoch hinaus geht es in die Lüfte mit einem deiner liebsten __Flug-Mounts__.
+
+Du bist in einer Flug-Zone, in einer Gruppe, und der Nicht-fliegen-Modus ist nicht eingeschaltet? Spring auf dein __Flug-Mount__ und jage gemeinsam mit deinen Freunden durch die Wolken.
 
 Wie traurig: du darfst oder kannst nicht fliegen - noch schlimmer - du schwimmst im kalten Wasser. Immerhin kannst du dein __Wasser-Mount__ rufen, das dich schnell zurück zum Strand bringt.
 
@@ -73,7 +75,8 @@ Die Haltbarkeit deiner Rüstung ist unter xx% -> Reparier-Mount
 Du bist allein im Ruhebereich -> Angeber-Mount
 Du bist in einer Gruppe im Ruhebereich, Taxi-Modus ist aus -> Angeber-Mount
 Du bist in einer Gruppe, Taxi-Modus ist an -> Taxi-Mount
-Du bist in einer Flug-Zone, Nicht-fliegen-Modus ist aus -> Flug-Mount
+Du bist in einer Flug-Zone, allein -> Flug-Mount
+Du bist in einer Flug-Zone, in einer Gruppe und der Nicht-fliegen-Modus ist aus -> Flug-Mount
 Du schwimmst im Wasser und kannst nicht fliegen -> Wasser-Mount
 sonst -> Boden-Mount
 ```
@@ -95,7 +98,7 @@ Ziehe mit der Maus deine favorisierten Mounts in die Kategorien deiner Wahl. Mit
 ## Optionen
 
 - __Zufall__ - Falls _eingeschaltet_, wird ein zufälliges Mount aus der jeweiligen _Kategorie_ ausgewählt. Falls _ausgeschaltet_, kommt eins nach dem anderen immer der Reihe nach und wieder von vorne.
-- __Nicht fliegen__ - Auch wenn du fliegen könntest, du bleibst immer auf dem Boden. Was hat das für einen Sinn? Falls du einen Freund begleitest, der noch nicht fliegen kann, und diesem beim Questen, dann ist es schon fair, wenn du ihm nicht immer wieder davonfliegst, außer ...
+- __Nicht fliegen__ - Solang du in einer Gruppe bist: Auch wenn du fliegen könntest, du bleibst immer auf dem Boden. Was hat das für einen Sinn? Falls du einen Freund begleitest, der noch nicht fliegen kann, und diesem beim Questen, dann ist es schon fair, wenn du ihm nicht immer wieder davonfliegst, außer ...
 - __Taxi-Modus__ - Unterwegs mit einem Freund, der mit deiner Unterstützung vorankommen will? Solange du in einer Gruppe bist, wird immer dein Taxi-Mount gerufen, so dass dein Freund bequem aufspringen kann und sich um nichts kümmern muss. Er hat ja dich.
 - __So rufst du ...__ - Mit deinem Taxi-Mount erscheint auch dieser Aufruf im Chat, damit dein Freund die Abfahrt nicht verpasst.
 - __Haltbarkeit__ - Hier stellst du den Wert ein, der dafür sorgt, dass dein Reparier-Mount kommt, wenn deine Rüstung aussieht wie eine Murloc-Unterhose.

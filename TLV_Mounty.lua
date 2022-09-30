@@ -263,7 +263,7 @@ function MountyKeyHandler(keypress)
 
         Mounty:Debug("Magic key")
 
-        if (donotfly) then flyable = false end
+        if (donotfly and not alone) then flyable = false end
 
         local category
 

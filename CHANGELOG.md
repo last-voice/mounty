@@ -1,5 +1,8 @@
 ## Mounty changelog
 
+v1.8.2
+- Don't fly mode only whilst in a party (No sense at all whilst solo, he?)
+
 v1.8.1
 - README.de.md in German/auf Deutsch
 - Format of READMEs

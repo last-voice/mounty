@@ -39,7 +39,7 @@ And you can assign this __one and only magic key__, which does its magic when pr
 Via checkboxes you can decide between the following:
 
 - _Taxi mode_ on/off: If on and you are in a group, prefer your taxi mount to summon and call for your friend to hop on.
-- _Don't fly mode_ on/off: Your winged mounts will (mostly) be ignored. Helpful if you joined friends, who can't fly yet and don't want to be left behind.
+- _Don't fly mode_ on/off: Your winged mounts will (mostly) be ignored whilst in a party. Helpful if you joined friends, who can't fly yet and don't want to be left behind.
 
 In the end its quite simple. When the __magic key is pressed__, it goes like this:
 
@@ -55,7 +55,9 @@ You are in this resting area, but member of a party of friends and your _taxi mo
 
 You are member of a party of friends and your _taxi mode_ is on? My friend, we call for a __taxi mount__ to ride away together. Hop on!
 
-You're in a flight zone and didn't deactivate flying via _don't fly mode_? Spread your wings or start your engines and up, up, up it goes with your favorite __fly mount__.
+You're in a flight zone, all alone? Spread your wings or start your engines and up, up, up it goes with your favorite __fly mount__.
+
+You're in a flight zone with friends and didn't deactivate flying via _don't fly mode_? Jump on your __fly mount__ as race the skies with your friends.
 
 So sad you can't fly and even harder that you're swimming in cold water, but at least now you will summon your __water mount__ to get back to the beach asap.
 
@@ -72,9 +74,10 @@ Are you mounted and not flying -> Dismount
 You are not mounted ->
 Your durability is lower than xx% (see options) -> Repair mount
 You are single in a resting area -> Show off mount
-You are party member in a resting area, taxi mode is off -> Show off mount
-You are party member, taxi mode is on -> Taxi mount
-You are in a flight zone and don't fly mode is off -> Fly mount
+You are party member in a resting area, 'taxi mode' is off -> Show off mount
+You are party member, 'taxi mode' is on -> Taxi mount
+You are in a flight zone, all alone -> Fly mount
+You are in a flight zone with friends and 'don't fly mode' is off -> Fly mount
 You can't fly and are swimming -> Water mount
 else -> Ground mount
 ```
@@ -96,7 +99,7 @@ Drag & drop all your favorite mounts into the categories of your choice. Click r
 ## Options
 
 - __Random__ - If _on_, __Mounty #TLV__ will randomly summon a mount of the selected _category_. If _off_ then it will cycle through one by one.
-- __Don't fly__ - Even if you are in a flight zone and have learned to fly, you will not and stay on the ground. Looking for any reason? If you joined a friend who can't fly yet and you want to help him progress, farm, or quest, then it's quite fair to stay with him and keep eye level. Except ...
+- __Don't fly__ - Whilst you are in a party: Even if you are in a flight zone and have learned to fly, you will not and stay on the ground. Looking for any reason? If you joined a friend who can't fly yet and you want to help him progress, farm, or quest, then it's quite fair to stay with him and keep eye level. Except ...
 - __Taxi mode__ - You want to help a friend and give him some rides whilst questing and farming together, then turn this on. When in a party and you summon your mount, your taxi mount will arrive. Where to?
 - __How to call ...__ - When your taxi arrives shout, erm speak out this short line of text, so your friend won't let you wait.
 - __Durability threshold__ - When your durability is lower than this, there's always a big hand for summoning your repair mount first. It's another kind of magic.
