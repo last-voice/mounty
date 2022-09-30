@@ -49,9 +49,9 @@ You are member of a party of friends and your _taxi mode_ is on? My friend, we c
 
 You're in a flight zone and didn't deactivate flying via _don't fly mode_? Spread your wings or start your engines and up, up, up it goes with your favorite __fly mount__.
 
-So sad you can't fly and even harder that you're swimming in cold water, but at least now you will summon your __water mount__ to get back to the beaches asap.
+So sad you can't fly and even harder that you're swimming in cold water, but at least now you will summon your __water mount__ to get back to the beach asap.
 
-All done and all the above didn't come true: Now it's time to get back to where it all started by climbing on the back of these good old __ground mounts__ and take your ride to all five horizons.
+None of the above did come true: Now it's time to get back to where it all started by climbing on the back of these good old __ground mounts__ and take your ride to all five horizons.
 
 Magic done. By __Mounty #TLV__.
 
@@ -61,13 +61,13 @@ Magic key is pressed ->
 Are you mounted and flying -> Do nothing
 Are you mounted and not flying -> Dismount
 You are not mounted ->
-Your durability is lower than xx% (see options) -> Summon repair mount
-You are single in a resting area -> Summon show off mount
-You are party member in a resting area, _taxi mode_ is off -> Summon show off mount
-You are party member, _taxi mode_ is on -> Summon taxi mount
-You are in a flight zone and _don't fly mode_ is off -> Summon fly mount
-You can't fly and are swimming -> Summon water mount
-else -> Summon ground mount
+Your durability is lower than xx% (see options) -> Repair mount
+You are single in a resting area -> Show off mount
+You are party member in a resting area, taxi mode is off -> Show off mount
+You are party member, taxi mode is on -> Taxi mount
+You are in a flight zone and don't fly mode is off -> Fly mount
+You can't fly and are swimming -> Water mount
+else -> Ground mount
 ```
 ## But there is still more than that
 
