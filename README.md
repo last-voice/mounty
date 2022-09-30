@@ -15,11 +15,11 @@ If you are lucky and got a few mounts in your collection, then it's quite simple
 
 __Mounty #TLV__ offers __6 categories__ for your mounts:
 
-- __Ground mounts__ - Mounts, which are big fun to ride, always with their feet on the ground.\
-- __Flying mounts__ - These can spread their wings or ignite their rockets to reach for the sky, with you on their back.\
-- __Water mounts__ - There are/were mounts which could walk on the water. At least there are few which are faster swimmers than others, so you don't have to hold your breath too long.\
-- __Repair mounts__ - You got one of these, haven't you? Or do you still have to run miles to the next anvil, to get bat to 100% durability?\
-- __Taxi mounts__ - A passenger's seat for a good friend is perfect for questing, farming, and fighting together hand in hand. Especially when your taxi has wings, and your friend doesn't know how to fly. He'll never forget your helping wing erm hand.\
+- __Ground mounts__ - Mounts, which are big fun to ride, always with their feet on the ground.
+- __Flying mounts__ - These can spread their wings or ignite their rockets to reach for the sky, with you on their back.
+- __Water mounts__ - There are/were mounts which could walk on the water. At least there are few which are faster swimmers than others, so you don't have to hold your breath too long.
+- __Repair mounts__ - You got one of these, haven't you? Or do you still have to run miles to the next anvil, to get bat to 100% durability?
+- __Taxi mounts__ - A passenger's seat for a good friend is perfect for questing, farming, and fighting together hand in hand. Especially when your taxi has wings, and your friend doesn't know how to fly. He'll never forget your helping wing erm hand.
 - __Show off mounts__ - You spent hours, days, weeks to get this special one, the mount of your dreams. There will never be a better one. Until tomorrow. But for now, everybody around must see: You got it!
 
 You can assign up to __10 different favorite mounts to every category__ per drag & drop from your mount collection.
@@ -30,7 +30,7 @@ And you can assign this __one and only magic key__, which does its magic when pr
 
 Via checkboxes you can decide between the following:
 
-- _Taxi mode_ on/off: If on and you are in a group, prefer your taxi mount to summon and call for your friend to hop on.\
+- _Taxi mode_ on/off: If on and you are in a group, prefer your taxi mount to summon and call for your friend to hop on.
 - _Don't fly mode_ on/off: Your winged mounts will (mostly) be ignored. Helpful if you joined friends, who can't fly yet and don't want to be left behind.
 
 In the end its quite simple. When the __magic key is pressed__, it goes like this:
