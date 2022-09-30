@@ -33,7 +33,7 @@ Via checkboxes you can decide between the following:
 - _Taxi mode_ on/off: If on and you are in a group, prefer your taxi mount to summon and call for your friend to hop on.\
 - _Don't fly mode_ on/off: Your winged mounts will (mostly) be ignored. Helpful if you joined friends, who can't fly yet and don't want to be left behind.
 
-In the end its quite simple. When the magic key is pressed, it goes like this:
+In the end its quite simple. When the __magic key is pressed__, it goes like this:
 
 Are you already on a mount? Then __dismount__ and get down unless you're flying high and might fall at Hogger's feet. Then do nothing.
 
