@@ -17,7 +17,7 @@ Dann ist __Mounty #TLV__ genau das richtige Add-on für dich und mit nur __einem
 
 # Was macht das Add-on
 
-## In jeder Situation immer das richtige Mount!
+## In jeder Situation das perfekte Mount!
 
 Wenn du das Glück hast, Besitzer:in von mehreren Mounts zu sein, dann weißt du auch, dass sich darunter auch immer das beste befindet; und zwar je nach Situation, in der du dich gerade befindest.
 
