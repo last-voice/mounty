@@ -45,7 +45,7 @@ In the end its quite simple. When the __magic key is pressed__, it goes like thi
 
 Are you already on a mount? Then __dismount__ and get down unless you're flying high and might fall at Hogger's feet. Then do nothing.
 
-You we're not already mounted? Then let's do the real magic and get you __the mount you crave__ for.
+You were not already mounted? Then let's do the real magic and get you __the mount you crave__ for.
 
 You just killed thousands of enemies and your durability is lower than the threshold via options? Summon your __repair mount__ and be reborn.
 
@@ -59,7 +59,7 @@ You're in a flight zone, all alone? Spread your wings or start your engines and 
 
 You're in a flight zone with friends and didn't deactivate flying via _don't fly mode_? Jump on your __fly mount__ as race the skies with your friends.
 
-So sad you can't fly and even harder that you're swimming in cold water, but at least now you will summon your __water mount__ to get back to the beach asap.
+It is sad that you can't fly, and it gets worse, cause you're swimming in cold water, but at least now you will summon your __water mount__ to get back to the beach asap.
 
 None of the above did come true: Now it's time to get back to where it all started by climbing on the back of these good old __ground mounts__ and take your ride to all five horizons.
 

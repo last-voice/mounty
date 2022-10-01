@@ -58,7 +58,7 @@ Du bist in einer Flug-Zone und in keiner Gruppe? Breite deine Flügel aus oder s
 
 Du bist in einer Flug-Zone, in einer Gruppe, und der Nicht-fliegen-Modus ist nicht eingeschaltet? Spring auf dein __Flug-Mount__ und jage gemeinsam mit deinen Freunden durch die Wolken.
 
-Wie traurig: du darfst oder kannst nicht fliegen - noch schlimmer - du schwimmst im kalten Wasser. Immerhin kannst du dein __Wasser-Mount__ rufen, das dich schnell zurück zum Strand bringt.
+Wie traurig: du darfst oder kannst nicht fliegen, und es kommt noch schlimmer: Du schwimmst im kalten Wasser. Immerhin kannst du dein __Wasser-Mount__ rufen, das dich schnell zurück zum Strand bringt.
 
 Nichts von alledem trifft zu: Dann machen wir es wie in der guten alten Zeit und steigen auf den Rücken unseres bevorzugten __Boden-Mounts__. (Was ja, um ganz ehrlich zu sein, nur ein Pferd sein kann!)
 
