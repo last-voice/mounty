@@ -15,7 +15,7 @@ L["Summon water mount"] = "Wasser-Mount"
 L["Summon taxi mount"] = "Taxi-Mount"
 L["Summon repair mount"] = "Mount zum reparieren"
 L["Summon show off mount"] = "Angeben!"
-L["Summon random mount"] = "Zufälliges Mount"
+L["Summon random mount"] = "Ganz zufälliges Mount"
 L["Force dismount"] = "Absteigen!"
 
 L["Taxi!"] = "Taxi!"

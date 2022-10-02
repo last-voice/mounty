@@ -70,7 +70,7 @@ function Mounty:Durability()
 
     local durability = math.floor((100 * curTotal / maxTotal) + 0.5)
 
-    Mounty:Debug("Durability: |cffa0a0ff" .. durability .. "%|r.")
+    Mounty:Debug("Durability: |cffa0a0ff" .. durability .. "%|r")
 
     return durability
 end
@@ -142,7 +142,7 @@ function Mounty:Select(typ)
         return ids[picked]
     end
 
-    Mounty:Debug("No mount found in category!")
+    Mounty:Debug("No mount found in category.")
 
     return Mounty:Select(Mounty:Fallback(typ))
 end
@@ -235,11 +235,12 @@ function MountyKeyHandler(keypress)
 
     elseif IsMounted() then
 
-        Mounty:Debug("You are mounted")
-
-        if not IsFlying() then
-            Dismount()
+        if IsFlying() then
+            Mounty:Debug("You are mounted and flying.")
+            return
         end
+
+        Dismount()
 
         if (keypress == "magic") then return end
     end

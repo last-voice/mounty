@@ -1,5 +1,8 @@
 ## Mounty #TLV changelog
 
+v1.8.2.3
+- Special keys won't dismount anymore whilst flying 
+
 v1.8.2.2
 - Stupid bug fixed: 'resting' and 'not resting' was mismatched
 
