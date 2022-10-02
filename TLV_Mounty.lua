@@ -172,15 +172,15 @@ function Mounty:Mount(category)
 
         typ = MountyFlying
 
-    elseif (category == "Water") then
+    elseif (category == "water") then
 
         typ = MountyWater
 
-    elseif (category == "Repair") then
+    elseif (category == "repair") then
 
         typ = MountyRepair
 
-    elseif (category == "Taxi") then
+    elseif (category == "taxi") then
 
         if not IsMounted() then
             if MountyData.Hello ~= "" then
@@ -244,7 +244,7 @@ function MountyKeyHandler(keypress)
         if (keypress == "magic") then return end
     end
 
-    if keypress == "Repair" or keypress == "random" or keypress == "showoff" or keypress == "Water" or keypress == "Taxi" then
+    if keypress == "repair" or keypress == "random" or keypress == "showoff" or keypress == "water" or keypress == "taxi" then
 
         Mounty:Debug("Dedicated key")
 
@@ -254,7 +254,7 @@ function MountyKeyHandler(keypress)
 
         -- magic
 
-        local resting = not IsResting()
+        local resting = IsResting()
         local alone = not IsInGroup()
         local flyable = IsFlyableArea()
         local swimming = IsSwimming()
@@ -269,7 +269,7 @@ function MountyKeyHandler(keypress)
 
         if (Mounty:Durability() < MountyData.DurabilityMin) then
 
-            category = "Repair"
+            category = "repair"
 
         elseif (resting and alone) then
 
@@ -281,7 +281,7 @@ function MountyKeyHandler(keypress)
 
         elseif (not alone and taximode) then
 
-            category = "Taxi"
+            category = "taxi"
 
         elseif (flyable) then
 
@@ -289,11 +289,11 @@ function MountyKeyHandler(keypress)
 
         elseif (not flyable and swimming) then
 
-            category = "Water"
+            category = "water"
 
         else
 
-            category = "Ground"
+            category = "ground"
         end
 
         Mounty:Mount(category)

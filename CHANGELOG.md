@@ -1,4 +1,7 @@
-## Mounty changelog
+## Mounty #TLV changelog
+
+v1.8.2.2
+- Stupid bug fixed: 'resting' and 'not resting' was mismatched
 
 v1.8.2.1
 - Typos in README.md
