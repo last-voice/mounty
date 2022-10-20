@@ -97,7 +97,7 @@ function Mounty:Fallback(typ)
     return MountyFlying
 end
 
-function Mounty:Select(typ)
+function Mounty:SelectMountByType(typ, onlyflyable)
 
     if (typ == 0) then return 0 end
 
@@ -114,6 +114,12 @@ function Mounty:Select(typ)
 
             local mountID = C_MountJournal.GetMountFromSpell(MountyData.Mounts[typ][i])
             local mname, _, _, _, isUsable = C_MountJournal.GetMountInfoByID(mountID)
+
+            if (onlyflyable) then
+            --    if (mountcannotfly_cannot_be_checked_yet) then
+            --        isUsable = false
+            --    end
+            end
 
             Mounty:Debug("Usable: " .. "[" .. mountID .. "] " .. mname .. " -> " .. tostring(isUsable))
 
@@ -144,7 +150,7 @@ function Mounty:Select(typ)
 
     Mounty:Debug("No mount found in category.")
 
-    return Mounty:Select(Mounty:Fallback(typ))
+    return Mounty:SelectMountByType(Mounty:Fallback(typ, false))
 end
 
 function Mounty:MountSpellID(mountID)
@@ -167,6 +173,7 @@ function Mounty:Mount(category)
     local mountID = 0
     local typ = MountyGround
     local spellID = 0
+    local onlyflyable = false
 
     if (category == "fly") then
 
@@ -194,6 +201,11 @@ function Mounty:Mount(category)
 
         typ = MountyShowOff
 
+        if IsFlyableArea() then
+            onlyflyable = true
+        end
+
+
     elseif (category == "random") then
 
         typ = 0
@@ -204,7 +216,7 @@ function Mounty:Mount(category)
 
     if (typ > 0) then
 
-        spellID = Mounty:Select(typ)
+        spellID = Mounty:SelectMountByType(typ, onlyflyable)
 
         if (spellID > 0) then
             mountID = C_MountJournal.GetMountFromSpell(spellID)
@@ -272,23 +284,19 @@ function MountyKeyHandler(keypress)
 
             category = "repair"
 
-        elseif (resting and alone) then
-
-            category = "showoff"
-
-        elseif (resting and not taximode) then
-
-            category = "showoff"
-
         elseif (not alone and taximode) then
 
             category = "taxi"
+
+        elseif (resting) then
+
+            category = "showoff"
 
         elseif (flyable) then
 
             category = "fly"
 
-        elseif (not flyable and swimming) then
+        elseif (swimming) then
 
             category = "water"
 

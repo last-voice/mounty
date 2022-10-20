@@ -48,11 +48,9 @@ Du sitzt auf keinem Mount? Dann lassen wir die Magie spielen und für dich __das
 
 Du hast gerade Tausende Gegner besiegt und deine Rüstung hängt in Fetzen herab. Ihre Haltbarkeit liegt unter dem von dir eingestellten Wert. Plötzlich steht ein __Reparier-Mount__ vor dir.
 
-Du bist im Ruhebereich und in keiner Gruppe? Der perfekte Zeitpunkt, alle anderen mit einem __Angeber-Mount__ zu beeindrucken.
-
-Du bist im Ruhebereich, in einer Gruppe mit Freunden aber der Taxi-Modus ist ausgeschaltet? Richtig: auch dann prahlst du mit deinem __Angeber-Mount__.
-
 Du bist in einer Gruppe mit Freunden und der Taximodus ist eingeschaltet? Mein Freund, wir rufen mein __Taxi-Mount__ und sausen gemeinsam davon. Los geht's!
+
+Du bist im Ruhebereich? Der perfekte Zeitpunkt, alle anderen mit einem __Angeber-Mount__ zu beeindrucken.
 
 Du bist in einer Flug-Zone und in keiner Gruppe? Breite deine Flügel aus oder starte die Maschinen und hoch hinaus geht es in die Lüfte mit einem deiner liebsten __Flug-Mounts__.
 
@@ -67,18 +65,17 @@ Magisch, oder? Dank __Mounty #TLV__.
 ## Die ganze Magie in wenigen Worten
 
 ``` 
-Die magische Taste wurde gedrückt ->
-Du bist auf einem Mount und fliegst -> nichts passiert
-Du bist auf einem Mount auf dem Boden -> Du sitzt ab
-Du sitzt auf keinem Mount ->
-Die Haltbarkeit deiner Rüstung ist unter xx% -> Reparier-Mount
-Du bist allein im Ruhebereich -> Angeber-Mount
-Du bist in einer Gruppe im Ruhebereich, Taxi-Modus ist aus -> Angeber-Mount
-Du bist in einer Gruppe, Taxi-Modus ist an -> Taxi-Mount
-Du bist in einer Flug-Zone, allein -> Flug-Mount
-Du bist in einer Flug-Zone, in einer Gruppe und der Nicht-fliegen-Modus ist aus -> Flug-Mount
-Du schwimmst im Wasser und kannst nicht fliegen -> Wasser-Mount
-sonst -> Boden-Mount
+Die magische Taste wurde gedrückt ->\
+Du bist auf einem Mount und fliegst -> nichts passiert\
+Du bist auf einem Mount auf dem Boden -> Du sitzt ab\
+Du sitzt auf keinem Mount ->\
+Die Haltbarkeit deiner Rüstung ist unter xx% -> Reparier-Mount\
+Du bist in einer Gruppe, Taxi-Modus ist an -> Taxi-Mount\
+Du bist im Ruhebereich -> Angeber-Mount\
+Du bist in einer Flug-Zone, allein -> Flug-Mount\
+Du bist in einer Flug-Zone, in einer Gruppe und der Nicht-fliegen-Modus ist aus -> Flug-Mount\
+Du schwimmst im Wasser -> Wasser-Mount\
+sonst -> Boden-Mount\
 ```
 
 ## Da ist noch mehr

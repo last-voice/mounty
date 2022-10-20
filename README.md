@@ -49,11 +49,9 @@ You were not already mounted? Then let's do the real magic and get you __the mou
 
 You just killed thousands of enemies and your durability is lower than the threshold via options? Summon your __repair mount__ and be reborn.
 
-You are in a resting area and no member of any party? Time to impress everyone around with one of your favorite __show off mounts__.
+You hang around with friends and your _taxi mode_ is on? My friend, we call for a __taxi mount__ to ride away together. Hop on!
 
-You are in this resting area, but member of a party of friends and your _taxi mode_ is off? Right, we __show off__, too.
-
-You are member of a party of friends and your _taxi mode_ is on? My friend, we call for a __taxi mount__ to ride away together. Hop on!
+You are in a resting area? Time to impress everyone around with one of your favorite __show off mounts__.
 
 You're in a flight zone, all alone? Spread your wings or start your engines and up, up, up it goes with your favorite __fly mount__.
 
@@ -68,18 +66,17 @@ Magic done. By __Mounty #TLV__.
 ## The full magic in less words
 
 ```
-Magic key is pressed ->
-Are you mounted and flying -> Do nothing
-Are you mounted and not flying -> Dismount
-You are not mounted ->
-Your durability is lower than xx% (see options) -> Repair mount
-You are single in a resting area -> Show off mount
-You are party member in a resting area, 'taxi mode' is off -> Show off mount
-You are party member, 'taxi mode' is on -> Taxi mount
-You are in a flight zone, all alone -> Fly mount
-You are in a flight zone with friends and 'don't fly mode' is off -> Fly mount
-You can't fly and are swimming -> Water mount
-else -> Ground mount
+Magic key is pressed ->\
+Are you mounted and flying -> Do nothing\
+Are you mounted and not flying -> Dismount\
+You are not mounted ->\
+Your durability is lower than xx% (see options) -> Repair mount\
+You are party member, 'taxi mode' is on -> Taxi mount\
+You are in a resting area -> Show off mount\
+You are in a flight zone, all alone -> Fly mount\
+You are in a flight zone with friends and 'don't fly mode' is off -> Fly mount\
+You are swimming -> Water mount\
+else -> Ground mount\
 ```
 
 ## But there is still more than that
