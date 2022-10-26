@@ -1,9 +1,9 @@
-## Interface: 90207
+## Interface: 100000
 ## Title: Mounty #TLV
 ## Notes: Selects the perfect mount with magic
 ## Author: the_last_voice
 ## SavedVariablesPerCharacter: MountyData
-## Version: v1.8.3
+## Version: v1.8.4
 
 localization\enUS.lua
 localization\deDE.lua

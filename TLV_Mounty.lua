@@ -106,8 +106,6 @@ function Mounty:SelectMountByType(typ, onlyflyable)
     local usable
     local picked
 
-    -- try MountyDataGlobal = MountyData
-
     for i = 1, MountyMounts do
 
         if (MountyData.Mounts[typ][i] > 0) then
@@ -116,9 +114,9 @@ function Mounty:SelectMountByType(typ, onlyflyable)
             local mname, _, _, _, isUsable = C_MountJournal.GetMountInfoByID(mountID)
 
             if (onlyflyable) then
-            --    if (mountcannotfly_cannot_be_checked_yet) then
-            --        isUsable = false
-            --    end
+                --    if (mountcannotfly_cannot_be_checked_yet) then
+                --        isUsable = false
+                --    end
             end
 
             Mounty:Debug("Usable: " .. "[" .. mountID .. "] " .. mname .. " -> " .. tostring(isUsable))
@@ -365,8 +363,6 @@ local function MountySetMount(self, button)
     end
 
     GameTooltip:Hide()
-
-    --self:SetTexture("Interface\\Buttons\\UI-EmptySlot-White");
 end
 
 local function MountyTooltip(self, motion)
@@ -390,6 +386,26 @@ end
 local function MountyInit(self, event)
 
     Mounty:InitOptionsFrame()
+
+    --    MountyData = {
+    --        ["MountGround"] = 0,
+    --        ["DurabilityMin"] = 75,
+    --        ["DoNotFly"] = false,
+    --        ["DebugMode"] = false,
+    --        ["MountWater"] = 0,
+    --        ["Iterator"] = { 0, 1, 0, 0, 0, 0, },
+    --        ["TaxiMode"] = false,
+    --        ["Mounts"] = {
+    --            { 36702, 48025, 260172, 332256, 0, 0, 0, 0, 0, 0, }, { 88990, 107845, 63956, 126508, 333021, 0, 0, 0, 0, 0, }, { 64731, 0, 0, 0, 0, 0, 0, 0, 0, 0, }, { 122708, 0, 0, 0, 0, 0, 0, 0, 0, 0, }, { 88990, 107845, 63956, 126508, 333021, 0, 0, 0, 0, 0, }, { 88990, 107845, 63956, 126508, 333021, 0, 0, 0, 0, 0, },
+    --        },
+    --        ["MountTaxi"] = 0,
+    --        ["MountRepair"] = 0,
+    --        ["MountShowOff"] = 0,
+    --        ["MountFlying"] = 0,
+    --        ["Hello"] = "Taxi!",
+    --        ["Random"] = true,
+    --        ["ArmoredMin"] = 75
+    --    }
 
     if MountyData.DebugMode == nil then
         MountyData.DebugMode = false
@@ -560,9 +576,9 @@ function Mounty:InitOptionsFrame()
             MountyOptionsFrame_Buttons[t][i].MountyTyp = t
             MountyOptionsFrame_Buttons[t][i].MountyIndex = i
             MountyOptionsFrame_Buttons[t][i]:SetSize(32, 32)
-            MountyOptionsFrame_Buttons[t][i]:SetDisabledTexture("Interface\\Buttons\\UI-EmptySlot", "ARTWORK")
+            MountyOptionsFrame_Buttons[t][i]:SetDisabledTexture("Interface\\Buttons\\UI-EmptySlot")
             MountyOptionsFrame_Buttons[t][i]:GetDisabledTexture():SetTexCoord(0.15, 0.85, 0.15, 0.85);
-            MountyOptionsFrame_Buttons[t][i]:SetHighlightTexture("Interface\\Buttons\\YellowOrange64_Radial", "ARTWORK")
+            MountyOptionsFrame_Buttons[t][i]:SetHighlightTexture("Interface\\Buttons\\YellowOrange64_Radial")
             MountyOptionsFrame_Buttons[t][i]:SetPoint("TOPLEFT", 48 + i * 38, top)
             MountyOptionsFrame_Buttons[t][i]:SetScript("OnMouseUp", MountySetMount)
             MountyOptionsFrame_Buttons[t][i]:SetScript("OnEnter", MountyTooltip)
@@ -576,19 +592,17 @@ function Mounty:InitOptionsFrame()
 
     top = top - control_top_delta + 4
 
-    temp = CreateFrame("Button", "MountyOptionsFrame_OpenMounts", MountyOptionsFrame)
-    temp:SetSize(16, 16)
-    temp:SetNormalTexture("Interface\\Icons\\Ability_Mount_RidingHorse", "ARTWORK")
-    --    temp:GetDisabledTexture():SetTexCoord(0.15, 0.85, 0.15, 0.85);
-    --    temp:SetHighlightTexture("Interface\\Buttons\\YellowOrange64_Radial", "ARTWORK")
-    temp:SetPoint("TOPLEFT", 90, top)
-    temp:SetScript("OnMouseUp", function(self)
-        ToggleCollectionsJournal(1)
-    end)
-
-    temp = MountyOptionsFrame:CreateFontString(nil, "BACKGROUND", "GameFontNormalSmall")
-    temp:SetPoint("TOPLEFT", 112, top - 3)
-    temp:SetText(L["Helptext"])
+    --    temp = CreateFrame("Button", "MountyOptionsFrame_OpenMounts", MountyOptionsFrame)
+    --    temp:SetSize(16, 16)
+    --    temp:SetNormalTexture("Interface\\Icons\\Ability_Mount_RidingHorse")
+    --    temp:SetPoint("TOPLEFT", 90, top)
+    --    temp:SetScript("OnMouseUp", function(self)
+    --        ToggleCollectionsJournal(1)
+    --    end)
+    --
+    --    temp = MountyOptionsFrame:CreateFontString(nil, "BACKGROUND", "GameFontNormalSmall")
+    --    temp:SetPoint("TOPLEFT", 112, top - 3)
+    --    temp:SetText(L["Helptext"])
 
     -- DebugMode checkbox
 
@@ -632,11 +646,11 @@ function Mounty:OptionsRenderButtons()
         for i = 1, MountyMounts do
 
             if (MountyData.Mounts[t][i] == 0) then
-                MountyOptionsFrame_Buttons[t][i]:SetNormalTexture(nil)
+                MountyOptionsFrame_Buttons[t][i]:SetNormalTexture("")
                 MountyOptionsFrame_Buttons[t][i]:Disable()
             else
                 icon = GetSpellTexture(MountyData.Mounts[t][i])
-                MountyOptionsFrame_Buttons[t][i]:SetNormalTexture(icon, "ARTWORK")
+                MountyOptionsFrame_Buttons[t][i]:SetNormalTexture(icon)
                 MountyOptionsFrame_Buttons[t][i]:Enable()
             end
         end
@@ -713,6 +727,5 @@ SlashCmdList["MOUNTY"] = function(message)
     else
 
         InterfaceOptionsFrame_OpenToCategory("Mounty");
-        InterfaceOptionsFrame_OpenToCategory("Mounty"); -- Muss 2 x aufgerufen werden ?! Bug im Blizzard Code !!
     end
 end
