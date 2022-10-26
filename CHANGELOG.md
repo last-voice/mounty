@@ -3,7 +3,7 @@
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
 v1.8.4
-- Won't crash no more on 10.0
+- Won't crash no more on 10.0.2
 - Sorry, you can't assign new mounts at the moment, i'm working on it
 
 v1.8.3

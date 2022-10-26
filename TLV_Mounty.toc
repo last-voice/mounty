@@ -1,4 +1,4 @@
-## Interface: 100000
+## Interface: 100002
 ## Title: Mounty #TLV
 ## Notes: Selects the perfect mount with magic
 ## Author: the_last_voice
