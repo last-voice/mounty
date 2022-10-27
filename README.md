@@ -91,6 +91,8 @@ If a category is empty, it will then select one of your __flying mounts__.  And 
 
 __Type _/mounty_ in the chat and the options frame will open.__
 
+__Mounty #TLV__'s options will also open automatically with the mount journal.
+
 Drag & drop all your favorite mounts into the categories of your choice. Click right on a mount to remove it from a category.
 
 ## Options

@@ -1,4 +1,4 @@
-local _, Mounty = ...
+local MountyAddOnName, Mounty = ...
 
 MountyData = {}
 
@@ -631,10 +631,7 @@ function Mounty:InitOptionsFrame()
         self:SetChecked(MountyData.DebugMode)
     end)
 
-    -- Add to Blizzard Interface Options
-
     MountyOptionsFrame.name = "Mounty"
-
 end
 
 local function MountyOptionsRender()
@@ -681,6 +678,18 @@ MountyOptionsFrame = CreateFrame("Frame", "MountyOptionsFrame", UIParent, "Basic
 MountyOptionsFrame:RegisterEvent("ADDON_LOADED")
 MountyOptionsFrame:SetScript("OnEvent", MountyInit)
 MountyOptionsFrame:SetScript("OnShow", MountyOptionsRender)
+
+EventRegistry:RegisterCallback("MountJournal.OnShow", function()
+    if CollectionsJournal.selectedTab == COLLECTIONS_JOURNAL_TAB_INDEX_MOUNTS then
+        MountyOptionsFrame:ClearAllPoints()
+        MountyOptionsFrame:SetPoint("TOPLEFT", CollectionsJournal, "TOPRIGHT", 0, 0)
+        MountyOptionsFrame:Show()
+    end
+end, MountyAddOnName)
+
+EventRegistry:RegisterCallback("MountJournal.OnHide", function()
+    MountyOptionsFrame:Hide()
+end, MountyAddOnName)
 
 BINDING_NAME_MOUNTY_MAGIC = L["Summon magic mount"]
 BINDING_NAME_MOUNTY_WATER = L["Summon water mount"]

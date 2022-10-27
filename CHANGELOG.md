@@ -2,6 +2,9 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.0.1
+- Options now automatically open with mount journal
+
 v2.0
 - Fully adapted to 10.0.2
 - Mounty now opens in its own frame

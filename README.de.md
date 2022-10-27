@@ -90,6 +90,8 @@ Wenn eine Kategorie leer ist, wird stattdessen eines deiner __Flug-Mounts__ ausg
 
 __Tippe /mounty im Chat und das Optionsfenster öffnet sich.__
 
+__Mouny #TLV__s Optionen öffnen sich auch automatisch zusammen mit Deiner Reittier-Sammlung.
+
 Ziehe mit der Maus deine favorisierten Mounts in die Kategorien deiner Wahl. Mit einem Rechtsklick kannst du einzelne Mounts wieder entfernen.
 
 ## Optionen
