@@ -18,7 +18,7 @@ L["Force dismount"] = "Force dismount"
 
 L["Taxi!"] = "Taxi!"
 
-L["Options"] = "Options"
+L["Options"] = "Mounty #TLV - Options"
 L["Random"] = "Random"
 L["Don't fly (except if taxi)"] = "Don't fly in group (except as a taxi)"
 L["Taxi mode"] = "Taxi mode"

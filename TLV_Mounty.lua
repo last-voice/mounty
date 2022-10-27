@@ -7,13 +7,13 @@ MountyData = {}
 local Mounty = Mounty
 local L = Mounty.L
 
-local MountyOptionsFrame = nil
-local MountyOptionsFrame_DebugMode = nil
-local MountyOptionsFrame_TaxiMode = nil
-local MountyOptionsFrame_DoNotFly = nil
-local MountyOptionsFrame_Random = nil
-local MountyOptionsFrame_DurabilityMin = nil
-local MountyOptionsFrame_Hello = nil
+local MountyOptionsFrame
+local MountyOptionsFrame_DebugMode
+local MountyOptionsFrame_TaxiMode
+local MountyOptionsFrame_DoNotFly
+local MountyOptionsFrame_Random
+local MountyOptionsFrame_DurabilityMin
+local MountyOptionsFrame_Hello
 
 local MountyOptionsFrame_Buttons = {}
 
@@ -387,6 +387,8 @@ local function MountyInit(self, event)
 
     Mounty:InitOptionsFrame()
 
+
+
     --    MountyData = {
     --        ["MountGround"] = 0,
     --        ["DurabilityMin"] = 75,
@@ -476,16 +478,27 @@ function Mounty:InitOptionsFrame()
 
     -- Mounty options
 
-    --    MountyOptionsFrame = CreateFrame("Frame", "MountyOptionsFrame", UIParent)
     MountyOptionsFrame:Hide()
-    MountyOptionsFrame:SetWidth(300)
-    MountyOptionsFrame:SetHeight(410)
+    MountyOptionsFrame:SetWidth(480)
+    MountyOptionsFrame:SetHeight(500)
+    MountyOptionsFrame:SetPoint("CENTER")
+
     MountyOptionsFrame:SetFrameStrata("DIALOG")
+
+    MountyOptionsFrame:EnableMouse(true)
+    MountyOptionsFrame:SetMovable(true)
+    MountyOptionsFrame:RegisterForDrag("LeftButton")
+    MountyOptionsFrame:SetScript("OnDragStart", function(self, button)
+        self:StartMoving()
+    end)
+    MountyOptionsFrame:SetScript("OnDragStop", function(self)
+        self:StopMovingOrSizing()
+    end)
 
     -- Title text
 
-    temp = MountyOptionsFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
-    temp:SetPoint("TOPLEFT", 16, -16)
+    temp = MountyOptionsFrame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+    temp:SetPoint("TOP", 0, -4)
     temp:SetText(L["Options"])
 
     -- Random checkbox
@@ -498,6 +511,16 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame_Random:SetScript("OnClick", function(self)
         MountyData.Random = not MountyData.Random
         self:SetChecked(MountyData.Random)
+    end)
+
+    -- Open Mounts
+
+    temp = CreateFrame("Button", "MountyOptionsFrame_OpenMounts", MountyOptionsFrame)
+    temp:SetSize(32, 32)
+    temp:SetNormalTexture("Interface\\Icons\\Ability_Mount_RidingHorse")
+    temp:SetPoint("TOPRIGHT", -20, top)
+    temp:SetScript("OnMouseUp", function(self)
+        ToggleCollectionsJournal(1)
     end)
 
     -- DoNotFly checkbox
@@ -534,7 +557,7 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame_Hello:SetPoint("TOPLEFT", 25, top)
     MountyOptionsFrame_Hello:SetAutoFocus(false)
     MountyOptionsFrame_Hello:CreateFontString("MountyOptionsFrame_HelloLabel", "BACKGROUND", "GameFontNormalSmall")
-    MountyOptionsFrame_HelloLabel:SetPoint("BOTTOMLEFT", MountyOptionsFrame_Hello, "TOPLEFT", 0, 1)
+    MountyOptionsFrame_HelloLabel:SetPoint("BOTTOMLEFT", MountyOptionsFrame_Hello, "TOPLEFT", 0, 4)
     MountyOptionsFrame_HelloLabel:SetText(L["How to call a passenger"])
     MountyOptionsFrame_Hello:SetScript("OnEnterPressed", function(self)
         MountyData.Hello = self:GetText()
@@ -577,8 +600,8 @@ function Mounty:InitOptionsFrame()
             MountyOptionsFrame_Buttons[t][i].MountyIndex = i
             MountyOptionsFrame_Buttons[t][i]:SetSize(32, 32)
             MountyOptionsFrame_Buttons[t][i]:SetDisabledTexture("Interface\\Buttons\\UI-EmptySlot")
-            MountyOptionsFrame_Buttons[t][i]:GetDisabledTexture():SetTexCoord(0.15, 0.85, 0.15, 0.85);
-            MountyOptionsFrame_Buttons[t][i]:SetHighlightTexture("Interface\\Buttons\\YellowOrange64_Radial")
+            MountyOptionsFrame_Buttons[t][i]:GetDisabledTexture():SetTexCoord(0.15, 0.85, 0.15, 0.85)
+            MountyOptionsFrame_Buttons[t][i]:SetHighlightTexture("Interface\\Buttons\\UI-StopButton")
             MountyOptionsFrame_Buttons[t][i]:SetPoint("TOPLEFT", 48 + i * 38, top)
             MountyOptionsFrame_Buttons[t][i]:SetScript("OnMouseUp", MountySetMount)
             MountyOptionsFrame_Buttons[t][i]:SetScript("OnEnter", MountyTooltip)
@@ -590,19 +613,11 @@ function Mounty:InitOptionsFrame()
 
     -- Helptext
 
-    top = top - control_top_delta + 4
+    top = top - control_top_delta + 8
 
-    --    temp = CreateFrame("Button", "MountyOptionsFrame_OpenMounts", MountyOptionsFrame)
-    --    temp:SetSize(16, 16)
-    --    temp:SetNormalTexture("Interface\\Icons\\Ability_Mount_RidingHorse")
-    --    temp:SetPoint("TOPLEFT", 90, top)
-    --    temp:SetScript("OnMouseUp", function(self)
-    --        ToggleCollectionsJournal(1)
-    --    end)
-    --
-    --    temp = MountyOptionsFrame:CreateFontString(nil, "BACKGROUND", "GameFontNormalSmall")
-    --    temp:SetPoint("TOPLEFT", 112, top - 3)
-    --    temp:SetText(L["Helptext"])
+    temp = MountyOptionsFrame:CreateFontString(nil, "BACKGROUND", "GameFontNormalSmall")
+    temp:SetPoint("TOPLEFT", 112, top - 3)
+    temp:SetText(L["Helptext"])
 
     -- DebugMode checkbox
 
@@ -619,7 +634,7 @@ function Mounty:InitOptionsFrame()
     -- Add to Blizzard Interface Options
 
     MountyOptionsFrame.name = "Mounty"
-    InterfaceOptions_AddCategory(MountyOptionsFrame)
+
 end
 
 local function MountyOptionsRender()
@@ -645,6 +660,8 @@ function Mounty:OptionsRenderButtons()
 
         for i = 1, MountyMounts do
 
+            MountyOptionsFrame_Buttons[t][i]:Hide() -- Muss sein, sonst werden die nicht immer neu gezeichnet ?!
+
             if (MountyData.Mounts[t][i] == 0) then
                 MountyOptionsFrame_Buttons[t][i]:SetNormalTexture("")
                 MountyOptionsFrame_Buttons[t][i]:Disable()
@@ -653,11 +670,13 @@ function Mounty:OptionsRenderButtons()
                 MountyOptionsFrame_Buttons[t][i]:SetNormalTexture(icon)
                 MountyOptionsFrame_Buttons[t][i]:Enable()
             end
+
+            MountyOptionsFrame_Buttons[t][i]:Show() -- Muss sein, sonst werden die nicht immer neu gezeichnet ?!
         end
     end
 end
 
-MountyOptionsFrame = CreateFrame("Frame", "MountyOptionsFrame", UIParent)
+MountyOptionsFrame = CreateFrame("Frame", "MountyOptionsFrame", UIParent, "BasicFrameTemplate")
 
 MountyOptionsFrame:RegisterEvent("ADDON_LOADED")
 MountyOptionsFrame:SetScript("OnEvent", MountyInit)
@@ -726,6 +745,6 @@ SlashCmdList["MOUNTY"] = function(message)
 
     else
 
-        InterfaceOptionsFrame_OpenToCategory("Mounty");
+        MountyOptionsFrame:Show();
     end
 end

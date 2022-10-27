@@ -2,6 +2,12 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.0
+- Fully adapted to 10.0.2
+- Mounty now opens in its own frame
+- Its frame can be moved with mouse
+- Minor layout changes
+
 v1.8.4
 - Won't crash no more on 10.0.2
 - Sorry, you can't assign new mounts at the moment, i'm working on it
