@@ -695,11 +695,19 @@ end
 
 function Mounty:AddJournalButton()
 
-    local temp = CreateFrame("Button", "MountJournal_OpenMounty", MountJournal)
-    temp:SetSize(32, 32)
+    local temp = CreateFrame("Button", nil, MountJournal)
     temp:SetFrameStrata("DIALOG")
-    temp:SetNormalTexture("Interface\\Icons\\Ability_Mount_RidingHorse")
-    temp:SetPoint("CENTER", 0, 0)
+    temp:SetPoint("BOTTOMRIGHT", -6, 5)
+    temp:SetSize(128, 21)
+    temp:SetNormalFontObject(GameFontNormal)
+    temp:SetHighlightFontObject(GameFontHighlight)
+    temp:SetNormalTexture(130763) -- "Interface\\Buttons\\UI-DialogBox-Button-Up"
+    temp:GetNormalTexture():SetTexCoord(0.0, 1.0, 0.0, 0.71875)
+    temp:SetPushedTexture(130761) -- "Interface\\Buttons\\UI-DialogBox-Button-Down"
+    temp:GetPushedTexture():SetTexCoord(0.0, 1.0, 0.0, 0.71875)
+    temp:SetHighlightTexture(130762) -- "Interface\\Buttons\\UI-DialogBox-Button-Highlight"
+    temp:GetHighlightTexture():SetTexCoord(0.0, 1.0, 0.0, 0.71875)
+    temp:SetText(L["Open Mounty"])
     temp:SetScript("OnMouseUp", function(self)
         if (MountyOptionsFrame:IsVisible()) then
             MountyOptionsFrame:Hide()
@@ -719,11 +727,11 @@ MountyOptionsFrame:SetScript("OnShow", MountyOptionsRender)
 
 EventRegistry:RegisterCallback("MountJournal.OnShow", function()
     if CollectionsJournal.selectedTab == COLLECTIONS_JOURNAL_TAB_INDEX_MOUNTS and not Mounty.MountyJournalButtonAdded then
-        EventRegistry:UnregisterCallback("MountJournal.OnShow", MountyAddOnName)
+        EventRegistry:UnregisterCallback("MountJournal.OnShow", MountyAddOnName .. 'Button')
         Mounty:AddJournalButton()
         Mounty.MountyJournalButtonAdded = true
     end
-end, MountyAddOnName)
+end, MountyAddOnName .. 'Button')
 
 EventRegistry:RegisterCallback("MountJournal.OnShow", function()
     if MountyData.AutoOpen then

@@ -89,9 +89,11 @@ If a category is empty, it will then select one of your __flying mounts__.  And 
 
 # How to configure and use
 
-__Type _/mounty_ in the chat and the options frame will open.__
+Type __/mounty in the chat__ and the options frame will open.
 
-__Mounty #TLV__'s options will also open automatically with the mount journal.
+__Mounty #TLV__'s option frame can also open __automatically with the mount journal__ if option is active.
+
+And __Mounty #TLV__'s option frame can be opened __by clicking a button__ in the mount journal's bottom right corner.
 
 Drag & drop all your favorite mounts into the categories of your choice. Click right on a mount to remove it from a category.
 
@@ -103,6 +105,37 @@ Drag & drop all your favorite mounts into the categories of your choice. Click r
 - __How to call ...__ - When your taxi arrives shout, erm speak out this short line of text, so your friend won't let you wait.
 - __Durability threshold__ - When your durability is lower than this, there's always a big hand for summoning your repair mount first. It's another kind of magic.
 - __Debug mode__ - Magic in numbers and letters. See for yourself what __Mounty #TLV__ let's you know via chat messages.
+
+## Command line
+
+Type in chat or use in macros
+
+__Options__
+
+_/mounty_  - to open the options frame
+
+_/mounty debug on_ - to turn debug mode on\
+_/mounty debug off_ - to turn debug mode off\
+_/mounty auto on_ - to turn auto open mode on\
+_/mounty auto off_ - to turn auto open mode off\
+_/mounty fly on_ - to turn don't fly mode off(!)\
+_/mounty fly off_ - to turn don't fly mode on(!)\
+_/mounty random on_ - to turn random mode on\
+_/mounty random off_ - to turn random mode off\
+_/mounty taxi on_ - to turn taxi mode on\
+_/mounty taxi off_ - to turn taxi mode off
+
+__Summoning__
+
+_/mounty magic_ - to let __Mounty #TLV's__ magic happen
+
+_/mounty ground_ - to summon ground mount\
+_/mounty fly_ - to summon fly mount\
+_/mounty water_ - to summon water mount\
+_/mounty repair_ - to summon repair mount\
+_/mounty taxi_ - to summon taxi mount\
+_/mounty showoff_ - to summon show off mount\
+_/mounty random_ - to summon random mount
 
 ## Binding keys
 

@@ -2,8 +2,11 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
-v2.0.2
-- Auto open and close with mount journal as an option
+v2.1
+- Auto open and close with mount journal is now an option
+- New button in mount journal to open and close Mounty
+- Command line options now in README
+- Updated README
 
 v2.0.1
 - Options now automatically open with mount journal

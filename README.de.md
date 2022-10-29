@@ -88,9 +88,11 @@ Wenn eine Kategorie leer ist, wird stattdessen eines deiner __Flug-Mounts__ ausg
 
 # Konfigurieren und benutzen
 
-__Tippe /mounty im Chat und das Optionsfenster öffnet sich.__
+Tippe __/mounty im Chat__ und das Optionsfenster öffnet sich.
 
-__Mouny #TLV__s Optionen öffnen sich auch automatisch zusammen mit Deiner Reittier-Sammlung.
+__Mouny #TLV__s Optionen öffnen sich auch __automatisch zusammen mit Deiner Reittier-Sammlung__, sofern die Option aktiviert ist.
+
+Außerdem kannst Du die Optionen auch mit einem __Button in der Reittiersammlung__ (unten/rechts) öffnen.
 
 Ziehe mit der Maus deine favorisierten Mounts in die Kategorien deiner Wahl. Mit einem Rechtsklick kannst du einzelne Mounts wieder entfernen.
 
@@ -102,6 +104,37 @@ Ziehe mit der Maus deine favorisierten Mounts in die Kategorien deiner Wahl. Mit
 - __So rufst du ...__ - Mit deinem Taxi-Mount erscheint auch dieser Aufruf im Chat, damit dein Freund die Abfahrt nicht verpasst.
 - __Haltbarkeit__ - Hier stellst du den Wert ein, der dafür sorgt, dass dein Reparier-Mount kommt, wenn deine Rüstung aussieht wie eine Murloc-Unterhose.
 - __Debug__ - Magie in Zahlen. Siehe selbst, was __Mounty #TLV__ dir alles im Chat verrät.
+
+## Kommandozeile
+
+Für den Chat oder Deine Makros
+
+__Optionen__
+
+_/mounty_  - um das Optionsfenster zu öffnen
+
+_/mounty debug on_ - schaltet den Debug-Modus ein\
+_/mounty debug off_ - schaltet den Debug-Modus ein\
+_/mounty auto on_ - schaltet den Auto-Öffnen-Modus ein\
+_/mounty auto off_ - schaltet den Auto-Öffnen-Modus aus\
+_/mounty fly on_ - schaltet den Nicht-fliegen-Modus aus(!)\
+_/mounty fly off_ - schaltet den Nicht-fliegen-Modus ein(!)\
+_/mounty random on_ - schaltet den Zufalls-Modus ein\
+_/mounty random off_ - schaltet den Zufalls-Modus aus\
+_/mounty taxi on_ - schaltet den Taxi-Modus ein\
+_/mounty taxi off_ - schaltet den Taxi-Modus ein\
+
+__Summoning__
+
+_/mounty magic_ - und __Mounty #TLV__ wirkt seinen Zauber
+
+_/mounty ground_ - beschwört ein Boden-Mount\
+_/mounty fly_ - beschwört ein Flug-Mount\
+_/mounty water_ - beschwört ein Wasser-Mount\
+_/mounty repair_ - beschwört ein Reparier-Mount\
+_/mounty taxi_ - beschwört ein Taxi-Mount\
+_/mounty showoff_ - beschwört ein Angeber-Mount\
+_/mounty random_ - beschwört ein zufälliges Mount
 
 ## Tastenbelegung
 
