@@ -23,6 +23,7 @@ L["Random"] = "Random"
 L["Don't fly (except if taxi)"] = "Don't fly in group (except as a taxi)"
 L["Taxi mode"] = "Taxi mode"
 L["Debug mode"] = "Debug mode"
+L["Auto open"] = "Auto open and close with mount journal"
 L["Summon repair mount if durability is less than %d%%."] = "Summon repair mount if durability is less than %d%%."
 L["How to call a passenger"] = "How to call a passenger"
 
@@ -35,6 +36,8 @@ L["taxi: "] = "taxi: "
 
 L["on"] = "on"
 L["off"] = "off"
+
+L["Open Mounty"] = "Mounty #TLV"
 
 local _, Mounty = ...
 Mounty.L = L

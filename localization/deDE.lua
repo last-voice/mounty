@@ -25,6 +25,7 @@ L["Random"] = "Zufällig"
 L["Don't fly (except if taxi)"] = "Nicht in der Gruppe fliegen (außer als Taxi)"
 L["Taxi mode"] = "Taxi-Modus"
 L["Debug mode"] = "Debug-Modus (nur englisch)"
+L["Auto open"] = "Automatisch mit der Reittiersammlung öffnen und schließen"
 L["Summon repair mount if durability is less than %d%%."] = "Das Repair kommt bei weniger als %d%% Rüstung."
 L["How to call a passenger"] = "So rufst du deinen Passagier"
 
@@ -37,6 +38,8 @@ L["taxi: "] = "Taxi: "
 
 L["on"] = "an"
 L["off"] = "aus"
+
+L["Open Mounty"] = "Mounty #TLV"
 
 local _, Mounty = ...
 Mounty.L = setmetatable(L, { __index = Mounty.L })
