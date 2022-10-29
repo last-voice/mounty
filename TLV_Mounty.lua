@@ -9,6 +9,7 @@ local L = Mounty.L
 
 local MountyOptionsFrame
 local MountyOptionsFrame_DebugMode
+local MountyOptionsFrame_AutoOpen
 local MountyOptionsFrame_TaxiMode
 local MountyOptionsFrame_DoNotFly
 local MountyOptionsFrame_Random
@@ -413,6 +414,10 @@ local function MountyInit(self, event)
         MountyData.DebugMode = false
     end
 
+    if MountyData.AutoOpen == nil then
+        MountyData.AutoOpen = true
+    end
+
     if MountyData.TaxiMode == nil then
         MountyData.TaxiMode = false
     end
@@ -480,7 +485,7 @@ function Mounty:InitOptionsFrame()
 
     MountyOptionsFrame:Hide()
     MountyOptionsFrame:SetWidth(480)
-    MountyOptionsFrame:SetHeight(500)
+    MountyOptionsFrame:SetHeight(520)
     MountyOptionsFrame:SetPoint("CENTER")
 
     MountyOptionsFrame:SetFrameStrata("DIALOG")
@@ -619,6 +624,18 @@ function Mounty:InitOptionsFrame()
     temp:SetPoint("TOPLEFT", 112, top - 3)
     temp:SetText(L["Helptext"])
 
+    -- AutoOpen checkbox
+
+    top = top - control_top_delta_small
+
+    MountyOptionsFrame_AutoOpen = CreateFrame("CheckButton", "MountyOptionsFrame_AutoOpen", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    MountyOptionsFrame_AutoOpen:SetPoint("TOPLEFT", 16, top)
+    MountyOptionsFrame_AutoOpenText:SetText(L["Auto open"])
+    MountyOptionsFrame_AutoOpen:SetScript("OnClick", function(self)
+        MountyData.AutoOpen = not MountyData.AutoOpen
+        self:SetChecked(MountyData.AutoOpen)
+    end)
+
     -- DebugMode checkbox
 
     top = top - control_top_delta_small
@@ -631,19 +648,22 @@ function Mounty:InitOptionsFrame()
         self:SetChecked(MountyData.DebugMode)
     end)
 
-    MountyOptionsFrame.name = "Mounty"
+    -- No Idea what for ..?
+
+    -- MountyOptionsFrame.name = "Mounty"
 end
 
 local function MountyOptionsRender()
 
-    MountyOptionsFrame_DebugMode:SetChecked(MountyData.DebugMode)
-
-    MountyOptionsFrame_TaxiMode:SetChecked(MountyData.TaxiMode)
-    MountyOptionsFrame_DoNotFly:SetChecked(MountyData.DoNotFly)
     MountyOptionsFrame_Random:SetChecked(MountyData.Random)
-    MountyOptionsFrame_DurabilityMin:SetValue(MountyData.DurabilityMin)
-
+    MountyOptionsFrame_DoNotFly:SetChecked(MountyData.DoNotFly)
+    MountyOptionsFrame_TaxiMode:SetChecked(MountyData.TaxiMode)
     MountyOptionsFrame_Hello:SetText(MountyData.Hello)
+    MountyOptionsFrame_DurabilityMin:SetValue(MountyData.DurabilityMin)
+    MountyOptionsFrame_DebugMode:SetChecked(MountyData.DebugMode)
+    MountyOptionsFrame_AutoOpen:SetChecked(MountyData.AutoOpen)
+
+
 
     Mounty:OptionsRenderButtons()
 end
@@ -673,6 +693,24 @@ function Mounty:OptionsRenderButtons()
     end
 end
 
+function Mounty:AddJournalButton()
+
+    local temp = CreateFrame("Button", "MountJournal_OpenMounty", MountJournal)
+    temp:SetSize(32, 32)
+    temp:SetFrameStrata("DIALOG")
+    temp:SetNormalTexture("Interface\\Icons\\Ability_Mount_RidingHorse")
+    temp:SetPoint("CENTER", 0, 0)
+    temp:SetScript("OnMouseUp", function(self)
+        if (MountyOptionsFrame:IsVisible()) then
+            MountyOptionsFrame:Hide()
+        else
+            MountyOptionsFrame:ClearAllPoints()
+            MountyOptionsFrame:SetPoint("TOPLEFT", CollectionsJournal, "TOPRIGHT", 0, 0)
+            MountyOptionsFrame:Show()
+        end
+    end)
+end
+
 MountyOptionsFrame = CreateFrame("Frame", "MountyOptionsFrame", UIParent, "BasicFrameTemplate")
 
 MountyOptionsFrame:RegisterEvent("ADDON_LOADED")
@@ -680,7 +718,15 @@ MountyOptionsFrame:SetScript("OnEvent", MountyInit)
 MountyOptionsFrame:SetScript("OnShow", MountyOptionsRender)
 
 EventRegistry:RegisterCallback("MountJournal.OnShow", function()
-    if CollectionsJournal.selectedTab == COLLECTIONS_JOURNAL_TAB_INDEX_MOUNTS then
+    if CollectionsJournal.selectedTab == COLLECTIONS_JOURNAL_TAB_INDEX_MOUNTS and not Mounty.MountyJournalButtonAdded then
+        EventRegistry:UnregisterCallback("MountJournal.OnShow", MountyAddOnName)
+        Mounty:AddJournalButton()
+        Mounty.MountyJournalButtonAdded = true
+    end
+end, MountyAddOnName)
+
+EventRegistry:RegisterCallback("MountJournal.OnShow", function()
+    if MountyData.AutoOpen then
         MountyOptionsFrame:ClearAllPoints()
         MountyOptionsFrame:SetPoint("TOPLEFT", CollectionsJournal, "TOPRIGHT", 0, 0)
         MountyOptionsFrame:Show()
@@ -688,7 +734,9 @@ EventRegistry:RegisterCallback("MountJournal.OnShow", function()
 end, MountyAddOnName)
 
 EventRegistry:RegisterCallback("MountJournal.OnHide", function()
-    MountyOptionsFrame:Hide()
+    if MountyData.AutoOpen then
+        MountyOptionsFrame:Hide()
+    end
 end, MountyAddOnName)
 
 BINDING_NAME_MOUNTY_MAGIC = L["Summon magic mount"]
@@ -717,6 +765,16 @@ SlashCmdList["MOUNTY"] = function(message)
 
         MountyData.DebugMode = false
         Mounty:Chat(L["Debug: "] .. "|cfff00000" .. L["off"] .. "|r.")
+
+    elseif message == "auto on" then
+
+        MountyData.AutoOpen = true
+        Mounty:Chat(L["Auto open & close: "] .. "|cff00f000" .. L["on"] .. "|r.")
+
+    elseif message == "auto off" then
+
+        MountyData.AutoOpen = false
+        Mounty:Chat(L["Auto open & close: "] .. "|cfff00000" .. L["off"] .. "|r.")
 
     elseif message == "fly on" then
 

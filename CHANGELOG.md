@@ -2,6 +2,9 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.0.2
+- Auto open and close with mount journal as an option
+
 v2.0.1
 - Options now automatically open with mount journal
 
