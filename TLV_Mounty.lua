@@ -149,7 +149,7 @@ function Mounty:SelectMountByType(typ, onlyflyable)
 
     Mounty:Debug("No mount found in category.")
 
-    return Mounty:SelectMountByType(Mounty:Fallback(typ, false))
+    return Mounty:SelectMountByType(Mounty:Fallback(typ), false)
 end
 
 function Mounty:MountSpellID(mountID)
@@ -170,9 +170,10 @@ end
 function Mounty:Mount(category)
 
     local mountID = 0
-    local typ = MountyGround
     local spellID = 0
     local onlyflyable = false
+
+    local typ = MountyGround
 
     if (category == "fly") then
 
