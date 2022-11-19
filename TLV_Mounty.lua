@@ -117,7 +117,7 @@ function Mounty:SelectMountByType(typ, onlyflyable)
             if onlyflyable then
                 local _, _, _, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
 
-                if mountTypeID ~= 248 then
+                if mountTypeID ~= 248 then -- 248 = mostly flyable
                     isUsable = false
                 end
             end

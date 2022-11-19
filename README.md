@@ -51,7 +51,7 @@ You just killed thousands of enemies and your durability is lower than the thres
 
 You hang around with friends and your _taxi mode_ is on? My friend, we call for a __taxi mount__ to ride away together. Hop on!
 
-You are in a resting area? Time to impress everyone around with one of your favorite __show off mounts__.
+You are in a resting area? Time to impress everyone around with one of your favorite __show off mounts__. **
 
 You're in a flight zone, all alone? Spread your wings or start your engines and up, up, up it goes with your favorite __fly mount__.
 
@@ -63,6 +63,8 @@ None of the above did come true: Now it's time to get back to where it all start
 
 Magic done. By __Mounty #TLV__.
 
+** In flyable resting areas only flyable show off mounts will be chosen.
+
 ## The full magic in less words
 
 ```
@@ -72,12 +74,15 @@ Are you mounted and not flying -> Dismount\
 You are not mounted ->\
 Your durability is lower than xx% (see options) -> Repair mount\
 You are party member, 'taxi mode' is on -> Taxi mount\
-You are in a resting area -> Show off mount\
+You are in a resting area -> Show off mount **\
 You are in a flight zone, all alone -> Fly mount\
 You are in a flight zone with friends and 'don't fly mode' is off -> Fly mount\
 You are swimming -> Water mount\
 else -> Ground mount\
 ```
+
+** In flyable resting areas only flyable show off mounts will be chosen.
+
 
 ## But there is still more than that
 

@@ -50,7 +50,7 @@ Du hast gerade Tausende Gegner besiegt und deine Rüstung hängt in Fetzen herab
 
 Du bist in einer Gruppe mit Freunden und der Taximodus ist eingeschaltet? Mein Freund, wir rufen mein __Taxi-Mount__ und sausen gemeinsam davon. Los geht's!
 
-Du bist im Ruhebereich? Der perfekte Zeitpunkt, alle anderen mit einem __Angeber-Mount__ zu beeindrucken.
+Du bist im Ruhebereich? Der perfekte Zeitpunkt, alle anderen mit einem __Angeber-Mount__ zu beeindrucken. **
 
 Du bist in einer Flug-Zone und in keiner Gruppe? Breite deine Flügel aus oder starte die Maschinen und hoch hinaus geht es in die Lüfte mit einem deiner liebsten __Flug-Mounts__.
 
@@ -62,6 +62,8 @@ Nichts von alledem trifft zu: Dann machen wir es wie in der guten alten Zeit und
 
 Magisch, oder? Dank __Mounty #TLV__.
 
+** In Ruhebereichen, in denen du fliegen kannst, werden auch nur fliegende Angeber-Mounts ausgewählt.
+
 ## Die ganze Magie in wenigen Worten
 
 ``` 
@@ -71,12 +73,14 @@ Du bist auf einem Mount auf dem Boden -> Du sitzt ab\
 Du sitzt auf keinem Mount ->\
 Die Haltbarkeit deiner Rüstung ist unter xx% -> Reparier-Mount\
 Du bist in einer Gruppe, Taxi-Modus ist an -> Taxi-Mount\
-Du bist im Ruhebereich -> Angeber-Mount\
+Du bist im Ruhebereich -> Angeber-Mount **\
 Du bist in einer Flug-Zone, allein -> Flug-Mount\
 Du bist in einer Flug-Zone, in einer Gruppe und der Nicht-fliegen-Modus ist aus -> Flug-Mount\
 Du schwimmst im Wasser -> Wasser-Mount\
 sonst -> Boden-Mount\
 ```
+
+** In Ruhebereichen, in denen du fliegen kannst, werden auch nur fliegende Angeber-Mounts ausgewählt.
 
 ## Da ist noch mehr
 
