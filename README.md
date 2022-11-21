@@ -2,7 +2,10 @@
 
 ---
 
-The add on can be found here: https://www.curseforge.com/wow/addons/mounty-tlv/
+The add on can be found here:
+- https://github.com/last-voice/mounty/
+- https://www.curseforge.com/wow/addons/mounty-tlv/
+- https://wowup.io/addons/2797812
 
 DEUTSCH? -> Das __deutsche README__ findest Du hier: https://github.com/last-voice/mounty/blob/main/README.de.md
 

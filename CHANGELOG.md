@@ -2,6 +2,14 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.1.1.1
+- Minor changes in READMEs
+
+v2.1.1
+- The user's ability to fly is now checked too
+- Fallbacks now change priority if or not user learned fly
+- "Hello taxi!" shout out only in group
+
 v2.1.0.2
 - Fallbacks now work properly - bug fixed
 - In flyable resting areas only flyable show off mounts will be chosen
