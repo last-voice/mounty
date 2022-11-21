@@ -37,7 +37,8 @@ local MountyTypesLabel = {
     [6] = L["mode.Show off"]
 }
 
-local MountyFallback = 0
+local MountyFallbackQueue = {}
+local MountyFallbackAlready = {}
 
 local MountyDebugForce = false
 
@@ -78,27 +79,35 @@ end
 
 function Mounty:Fallback(typ)
 
-    if MountyFallback == MountyGround then
+    MountyFallbackAlready[typ] = true
 
-        Mounty:Debug("Fallback: '" .. L["mode.Random"] .. "'")
-        return 0
+    local FallbackTo = 0
+
+    if (not MountyFallbackAlready[MountyFallbackQueue[1]]) then
+
+        FallbackTo = MountyFallbackQueue[1]
+
+    elseif (not MountyFallbackAlready[MountyFallbackQueue[2]]) then
+
+        FallbackTo = MountyFallbackQueue[2]
     end
 
-    if MountyFallback == MountyFlying or typ == MountyFlying then
+    if (FallbackTo == MountyFlying) then
 
-        MountyFallback = MountyGround
+        Mounty:Debug("Fallback: '" .. L["mode.Flying"] .. "'")
+        return MountyFlying
+
+    elseif (FallbackTo == MountyGround) then
 
         Mounty:Debug("Fallback: '" .. L["mode.Ground"] .. "'")
         return MountyGround
     end
 
-    MountyFallback = MountyFlying
-
-    Mounty:Debug("Fallback: '" .. L["mode.Flying"] .. "'")
-    return MountyFlying
+    Mounty:Debug("Fallback: '" .. L["mode.Random"] .. "'")
+    return 0
 end
 
-function Mounty:SelectMountByType(typ, onlyflyable)
+function Mounty:SelectMountByType(typ, only_flyable_showoffs)
 
     if typ == 0 then return 0 end
 
@@ -114,7 +123,7 @@ function Mounty:SelectMountByType(typ, onlyflyable)
             local mountID = C_MountJournal.GetMountFromSpell(MountyData.Mounts[typ][i])
             local mname, _, _, _, isUsable = C_MountJournal.GetMountInfoByID(mountID)
 
-            if onlyflyable then
+            if only_flyable_showoffs then
                 local _, _, _, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
 
                 if mountTypeID ~= 248 then -- 248 = mostly flyable
@@ -169,11 +178,16 @@ function Mounty:MountUsableBySpellID(spellID)
     return icon
 end
 
+function Mounty:UserCanFlyHere()
+
+    return IsFlyableArea() and (C_Spell.DoesSpellExist(34090) or C_Spell.DoesSpellExist(90265)) -- riding has been learned
+end
+
 function Mounty:Mount(category)
 
     local mountID = 0
     local spellID = 0
-    local onlyflyable = false
+    local only_flyable_showoffs = false
 
     local typ = MountyGround
 
@@ -203,8 +217,8 @@ function Mounty:Mount(category)
 
         typ = MountyShowOff
 
-        if IsFlyableArea() then
-            onlyflyable = true
+        if Mounty:UserCanFlyHere() then
+            only_flyable_showoffs = true
         end
 
 
@@ -218,7 +232,15 @@ function Mounty:Mount(category)
 
     if typ > 0 then
 
-        spellID = Mounty:SelectMountByType(typ, onlyflyable)
+        MountyFallbackAlready = {} -- Muss wieder auf leer gesetzt werden
+
+        if (Mounty:UserCanFlyHere()) then
+            MountyFallbackQueue = { MountyFlying, MountyGround }
+        else
+            MountyFallbackQueue = { MountyGround, MountyFlying }
+        end
+
+        spellID = Mounty:SelectMountByType(typ, only_flyable_showoffs)
 
         if spellID > 0 then
             mountID = C_MountJournal.GetMountFromSpell(spellID)
@@ -271,7 +293,7 @@ function MountyKeyHandler(keypress)
 
         local resting = IsResting()
         local alone = not IsInGroup()
-        local flyable = IsFlyableArea()
+        local flyable = Mounty:UserCanFlyHere()
         local swimming = IsSwimming()
         local taximode = MountyData.TaxiMode
         local donotfly = MountyData.DoNotFly
