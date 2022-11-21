@@ -50,7 +50,7 @@ Du hast gerade Tausende Gegner besiegt und deine Rüstung hängt in Fetzen herab
 
 Du bist in einer Gruppe mit Freunden und der Taximodus ist eingeschaltet? Mein Freund, wir rufen mein __Taxi-Mount__ und sausen gemeinsam davon. Los geht's!
 
-Du bist im Ruhebereich? Der perfekte Zeitpunkt, alle anderen mit einem __Angeber-Mount__ zu beeindrucken. **
+Du bist im Ruhebereich? Der perfekte Zeitpunkt, alle anderen mit einem __Angeber-Mount__ zu beeindrucken.
 
 Du bist in einer Flug-Zone und in keiner Gruppe? Breite deine Flügel aus oder starte die Maschinen und hoch hinaus geht es in die Lüfte mit einem deiner liebsten __Flug-Mounts__.
 
@@ -62,9 +62,7 @@ Nichts von alledem trifft zu: Dann machen wir es wie in der guten alten Zeit und
 
 Magisch, oder? Dank __Mounty #TLV__.
 
-** In Ruhebereichen, in denen du fliegen kannst, werden auch nur fliegende Angeber-Mounts ausgewählt.
-
-## Die ganze Magie in wenigen Worten
+### Die ganze Magie in wenigen Worten
 
 ``` 
 Die magische Taste wurde gedrückt ->\
@@ -73,22 +71,25 @@ Du bist auf einem Mount auf dem Boden -> Du sitzt ab\
 Du sitzt auf keinem Mount ->\
 Die Haltbarkeit deiner Rüstung ist unter xx% -> Reparier-Mount\
 Du bist in einer Gruppe, Taxi-Modus ist an -> Taxi-Mount\
-Du bist im Ruhebereich -> Angeber-Mount **\
+Du bist im Ruhebereich -> Angeber-Mount\
 Du bist in einer Flug-Zone, allein -> Flug-Mount\
 Du bist in einer Flug-Zone, in einer Gruppe und der Nicht-fliegen-Modus ist aus -> Flug-Mount\
 Du schwimmst im Wasser -> Wasser-Mount\
 sonst -> Boden-Mount\
 ```
 
-** In Ruhebereichen, in denen du fliegen kannst, werden auch nur fliegende Angeber-Mounts ausgewählt.
-
-## Da ist noch mehr
+###Und wenn eine Kategorie leer ist?
 
 __Mounty #TLV__ wird immer für dich das perfekte Mount aussuchen. Aber vielleicht ist ja eine Kategorie leer, weil dir das passende Mount noch fehlt.
 
 In diesem Fall gibt es einen _Fallback_:
 
 Wenn eine Kategorie leer ist, wird stattdessen eines deiner __Flug-Mounts__ ausgesucht. Solltest du auch dort keins zugeordnet haben, greift die Magie auf deine __Boden-Mounts__ zurück. Und wenn auch die fehlen, kann __Mounty #TLV__ nur noch eines für dich tun: Zufällig __irgendeins deiner gesamten Mount-Sammlung__ auswählen, wobei immerhin deine Favoriten bevorzugt werden.
+
+###Sonderfälle
+
+- Sonderfall 1: Falls du noch nicht gelernt hast zu fliegen, werden Boden-Mounts immer bevorzugt.
+- Sonderfall 2: In Ruhebereichen, in denen du fliegen kannst, werden nur fliegende Angeber-Mounts ausgewählt.
 
 # Konfigurieren und benutzen
 
@@ -105,7 +106,7 @@ Ziehe mit der Maus deine favorisierten Mounts in die Kategorien deiner Wahl. Mit
 - __Zufall__ - Falls _eingeschaltet_, wird ein zufälliges Mount aus der jeweiligen _Kategorie_ ausgewählt. Falls _ausgeschaltet_, kommt eins nach dem anderen immer der Reihe nach und wieder von vorne.
 - __Nicht fliegen__ - Solang du in einer Gruppe bist: Auch wenn du fliegen könntest, du bleibst immer auf dem Boden. Was hat das für einen Sinn? Falls du einen Freund begleitest, der noch nicht fliegen kann, und diesem beim Questen, dann ist es schon fair, wenn du ihm nicht immer wieder davonfliegst, außer ...
 - __Taxi-Modus__ - Unterwegs mit einem Freund, der mit deiner Unterstützung vorankommen will? Solange du in einer Gruppe bist, wird immer dein Taxi-Mount gerufen, so dass dein Freund bequem aufspringen kann und sich um nichts kümmern muss. Er hat ja dich.
-- __So rufst du ...__ - Mit deinem Taxi-Mount erscheint auch dieser Aufruf im Chat, damit dein Freund die Abfahrt nicht verpasst.
+- __So rufst du ...__ - Mit deinem Taxi-Mount erscheint auch dieser Aufruf im Chat, damit dein Freund die Abfahrt nicht verpasst. (Nur in einer Gruppe)
 - __Haltbarkeit__ - Hier stellst du den Wert ein, der dafür sorgt, dass dein Reparier-Mount kommt, wenn deine Rüstung aussieht wie eine Murloc-Unterhose.
 - __Debug__ - Magie in Zahlen. Siehe selbst, was __Mounty #TLV__ dir alles im Chat verrät.
 

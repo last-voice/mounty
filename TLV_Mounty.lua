@@ -205,7 +205,7 @@ function Mounty:Mount(category)
 
     elseif category == "taxi" then
 
-        if not IsMounted() then
+        if IsInGroup() and not IsMounted() then
             if MountyData.Hello ~= "" then
                 SendChatMessage(MountyData.Hello)
             end
@@ -687,8 +687,6 @@ local function MountyOptionsRender()
     MountyOptionsFrame_DurabilityMin:SetValue(MountyData.DurabilityMin)
     MountyOptionsFrame_DebugMode:SetChecked(MountyData.DebugMode)
     MountyOptionsFrame_AutoOpen:SetChecked(MountyData.AutoOpen)
-
-
 
     Mounty:OptionsRenderButtons()
 end
