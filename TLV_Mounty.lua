@@ -399,12 +399,8 @@ local function MountyTooltip(self, motion)
     local spellID = MountyData.Mounts[typ][index]
 
     if spellID then
-
-        local mountID = C_MountJournal.GetMountFromSpell(spellID)
-        local name = C_MountJournal.GetMountInfoByID(mountID)
-
         GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
-        GameTooltip:SetText(name)
+        GameTooltip:SetHyperlink("spell:" .. spellID)
         GameTooltip:Show()
     end
 end

@@ -2,6 +2,9 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.1.1.2
+- Improved tooltip to standard
+
 v2.1.1.1
 - Minor changes in READMEs
 
