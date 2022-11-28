@@ -18,7 +18,20 @@ Für jede Gelegenheit hast du mehrere Lieblings-Mounts und möchtest dich überr
 
 Dann ist __Mounty #TLV__ genau das richtige Add-on für dich und mit nur __einem einzigen Tastendruck__ kommt _Magie_ ins Spiel.
 
-# Was macht das Add-on
+---
+
+# Quickstart
+
+1. Installiere __Mounty #TLV__.
+2. Öffne WoWs _Reittiersammlung_. __Mounty #TLV__ sollte sich ebenfalls automatisch öffnen.
+3. Ziehe deine liebsten Reittiere mit der Maus in die entsprechenden Kategorien von __Mounty #TLV__.
+4. Öffne WoWs Einstellungen für Tastaturbelegungen, wähle __Mounty #TLV__ und konfiguriere deine _magische Taste_. (z.B. ist meine #)
+5. Drücke deine _magische Taste_ um hier und jetzt immer das perfekte Reittier zu rufen.
+6. Genieße __Mounty #TLV__ und schau dir gerne auch alle weiteren Optionen und Mögichkeiten an.
+
+---
+
+# Anleitung
 
 ## In jeder Situation das perfekte Mount!
 
@@ -29,7 +42,7 @@ __Mounty #TLV__ unterscheidet zwischen __6 Kategorien für deine Mounts__:
 - __Boden-Mounts__ - Mounts und Vehikel, die richtig viel Spaß machen, dabei aber mit festen Füßen auf der Erde stehen.
 - __Flug-Mounts__ - Sie breiten ihre Flügel aus oder starten ihre Propeller, um den Himmel zu erobern. Mit dir fest in ihrem Sattel.
 - __Wasser-Mounts__ - Es gibt oder gab Mounts, die sogar auf dem Wasser gehen konnten. In jedem Fall aber gibt es Mounts, die im Wasser schneller schwimmen als alle anderen, damit du nicht zu lange die Luft anhalten musst.
-- __Reparier-Mounts_ - Du weißt, welche ich damit meine und du hast so eins auch. - oder musst du immer wieder stundenlang bis zum nächsten Amboss laufen, um deine Rüstung wieder zum Glänzen zu bringen?
+- __Reparier-Mounts__ - Du weißt, welche ich damit meine und du hast so eins auch. - oder musst du immer wieder stundenlang bis zum nächsten Amboss laufen, um deine Rüstung wieder zum Glänzen zu bringen?
 - __Taxi-Mounts__ - Ein Beifahrer-Platz für einen guten Freund ist perfekt für gemeinsames Questen, farmen und kämpfen Hand in Hand. Vor allen Dingen, wenn dein Taxi Flügel hat, und dein Freund noch nicht gelernt hat zu fliegen. Er wird dir auf ewig dankbar sein.
 - __Angeber-Mounts__ - Du hast Stunden, Tage, sogar Wochen damit verbracht, dieses eine ganz besondere Mount deiner Träume zu ergattern. Es wird nie wieder ein besseres Mount geben. Vielleicht ab morgen wieder. Für heute aber musst du allen zeigen: Es ist für immer deins!
   
@@ -81,7 +94,7 @@ Du schwimmst im Wasser -> Wasser-Mount\
 sonst -> Boden-Mount\
 ```
 
-###Und wenn eine Kategorie leer ist?
+### Und wenn eine Kategorie leer ist?
 
 __Mounty #TLV__ wird immer für dich das perfekte Mount aussuchen. Aber vielleicht ist ja eine Kategorie leer, weil dir das passende Mount noch fehlt.
 
@@ -89,7 +102,7 @@ In diesem Fall gibt es einen _Fallback_:
 
 Wenn eine Kategorie leer ist, wird stattdessen eines deiner __Flug-Mounts__ ausgesucht. Solltest du auch dort keins zugeordnet haben, greift die Magie auf deine __Boden-Mounts__ zurück. Und wenn auch die fehlen, kann __Mounty #TLV__ nur noch eines für dich tun: Zufällig __irgendeins deiner gesamten Mount-Sammlung__ auswählen, wobei immerhin deine Favoriten bevorzugt werden.
 
-###Sonderfälle
+### Sonderfälle
 
 - Sonderfall 1: Falls du noch nicht gelernt hast zu fliegen, werden Boden-Mounts immer bevorzugt.
 - Sonderfall 2: In Ruhebereichen, in denen du fliegen kannst, werden nur fliegende Angeber-Mounts ausgewählt.
@@ -98,7 +111,7 @@ Wenn eine Kategorie leer ist, wird stattdessen eines deiner __Flug-Mounts__ ausg
 
 Tippe __/mounty im Chat__ und das Optionsfenster öffnet sich.
 
-__Mouny #TLV__s Optionen öffnen sich auch __automatisch zusammen mit Deiner Reittier-Sammlung__, sofern die Option aktiviert ist.
+Das Optionsfenster öffnet sich auch __automatisch zusammen mit Deiner Reittier-Sammlung__, sofern die Option nicht deaktiviert ist.
 
 Außerdem kannst Du die Optionen auch mit einem __Button in der Reittiersammlung__ (unten/rechts) öffnen.
 

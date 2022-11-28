@@ -18,7 +18,20 @@ You got some favorite mounts for all these occasions and just want to be surpris
 
 All this can be done with __Mounty #TLV__ and all this will happen _magically_ with just __1 single key__ pressed.
 
-# What it does
+---
+
+# Quickstart
+
+1. Install __Mounty #TLV__.
+2. Open WoW's _mount journal_, __Mounty #TLV__ should also open automatically.
+3. Pull your favourite mounts from the mount journal into the categories of __Mounty #TLV__.
+4. Open WoW's settings for _key bindings_, select __Mounty #TLV__ and configure your _magic key_ to mount. (i.e. mine is #)
+5. Press your _magic key_ to pick up the perfect mount for here and now.
+6. Enjoy __Mounty #TLV__ and take a look and all the other options and possibilities.
+
+---
+
+# Manual
 
 ## Always the perfect mount in any given situation!
 
@@ -90,7 +103,7 @@ In this case there is a _fallback_:
 
 If a category is empty, it will then select one of your __flying mounts__.  And if there are none, too, it will select one of your __ground mounts__.  And if those are also missing, then there is only one last thing __Mounty #TLV__ can do for you: Randomly summon __any mount out of your whole collection__, preferring your favorites if there are any. 
 
-###Exceptions
+### Exceptions
 
 - Exception 1: In flyable resting areas only flyable show off mounts will be chosen.
 - Exception 2: As long as you haven't given to fly yet, ground mounts will always be prefered before fly mounts.
@@ -99,7 +112,7 @@ If a category is empty, it will then select one of your __flying mounts__.  And 
 
 Type __/mounty in the chat__ and the options frame will open.
 
-__Mounty #TLV__'s option frame can also open __automatically with the mount journal__ if option is active.
+__Mounty #TLV__'s option frame will also open __automatically with the mount journal__ if option is not deactivated.
 
 And __Mounty #TLV__'s option frame can be opened __by clicking a button__ in the mount journal's bottom right corner.
 

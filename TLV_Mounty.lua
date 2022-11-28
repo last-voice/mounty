@@ -253,7 +253,7 @@ function Mounty:Mount(category)
     C_MountJournal.SummonByID(mountID)
 end
 
-function MountyKeyHandler(keypress)
+function Mounty:KeyHandler(keypress)
 
     if keypress == nil then
         keypress = "magic"
@@ -333,68 +333,73 @@ function MountyKeyHandler(keypress)
     end
 end
 
-local function MountySetMount(self, button)
+function Mounty:AddMount(target)
 
-    local typ = self.MountyTyp
-    local index = self.MountyIndex
+    local infoType, mountID = GetCursorInfo()
 
-    if button == "LeftButton" then
+    if infoType == "mount" then
 
-        while (index > 1 and MountyData.Mounts[typ][index - 1] == 0) do
-            index = index - 1
-        end
+        ClearCursor()
 
-        local infoType, mountID = GetCursorInfo()
+        local typ = target.MountyTyp
 
-        if infoType == "mount" then
+        local spellID = Mounty:MountSpellID(mountID)
 
-            ClearCursor()
+        local already = false
 
-            local spellID = Mounty:MountSpellID(mountID)
-
-            local already = false
-
-            for i = 1, MountyMounts do
-                if MountyData.Mounts[typ][i] == spellID then
-                    already = true
-                end
-            end
-
-            if spellID == 0 then
-
-                Mounty:Debug("Fail: spellID = 0 | " .. infoType .. " " .. typ .. " " .. mountID)
-
-            elseif already then
-
-                Mounty:Debug("Fail: Already | " .. infoType .. " " .. typ .. " " .. mountID .. " " .. spellID)
-
-            else
-
-                Mounty:Debug("Mount saved: " .. infoType .. " " .. typ .. " " .. index .. " " .. mountID .. " " .. spellID)
-                MountyData.Mounts[typ][index] = spellID
-                Mounty:OptionsRenderButtons()
+        for i = 1, MountyMounts do
+            if MountyData.Mounts[typ][i] == spellID then
+                already = true
             end
         end
 
-    elseif button == "RightButton" then
+        if spellID == 0 then
 
-        Mounty:Debug("Mount removed: " .. typ .. " " .. index)
+            Mounty:Debug("Fail: spellID = 0 | " .. infoType .. " " .. typ .. " " .. mountID)
 
-        for i = index, MountyMounts - 1 do
-            MountyData.Mounts[typ][i] = MountyData.Mounts[typ][i + 1]
+        elseif already then
+
+            Mounty:Debug("Fail: Already | " .. infoType .. " " .. typ .. " " .. mountID .. " " .. spellID)
+
+        else
+
+            local index = target.MountyIndex
+
+            -- find the first empty slot
+            while (index > 1 and MountyData.Mounts[typ][index - 1] == 0) do
+                index = index - 1
+            end
+
+            Mounty:Debug("Mount saved: " .. infoType .. " " .. typ .. " " .. index .. " " .. mountID .. " " .. spellID)
+            MountyData.Mounts[typ][index] = spellID
+            Mounty:OptionsRenderButtons()
         end
-        MountyData.Mounts[typ][MountyMounts] = 0
 
-        Mounty:OptionsRenderButtons()
+        GameTooltip:Hide()
     end
+end
+
+function Mounty:RemoveMount(target)
+
+    local typ = target.MountyTyp
+    local index = target.MountyIndex
+
+    Mounty:Debug("Mount removed: " .. typ .. " " .. index)
+
+    for i = index, MountyMounts - 1 do
+        MountyData.Mounts[typ][i] = MountyData.Mounts[typ][i + 1]
+    end
+    MountyData.Mounts[typ][MountyMounts] = 0
+
+    Mounty:OptionsRenderButtons()
 
     GameTooltip:Hide()
 end
 
-local function MountyTooltip(self, motion)
+function Mounty:Tooltip(calling)
 
-    local typ = self.MountyTyp
-    local index = self.MountyIndex
+    local typ = calling.MountyTyp
+    local index = calling.MountyIndex
 
     local spellID = MountyData.Mounts[typ][index]
 
@@ -405,11 +410,265 @@ local function MountyTooltip(self, motion)
     end
 end
 
-local function MountyInit(self, event)
+function Mounty:InitOptionsFrame()
+
+    local top
+    local temp
+    local spellID
+    local infoType
+    local mountID
+    local icon
+
+    local control_top_delta = 40
+    local control_top_delta_small = 20
+
+    -- Mounty options
+
+    MountyOptionsFrame:Hide()
+    MountyOptionsFrame:SetWidth(480)
+    MountyOptionsFrame:SetHeight(520)
+    MountyOptionsFrame:SetPoint("CENTER")
+
+    MountyOptionsFrame:SetFrameStrata("DIALOG")
+
+    MountyOptionsFrame:EnableMouse(true)
+    MountyOptionsFrame:SetMovable(true)
+    MountyOptionsFrame:RegisterForDrag("LeftButton")
+    MountyOptionsFrame:SetScript("OnDragStart", function(calling, button)
+        calling:StartMoving()
+    end)
+    MountyOptionsFrame:SetScript("OnDragStop", function(calling)
+        calling:StopMovingOrSizing()
+    end)
+
+    -- Title text
+
+    temp = MountyOptionsFrame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+    temp:SetPoint("TOP", 0, -4)
+    temp:SetText(L["Options"])
+
+    -- Random checkbox
+
+    top = -40
+
+    MountyOptionsFrame_Random = CreateFrame("CheckButton", "MountyOptionsFrame_Random", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    MountyOptionsFrame_Random:SetPoint("TOPLEFT", 16, top)
+    MountyOptionsFrame_RandomText:SetText(L["Random"])
+    MountyOptionsFrame_Random:SetScript("OnClick", function(calling)
+        MountyData.Random = not MountyData.Random
+        calling:SetChecked(MountyData.Random)
+    end)
+
+    -- Open Mounts
+
+    temp = CreateFrame("Button", "MountyOptionsFrame_OpenMounts", MountyOptionsFrame)
+    temp:SetSize(32, 32)
+    temp:SetNormalTexture("Interface\\Icons\\Ability_Mount_RidingHorse")
+    temp:SetPoint("TOPRIGHT", -20, top)
+    temp:SetScript("OnMouseUp", function(calling)
+        ToggleCollectionsJournal(1)
+    end)
+
+    -- DoNotFly checkbox
+
+    top = top - control_top_delta_small
+
+    MountyOptionsFrame_DoNotFly = CreateFrame("CheckButton", "MountyOptionsFrame_DoNotFly", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    MountyOptionsFrame_DoNotFly:SetPoint("TOPLEFT", 16, top)
+    MountyOptionsFrame_DoNotFlyText:SetText(L["Don't fly (except if taxi)"])
+    MountyOptionsFrame_DoNotFly:SetScript("OnClick", function(calling)
+        MountyData.DoNotFly = not MountyData.DoNotFly
+        calling:SetChecked(MountyData.DoNotFly)
+    end)
+
+    -- TaxiMode checkbox
+
+    top = top - control_top_delta_small
+
+    MountyOptionsFrame_TaxiMode = CreateFrame("CheckButton", "MountyOptionsFrame_TaxiMode", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    MountyOptionsFrame_TaxiMode:SetPoint("TOPLEFT", 16, top)
+    MountyOptionsFrame_TaxiModeText:SetText(L["Taxi mode"])
+    MountyOptionsFrame_TaxiMode:SetScript("OnClick", function(calling)
+        MountyData.TaxiMode = not MountyData.TaxiMode
+        calling:SetChecked(MountyData.TaxiMode)
+    end)
+
+    -- Taxi!
+
+    top = top - control_top_delta - 10
+
+    MountyOptionsFrame_Hello = CreateFrame("EditBox", "MountyOptionsFrame_Hello", MountyOptionsFrame, "InputBoxTemplate")
+    MountyOptionsFrame_Hello:SetWidth(335)
+    MountyOptionsFrame_Hello:SetHeight(16)
+    MountyOptionsFrame_Hello:SetPoint("TOPLEFT", 25, top)
+    MountyOptionsFrame_Hello:SetAutoFocus(false)
+    MountyOptionsFrame_Hello:CreateFontString("MountyOptionsFrame_HelloLabel", "BACKGROUND", "GameFontNormalSmall")
+    MountyOptionsFrame_HelloLabel:SetPoint("BOTTOMLEFT", MountyOptionsFrame_Hello, "TOPLEFT", 0, 4)
+    MountyOptionsFrame_HelloLabel:SetText(L["How to call a passenger"])
+    MountyOptionsFrame_Hello:SetScript("OnEnterPressed", function(calling)
+        MountyData.Hello = calling:GetText()
+        calling:ClearFocus()
+    end)
+
+    -- Durability slider
+
+    top = top - control_top_delta
+
+    MountyOptionsFrame_DurabilityMin = CreateFrame("Slider", "MountyOptionsFrame_DurabilityMin", MountyOptionsFrame, "OptionsSliderTemplate")
+    MountyOptionsFrame_DurabilityMin:SetWidth(335)
+    MountyOptionsFrame_DurabilityMin:SetHeight(16)
+    MountyOptionsFrame_DurabilityMin:SetPoint("TOPLEFT", 25, top)
+    MountyOptionsFrame_DurabilityMinLow:SetText("50%")
+    MountyOptionsFrame_DurabilityMinHigh:SetText("100%")
+    MountyOptionsFrame_DurabilityMin:SetMinMaxValues(50, 100)
+    MountyOptionsFrame_DurabilityMin:SetValueStep(1)
+    MountyOptionsFrame_DurabilityMin:SetScript("OnValueChanged", function(calling, value)
+        MountyOptionsFrame_DurabilityMinText:SetFormattedText(L["Summon repair mount if durability is less than %d%%."], math.floor(value + 0.5))
+        MountyData.DurabilityMin = math.floor(value + 0.5)
+    end)
+
+    -- Mounts
+
+    for t = 1, MountyTypes do
+
+        MountyOptionsFrame_Buttons[t] = {}
+
+        top = top - control_top_delta
+
+        temp = MountyOptionsFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+        temp:SetPoint("TOPLEFT", 16, top - 10)
+        temp:SetText(MountyTypesLabel[t])
+
+        for i = 1, MountyMounts do
+
+            MountyOptionsFrame_Buttons[t][i] = CreateFrame("Button", "MountyOptionsFrame_Buttons_t" .. t .. "_i" .. i, MountyOptionsFrame)
+            MountyOptionsFrame_Buttons[t][i].MountyTyp = t
+            MountyOptionsFrame_Buttons[t][i].MountyIndex = i
+            MountyOptionsFrame_Buttons[t][i]:SetSize(32, 32)
+            MountyOptionsFrame_Buttons[t][i]:SetDisabledTexture("Interface\\Buttons\\UI-EmptySlot")
+            MountyOptionsFrame_Buttons[t][i]:GetDisabledTexture():SetTexCoord(0.15, 0.85, 0.15, 0.85)
+            MountyOptionsFrame_Buttons[t][i]:SetHighlightTexture("Interface\\Buttons\\UI-StopButton")
+            MountyOptionsFrame_Buttons[t][i]:SetPoint("TOPLEFT", 48 + i * 38, top)
+            MountyOptionsFrame_Buttons[t][i]:SetScript("OnMouseUp", function(calling, button)
+                if button == "LeftButton" then
+                    Mounty:AddMount(calling)
+                elseif button == "RightButton" then
+                    Mounty:RemoveMount(calling)
+                end
+            end)
+            MountyOptionsFrame_Buttons[t][i]:SetScript("OnEnter", function(calling)
+                Mounty:Tooltip(calling)
+            end)
+            MountyOptionsFrame_Buttons[t][i]:SetScript("OnLeave", function()
+                GameTooltip:Hide()
+            end)
+        end
+    end
+
+    -- Helptext
+
+    top = top - control_top_delta + 8
+
+    temp = MountyOptionsFrame:CreateFontString(nil, "BACKGROUND", "GameFontNormalSmall")
+    temp:SetPoint("TOPLEFT", 112, top - 3)
+    temp:SetText(L["Helptext"])
+
+    -- AutoOpen checkbox
+
+    top = top - control_top_delta_small
+
+    MountyOptionsFrame_AutoOpen = CreateFrame("CheckButton", "MountyOptionsFrame_AutoOpen", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    MountyOptionsFrame_AutoOpen:SetPoint("TOPLEFT", 16, top)
+    MountyOptionsFrame_AutoOpenText:SetText(L["Auto open"])
+    MountyOptionsFrame_AutoOpen:SetScript("OnClick", function(calling)
+        MountyData.AutoOpen = not MountyData.AutoOpen
+        calling:SetChecked(MountyData.AutoOpen)
+    end)
+
+    -- DebugMode checkbox
+
+    top = top - control_top_delta_small
+
+    MountyOptionsFrame_DebugMode = CreateFrame("CheckButton", "MountyOptionsFrame_DebugMode", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    MountyOptionsFrame_DebugMode:SetPoint("TOPLEFT", 16, top)
+    MountyOptionsFrame_DebugModeText:SetText(L["Debug mode"])
+    MountyOptionsFrame_DebugMode:SetScript("OnClick", function(calling)
+        MountyData.DebugMode = not MountyData.DebugMode
+        calling:SetChecked(MountyData.DebugMode)
+    end)
+
+    -- No Idea what for ..?
+
+    -- MountyOptionsFrame.name = "Mounty"
+end
+
+function Mounty:OptionsRender()
+
+    MountyOptionsFrame_Random:SetChecked(MountyData.Random)
+    MountyOptionsFrame_DoNotFly:SetChecked(MountyData.DoNotFly)
+    MountyOptionsFrame_TaxiMode:SetChecked(MountyData.TaxiMode)
+    MountyOptionsFrame_Hello:SetText(MountyData.Hello)
+    MountyOptionsFrame_DurabilityMin:SetValue(MountyData.DurabilityMin)
+    MountyOptionsFrame_DebugMode:SetChecked(MountyData.DebugMode)
+    MountyOptionsFrame_AutoOpen:SetChecked(MountyData.AutoOpen)
+
+    Mounty:OptionsRenderButtons()
+end
+
+function Mounty:OptionsRenderButtons()
+
+    local spellID
+    local icon
+
+    for t = 1, MountyTypes do
+
+        for i = 1, MountyMounts do
+
+            MountyOptionsFrame_Buttons[t][i]:Hide() -- Muss sein, sonst werden die nicht immer neu gezeichnet ?!
+
+            if MountyData.Mounts[t][i] == 0 then
+                MountyOptionsFrame_Buttons[t][i]:SetNormalTexture("")
+                MountyOptionsFrame_Buttons[t][i]:Disable()
+            else
+                icon = GetSpellTexture(MountyData.Mounts[t][i])
+                MountyOptionsFrame_Buttons[t][i]:SetNormalTexture(icon)
+                MountyOptionsFrame_Buttons[t][i]:Enable()
+            end
+
+            MountyOptionsFrame_Buttons[t][i]:Show() -- Muss sein, sonst werden die nicht immer neu gezeichnet ?!
+        end
+    end
+end
+
+function Mounty:AddJournalButton()
+
+    local temp = CreateFrame("Button", nil, MountJournal)
+    temp:SetFrameStrata("DIALOG")
+    temp:SetPoint("BOTTOMRIGHT", -6, 5)
+    temp:SetSize(128, 21)
+    temp:SetNormalFontObject(GameFontNormal)
+    temp:SetHighlightFontObject(GameFontHighlight)
+    temp:SetNormalTexture(130763) -- "Interface\\Buttons\\UI-DialogBox-Button-Up"
+    temp:GetNormalTexture():SetTexCoord(0.0, 1.0, 0.0, 0.71875)
+    temp:SetPushedTexture(130761) -- "Interface\\Buttons\\UI-DialogBox-Button-Down"
+    temp:GetPushedTexture():SetTexCoord(0.0, 1.0, 0.0, 0.71875)
+    temp:SetHighlightTexture(130762) -- "Interface\\Buttons\\UI-DialogBox-Button-Highlight"
+    temp:GetHighlightTexture():SetTexCoord(0.0, 1.0, 0.0, 0.71875)
+    temp:SetText(L["Open Mounty"])
+    temp:SetScript("OnMouseUp", function(calling)
+        if MountyOptionsFrame:IsVisible() then
+            MountyOptionsFrame:Hide()
+        else
+            MountyOptionsFrame:ClearAllPoints()
+            MountyOptionsFrame:SetPoint("TOPLEFT", CollectionsJournal, "TOPRIGHT", 0, 0)
+            MountyOptionsFrame:Show()
+        end
+    end)
+end
+
+function Mounty.Init(calling, event)
 
     Mounty:InitOptionsFrame()
-
-
 
     --    MountyData = {
     --        ["MountGround"] = 0,
@@ -484,265 +743,20 @@ local function MountyInit(self, event)
         end
     end
 
-    self:UnregisterEvent("ADDON_LOADED")
-    self:SetScript("OnEvent", nil)
+    calling:UnregisterEvent("ADDON_LOADED")
+    calling:SetScript("OnEvent", nil)
 
-    MountyInit = nil
 end
 
-function Mounty:InitOptionsFrame()
-
-    local top
-    local temp
-    local spellID
-    local infoType
-    local mountID
-    local icon
-
-    local control_top_delta = 40
-    local control_top_delta_small = 20
-
-    -- Mounty options
-
-    MountyOptionsFrame:Hide()
-    MountyOptionsFrame:SetWidth(480)
-    MountyOptionsFrame:SetHeight(520)
-    MountyOptionsFrame:SetPoint("CENTER")
-
-    MountyOptionsFrame:SetFrameStrata("DIALOG")
-
-    MountyOptionsFrame:EnableMouse(true)
-    MountyOptionsFrame:SetMovable(true)
-    MountyOptionsFrame:RegisterForDrag("LeftButton")
-    MountyOptionsFrame:SetScript("OnDragStart", function(self, button)
-        self:StartMoving()
-    end)
-    MountyOptionsFrame:SetScript("OnDragStop", function(self)
-        self:StopMovingOrSizing()
-    end)
-
-    -- Title text
-
-    temp = MountyOptionsFrame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-    temp:SetPoint("TOP", 0, -4)
-    temp:SetText(L["Options"])
-
-    -- Random checkbox
-
-    top = -40
-
-    MountyOptionsFrame_Random = CreateFrame("CheckButton", "MountyOptionsFrame_Random", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
-    MountyOptionsFrame_Random:SetPoint("TOPLEFT", 16, top)
-    MountyOptionsFrame_RandomText:SetText(L["Random"])
-    MountyOptionsFrame_Random:SetScript("OnClick", function(self)
-        MountyData.Random = not MountyData.Random
-        self:SetChecked(MountyData.Random)
-    end)
-
-    -- Open Mounts
-
-    temp = CreateFrame("Button", "MountyOptionsFrame_OpenMounts", MountyOptionsFrame)
-    temp:SetSize(32, 32)
-    temp:SetNormalTexture("Interface\\Icons\\Ability_Mount_RidingHorse")
-    temp:SetPoint("TOPRIGHT", -20, top)
-    temp:SetScript("OnMouseUp", function(self)
-        ToggleCollectionsJournal(1)
-    end)
-
-    -- DoNotFly checkbox
-
-    top = top - control_top_delta_small
-
-    MountyOptionsFrame_DoNotFly = CreateFrame("CheckButton", "MountyOptionsFrame_DoNotFly", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
-    MountyOptionsFrame_DoNotFly:SetPoint("TOPLEFT", 16, top)
-    MountyOptionsFrame_DoNotFlyText:SetText(L["Don't fly (except if taxi)"])
-    MountyOptionsFrame_DoNotFly:SetScript("OnClick", function(self)
-        MountyData.DoNotFly = not MountyData.DoNotFly
-        self:SetChecked(MountyData.DoNotFly)
-    end)
-
-    -- TaxiMode checkbox
-
-    top = top - control_top_delta_small
-
-    MountyOptionsFrame_TaxiMode = CreateFrame("CheckButton", "MountyOptionsFrame_TaxiMode", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
-    MountyOptionsFrame_TaxiMode:SetPoint("TOPLEFT", 16, top)
-    MountyOptionsFrame_TaxiModeText:SetText(L["Taxi mode"])
-    MountyOptionsFrame_TaxiMode:SetScript("OnClick", function(self)
-        MountyData.TaxiMode = not MountyData.TaxiMode
-        self:SetChecked(MountyData.TaxiMode)
-    end)
-
-    -- Taxi!
-
-    top = top - control_top_delta - 10
-
-    MountyOptionsFrame_Hello = CreateFrame("EditBox", "MountyOptionsFrame_Hello", MountyOptionsFrame, "InputBoxTemplate")
-    MountyOptionsFrame_Hello:SetWidth(335)
-    MountyOptionsFrame_Hello:SetHeight(16)
-    MountyOptionsFrame_Hello:SetPoint("TOPLEFT", 25, top)
-    MountyOptionsFrame_Hello:SetAutoFocus(false)
-    MountyOptionsFrame_Hello:CreateFontString("MountyOptionsFrame_HelloLabel", "BACKGROUND", "GameFontNormalSmall")
-    MountyOptionsFrame_HelloLabel:SetPoint("BOTTOMLEFT", MountyOptionsFrame_Hello, "TOPLEFT", 0, 4)
-    MountyOptionsFrame_HelloLabel:SetText(L["How to call a passenger"])
-    MountyOptionsFrame_Hello:SetScript("OnEnterPressed", function(self)
-        MountyData.Hello = self:GetText()
-        self:ClearFocus()
-    end)
-
-    -- Durability slider
-
-    top = top - control_top_delta
-
-    MountyOptionsFrame_DurabilityMin = CreateFrame("Slider", "MountyOptionsFrame_DurabilityMin", MountyOptionsFrame, "OptionsSliderTemplate")
-    MountyOptionsFrame_DurabilityMin:SetWidth(335)
-    MountyOptionsFrame_DurabilityMin:SetHeight(16)
-    MountyOptionsFrame_DurabilityMin:SetPoint("TOPLEFT", 25, top)
-    MountyOptionsFrame_DurabilityMinLow:SetText("50%")
-    MountyOptionsFrame_DurabilityMinHigh:SetText("100%")
-    MountyOptionsFrame_DurabilityMin:SetMinMaxValues(50, 100)
-    MountyOptionsFrame_DurabilityMin:SetValueStep(1)
-    MountyOptionsFrame_DurabilityMin:SetScript("OnValueChanged", function(self, value)
-        MountyOptionsFrame_DurabilityMinText:SetFormattedText(L["Summon repair mount if durability is less than %d%%."], math.floor(value + 0.5))
-        MountyData.DurabilityMin = math.floor(value + 0.5)
-    end)
-
-    -- Mounts
-
-    for t = 1, MountyTypes do
-
-        MountyOptionsFrame_Buttons[t] = {}
-
-        top = top - control_top_delta
-
-        temp = MountyOptionsFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-        temp:SetPoint("TOPLEFT", 16, top - 10)
-        temp:SetText(MountyTypesLabel[t])
-
-        for i = 1, MountyMounts do
-
-            MountyOptionsFrame_Buttons[t][i] = CreateFrame("Button", "MountyOptionsFrame_Buttons_t" .. t .. "_i" .. i, MountyOptionsFrame)
-            MountyOptionsFrame_Buttons[t][i].MountyTyp = t
-            MountyOptionsFrame_Buttons[t][i].MountyIndex = i
-            MountyOptionsFrame_Buttons[t][i]:SetSize(32, 32)
-            MountyOptionsFrame_Buttons[t][i]:SetDisabledTexture("Interface\\Buttons\\UI-EmptySlot")
-            MountyOptionsFrame_Buttons[t][i]:GetDisabledTexture():SetTexCoord(0.15, 0.85, 0.15, 0.85)
-            MountyOptionsFrame_Buttons[t][i]:SetHighlightTexture("Interface\\Buttons\\UI-StopButton")
-            MountyOptionsFrame_Buttons[t][i]:SetPoint("TOPLEFT", 48 + i * 38, top)
-            MountyOptionsFrame_Buttons[t][i]:SetScript("OnMouseUp", MountySetMount)
-            MountyOptionsFrame_Buttons[t][i]:SetScript("OnEnter", MountyTooltip)
-            MountyOptionsFrame_Buttons[t][i]:SetScript("OnLeave", function()
-                GameTooltip:Hide()
-            end)
-        end
-    end
-
-    -- Helptext
-
-    top = top - control_top_delta + 8
-
-    temp = MountyOptionsFrame:CreateFontString(nil, "BACKGROUND", "GameFontNormalSmall")
-    temp:SetPoint("TOPLEFT", 112, top - 3)
-    temp:SetText(L["Helptext"])
-
-    -- AutoOpen checkbox
-
-    top = top - control_top_delta_small
-
-    MountyOptionsFrame_AutoOpen = CreateFrame("CheckButton", "MountyOptionsFrame_AutoOpen", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
-    MountyOptionsFrame_AutoOpen:SetPoint("TOPLEFT", 16, top)
-    MountyOptionsFrame_AutoOpenText:SetText(L["Auto open"])
-    MountyOptionsFrame_AutoOpen:SetScript("OnClick", function(self)
-        MountyData.AutoOpen = not MountyData.AutoOpen
-        self:SetChecked(MountyData.AutoOpen)
-    end)
-
-    -- DebugMode checkbox
-
-    top = top - control_top_delta_small
-
-    MountyOptionsFrame_DebugMode = CreateFrame("CheckButton", "MountyOptionsFrame_DebugMode", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
-    MountyOptionsFrame_DebugMode:SetPoint("TOPLEFT", 16, top)
-    MountyOptionsFrame_DebugModeText:SetText(L["Debug mode"])
-    MountyOptionsFrame_DebugMode:SetScript("OnClick", function(self)
-        MountyData.DebugMode = not MountyData.DebugMode
-        self:SetChecked(MountyData.DebugMode)
-    end)
-
-    -- No Idea what for ..?
-
-    -- MountyOptionsFrame.name = "Mounty"
-end
-
-local function MountyOptionsRender()
-
-    MountyOptionsFrame_Random:SetChecked(MountyData.Random)
-    MountyOptionsFrame_DoNotFly:SetChecked(MountyData.DoNotFly)
-    MountyOptionsFrame_TaxiMode:SetChecked(MountyData.TaxiMode)
-    MountyOptionsFrame_Hello:SetText(MountyData.Hello)
-    MountyOptionsFrame_DurabilityMin:SetValue(MountyData.DurabilityMin)
-    MountyOptionsFrame_DebugMode:SetChecked(MountyData.DebugMode)
-    MountyOptionsFrame_AutoOpen:SetChecked(MountyData.AutoOpen)
-
-    Mounty:OptionsRenderButtons()
-end
-
-function Mounty:OptionsRenderButtons()
-
-    local spellID
-    local icon
-
-    for t = 1, MountyTypes do
-
-        for i = 1, MountyMounts do
-
-            MountyOptionsFrame_Buttons[t][i]:Hide() -- Muss sein, sonst werden die nicht immer neu gezeichnet ?!
-
-            if MountyData.Mounts[t][i] == 0 then
-                MountyOptionsFrame_Buttons[t][i]:SetNormalTexture("")
-                MountyOptionsFrame_Buttons[t][i]:Disable()
-            else
-                icon = GetSpellTexture(MountyData.Mounts[t][i])
-                MountyOptionsFrame_Buttons[t][i]:SetNormalTexture(icon)
-                MountyOptionsFrame_Buttons[t][i]:Enable()
-            end
-
-            MountyOptionsFrame_Buttons[t][i]:Show() -- Muss sein, sonst werden die nicht immer neu gezeichnet ?!
-        end
-    end
-end
-
-function Mounty:AddJournalButton()
-
-    local temp = CreateFrame("Button", nil, MountJournal)
-    temp:SetFrameStrata("DIALOG")
-    temp:SetPoint("BOTTOMRIGHT", -6, 5)
-    temp:SetSize(128, 21)
-    temp:SetNormalFontObject(GameFontNormal)
-    temp:SetHighlightFontObject(GameFontHighlight)
-    temp:SetNormalTexture(130763) -- "Interface\\Buttons\\UI-DialogBox-Button-Up"
-    temp:GetNormalTexture():SetTexCoord(0.0, 1.0, 0.0, 0.71875)
-    temp:SetPushedTexture(130761) -- "Interface\\Buttons\\UI-DialogBox-Button-Down"
-    temp:GetPushedTexture():SetTexCoord(0.0, 1.0, 0.0, 0.71875)
-    temp:SetHighlightTexture(130762) -- "Interface\\Buttons\\UI-DialogBox-Button-Highlight"
-    temp:GetHighlightTexture():SetTexCoord(0.0, 1.0, 0.0, 0.71875)
-    temp:SetText(L["Open Mounty"])
-    temp:SetScript("OnMouseUp", function(self)
-        if MountyOptionsFrame:IsVisible() then
-            MountyOptionsFrame:Hide()
-        else
-            MountyOptionsFrame:ClearAllPoints()
-            MountyOptionsFrame:SetPoint("TOPLEFT", CollectionsJournal, "TOPRIGHT", 0, 0)
-            MountyOptionsFrame:Show()
-        end
-    end)
+function MountyKeyHandler (keypress)
+    Mounty:KeyHandler (keypress)
 end
 
 MountyOptionsFrame = CreateFrame("Frame", "MountyOptionsFrame", UIParent, "BasicFrameTemplate")
 
 MountyOptionsFrame:RegisterEvent("ADDON_LOADED")
-MountyOptionsFrame:SetScript("OnEvent", MountyInit)
-MountyOptionsFrame:SetScript("OnShow", MountyOptionsRender)
+MountyOptionsFrame:SetScript("OnEvent", Mounty.Init)
+MountyOptionsFrame:SetScript("OnShow", Mounty.OptionsRender)
 
 EventRegistry:RegisterCallback("MountJournal.OnShow", function()
     if CollectionsJournal.selectedTab == COLLECTIONS_JOURNAL_TAB_INDEX_MOUNTS and not Mounty.MountyJournalButtonAdded then
@@ -781,7 +795,7 @@ SlashCmdList["MOUNTY"] = function(message)
 
     if message == "magic" then
 
-        MountyKeyHandler()
+        Mounty:KeyHandler()
 
     elseif message == "debug on" then
 

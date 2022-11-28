@@ -2,6 +2,13 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.2.1
+- New QUICKSTART in README
+- Typos in README
+
+v2.2
+- Refactored quite some code #oop
+
 v2.1.1.2
 - Improved tooltip to standard
 
