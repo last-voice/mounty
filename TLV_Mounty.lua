@@ -780,14 +780,6 @@ EventRegistry:RegisterCallback("MountJournal.OnHide", function()
     end
 end, MountyAddOnName)
 
-BINDING_NAME_MOUNTY_MAGIC = L["Summon magic mount"]
-BINDING_NAME_MOUNTY_WATER = L["Summon water mount"]
-BINDING_NAME_MOUNTY_TAXI = L["Summon taxi mount"]
-BINDING_NAME_MOUNTY_REPAIR = L["Summon repair mount"]
-BINDING_NAME_MOUNTY_SHOWOFF = L["Summon show off mount"]
-BINDING_NAME_MOUNTY_RANDOM = L["Summon random mount"]
-BINDING_NAME_MOUNTY_DISMOUNT = L["Force dismount"]
-
 -- /mounty
 
 SLASH_MOUNTY1 = "/mounty"

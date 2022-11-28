@@ -5,6 +5,7 @@ Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 v2.2.1
 - New QUICKSTART in README
 - Typos in README
+- Bindings refactored
 
 v2.2
 - Refactored quite some code #oop

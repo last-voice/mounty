@@ -1,23 +1,23 @@
 <Bindings>
-	<Binding name="MOUNTY_MAGIC" header="Mounty #TLV">
+	<Binding name="MOUNTY_MAGIC" category="Mounty #TLV">
 		MountyKeyHandler()
 	</Binding>
-	<Binding name="MOUNTY_WATER" header="Mounty #TLV">
+	<Binding name="MOUNTY_WATER" category="Mounty #TLV">
 		MountyKeyHandler("water")
 	</Binding>
-	<Binding name="MOUNTY_TAXI" header="Mounty #TLV">
+	<Binding name="MOUNTY_TAXI" category="Mounty #TLV">
 		MountyKeyHandler("taxi")
 	</Binding>
-	<Binding name="MOUNTY_REPAIR" header="Mounty #TLV">
+	<Binding name="MOUNTY_REPAIR" category="Mounty #TLV">
 		MountyKeyHandler("repair")
 	</Binding>
-	<Binding name="MOUNTY_SHOWOFF" header="Mounty #TLV">
+	<Binding name="MOUNTY_SHOWOFF" category="Mounty #TLV">
 		MountyKeyHandler("showoff")
 	</Binding>
-	<Binding name="MOUNTY_RANDOM" header="Mounty #TLV">
+	<Binding name="MOUNTY_RANDOM" category="Mounty #TLV">
 		MountyKeyHandler("random")
 	</Binding>
-	<Binding name="MOUNTY_DISMOUNT" header="Mounty #TLV">
+	<Binding name="MOUNTY_DISMOUNT" category="Mounty #TLV">
 		MountyKeyHandler("forceoff")
 	</Binding>
 </Bindings>

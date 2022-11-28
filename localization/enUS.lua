@@ -1,4 +1,13 @@
 local L = {}
+local _G = _G
+
+_G["BINDING_NAME_MOUNTY_MAGIC"] = "Summon magic mount"
+_G["BINDING_NAME_MOUNTY_WATER"] = "Summon water mount"
+_G["BINDING_NAME_MOUNTY_TAXI"] = "Summon taxi mount"
+_G["BINDING_NAME_MOUNTY_REPAIR"] = "Summon repair mount"
+_G["BINDING_NAME_MOUNTY_SHOWOFF"] = "Summon show off mount"
+_G["BINDING_NAME_MOUNTY_RANDOM"] = "Summon random mount"
+_G["BINDING_NAME_MOUNTY_DISMOUNT"] = "Force dismount"
 
 L["mode.Ground"] = "Ground"
 L["mode.Flying"] = "Flying"
@@ -7,14 +16,6 @@ L["mode.Repair"] = "Repair"
 L["mode.Taxi"] = "Taxi"
 L["mode.Show off"] = "Show off"
 L["mode.Random"] = "Random"
-
-L["Summon magic mount"] = "Summon magic mount"
-L["Summon water mount"] = "Summon water mount"
-L["Summon taxi mount"] = "Summon taxi mount"
-L["Summon repair mount"] = "Summon repair mount"
-L["Summon show off mount"] = "Summon show off mount"
-L["Summon random mount"] = "Summon any random mount"
-L["Force dismount"] = "Force dismount"
 
 L["Taxi!"] = "Taxi!"
 

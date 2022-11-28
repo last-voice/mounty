@@ -1,6 +1,16 @@
 if (GetLocale() ~= "deDE") then return end
 
 local L = {}
+local _G = _G
+
+_G["BINDING_NAME_MOUNTY_MAGIC"] = "Magisches Mount"
+_G["BINDING_NAME_MOUNTY_WATER"] = "Wasser-Mount"
+_G["BINDING_NAME_MOUNTY_TAXI"] = "Taxi-Mount"
+_G["BINDING_NAME_MOUNTY_REPAIR"] = "Reparier-Mount"
+_G["BINDING_NAME_MOUNTY_SHOWOFF"] = "Angeben!"
+_G["BINDING_NAME_MOUNTY_RANDOM"] = "Zufälliges Mount"
+_G["BINDING_NAME_MOUNTY_DISMOUNT"] = "Absteigen!"
+
 
 L["mode.Ground"] = "Reiten"
 L["mode.Flying"] = "Fliegen"
@@ -9,14 +19,6 @@ L["mode.Repair"] = "Reparieren"
 L["mode.Taxi"] = "Taxi"
 L["mode.Show off"] = "Angeberei"
 L["mode.Random"] = "Zufällig"
-
-L["Summon magic mount"] = "Magisches Mount"
-L["Summon water mount"] = "Wasser-Mount"
-L["Summon taxi mount"] = "Taxi-Mount"
-L["Summon repair mount"] = "Mount zum reparieren"
-L["Summon show off mount"] = "Angeben!"
-L["Summon random mount"] = "Ganz zufälliges Mount"
-L["Force dismount"] = "Absteigen!"
 
 L["Taxi!"] = "Taxi!"
 
