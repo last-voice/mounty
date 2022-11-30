@@ -2,6 +2,11 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.3
+- Ready for Dragonflight
+- Automatically show off can now be disabled
+- READMEs will be updated soon (wanna ride the dragons now ;)
+
 v2.2.1
 - New QUICKSTART in README
 - Typos in README

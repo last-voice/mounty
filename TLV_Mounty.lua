@@ -12,29 +12,32 @@ local MountyOptionsFrame_DebugMode
 local MountyOptionsFrame_AutoOpen
 local MountyOptionsFrame_TaxiMode
 local MountyOptionsFrame_DoNotFly
+local MountyOptionsFrame_DoNotShowOff
 local MountyOptionsFrame_Random
 local MountyOptionsFrame_DurabilityMin
 local MountyOptionsFrame_Hello
 
 local MountyOptionsFrame_Buttons = {}
 
+local MountyTypes = 7
+local MountyMounts = 10
+
 local MountyGround = 1
 local MountyFlying = 2
-local MountyWater = 3
-local MountyRepair = 4
-local MountyTaxi = 5
-local MountyShowOff = 6
-
-local MountyTypes = 6
-local MountyMounts = 10
+local MountDragonflight = 3
+local MountyWater = 4
+local MountyRepair = 5
+local MountyTaxi = 6
+local MountyShowOff = 7
 
 local MountyTypesLabel = {
     [1] = L["mode.Ground"],
     [2] = L["mode.Flying"],
-    [3] = L["mode.Water"],
-    [4] = L["mode.Repair"],
-    [5] = L["mode.Taxi"],
-    [6] = L["mode.Show off"]
+    [3] = L["mode.Dragonflight"],
+    [4] = L["mode.Water"],
+    [5] = L["mode.Repair"],
+    [6] = L["mode.Taxi"],
+    [7] = L["mode.Show off"]
 }
 
 local MountyFallbackQueue = {}
@@ -181,6 +184,31 @@ end
 function Mounty:UserCanFlyHere()
 
     return IsFlyableArea() and (C_Spell.DoesSpellExist(34090) or C_Spell.DoesSpellExist(90265)) -- riding has been learned
+    --    return IsFlyableArea() and (IsPlayerSpell(34090) or IsPlayerSpell(90265)) -- riding has been learned
+end
+
+function Mounty:IsInDragonflight()
+
+    local mapID = C_Map.GetBestMapForUnit("player");
+
+    local map_info = C_Map.GetMapInfo(mapID)
+
+    while (map_info and map_info.mapType > 2) do
+
+        if map_info.parentMapID == 0 then
+            return false
+        end
+
+        map_info = C_Map.GetMapInfo(map_info.parentMapID)
+    end
+
+    return (map_info and map_info.mapID == 1978) -- Dragonflight
+end
+
+function Mounty:UserCanDragonflyHere()
+
+    return Mounty:IsInDragonflight() and C_Spell.DoesSpellExist(376777) -- dragon riding has been learned
+    -- return Mounty:IsInDragonflight() and IsPlayerSpell(376777) -- dragon riding has been learned
 end
 
 function Mounty:Mount(category)
@@ -191,7 +219,11 @@ function Mounty:Mount(category)
 
     local typ = MountyGround
 
-    if category == "fly" then
+    if category == "dragonflight" then
+
+        typ = MountDragonflight
+
+    elseif category == "fly" then
 
         typ = MountyFlying
 
@@ -292,11 +324,13 @@ function Mounty:KeyHandler(keypress)
         -- magic
 
         local resting = IsResting()
+        local dragonflight = Mounty:UserCanDragonflyHere()
         local alone = not IsInGroup()
         local flyable = Mounty:UserCanFlyHere()
         local swimming = IsSwimming()
         local taximode = MountyData.TaxiMode
         local donotfly = MountyData.DoNotFly
+        local donotshowoff = MountyData.DoNotShowOff
 
         Mounty:Debug("Magic key")
 
@@ -312,9 +346,13 @@ function Mounty:KeyHandler(keypress)
 
             category = "taxi"
 
-        elseif resting then
+        elseif resting and not donotshowoff then
 
             category = "showoff"
+
+        elseif dragonflight then
+
+            category = "dragonflight"
 
         elseif flyable then
 
@@ -426,7 +464,7 @@ function Mounty:InitOptionsFrame()
 
     MountyOptionsFrame:Hide()
     MountyOptionsFrame:SetWidth(480)
-    MountyOptionsFrame:SetHeight(520)
+    MountyOptionsFrame:SetHeight(580)
     MountyOptionsFrame:SetPoint("CENTER")
 
     MountyOptionsFrame:SetFrameStrata("DIALOG")
@@ -467,6 +505,18 @@ function Mounty:InitOptionsFrame()
     temp:SetPoint("TOPRIGHT", -20, top)
     temp:SetScript("OnMouseUp", function(calling)
         ToggleCollectionsJournal(1)
+    end)
+
+    -- DoNotShowOff checkbox
+
+    top = top - control_top_delta_small
+
+    MountyOptionsFrame_DoNotShowOff = CreateFrame("CheckButton", "MountyOptionsFrame_DoNotShowOff", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    MountyOptionsFrame_DoNotShowOff:SetPoint("TOPLEFT", 16, top)
+    MountyOptionsFrame_DoNotShowOffText:SetText(L["Don't show off in resting areas"])
+    MountyOptionsFrame_DoNotShowOff:SetScript("OnClick", function(calling)
+        MountyData.DoNotShowOff = not MountyData.DoNotShowOff
+        calling:SetChecked(MountyData.DoNotShowOff)
     end)
 
     -- DoNotFly checkbox
@@ -606,6 +656,7 @@ function Mounty:OptionsRender()
 
     MountyOptionsFrame_Random:SetChecked(MountyData.Random)
     MountyOptionsFrame_DoNotFly:SetChecked(MountyData.DoNotFly)
+    MountyOptionsFrame_DoNotShowOff:SetChecked(MountyData.DoNotShowOff)
     MountyOptionsFrame_TaxiMode:SetChecked(MountyData.TaxiMode)
     MountyOptionsFrame_Hello:SetText(MountyData.Hello)
     MountyOptionsFrame_DurabilityMin:SetValue(MountyData.DurabilityMin)
@@ -670,25 +721,27 @@ function Mounty.Init(calling, event)
 
     Mounty:InitOptionsFrame()
 
-    --    MountyData = {
-    --        ["MountGround"] = 0,
-    --        ["DurabilityMin"] = 75,
-    --        ["DoNotFly"] = false,
-    --        ["DebugMode"] = false,
-    --        ["MountWater"] = 0,
-    --        ["Iterator"] = { 0, 1, 0, 0, 0, 0, },
-    --        ["TaxiMode"] = false,
-    --        ["Mounts"] = {
-    --            { 36702, 48025, 260172, 332256, 0, 0, 0, 0, 0, 0, }, { 88990, 107845, 63956, 126508, 333021, 0, 0, 0, 0, 0, }, { 64731, 0, 0, 0, 0, 0, 0, 0, 0, 0, }, { 122708, 0, 0, 0, 0, 0, 0, 0, 0, 0, }, { 88990, 107845, 63956, 126508, 333021, 0, 0, 0, 0, 0, }, { 88990, 107845, 63956, 126508, 333021, 0, 0, 0, 0, 0, },
-    --        },
-    --        ["MountTaxi"] = 0,
-    --        ["MountRepair"] = 0,
-    --        ["MountShowOff"] = 0,
-    --        ["MountFlying"] = 0,
-    --        ["Hello"] = "Taxi!",
-    --        ["Random"] = true,
-    --        ["ArmoredMin"] = 75
-    --    }
+    --- -[[
+    -- MountyData = {
+    -- ["MountGround"] = 0,
+    -- ["DurabilityMin"] = 75,
+    -- ["DoNotFly"] = false,
+    -- ["DebugMode"] = false,
+    -- ["MountWater"] = 0,
+    -- ["Iterator"] = { 0, 1, 0, 0, 0, 0, },
+    -- ["TaxiMode"] = false,
+    -- ["Mounts"] = {
+    -- { 36702, 48025, 260172, 332256, 0, 0, 0, 0, 0, 0, }, { 88990, 107845, 63956, 126508, 333021, 0, 0, 0, 0, 0, }, { 64731, 0, 0, 0, 0, 0, 0, 0, 0, 0, }, { 122708, 0, 0, 0, 0, 0, 0, 0, 0, 0, }, { 88990, 107845, 63956, 126508, 333021, 0, 0, 0, 0, 0, }, { 88990, 107845, 63956, 126508, 333021, 0, 0, 0, 0, 0, },
+    -- },
+    -- ["MountTaxi"] = 0,
+    -- ["MountRepair"] = 0,
+    -- ["MountShowOff"] = 0,
+    -- ["MountFlying"] = 0,
+    -- ["Hello"] = "Taxi!",
+    -- ["Random"] = true,
+    -- ["ArmoredMin"] = 75
+    -- }
+    -- ]]
 
     if MountyData.DebugMode == nil then
         MountyData.DebugMode = false
@@ -704,6 +757,10 @@ function Mounty.Init(calling, event)
 
     if MountyData.DoNotFly == nil then
         MountyData.DoNotFly = false
+    end
+
+    if MountyData.DoNotShowOff == nil then
+        MountyData.DoNotShowOff = false
     end
 
     if MountyData.Random == nil then
@@ -743,13 +800,22 @@ function Mounty.Init(calling, event)
         end
     end
 
+    if (MountyData.UpgradeToDragonflight == nil) then
+        MountyData.UpgradeToDragonflight = true
+        for t = MountyTypes, 4, -1 do
+            for i = 1, MountyMounts do
+                MountyData.Mounts[t][i] = MountyData.Mounts[t - 1][i]
+                MountyData.Mounts[t - 1][i] = 0
+            end
+        end
+    end
+
     calling:UnregisterEvent("ADDON_LOADED")
     calling:SetScript("OnEvent", nil)
-
 end
 
-function MountyKeyHandler (keypress)
-    Mounty:KeyHandler (keypress)
+function MountyKeyHandler(keypress)
+    Mounty:KeyHandler(keypress)
 end
 
 MountyOptionsFrame = CreateFrame("Frame", "MountyOptionsFrame", UIParent, "BasicFrameTemplate")
@@ -818,6 +884,16 @@ SlashCmdList["MOUNTY"] = function(message)
 
         MountyData.DoNotFly = true
         Mounty:Chat(L["fly mode: "] .. "|cfff00000" .. L["off"] .. "|r.")
+
+    elseif message == "show off on" then
+
+        MountyData.DoNotShowOff = false
+        Mounty:Chat(L["show off mode: "] .. "|cff00f000" .. L["on"] .. "|r.")
+
+    elseif message == "show off off" then
+
+        MountyData.DoNotShowOff = true
+        Mounty:Chat(L["show off mode: "] .. "|cfff00000" .. L["off"] .. "|r.")
 
     elseif message == "random on" then
 
