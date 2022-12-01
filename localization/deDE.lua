@@ -4,6 +4,7 @@ local L = {}
 local _G = _G
 
 _G["BINDING_NAME_MOUNTY_MAGIC"] = "Magisches Mount"
+_G["BINDING_NAME_MOUNTY_GROUND"] = "Boden-Mount"
 _G["BINDING_NAME_MOUNTY_WATER"] = "Wasser-Mount"
 _G["BINDING_NAME_MOUNTY_TAXI"] = "Taxi-Mount"
 _G["BINDING_NAME_MOUNTY_REPAIR"] = "Reparier-Mount"
@@ -24,9 +25,10 @@ L["mode.Random"] = "Zufällig"
 L["Taxi!"] = "Taxi!"
 
 L["Options"] = "Mounty #TLV - Optionen"
-L["Random"] = "Zufällig"
-L["Don't show off in resting areas"] = "Keine automatische Angeberei in Ruhebereichen"
-L["Don't fly (except if taxi)"] = "Nicht in der Gruppe fliegen (außer als Taxi)"
+L["Quick start"] = "Quick-Start"
+L["Random"] = "Zufällig (Wenn nicht angehakt, kommen die Mounts je Kategorie der Reihe nach)"
+L["Look at me!"] = "Seht her! Angeberei in Ruhebereichen"
+L["Stay together"] = "Als Gruppe zusammen bleiben, nicht fliegen (außer als Taxi)"
 L["Taxi mode"] = "Taxi-Modus"
 L["Debug mode"] = "Debug-Modus (nur englisch)"
 L["Auto open"] = "Automatisch mit der Reittiersammlung öffnen und schließen"
@@ -36,14 +38,18 @@ L["How to call a passenger"] = "So rufst du deinen Passagier"
 L["Helptext"] = "Mounts hier reinziehen. Rechtsklick, um Mount zu entfernen."
 
 L["Debug: "] = "Debug: "
-L["fly mode: "] = "Flug-Modus: "
-L["random: "] = "Zufall: "
-L["taxi: "] = "Taxi: "
+L["Auto open & close: "] = "Auto öffnen: "
+L["Together mode: "] = "Zusammen bleiben: "
+L["Show off mode: "] = "Angeberei: "
+L["Random: "] = "Zufall: "
+L["Taxi mode: "] = "Taxi-Modus: "
 
 L["on"] = "an"
 L["off"] = "aus"
 
 L["Open Mounty"] = "Mounty #TLV"
+
+L["Quick start full"] = "- Ziehe deine liebsten Reittiere mit der Maus in die entsprechenden Kategorien von Mounty #TLV.\n- Öffne WoWs Tastaturbelegungen, wähle Mounty #TLV und konfiguriere deine magische Taste.\n- Drücke deine magische Taste um hier und jetzt immer das perfekte Reittier zu rufen.\n- Genieße Mounty #TLV und schau dir gerne auch alle weiteren Optionen und Mögichkeiten an."
 
 local _, Mounty = ...
 Mounty.L = setmetatable(L, { __index = Mounty.L })

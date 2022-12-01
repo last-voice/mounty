@@ -5,6 +5,9 @@
 	<Binding name="MOUNTY_WATER" category="Mounty #TLV">
 		MountyKeyHandler("water")
 	</Binding>
+	<Binding name="MOUNTY_GROUND" category="Mounty #TLV">
+		MountyKeyHandler("ground")
+	</Binding>
 	<Binding name="MOUNTY_TAXI" category="Mounty #TLV">
 		MountyKeyHandler("taxi")
 	</Binding>

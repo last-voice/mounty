@@ -2,6 +2,14 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.3.1
+- New key binding for ground mounts
+- Nicer wording
+- READMEs up to date
+- Quick start under options frame
+- ESC now closes options frame
+- Minor layout changes
+
 v2.3
 - Ready for Dragonflight
 - Automatically show off can now be disabled

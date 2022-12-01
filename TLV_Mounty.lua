@@ -11,11 +11,12 @@ local MountyOptionsFrame
 local MountyOptionsFrame_DebugMode
 local MountyOptionsFrame_AutoOpen
 local MountyOptionsFrame_TaxiMode
-local MountyOptionsFrame_DoNotFly
-local MountyOptionsFrame_DoNotShowOff
+local MountyOptionsFrame_Together
+local MountyOptionsFrame_ShowOff
 local MountyOptionsFrame_Random
 local MountyOptionsFrame_DurabilityMin
 local MountyOptionsFrame_Hello
+local MountyOptionsFrame_QuickStart
 
 local MountyOptionsFrame_Buttons = {}
 
@@ -313,7 +314,7 @@ function Mounty:KeyHandler(keypress)
         if keypress == "magic" then return end
     end
 
-    if keypress == "repair" or keypress == "random" or keypress == "showoff" or keypress == "water" or keypress == "taxi" then
+    if keypress == "ground" or keypress == "repair" or keypress == "random" or keypress == "showoff" or keypress == "water" or keypress == "taxi" then
 
         Mounty:Debug("Dedicated key")
 
@@ -329,12 +330,12 @@ function Mounty:KeyHandler(keypress)
         local flyable = Mounty:UserCanFlyHere()
         local swimming = IsSwimming()
         local taximode = MountyData.TaxiMode
-        local donotfly = MountyData.DoNotFly
-        local donotshowoff = MountyData.DoNotShowOff
+        local together = MountyData.Together
+        local showoff = MountyData.ShowOff
 
         Mounty:Debug("Magic key")
 
-        if donotfly and not alone then flyable = false end
+        if together and not alone then flyable = false end
 
         local category
 
@@ -346,7 +347,7 @@ function Mounty:KeyHandler(keypress)
 
             category = "taxi"
 
-        elseif resting and not donotshowoff then
+        elseif resting and showoff then
 
             category = "showoff"
 
@@ -467,7 +468,8 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame:SetHeight(580)
     MountyOptionsFrame:SetPoint("CENTER")
 
-    MountyOptionsFrame:SetFrameStrata("DIALOG")
+    MountyOptionsFrame:SetFrameStrata("HIGH")
+    MountyOptionsFrame.Bg:SetFrameStrata ("MEDIUM")
 
     MountyOptionsFrame:EnableMouse(true)
     MountyOptionsFrame:SetMovable(true)
@@ -484,6 +486,28 @@ function Mounty:InitOptionsFrame()
     temp = MountyOptionsFrame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
     temp:SetPoint("TOP", 0, -4)
     temp:SetText(L["Options"])
+
+    -- Quickstart
+
+    MountyOptionsFrame_QuickStart = CreateFrame("Frame", nil, MountyOptionsFrame, "SettingsFrameTemplate")
+    MountyOptionsFrame_QuickStart:SetWidth(480)
+    MountyOptionsFrame_QuickStart:SetHeight(90)
+    MountyOptionsFrame_QuickStart:SetPoint("BOTTOM", 0, -90)
+    MountyOptionsFrame_QuickStart:SetFrameStrata("HIGH")
+    MountyOptionsFrame_QuickStart.Bg:SetFrameStrata ("MEDIUM")
+
+    temp = MountyOptionsFrame_QuickStart:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+    temp:SetPoint("TOP", 0, -4)
+    temp:SetText(L["Quick start"])
+
+    temp = MountyOptionsFrame_QuickStart:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+    temp:SetPoint("TOPLEFT", 32, -32)
+    temp:SetJustifyH("LEFT")
+    temp:SetText(L["Quick start full"])
+
+    if (not MountyData.QuickStart) then
+        MountyOptionsFrame_QuickStart:Hide()
+    end
 
     -- Random checkbox
 
@@ -503,32 +527,46 @@ function Mounty:InitOptionsFrame()
     temp:SetSize(32, 32)
     temp:SetNormalTexture("Interface\\Icons\\Ability_Mount_RidingHorse")
     temp:SetPoint("TOPRIGHT", -20, top)
-    temp:SetScript("OnMouseUp", function(calling)
+    temp:SetScript("OnMouseUp", function()
         ToggleCollectionsJournal(1)
     end)
 
-    -- DoNotShowOff checkbox
+    -- Open Quick start
 
-    top = top - control_top_delta_small
-
-    MountyOptionsFrame_DoNotShowOff = CreateFrame("CheckButton", "MountyOptionsFrame_DoNotShowOff", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
-    MountyOptionsFrame_DoNotShowOff:SetPoint("TOPLEFT", 16, top)
-    MountyOptionsFrame_DoNotShowOffText:SetText(L["Don't show off in resting areas"])
-    MountyOptionsFrame_DoNotShowOff:SetScript("OnClick", function(calling)
-        MountyData.DoNotShowOff = not MountyData.DoNotShowOff
-        calling:SetChecked(MountyData.DoNotShowOff)
+    temp = CreateFrame("Button", "MountyOptionsFrame_OpenMounts", MountyOptionsFrame)
+    temp:SetSize(32, 32)
+    temp:SetNormalTexture("Interface\\Icons\\INV_Misc_QuestionMark")
+    temp:SetPoint("TOPRIGHT", -20, top - 40)
+    temp:SetScript("OnMouseUp", function()
+        if MountyOptionsFrame_QuickStart:IsVisible() then
+            MountyOptionsFrame_QuickStart:Hide()
+        else
+            MountyOptionsFrame_QuickStart:Show()
+        end
     end)
 
-    -- DoNotFly checkbox
+    -- ShowOff checkbox
 
     top = top - control_top_delta_small
 
-    MountyOptionsFrame_DoNotFly = CreateFrame("CheckButton", "MountyOptionsFrame_DoNotFly", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
-    MountyOptionsFrame_DoNotFly:SetPoint("TOPLEFT", 16, top)
-    MountyOptionsFrame_DoNotFlyText:SetText(L["Don't fly (except if taxi)"])
-    MountyOptionsFrame_DoNotFly:SetScript("OnClick", function(calling)
-        MountyData.DoNotFly = not MountyData.DoNotFly
-        calling:SetChecked(MountyData.DoNotFly)
+    MountyOptionsFrame_ShowOff = CreateFrame("CheckButton", "MountyOptionsFrame_ShowOff", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    MountyOptionsFrame_ShowOff:SetPoint("TOPLEFT", 16, top)
+    MountyOptionsFrame_ShowOffText:SetText(L["Look at me!"])
+    MountyOptionsFrame_ShowOff:SetScript("OnClick", function(calling)
+        MountyData.ShowOff = not MountyData.ShowOff
+        calling:SetChecked(MountyData.ShowOff)
+    end)
+
+    -- Together checkbox
+
+    top = top - control_top_delta_small
+
+    MountyOptionsFrame_Together = CreateFrame("CheckButton", "MountyOptionsFrame_Together", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    MountyOptionsFrame_Together:SetPoint("TOPLEFT", 16, top)
+    MountyOptionsFrame_TogetherText:SetText(L["Stay together"])
+    MountyOptionsFrame_Together:SetScript("OnClick", function(calling)
+        MountyData.Together = not MountyData.Together
+        calling:SetChecked(MountyData.Together)
     end)
 
     -- TaxiMode checkbox
@@ -620,7 +658,7 @@ function Mounty:InitOptionsFrame()
     top = top - control_top_delta + 8
 
     temp = MountyOptionsFrame:CreateFontString(nil, "BACKGROUND", "GameFontNormalSmall")
-    temp:SetPoint("TOPLEFT", 112, top - 3)
+    temp:SetPoint("TOPLEFT", 90, top - 3)
     temp:SetText(L["Helptext"])
 
     -- AutoOpen checkbox
@@ -655,8 +693,8 @@ end
 function Mounty:OptionsRender()
 
     MountyOptionsFrame_Random:SetChecked(MountyData.Random)
-    MountyOptionsFrame_DoNotFly:SetChecked(MountyData.DoNotFly)
-    MountyOptionsFrame_DoNotShowOff:SetChecked(MountyData.DoNotShowOff)
+    MountyOptionsFrame_Together:SetChecked(MountyData.Together)
+    MountyOptionsFrame_ShowOff:SetChecked(MountyData.ShowOff)
     MountyOptionsFrame_TaxiMode:SetChecked(MountyData.TaxiMode)
     MountyOptionsFrame_Hello:SetText(MountyData.Hello)
     MountyOptionsFrame_DurabilityMin:SetValue(MountyData.DurabilityMin)
@@ -694,7 +732,7 @@ end
 function Mounty:AddJournalButton()
 
     local temp = CreateFrame("Button", nil, MountJournal)
-    temp:SetFrameStrata("DIALOG")
+    temp:SetFrameStrata("HIGH")
     temp:SetPoint("BOTTOMRIGHT", -6, 5)
     temp:SetSize(128, 21)
     temp:SetNormalFontObject(GameFontNormal)
@@ -719,30 +757,6 @@ end
 
 function Mounty.Init(calling, event)
 
-    Mounty:InitOptionsFrame()
-
-    --- -[[
-    -- MountyData = {
-    -- ["MountGround"] = 0,
-    -- ["DurabilityMin"] = 75,
-    -- ["DoNotFly"] = false,
-    -- ["DebugMode"] = false,
-    -- ["MountWater"] = 0,
-    -- ["Iterator"] = { 0, 1, 0, 0, 0, 0, },
-    -- ["TaxiMode"] = false,
-    -- ["Mounts"] = {
-    -- { 36702, 48025, 260172, 332256, 0, 0, 0, 0, 0, 0, }, { 88990, 107845, 63956, 126508, 333021, 0, 0, 0, 0, 0, }, { 64731, 0, 0, 0, 0, 0, 0, 0, 0, 0, }, { 122708, 0, 0, 0, 0, 0, 0, 0, 0, 0, }, { 88990, 107845, 63956, 126508, 333021, 0, 0, 0, 0, 0, }, { 88990, 107845, 63956, 126508, 333021, 0, 0, 0, 0, 0, },
-    -- },
-    -- ["MountTaxi"] = 0,
-    -- ["MountRepair"] = 0,
-    -- ["MountShowOff"] = 0,
-    -- ["MountFlying"] = 0,
-    -- ["Hello"] = "Taxi!",
-    -- ["Random"] = true,
-    -- ["ArmoredMin"] = 75
-    -- }
-    -- ]]
-
     if MountyData.DebugMode == nil then
         MountyData.DebugMode = false
     end
@@ -759,8 +773,16 @@ function Mounty.Init(calling, event)
         MountyData.DoNotFly = false
     end
 
+    if MountyData.Together == nil then
+        MountyData.Together = MountyData.DoNotFly -- renamed
+    end
+
     if MountyData.DoNotShowOff == nil then
         MountyData.DoNotShowOff = false
+    end
+
+    if MountyData.ShowOff == nil then
+        MountyData.ShowOff = not MountyData.DoNotShowOff
     end
 
     if MountyData.Random == nil then
@@ -810,6 +832,19 @@ function Mounty.Init(calling, event)
         end
     end
 
+    if MountyData.QuickStart == nil then
+        MountyData.QuickStart = true
+    else
+        MountyData.QuickStart = true
+        for t = 1, MountyTypes do
+            if MountyData.Mounts[t][1] ~= 0 then
+                MountyData.QuickStart = false
+            end
+        end
+    end
+
+    Mounty:InitOptionsFrame()
+
     calling:UnregisterEvent("ADDON_LOADED")
     calling:SetScript("OnEvent", nil)
 end
@@ -818,11 +853,13 @@ function MountyKeyHandler(keypress)
     Mounty:KeyHandler(keypress)
 end
 
-MountyOptionsFrame = CreateFrame("Frame", "MountyOptionsFrame", UIParent, "BasicFrameTemplate")
+MountyOptionsFrame = CreateFrame("Frame", "MountyOptionsFrame", UIParent, "SettingsFrameTemplate")
 
 MountyOptionsFrame:RegisterEvent("ADDON_LOADED")
 MountyOptionsFrame:SetScript("OnEvent", Mounty.Init)
 MountyOptionsFrame:SetScript("OnShow", Mounty.OptionsRender)
+
+tinsert(UISpecialFrames, "MountyOptionsFrame");
 
 EventRegistry:RegisterCallback("MountJournal.OnShow", function()
     if CollectionsJournal.selectedTab == COLLECTIONS_JOURNAL_TAB_INDEX_MOUNTS and not Mounty.MountyJournalButtonAdded then
@@ -875,40 +912,40 @@ SlashCmdList["MOUNTY"] = function(message)
         MountyData.AutoOpen = false
         Mounty:Chat(L["Auto open & close: "] .. "|cfff00000" .. L["off"] .. "|r.")
 
-    elseif message == "fly on" then
+    elseif message == "together on" then
 
-        MountyData.DoNotFly = false
-        Mounty:Chat(L["fly mode: "] .. "|cff00f000" .. L["on"] .. "|r.")
+        MountyData.Together = true
+        Mounty:Chat(L["Together mode: "] .. "|cff00f000" .. L["on"] .. "|r.")
 
-    elseif message == "fly off" then
+    elseif message == "together off" then
 
-        MountyData.DoNotFly = true
-        Mounty:Chat(L["fly mode: "] .. "|cfff00000" .. L["off"] .. "|r.")
+        MountyData.Together = false
+        Mounty:Chat(L["Together mode: "] .. "|cfff00000" .. L["off"] .. "|r.")
 
-    elseif message == "show off on" then
+    elseif message == "showoff on" then
 
-        MountyData.DoNotShowOff = false
-        Mounty:Chat(L["show off mode: "] .. "|cff00f000" .. L["on"] .. "|r.")
+        MountyData.ShowOff = true
+        Mounty:Chat(L["Show off mode: "] .. "|cff00f000" .. L["on"] .. "|r.")
 
-    elseif message == "show off off" then
+    elseif message == "showoff off" then
 
-        MountyData.DoNotShowOff = true
-        Mounty:Chat(L["show off mode: "] .. "|cfff00000" .. L["off"] .. "|r.")
+        MountyData.ShowOff = false
+        Mounty:Chat(L["Show off mode: "] .. "|cfff00000" .. L["off"] .. "|r.")
 
     elseif message == "random on" then
 
-        MountyData.Random = false
-        Mounty:Chat(L["random: "] .. "|cff00f000" .. L["on"] .. "|r.")
+        MountyData.Random = true
+        Mounty:Chat(L["Random: "] .. "|cff00f000" .. L["on"] .. "|r.")
 
     elseif message == "random off" then
 
-        MountyData.Random = true
-        Mounty:Chat(L["random: "] .. "|cfff00000" .. L["off"] .. "|r.")
+        MountyData.Random = false
+        Mounty:Chat(L["Random: "] .. "|cfff00000" .. L["off"] .. "|r.")
 
     elseif message == "taxi on" then
 
         MountyData.TaxiMode = true
-        Mounty:Chat(L["taxi: "] .. "|cff00f000" .. L["on"] .. "|r.")
+        Mounty:Chat(L["Taxi mode: "] .. "|cff00f000" .. L["on"] .. "|r.")
 
     elseif message == "taxi off" then
 

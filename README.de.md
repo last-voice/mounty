@@ -25,7 +25,7 @@ Dann ist __Mounty #TLV__ genau das richtige Add-on für dich und mit nur __einem
 1. Installiere __Mounty #TLV__.
 2. Öffne WoWs _Reittiersammlung_. __Mounty #TLV__ sollte sich ebenfalls automatisch öffnen.
 3. Ziehe deine liebsten Reittiere mit der Maus in die entsprechenden Kategorien von __Mounty #TLV__.
-4. Öffne WoWs Einstellungen für Tastaturbelegungen, wähle __Mounty #TLV__ und konfiguriere deine _magische Taste_. (z.B. ist meine #)
+4. Öffne WoWs Tastaturbelegungen, wähle __Mounty #TLV__ und konfiguriere deine _magische Taste_. (z.B. ist meine #)
 5. Drücke deine _magische Taste_ um hier und jetzt immer das perfekte Reittier zu rufen.
 6. Genieße __Mounty #TLV__ und schau dir gerne auch alle weiteren Optionen und Mögichkeiten an.
 
