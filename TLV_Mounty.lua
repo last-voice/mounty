@@ -44,6 +44,8 @@ local MountyTypesLabel = {
 local MountyFallbackQueue = {}
 local MountyFallbackAlready = {}
 
+local MountyTestDragon
+
 local MountyDebugForce = false
 
 function Mounty:Chat(msg)
@@ -206,10 +208,31 @@ function Mounty:IsInDragonflight()
     return (map_info and map_info.mapID == 1978) -- Dragonflight
 end
 
-function Mounty:UserCanDragonflyHere()
-
+function Mounty:UserCanDragonflyHere() -- Not used, using Mounty:DragonCanFlyHere instead
     return Mounty:IsInDragonflight() and C_Spell.DoesSpellExist(376777) -- dragon riding has been learned
     -- return Mounty:IsInDragonflight() and IsPlayerSpell(376777) -- dragon riding has been learned
+end
+
+function Mounty:DragonsCanFlyHere()
+
+    if (MountyTestDragon == nil) then
+
+        MountyTestDragon = 0
+
+        for k, v in ipairs(C_MountJournal.GetCollectedDragonridingMounts()) do
+            local name, spellID, _, _, _, _, _, _, _, _, isCollected = C_MountJournal.GetMountInfoByID(v)
+            if (isCollected) then
+                MountyTestDragon = spellID
+                Mounty:Debug("Test dragon found: " .. name .. " [" .. spellID .. "]")
+            end
+        end
+    end
+
+    if (MountyTestDragon == 0) then
+        return false
+    end
+
+    return (IsUsableSpell(MountyTestDragon))
 end
 
 function Mounty:Mount(category)
@@ -325,7 +348,7 @@ function Mounty:KeyHandler(keypress)
         -- magic
 
         local resting = IsResting()
-        local dragonflight = Mounty:UserCanDragonflyHere()
+        local dragonflight = Mounty:DragonsCanFlyHere()
         local alone = not IsInGroup()
         local flyable = Mounty:UserCanFlyHere()
         local swimming = IsSwimming()
@@ -469,7 +492,7 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame:SetPoint("CENTER")
 
     MountyOptionsFrame:SetFrameStrata("HIGH")
-    MountyOptionsFrame.Bg:SetFrameStrata ("MEDIUM")
+    MountyOptionsFrame.Bg:SetFrameStrata("MEDIUM")
 
     MountyOptionsFrame:EnableMouse(true)
     MountyOptionsFrame:SetMovable(true)
@@ -494,7 +517,7 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame_QuickStart:SetHeight(90)
     MountyOptionsFrame_QuickStart:SetPoint("BOTTOM", 0, -90)
     MountyOptionsFrame_QuickStart:SetFrameStrata("HIGH")
-    MountyOptionsFrame_QuickStart.Bg:SetFrameStrata ("MEDIUM")
+    MountyOptionsFrame_QuickStart.Bg:SetFrameStrata("MEDIUM")
 
     temp = MountyOptionsFrame_QuickStart:CreateFontString(nil, "ARTWORK", "GameFontNormal")
     temp:SetPoint("TOP", 0, -4)
@@ -822,6 +845,8 @@ function Mounty.Init(calling, event)
         end
     end
 
+    -- shift types once cause of dragon flight upgrade
+
     if (MountyData.UpgradeToDragonflight == nil) then
         MountyData.UpgradeToDragonflight = true
         for t = MountyTypes, 4, -1 do
@@ -831,6 +856,8 @@ function Mounty.Init(calling, event)
             end
         end
     end
+
+    -- show quick start?
 
     if MountyData.QuickStart == nil then
         MountyData.QuickStart = true
