@@ -2,6 +2,9 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.3.2.1
+- Code improvement during start of new add on
+
 v2.3.2
 - Much better Dragonflight check (I hope ;)
 - Updated preview screenshots

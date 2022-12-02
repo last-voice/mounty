@@ -2,9 +2,6 @@ local MountyAddOnName, Mounty = ...
 
 MountyData = {}
 
--- debugging https://www.wowace.com/projects/rarity/pages/faq/how-to-enable-and-disable-script-errors-lua-errors
-
-local Mounty = Mounty
 local L = Mounty.L
 
 local MountyOptionsFrame
@@ -115,7 +112,9 @@ end
 
 function Mounty:SelectMountByType(typ, only_flyable_showoffs)
 
-    if typ == 0 then return 0 end
+    if typ == 0 then
+        return 0
+    end
 
     local ids = {}
     local count = 0
@@ -132,7 +131,8 @@ function Mounty:SelectMountByType(typ, only_flyable_showoffs)
             if only_flyable_showoffs then
                 local _, _, _, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
 
-                if mountTypeID ~= 248 then -- 248 = mostly flyable
+                if mountTypeID ~= 248 then
+                    -- 248 = mostly flyable
                     isUsable = false
                 end
             end
@@ -208,7 +208,8 @@ function Mounty:IsInDragonflight()
     return (map_info and map_info.mapID == 1978) -- Dragonflight
 end
 
-function Mounty:UserCanDragonflyHere() -- Not used, using Mounty:DragonCanFlyHere instead
+function Mounty:UserCanDragonflyHere()
+    -- Not used, using Mounty:DragonCanFlyHere instead
     return Mounty:IsInDragonflight() and C_Spell.DoesSpellExist(376777) -- dragon riding has been learned
     -- return Mounty:IsInDragonflight() and IsPlayerSpell(376777) -- dragon riding has been learned
 end
@@ -334,7 +335,9 @@ function Mounty:KeyHandler(keypress)
 
         Dismount()
 
-        if keypress == "magic" then return end
+        if keypress == "magic" then
+            return
+        end
     end
 
     if keypress == "ground" or keypress == "repair" or keypress == "random" or keypress == "showoff" or keypress == "water" or keypress == "taxi" then
@@ -358,7 +361,9 @@ function Mounty:KeyHandler(keypress)
 
         Mounty:Debug("Magic key")
 
-        if together and not alone then flyable = false end
+        if together and not alone then
+            flyable = false
+        end
 
         local category
 
@@ -778,7 +783,7 @@ function Mounty:AddJournalButton()
     end)
 end
 
-function Mounty.Init(calling, event)
+function Mounty:Init()
 
     if MountyData.DebugMode == nil then
         MountyData.DebugMode = false
@@ -872,8 +877,6 @@ function Mounty.Init(calling, event)
 
     Mounty:InitOptionsFrame()
 
-    calling:UnregisterEvent("ADDON_LOADED")
-    calling:SetScript("OnEvent", nil)
 end
 
 function MountyKeyHandler(keypress)
@@ -883,7 +886,13 @@ end
 MountyOptionsFrame = CreateFrame("Frame", "MountyOptionsFrame", UIParent, "SettingsFrameTemplate")
 
 MountyOptionsFrame:RegisterEvent("ADDON_LOADED")
-MountyOptionsFrame:SetScript("OnEvent", Mounty.Init)
+MountyOptionsFrame:SetScript("OnEvent", function(self, event, addon)
+    if (addon == MountyAddOnName) then
+        Mounty.Init()
+        self:UnregisterEvent("ADDON_LOADED")
+    end
+end)
+
 MountyOptionsFrame:SetScript("OnShow", Mounty.OptionsRender)
 
 tinsert(UISpecialFrames, "MountyOptionsFrame");
