@@ -719,6 +719,7 @@ function Mounty:InitOptionsFrame()
         ['defaultVal'] = '',
         ['changeFunc'] = function(dropdown_frame, dropdown_val)
             Mounty:ParseProfile(dropdown_val)
+            UIDropDownMenu_SetText(MountyOptionsFrame_ProfileDropdown, "")
         end
     }
 
