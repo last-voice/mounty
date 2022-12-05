@@ -2,6 +2,11 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.4
+- Profiles can now be used (See README)
+- Version in Title
+- version as a chat command argument
+
 v2.3.2.1
 - Code improvement during start of new add on
 

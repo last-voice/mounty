@@ -1,4 +1,6 @@
-if (GetLocale() ~= "deDE") then return end
+if (GetLocale() ~= "deDE") then
+    return
+end
 
 local L = {}
 local _G = _G
@@ -11,7 +13,6 @@ _G["BINDING_NAME_MOUNTY_REPAIR"] = "Reparier-Mount"
 _G["BINDING_NAME_MOUNTY_SHOWOFF"] = "Angeben!"
 _G["BINDING_NAME_MOUNTY_RANDOM"] = "Zufälliges Mount"
 _G["BINDING_NAME_MOUNTY_DISMOUNT"] = "Absteigen!"
-
 
 L["mode.Ground"] = "Reiten"
 L["mode.Flying"] = "Fliegen"
@@ -32,8 +33,11 @@ L["Stay together"] = "Als Gruppe zusammen bleiben, nicht fliegen (außer als Tax
 L["Taxi mode"] = "Taxi-Modus"
 L["Debug mode"] = "Debug-Modus (nur englisch)"
 L["Auto open"] = "Automatisch mit der Reittiersammlung öffnen und schließen"
-L["Summon repair mount if durability is less than %d%%."] = "Das Repair kommt bei weniger als %d%% Rüstung."
-L["How to call a passenger"] = "So rufst du deinen Passagier"
+L["Summon repair mount"] = "Das Repair kommt bei weniger als %d%% Rüstung."
+L["Hello"] = "So rufst du deinen Passagier"
+
+L["Switched profile"] = "Zu Profil |cff00f000%d|r gewechselt."
+L["Profile number error"] = "Bitte eine Nummer auswählen."
 
 L["Helptext"] = "Mounts hier reinziehen. Rechtsklick, um Mount zu entfernen."
 

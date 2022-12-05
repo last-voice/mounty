@@ -29,8 +29,11 @@ L["Stay together"] = "Stay together and don't fly in group (except as a taxi)"
 L["Taxi mode"] = "Taxi mode"
 L["Debug mode"] = "Debug mode"
 L["Auto open"] = "Auto open and close with mount journal"
-L["Summon repair mount if durability is less than %d%%."] = "Summon repair mount if durability is less than %d%%."
-L["How to call a passenger"] = "How to call a passenger"
+L["Summon repair mount"] = "Summon repair mount if durability is less than %d%%."
+L["Hello"] = "How to call a passenger"
+
+L["Switched profile"] = "Switched to profile |cff00f000%d|r."
+L["Profile number error"] = "Profile should be a number. "
 
 L["Helptext"] = "Drag mounts into here. Right click to remove a mount."
 
