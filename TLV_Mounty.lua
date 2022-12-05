@@ -19,6 +19,7 @@ local MountyOptionsFrame_ShowOff
 local MountyOptionsFrame_Random
 local MountyOptionsFrame_DurabilityMin
 local MountyOptionsFrame_Hello
+local MountyOptionsFrame_Profile
 local MountyOptionsFrame_QuickStart
 
 local MountyOptionsFrame_Buttons = {}
@@ -495,7 +496,7 @@ function Mounty:InitOptionsFrame()
 
     MountyOptionsFrame:Hide()
     MountyOptionsFrame:SetWidth(480)
-    MountyOptionsFrame:SetHeight(580)
+    MountyOptionsFrame:SetHeight(620)
     MountyOptionsFrame:SetPoint("CENTER")
 
     MountyOptionsFrame:SetFrameStrata("MEDIUM")
@@ -527,12 +528,12 @@ function Mounty:InitOptionsFrame()
 
     temp = MountyOptionsFrame_QuickStart:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     temp:SetPoint("TOP", 0, -6)
-    temp:SetText(L["Quick start"])
+    temp:SetText(L["quick.title"])
 
     temp = MountyOptionsFrame_QuickStart:CreateFontString(nil, "ARTWORK", "GameFontNormal")
     temp:SetPoint("TOPLEFT", 32, -32)
     temp:SetJustifyH("LEFT")
-    temp:SetText(L["Quick start full"])
+    temp:SetText(L["quick.text"])
 
     if (not TLV.QuickStart) then
         MountyOptionsFrame_QuickStart:Hide()
@@ -544,7 +545,7 @@ function Mounty:InitOptionsFrame()
 
     MountyOptionsFrame_Random = CreateFrame("CheckButton", "MountyOptionsFrame_Random", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     MountyOptionsFrame_Random:SetPoint("TOPLEFT", 16, top)
-    MountyOptionsFrame_RandomText:SetText(L["Random"])
+    MountyOptionsFrame_RandomText:SetText(L["options.Random"])
     MountyOptionsFrame_Random:SetScript("OnClick", function(calling)
         TLV_Profile.Random = not TLV_Profile.Random
         calling:SetChecked(TLV_Profile.Random)
@@ -580,7 +581,7 @@ function Mounty:InitOptionsFrame()
 
     MountyOptionsFrame_ShowOff = CreateFrame("CheckButton", "MountyOptionsFrame_ShowOff", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     MountyOptionsFrame_ShowOff:SetPoint("TOPLEFT", 16, top)
-    MountyOptionsFrame_ShowOffText:SetText(L["Look at me!"])
+    MountyOptionsFrame_ShowOffText:SetText(L["options.Look"])
     MountyOptionsFrame_ShowOff:SetScript("OnClick", function(calling)
         TLV_Profile.ShowOff = not TLV_Profile.ShowOff
         calling:SetChecked(TLV_Profile.ShowOff)
@@ -592,7 +593,7 @@ function Mounty:InitOptionsFrame()
 
     MountyOptionsFrame_Together = CreateFrame("CheckButton", "MountyOptionsFrame_Together", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     MountyOptionsFrame_Together:SetPoint("TOPLEFT", 16, top)
-    MountyOptionsFrame_TogetherText:SetText(L["Stay together"])
+    MountyOptionsFrame_TogetherText:SetText(L["options.Stay"])
     MountyOptionsFrame_Together:SetScript("OnClick", function(calling)
         TLV_Profile.Together = not TLV_Profile.Together
         calling:SetChecked(TLV_Profile.Together)
@@ -604,7 +605,7 @@ function Mounty:InitOptionsFrame()
 
     MountyOptionsFrame_TaxiMode = CreateFrame("CheckButton", "MountyOptionsFrame_TaxiMode", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     MountyOptionsFrame_TaxiMode:SetPoint("TOPLEFT", 16, top)
-    MountyOptionsFrame_TaxiModeText:SetText(L["Taxi mode"])
+    MountyOptionsFrame_TaxiModeText:SetText(L["options.Taxi"])
     MountyOptionsFrame_TaxiMode:SetScript("OnClick", function(calling)
         TLV_Profile.TaxiMode = not TLV_Profile.TaxiMode
         calling:SetChecked(TLV_Profile.TaxiMode)
@@ -621,7 +622,7 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame_Hello:SetAutoFocus(false)
     MountyOptionsFrame_Hello:CreateFontString("MountyOptionsFrame_HelloLabel", "BACKGROUND", "GameFontNormalSmall")
     MountyOptionsFrame_HelloLabel:SetPoint("BOTTOMLEFT", MountyOptionsFrame_Hello, "TOPLEFT", 0, 4)
-    MountyOptionsFrame_HelloLabel:SetText(L["Hello"])
+    MountyOptionsFrame_HelloLabel:SetText(L["options.Hello"])
     MountyOptionsFrame_Hello:SetScript("OnEnterPressed", function(calling)
         TLV_Profile.Hello = calling:GetText()
         calling:ClearFocus()
@@ -640,7 +641,7 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame_DurabilityMin:SetMinMaxValues(50, 100)
     MountyOptionsFrame_DurabilityMin:SetValueStep(1)
     MountyOptionsFrame_DurabilityMin:SetScript("OnValueChanged", function(calling, value)
-        MountyOptionsFrame_DurabilityMinText:SetFormattedText(L["Summon if durability"], math.floor(value + 0.5))
+        MountyOptionsFrame_DurabilityMinText:SetFormattedText(L["options.Durability"], math.floor(value + 0.5))
         TLV_Profile.DurabilityMin = math.floor(value + 0.5)
     end)
 
@@ -688,7 +689,41 @@ function Mounty:InitOptionsFrame()
 
     temp = MountyOptionsFrame:CreateFontString(nil, "BACKGROUND", "GameFontNormalSmall")
     temp:SetPoint("TOPLEFT", 90, top - 3)
-    temp:SetText(L["Helptext"])
+    temp:SetText(L["options.Helptext"])
+
+    -- Current profile
+
+    top = top - control_top_delta
+
+    MountyOptionsFrame_Profile = CreateFrame("EditBox", "MountyOptionsFrame_Profile", MountyOptionsFrame, "InputBoxTemplate")
+    MountyOptionsFrame_Profile:SetWidth(140)
+    MountyOptionsFrame_Profile:SetHeight(16)
+    MountyOptionsFrame_Profile:SetPoint("TOPLEFT", 25, top)
+    MountyOptionsFrame_Profile:SetAutoFocus(false)
+    MountyOptionsFrame_Profile:CreateFontString("MountyOptionsFrame_ProfileLabel", "BACKGROUND", "GameFontNormalSmall")
+    MountyOptionsFrame_ProfileLabel:SetPoint("BOTTOMLEFT", MountyOptionsFrame_Profile, "TOPLEFT", 0, 4)
+    MountyOptionsFrame_ProfileLabel:SetText(L["options.Profile"])
+    MountyOptionsFrame_Profile:SetScript("OnEnterPressed", function(calling)
+        calling:ClearFocus()
+        local ok = Mounty:ParseProfile(string.split(" ", calling:GetText(), 2))
+        if not ok then
+            MountyOptionsFrame_Profile:SetText(TLV.Profile)
+        end
+    end)
+
+    local raid_opts = {
+        ['name'] = 'raid',
+        ['parent'] = MountyOptionsFrame,
+        ['title'] = '',
+        ['items'] = { '2', '12', '13' },
+        ['defaultVal'] = '',
+        ['changeFunc'] = function(dropdown_frame, dropdown_val)
+            Mounty:ParseProfile(dropdown_val)
+        end
+    }
+
+    MountyOptionsFrame_ProfileDropdown = createDropdown(raid_opts)
+    MountyOptionsFrame_ProfileDropdown:SetPoint("TOPLEFT", 160, top+6);
 
     -- AutoOpen checkbox
 
@@ -696,7 +731,7 @@ function Mounty:InitOptionsFrame()
 
     MountyOptionsFrame_AutoOpen = CreateFrame("CheckButton", "MountyOptionsFrame_AutoOpen", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     MountyOptionsFrame_AutoOpen:SetPoint("TOPLEFT", 16, top)
-    MountyOptionsFrame_AutoOpenText:SetText(L["Auto open"])
+    MountyOptionsFrame_AutoOpenText:SetText(L["options.Autoopen"])
     MountyOptionsFrame_AutoOpen:SetScript("OnClick", function(calling)
         TLV.AutoOpen = not TLV.AutoOpen
         calling:SetChecked(TLV.AutoOpen)
@@ -708,7 +743,7 @@ function Mounty:InitOptionsFrame()
 
     MountyOptionsFrame_DebugMode = CreateFrame("CheckButton", "MountyOptionsFrame_DebugMode", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     MountyOptionsFrame_DebugMode:SetPoint("TOPLEFT", 16, top)
-    MountyOptionsFrame_DebugModeText:SetText(L["Debug mode"])
+    MountyOptionsFrame_DebugModeText:SetText(L["options.Debug"])
     MountyOptionsFrame_DebugMode:SetScript("OnClick", function(calling)
         TLV.DebugMode = not TLV.DebugMode
         calling:SetChecked(TLV.DebugMode)
@@ -728,6 +763,7 @@ function Mounty:OptionsRender()
     MountyOptionsFrame_Hello:SetText(TLV_Profile.Hello)
     MountyOptionsFrame_DurabilityMin:SetValue(TLV_Profile.DurabilityMin)
 
+    MountyOptionsFrame_Profile:SetText(TLV.Profile)
     MountyOptionsFrame_DebugMode:SetChecked(TLV.DebugMode)
     MountyOptionsFrame_AutoOpen:SetChecked(TLV.AutoOpen)
 
@@ -772,7 +808,7 @@ function Mounty:AddJournalButton()
     temp:GetPushedTexture():SetTexCoord(0.0, 1.0, 0.0, 0.71875)
     temp:SetHighlightTexture(130762) -- "Interface\\Buttons\\UI-DialogBox-Button-Highlight"
     temp:GetHighlightTexture():SetTexCoord(0.0, 1.0, 0.0, 0.71875)
-    temp:SetText(L["Open Mounty"])
+    temp:SetText(L["Mount journal - Open Mounty"])
     temp:SetScript("OnMouseUp", function()
         if MountyOptionsFrame:IsVisible() then
             MountyOptionsFrame:Hide()
@@ -784,11 +820,29 @@ function Mounty:AddJournalButton()
     end)
 end
 
+function Mounty:ParseProfile(p1, p2)
+
+    local n1 = math.floor(tonumber(p1) or 0)
+    local n2 = math.floor(tonumber(p2) or 0)
+
+    if n1 > 0 and p2 == "-" then
+        Mounty:DeleteProfile(n1)
+    elseif n1 > 0 then
+        Mounty:SwitchProfile(n1, n2)
+    else
+        Mounty:Chat(L["chat.profile-error"])
+        return false
+    end
+
+    return true
+
+end
+
 function Mounty:DeleteProfile(p)
 
     if (p > 1) then
         TLV.Profiles[p] = nil
-        Mounty:Chat(string.format(L["Deleted profile"], p))
+        Mounty:Chat(string.format(L["chat.profile-deleted"], p))
         Mounty:SwitchProfile(1, 0)
     end
 
@@ -800,13 +854,13 @@ function Mounty:SwitchProfile(p, pfrom)
 
         if TLV.Profiles[pfrom] == nil then
 
-            Mounty:Chat(string.format(L["Empty profile"], pfrom))
+            Mounty:Chat(string.format(L["chat.profile-empty"], pfrom))
 
         else
 
             TLV.Profiles[p] = deepTableCopy(TLV.Profiles[pfrom])
 
-            Mounty:Chat(string.format(L["Copied profile"], p, pfrom))
+            Mounty:Chat(string.format(L["chat.profile-copied"], p, pfrom))
 
         end
     end
@@ -814,7 +868,7 @@ function Mounty:SwitchProfile(p, pfrom)
     Mounty:SelectProfile(p)
     Mounty:OptionsRender()
 
-    Mounty:Chat(string.format(L["Switched profile"], p))
+    Mounty:Chat(string.format(L["chat.profile-switched"], p))
 
 end
 
@@ -861,7 +915,7 @@ function Mounty:SelectProfile(p)
     end
 
     if TLV.Profiles[p].Hello == nil then
-        TLV.Profiles[p].Hello = L["Taxi!"]
+        TLV.Profiles[p].Hello = L["options.Hello-Default"]
     end
 
     if TLV.Profiles[p].Mounts == nil then
@@ -891,7 +945,7 @@ function Mounty:SelectProfile(p)
 
     TLV_Profile = TLV.Profiles[p];
 
-    TLV.SelectedProfile = p
+    TLV.Profile = p
 
 end
 
@@ -902,8 +956,8 @@ function Mounty:Init()
 
     Mounty:Upgrade()
 
-    if TLV.SelectedProfile == nil then
-        TLV.SelectedProfile = 1
+    if TLV.Profile == nil then
+        TLV.Profile = 1
     end
 
     if TLV.Profiles == nil then
@@ -918,7 +972,7 @@ function Mounty:Init()
         TLV.AutoOpen = true
     end
 
-    Mounty:SelectProfile(TLV.SelectedProfile)
+    Mounty:SelectProfile(TLV.Profile)
 
     -- show quick start?
 
@@ -941,20 +995,23 @@ end
 
 function Mounty:Upgrade()
 
+    -- MountyData not deleted yet
     -- New category Dragonflight
 
     if MountyData ~= nil then
+        if MountyData.Mounts ~= nil then
 
-        if (MountyData.UpgradeToDragonflight == nil) then
-            MountyData.UpgradeToDragonflight = true
-            for t = MountyTypes, 4, -1 do
-                for i = 1, MountyMounts do
-                    TLV_Profile.Mounts[t][i] = TLV.Profiles[p].Mounts[t - 1][i]
-                    TLV_Profile.Mounts[t - 1][i] = 0
+            if (MountyData.UpgradeToDragonflight == nil) then
+                MountyData.UpgradeToDragonflight = true
+                for t = MountyTypes, 4, -1 do
+                    for i = 1, MountyMounts do
+                        MountyData.Mounts[t][i] = MountyData.Mounts[t - 1][i]
+                        MountyData.Mounts[t - 1][i] = 0
+                    end
                 end
             end
-        end
 
+        end
     end
 
     -- MountyProfiles
@@ -1057,17 +1114,10 @@ SlashCmdList["MOUNTY"] = function(message)
 
     elseif mode == "profile" then
 
-        local p1 = math.floor(tonumber(arg1) or 0)
-        local p2 = math.floor(tonumber(arg2) or 0)
-
         if arg1 == "" then
-            Mounty:Chat(string.format(L["Current profile"], TLV.SelectedProfile))
-        elseif p1 > 0 and arg2 == "-" then
-            Mounty:DeleteProfile(p1)
-        elseif p1 > 0 then
-            Mounty:SwitchProfile(p1, p2)
+            Mounty:Chat(string.format(L["chat.profile-current"], TLV.Profile))
         else
-            Mounty:Chat(L["Profile number error"])
+            Mounty:ParseProfile(arg1, arg2)
         end
 
     elseif mode == "version" then
@@ -1079,12 +1129,12 @@ SlashCmdList["MOUNTY"] = function(message)
         if arg1 == "on" then
 
             TLV.DebugMode = true
-            Mounty:Chat(L["Debug: "] .. "|cff00f000" .. L["on"] .. "|r.")
+            Mounty:Chat(L["chat.Debug"] .. "|cff00f000" .. L["on"] .. "|r.")
 
         elseif arg1 == "off" then
 
             TLV.DebugMode = false
-            Mounty:Chat(L["Debug: "] .. "|cfff00000" .. L["off"] .. "|r.")
+            Mounty:Chat(L["chat.Debug"] .. "|cfff00000" .. L["off"] .. "|r.")
         end
 
     elseif mode == "auto" then
@@ -1092,12 +1142,12 @@ SlashCmdList["MOUNTY"] = function(message)
         if arg1 == "on" then
 
             TLV.AutoOpen = true
-            Mounty:Chat(L["Auto open & close: "] .. "|cff00f000" .. L["on"] .. "|r.")
+            Mounty:Chat(L["chat.Autoopen"] .. "|cff00f000" .. L["on"] .. "|r.")
 
         elseif arg1 == "off" then
 
             TLV.AutoOpen = false
-            Mounty:Chat(L["Auto open & close: "] .. "|cfff00000" .. L["off"] .. "|r.")
+            Mounty:Chat(L["chat.Autoopen"] .. "|cfff00000" .. L["off"] .. "|r.")
         end
 
     elseif mode == "together" then
@@ -1105,12 +1155,12 @@ SlashCmdList["MOUNTY"] = function(message)
         if arg1 == "on" then
 
             TLV_Profile.Together = true
-            Mounty:Chat(L["Together mode: "] .. "|cff00f000" .. L["on"] .. "|r.")
+            Mounty:Chat(L["chat.Together"] .. "|cff00f000" .. L["on"] .. "|r.")
 
         elseif arg1 == "off" then
 
             TLV_Profile.Together = false
-            Mounty:Chat(L["Together mode: "] .. "|cfff00000" .. L["off"] .. "|r.")
+            Mounty:Chat(L["chat.Together"] .. "|cfff00000" .. L["off"] .. "|r.")
 
         end
 
@@ -1119,12 +1169,12 @@ SlashCmdList["MOUNTY"] = function(message)
         if arg1 == "on" then
 
             TLV_Profile.ShowOff = true
-            Mounty:Chat(L["Show off mode: "] .. "|cff00f000" .. L["on"] .. "|r.")
+            Mounty:Chat(L["chat.Showoff"] .. "|cff00f000" .. L["on"] .. "|r.")
 
         elseif arg1 == "off" then
 
             TLV_Profile.ShowOff = false
-            Mounty:Chat(L["Show off mode: "] .. "|cfff00000" .. L["off"] .. "|r.")
+            Mounty:Chat(L["chat.Showoff"] .. "|cfff00000" .. L["off"] .. "|r.")
 
         end
 
@@ -1133,12 +1183,12 @@ SlashCmdList["MOUNTY"] = function(message)
         if arg1 == "on" then
 
             TLV_Profile.Random = true
-            Mounty:Chat(L["Random: "] .. "|cff00f000" .. L["on"] .. "|r.")
+            Mounty:Chat(L["chat.Random"] .. "|cff00f000" .. L["on"] .. "|r.")
 
         elseif arg1 == "off" then
 
             TLV_Profile.Random = false
-            Mounty:Chat(L["Random: "] .. "|cfff00000" .. L["off"] .. "|r.")
+            Mounty:Chat(L["chat.Random"] .. "|cfff00000" .. L["off"] .. "|r.")
 
         end
 
@@ -1147,12 +1197,12 @@ SlashCmdList["MOUNTY"] = function(message)
         if arg1 == "on" then
 
             TLV_Profile.TaxiMode = true
-            Mounty:Chat(L["Taxi mode: "] .. "|cff00f000" .. L["on"] .. "|r.")
+            Mounty:Chat(L["chat.Taxi"] .. "|cff00f000" .. L["on"] .. "|r.")
 
         elseif arg1 == "off" then
 
             TLV_Profile.TaxiMode = false
-            Mounty:Chat(L["taxi: "] .. "|cfff00000" .. L["off"] .. "|r.")
+            Mounty:Chat(L["chat.Taxi"] .. "|cfff00000" .. L["off"] .. "|r.")
 
         end
 

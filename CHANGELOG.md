@@ -3,9 +3,13 @@
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
 v2.4
-- Profiles can now be used (See README)
+- Here come the profiles
+- Thanks to Jordan Benge for dropdowns (https://jordanbenge.medium.com/creating-a-wow-dropdown-menu-in-pure-lua-db7b2f9c0364)
+
+v2.3.2.2
 - Version in Title
-- version as a chat command argument
+- Version via chat command (/mounty version)
+- Strata fixes
 
 v2.3.2.1
 - Code improvement during start of new add on
