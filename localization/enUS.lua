@@ -49,6 +49,8 @@ L["chat.Taxi"] = "Taxi mode: "
 L["on"] = "on"
 L["off"] = "off"
 
+L["button.OK"] = "OK"
+
 L["Mount journal - Open Mounty"] = "Mounty #TLV"
 
 L["quick.title"] = "Quick start"

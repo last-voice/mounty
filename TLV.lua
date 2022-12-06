@@ -1,10 +1,12 @@
-function deepTableCopy(copy_from)
+TLV = {}
+
+function TLV:TableCopy(copy_from)
 
     local copy_to = {}
 
     for k, v in pairs(copy_from) do
         if type(v) == "table" then
-            v = deepTableCopy(v)
+            v = TLV:TableCopy(v)
         end
         copy_to[k] = v
     end
@@ -23,7 +25,7 @@ end
 --- Thanks to Jordan Benge
 --- https://jordanbenge.medium.com/creating-a-wow-dropdown-menu-in-pure-lua-db7b2f9c0364
 ---
-function createDropdown(opts)
+function TLV:Dropdown(opts)
     local dropdown_name = "$parent_" .. opts["name"] .. "_dropdown"
     local menu_items = opts["items"] or {}
     local title_text = opts["title"] or ""
@@ -68,4 +70,24 @@ function createDropdown(opts)
     end)
 
     return dropdown
+end
+
+function TLV:Button(parent, point, x, y, width, strata, text)
+
+    local temp = CreateFrame("Button", nil, parent)
+    temp:SetFrameStrata(strata)
+    temp:SetPoint(point, x, y)
+    temp:SetSize(width, 21)
+    temp:SetNormalFontObject(GameFontNormal)
+    temp:SetHighlightFontObject(GameFontHighlight)
+    temp:SetNormalTexture(130763) -- "Interface\\Buttons\\UI-DialogBox-Button-Up"
+    temp:GetNormalTexture():SetTexCoord(0.0, 1.0, 0.0, 0.71875)
+    temp:SetPushedTexture(130761) -- "Interface\\Buttons\\UI-DialogBox-Button-Down"
+    temp:GetPushedTexture():SetTexCoord(0.0, 1.0, 0.0, 0.71875)
+    temp:SetHighlightTexture(130762) -- "Interface\\Buttons\\UI-DialogBox-Button-Highlight"
+    temp:GetHighlightTexture():SetTexCoord(0.0, 1.0, 0.0, 0.71875)
+    temp:SetText(text)
+
+    return temp
+
 end
