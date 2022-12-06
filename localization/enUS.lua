@@ -29,15 +29,15 @@ L["options.Durability"] = "Summon repair mount if durability is less than %d%%."
 L["options.Hello"] = "How to call a passenger"
 L["options.Hello-Default"] = "Taxi!"
 L["options.Helptext"] = "Drag mounts into here. Right click to remove a mount."
-L["options.Profile"] = "Current profile (Please see README for how to use.)"
+L["options.Profile"] = "Profile"
 
-L["chat.profile-switched"] = "Switched to profile |cff00f000%d|r."
-L["chat.profile-deleted"] = "Profile |cff00f000%d|r has been deleted."
-L["chat.profile-current"] = "Current profile: |cff00f000%d|r."
-L["chat.profile-error"] = "Please enter a |cff00f000a number|r."
-L["chat.profile-empty"] = "Profile |cff00f000%d|r is empty."
-L["chat.profile-copied"] = "Copied profile |cff00f000%d|r to |cff00f000%d|r."
-
+L["chat.profile-switched"] = "Switched to profile |cff00f000%s|r."
+L["chat.profile-deleted"] = "Profile |cff00f000%s|r has been deleted."
+L["chat.profile-current"] = "Current profile: |cff00f000%s|r."
+L["chat.profile-error"] = "Please use |cff00f000letters and digits|r only."
+L["chat.profile-empty"] = "Profile |cff00f000%s|r is empty."
+L["chat.profile-same"] = "Please choose a different name."
+L["chat.profile-copied"] = "Copied profile |cff00f000%s|r to |cff00f000%s|r."
 
 L["chat.Debug"] = "Debug: "
 L["chat.Autoopen"] = "Auto open & close: "
@@ -50,6 +50,9 @@ L["on"] = "on"
 L["off"] = "off"
 
 L["button.OK"] = "OK"
+L["button.Add"] = "Add"
+L["button.Copy"] = "Copy"
+L["button.Delete"] = "Delete"
 
 L["Mount journal - Open Mounty"] = "Mounty #TLV"
 

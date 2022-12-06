@@ -3,7 +3,7 @@ local MountyAddOnName, Mounty = ...
 MountyData = {}
 _Data = {}
 
-local _Data_Profile = {}
+local _Profile = {}
 
 local TLV = TLV
 
@@ -22,6 +22,7 @@ local MountyOptionsFrame_Random
 local MountyOptionsFrame_DurabilityMin
 local MountyOptionsFrame_Hello
 local MountyOptionsFrame_Profile
+local MountyOptionsFrame_ProfileDropdown
 local MountyOptionsFrame_QuickStart
 
 local MountyOptionsFrame_Buttons = {}
@@ -54,12 +55,19 @@ local MountyTestDragon
 
 local MountyDebugForce = false
 
+function Mounty:Alert(msg)
+
+    Mounty:Chat(msg)
+    TLV:Alert(msg)
+
+end
+
 function Mounty:Chat(msg)
 
     if DEFAULT_CHAT_FRAME then
-
         DEFAULT_CHAT_FRAME:AddMessage("|cffa0a0ff" .. AddOnTitle .. " " .. AddOnVersion .. "|r: " .. msg, 1, 1, 0)
     end
+
 end
 
 function Mounty:Debug(msg)
@@ -95,21 +103,21 @@ function Mounty:Fallback(typ)
 
     local FallbackTo = 0
 
-    if (not MountyFallbackAlready[MountyFallbackQueue[1]]) then
+    if not MountyFallbackAlready[MountyFallbackQueue[1]] then
 
         FallbackTo = MountyFallbackQueue[1]
 
-    elseif (not MountyFallbackAlready[MountyFallbackQueue[2]]) then
+    elseif not MountyFallbackAlready[MountyFallbackQueue[2]] then
 
         FallbackTo = MountyFallbackQueue[2]
     end
 
-    if (FallbackTo == MountyFlying) then
+    if FallbackTo == MountyFlying then
 
         Mounty:Debug("Fallback: '" .. L["mode.Flying"] .. "'")
         return MountyFlying
 
-    elseif (FallbackTo == MountyGround) then
+    elseif FallbackTo == MountyGround then
 
         Mounty:Debug("Fallback: '" .. L["mode.Ground"] .. "'")
         return MountyGround
@@ -132,9 +140,9 @@ function Mounty:SelectMountByType(typ, only_flyable_showoffs)
 
     for i = 1, MountyMounts do
 
-        if _Data_Profile.Mounts[typ][i] > 0 then
+        if _Profile.Mounts[typ][i] > 0 then
 
-            local mountID = C_MountJournal.GetMountFromSpell(_Data_Profile.Mounts[typ][i])
+            local mountID = C_MountJournal.GetMountFromSpell(_Profile.Mounts[typ][i])
             local mname, _, _, _, isUsable = C_MountJournal.GetMountInfoByID(mountID)
 
             if only_flyable_showoffs then
@@ -150,22 +158,22 @@ function Mounty:SelectMountByType(typ, only_flyable_showoffs)
 
             if isUsable then
                 count = count + 1
-                ids[count] = _Data_Profile.Mounts[typ][i]
+                ids[count] = _Profile.Mounts[typ][i]
             end
         end
     end
 
     if count > 0 then
 
-        if _Data_Profile.Random then
+        if _Profile.Random then
             picked = math.random(count)
         else
-            if _Data_Profile.Iterator[typ] < count then
-                _Data_Profile.Iterator[typ] = _Data_Profile.Iterator[typ] + 1
+            if _Profile.Iterator[typ] < count then
+                _Profile.Iterator[typ] = _Profile.Iterator[typ] + 1
             else
-                _Data_Profile.Iterator[typ] = 1
+                _Profile.Iterator[typ] = 1
             end
-            picked = _Data_Profile.Iterator[typ]
+            picked = _Profile.Iterator[typ]
         end
 
         Mounty:Debug("Selected: " .. picked .. " of " .. count)
@@ -225,20 +233,20 @@ end
 
 function Mounty:DragonsCanFlyHere()
 
-    if (MountyTestDragon == nil) then
+    if MountyTestDragon == nil then
 
         MountyTestDragon = 0
 
         for k, v in ipairs(C_MountJournal.GetCollectedDragonridingMounts()) do
             local name, spellID, _, _, _, _, _, _, _, _, isCollected = C_MountJournal.GetMountInfoByID(v)
-            if (isCollected) then
+            if isCollected then
                 MountyTestDragon = spellID
                 Mounty:Debug("Test dragon found: " .. name .. " [" .. spellID .. "]")
             end
         end
     end
 
-    if (MountyTestDragon == 0) then
+    if MountyTestDragon == 0 then
         return false
     end
 
@@ -272,8 +280,8 @@ function Mounty:Mount(category)
     elseif category == "taxi" then
 
         if IsInGroup() and not IsMounted() then
-            if _Data_Profile.Hello ~= "" then
-                SendChatMessage(_Data_Profile.Hello)
+            if _Profile.Hello ~= "" then
+                SendChatMessage(_Profile.Hello)
             end
         end
 
@@ -300,7 +308,7 @@ function Mounty:Mount(category)
 
         MountyFallbackAlready = {} -- Muss wieder auf leer gesetzt werden
 
-        if (Mounty:UserCanFlyHere()) then
+        if Mounty:UserCanFlyHere() then
             MountyFallbackQueue = { MountyFlying, MountyGround }
         else
             MountyFallbackQueue = { MountyGround, MountyFlying }
@@ -364,9 +372,9 @@ function Mounty:KeyHandler(keypress)
         local alone = not IsInGroup()
         local flyable = Mounty:UserCanFlyHere()
         local swimming = IsSwimming()
-        local taximode = _Data_Profile.TaxiMode
-        local together = _Data_Profile.Together
-        local showoff = _Data_Profile.ShowOff
+        local taximode = _Profile.TaxiMode
+        local together = _Profile.Together
+        local showoff = _Profile.ShowOff
 
         Mounty:Debug("Magic key")
 
@@ -376,7 +384,7 @@ function Mounty:KeyHandler(keypress)
 
         local category
 
-        if Mounty:Durability() < _Data_Profile.DurabilityMin then
+        if Mounty:Durability() < _Profile.DurabilityMin then
 
             category = "repair"
 
@@ -424,7 +432,7 @@ function Mounty:AddMount(target)
         local already = false
 
         for i = 1, MountyMounts do
-            if _Data_Profile.Mounts[typ][i] == spellID then
+            if _Profile.Mounts[typ][i] == spellID then
                 already = true
             end
         end
@@ -442,12 +450,12 @@ function Mounty:AddMount(target)
             local index = target.MountyIndex
 
             -- find the first empty slot
-            while (index > 1 and _Data_Profile.Mounts[typ][index - 1] == 0) do
+            while (index > 1 and _Profile.Mounts[typ][index - 1] == 0) do
                 index = index - 1
             end
 
             Mounty:Debug("Mount saved: " .. infoType .. " " .. typ .. " " .. index .. " " .. mountID .. " " .. spellID)
-            _Data_Profile.Mounts[typ][index] = spellID
+            _Profile.Mounts[typ][index] = spellID
             Mounty:OptionsRenderButtons()
         end
 
@@ -463,9 +471,9 @@ function Mounty:RemoveMount(target)
     Mounty:Debug("Mount removed: " .. typ .. " " .. index)
 
     for i = index, MountyMounts - 1 do
-        _Data_Profile.Mounts[typ][i] = _Data_Profile.Mounts[typ][i + 1]
+        _Profile.Mounts[typ][i] = _Profile.Mounts[typ][i + 1]
     end
-    _Data_Profile.Mounts[typ][MountyMounts] = 0
+    _Profile.Mounts[typ][MountyMounts] = 0
 
     Mounty:OptionsRenderButtons()
 
@@ -477,7 +485,7 @@ function Mounty:Tooltip(calling)
     local typ = calling.MountyTyp
     local index = calling.MountyIndex
 
-    local spellID = _Data_Profile.Mounts[typ][index]
+    local spellID = _Profile.Mounts[typ][index]
 
     if spellID then
         GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
@@ -493,8 +501,6 @@ function Mounty:InitOptionsFrame()
 
     local control_top_delta = 40
     local control_top_delta_small = 20
-
-    -- Mounty options
 
     MountyOptionsFrame:Hide()
     MountyOptionsFrame:SetWidth(480)
@@ -535,7 +541,7 @@ function Mounty:InitOptionsFrame()
     temp:SetJustifyH("LEFT")
     temp:SetText(L["quick.text"])
 
-    if (not _Data.QuickStart) then
+    if not _Data.QuickStart then
         MountyOptionsFrame_QuickStart:Hide()
     end
 
@@ -547,8 +553,8 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame_Random:SetPoint("TOPLEFT", 16, top)
     MountyOptionsFrame_RandomText:SetText(L["options.Random"])
     MountyOptionsFrame_Random:SetScript("OnClick", function(calling)
-        _Data_Profile.Random = not _Data_Profile.Random
-        calling:SetChecked(_Data_Profile.Random)
+        _Profile.Random = not _Profile.Random
+        calling:SetChecked(_Profile.Random)
     end)
 
     -- Open Mounts
@@ -557,7 +563,7 @@ function Mounty:InitOptionsFrame()
     temp:SetSize(32, 32)
     temp:SetNormalTexture("Interface\\Icons\\Ability_Mount_RidingHorse")
     temp:SetPoint("TOPRIGHT", -20, top)
-    temp:SetScript("OnMouseUp", function()
+    temp:SetScript("OnClick", function()
         ToggleCollectionsJournal(1)
     end)
 
@@ -567,7 +573,7 @@ function Mounty:InitOptionsFrame()
     temp:SetSize(32, 32)
     temp:SetNormalTexture("Interface\\Icons\\INV_Misc_QuestionMark")
     temp:SetPoint("TOPRIGHT", -20, top - 40)
-    temp:SetScript("OnMouseUp", function()
+    temp:SetScript("OnClick", function()
         if MountyOptionsFrame_QuickStart:IsVisible() then
             MountyOptionsFrame_QuickStart:Hide()
         else
@@ -583,8 +589,8 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame_ShowOff:SetPoint("TOPLEFT", 16, top)
     MountyOptionsFrame_ShowOffText:SetText(L["options.Look"])
     MountyOptionsFrame_ShowOff:SetScript("OnClick", function(calling)
-        _Data_Profile.ShowOff = not _Data_Profile.ShowOff
-        calling:SetChecked(_Data_Profile.ShowOff)
+        _Profile.ShowOff = not _Profile.ShowOff
+        calling:SetChecked(_Profile.ShowOff)
     end)
 
     -- Together checkbox
@@ -595,8 +601,8 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame_Together:SetPoint("TOPLEFT", 16, top)
     MountyOptionsFrame_TogetherText:SetText(L["options.Stay"])
     MountyOptionsFrame_Together:SetScript("OnClick", function(calling)
-        _Data_Profile.Together = not _Data_Profile.Together
-        calling:SetChecked(_Data_Profile.Together)
+        _Profile.Together = not _Profile.Together
+        calling:SetChecked(_Profile.Together)
     end)
 
     -- TaxiMode checkbox
@@ -607,8 +613,8 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame_TaxiMode:SetPoint("TOPLEFT", 16, top)
     MountyOptionsFrame_TaxiModeText:SetText(L["options.Taxi"])
     MountyOptionsFrame_TaxiMode:SetScript("OnClick", function(calling)
-        _Data_Profile.TaxiMode = not _Data_Profile.TaxiMode
-        calling:SetChecked(_Data_Profile.TaxiMode)
+        _Profile.TaxiMode = not _Profile.TaxiMode
+        calling:SetChecked(_Profile.TaxiMode)
     end)
 
     -- Taxi!
@@ -624,16 +630,16 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame_HelloLabel:SetPoint("BOTTOMLEFT", MountyOptionsFrame_Hello, "TOPLEFT", 0, 4)
     MountyOptionsFrame_HelloLabel:SetText(L["options.Hello"])
     MountyOptionsFrame_Hello:SetScript("OnEnterPressed", function(calling)
-        _Data_Profile.Hello = calling:GetText()
+        _Profile.Hello = calling:GetText()
         calling:ClearFocus()
     end)
     MountyOptionsFrame_Hello:SetScript("OnEscapePressed", function(calling)
-        calling:SetText(_Data_Profile.Hello)
+        calling:SetText(_Profile.Hello)
     end)
 
-    temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 360, top + 2, 32, "MEDIUM", L["button.OK"])
-    temp:SetScript("OnMouseUp", function()
-        _Data_Profile.Hello = MountyOptionsFrame_Hello:GetText()
+    temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 360, top + 3, 32, L["button.OK"])
+    temp:SetScript("OnClick", function()
+        _Profile.Hello = MountyOptionsFrame_Hello:GetText()
         MountyOptionsFrame_Hello:ClearFocus()
     end)
 
@@ -651,7 +657,7 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame_DurabilityMin:SetValueStep(1)
     MountyOptionsFrame_DurabilityMin:SetScript("OnValueChanged", function(calling, value)
         MountyOptionsFrame_DurabilityMinText:SetFormattedText(L["options.Durability"], math.floor(value + 0.5))
-        _Data_Profile.DurabilityMin = math.floor(value + 0.5)
+        _Profile.DurabilityMin = math.floor(value + 0.5)
     end)
 
     -- Mounts
@@ -704,40 +710,57 @@ function Mounty:InitOptionsFrame()
 
     top = top - control_top_delta
 
-    MountyOptionsFrame_Profile = CreateFrame("EditBox", "MountyOptionsFrame_Profile", MountyOptionsFrame, "InputBoxTemplate")
-    MountyOptionsFrame_Profile:SetWidth(140)
-    MountyOptionsFrame_Profile:SetHeight(16)
-    MountyOptionsFrame_Profile:SetPoint("TOPLEFT", 25, top)
-    MountyOptionsFrame_Profile:SetAutoFocus(false)
-    MountyOptionsFrame_Profile:CreateFontString("MountyOptionsFrame_ProfileLabel", "OVERLAY", "GameFontNormalSmall")
-    MountyOptionsFrame_ProfileLabel:SetPoint("BOTTOMLEFT", MountyOptionsFrame_Profile, "TOPLEFT", 0, 4)
-    MountyOptionsFrame_ProfileLabel:SetText(L["options.Profile"])
-    MountyOptionsFrame_Profile:SetScript("OnEnterPressed", function(calling)
-        calling:ClearFocus()
-        local ok = Mounty:ParseProfile(string.split(" ", calling:GetText(), 2))
-        if not ok then
-            MountyOptionsFrame_Profile:SetText(_Data.Profile)
+    MountyOptionsFrame_ProfileDropdown = CreateFrame("FRAME", "MountyOptionsFrame_ProfileDropdown", MountyOptionsFrame, "UIDropDownMenuTemplate")
+    MountyOptionsFrame_ProfileDropdown:SetPoint("TOPLEFT", 0, top + 6);
+    MountyOptionsFrame_ProfileDropdown:CreateFontString("MountyOptionsFrame_ProfileDropdownLabel", "OVERLAY", "GameFontNormalSmall")
+    MountyOptionsFrame_ProfileDropdownLabel:SetPoint("BOTTOMLEFT", MountyOptionsFrame_ProfileDropdown, "TOPLEFT", 16, -2)
+    MountyOptionsFrame_ProfileDropdownLabel:SetText(L["options.Profile"])
+    UIDropDownMenu_SetWidth(MountyOptionsFrame_ProfileDropdown, 120)
+    UIDropDownMenu_SetText(MountyOptionsFrame_ProfileDropdown, _Data.CurrentProfile)
+    UIDropDownMenu_JustifyText(MountyOptionsFrame_ProfileDropdown, "LEFT")
+    UIDropDownMenu_Initialize(MountyOptionsFrame_ProfileDropdown, function(frame, level, menuList)
+
+        local info = UIDropDownMenu_CreateInfo()
+
+        for k, v in pairs(_Data.Profiles) do
+
+            info.text = k
+            info.func = function(p)
+                Mounty:SwitchProfile(p.value)
+            end
+
+            UIDropDownMenu_AddButton(info)
+
         end
+
     end)
 
-    local raid_opts = {
-        ['name'] = 'raid',
-        ['parent'] = MountyOptionsFrame,
-        ['title'] = '',
-        ['items'] = { '2', '12', '13' },
-        ['defaultVal'] = '',
-        ['changeFunc'] = function(dropdown_frame, dropdown_val)
-            Mounty:ParseProfile(dropdown_val)
-            UIDropDownMenu_SetText(MountyOptionsFrame_ProfileDropdown, "")
-        end
-    }
+    temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 152, top + 3, 48, L["button.Delete"])
+    temp:SetScript("OnClick", function()
+        Mounty:DeleteProfile(_Data.CurrentProfile)
+    end)
 
-    MountyOptionsFrame_ProfileDropdown = TLV:Dropdown(raid_opts)
-    MountyOptionsFrame_ProfileDropdown:SetPoint("TOPLEFT", 160, top + 6);
+    MountyOptionsFrame_Profile = CreateFrame("EditBox", "MountyOptionsFrame_Profile", MountyOptionsFrame, "InputBoxTemplate")
+    MountyOptionsFrame_Profile:SetWidth(120)
+    MountyOptionsFrame_Profile:SetHeight(16)
+    MountyOptionsFrame_Profile:SetPoint("TOPLEFT", 220, top)
+    MountyOptionsFrame_Profile:SetAutoFocus(false)
+    MountyOptionsFrame_Profile:SetScript("OnEnterPressed", function(calling)
+        calling:ClearFocus()
+        Mounty:SwitchProfile(calling:GetText())
+    end)
 
-    -- AutoOpen checkbox
+    temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 338, top + 3, 48, L["button.Add"])
+    temp:SetScript("OnClick", function()
+        Mounty:SwitchProfile(MountyOptionsFrame_Profile:GetText())
+    end)
 
-    top = top - control_top_delta_small
+    temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 384, top + 3, 48, L["button.Copy"])
+    temp:SetScript("OnClick", function()
+        Mounty:SwitchProfile(MountyOptionsFrame_Profile:GetText(), _Data.CurrentProfile)
+    end)
+
+    top = top - control_top_delta_small - 4
 
     MountyOptionsFrame_AutoOpen = CreateFrame("CheckButton", "MountyOptionsFrame_AutoOpen", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     MountyOptionsFrame_AutoOpen:SetPoint("TOPLEFT", 16, top)
@@ -759,24 +782,23 @@ function Mounty:InitOptionsFrame()
         calling:SetChecked(_Data.DebugMode)
     end)
 
-    -- No Idea what for ..?
-
-    -- MountyOptionsFrame.name = "Mounty"
-
 end
 
 function Mounty:OptionsRender()
 
-    MountyOptionsFrame_Random:SetChecked(_Data_Profile.Random)
-    MountyOptionsFrame_Together:SetChecked(_Data_Profile.Together)
-    MountyOptionsFrame_ShowOff:SetChecked(_Data_Profile.ShowOff)
-    MountyOptionsFrame_TaxiMode:SetChecked(_Data_Profile.TaxiMode)
-    MountyOptionsFrame_Hello:SetText(_Data_Profile.Hello)
-    MountyOptionsFrame_DurabilityMin:SetValue(_Data_Profile.DurabilityMin)
+    MountyOptionsFrame_Random:SetChecked(_Profile.Random)
+    MountyOptionsFrame_Together:SetChecked(_Profile.Together)
+    MountyOptionsFrame_ShowOff:SetChecked(_Profile.ShowOff)
+    MountyOptionsFrame_TaxiMode:SetChecked(_Profile.TaxiMode)
+    MountyOptionsFrame_Hello:SetText(_Profile.Hello)
+    MountyOptionsFrame_DurabilityMin:SetValue(_Profile.DurabilityMin)
 
-    MountyOptionsFrame_Profile:SetText(_Data.Profile)
     MountyOptionsFrame_DebugMode:SetChecked(_Data.DebugMode)
     MountyOptionsFrame_AutoOpen:SetChecked(_Data.AutoOpen)
+
+    MountyOptionsFrame_Profile:SetText("")
+
+    UIDropDownMenu_SetText(MountyOptionsFrame_ProfileDropdown, _Data.CurrentProfile)
 
     Mounty:OptionsRenderButtons()
 end
@@ -791,11 +813,11 @@ function Mounty:OptionsRenderButtons()
 
             MountyOptionsFrame_Buttons[t][i]:Hide() -- Muss sein, sonst werden die nicht immer neu gezeichnet ?!
 
-            if _Data_Profile.Mounts[t][i] == 0 then
+            if _Profile.Mounts[t][i] == 0 then
                 MountyOptionsFrame_Buttons[t][i]:SetNormalTexture("")
                 MountyOptionsFrame_Buttons[t][i]:Disable()
             else
-                icon = GetSpellTexture(_Data_Profile.Mounts[t][i])
+                icon = GetSpellTexture(_Profile.Mounts[t][i])
                 MountyOptionsFrame_Buttons[t][i]:SetNormalTexture(icon)
                 MountyOptionsFrame_Buttons[t][i]:Enable()
             end
@@ -807,9 +829,9 @@ end
 
 function Mounty:AddJournalButton()
 
-    local temp = TLV:Button(MountJournal, "BOTTOMRIGHT", -6, 3, 128, "HIGH", L["Mount journal - Open Mounty"])
+    local temp = TLV:Button(MountJournal, "BOTTOMRIGHT", -6, 3, 128, L["Mount journal - Open Mounty"])
 
-    temp:SetScript("OnMouseUp", function()
+    temp:SetScript("OnClick", function()
         if MountyOptionsFrame:IsVisible() then
             MountyOptionsFrame:Hide()
         else
@@ -821,59 +843,113 @@ function Mounty:AddJournalButton()
 
 end
 
-function Mounty:ParseProfile(p1, p2)
+function Mounty:ProfileNameDefault ()
 
-    local n1 = math.floor(tonumber(p1) or 0)
-    local n2 = math.floor(tonumber(p2) or 0)
+    local default = UnitName("player")
 
-    if n1 > 0 and p2 == "-" then
-        Mounty:DeleteProfile(n1)
-    elseif n1 > 0 then
-        Mounty:SwitchProfile(n1, n2)
-    else
-        Mounty:Chat(L["chat.profile-error"])
-        return false
+    if not Mounty:ProfileCheckName(default) then
+        default = "Mounty"
     end
 
-    return true
+    return default
+
+end
+
+function Mounty:ProfileCheckName (p, alert)
+
+    local ok = true
+
+    if p == nil or p == "" then
+        ok = false
+    elseif p ~= string.match(p, "[a-zA-Z0-9]+") then
+        ok = false
+    end
+
+    if not ok and alert then
+        Mounty:Alert(L["chat.profile-error"])
+    end
+
+    return ok
+
+end
+
+function Mounty:ParseProfile(p1, p2)
+
+    if string.lower(p1) == "delete" then
+        Mounty:DeleteProfile(p2)
+    else
+        Mounty:SwitchProfile(p1, p2)
+    end
 
 end
 
 function Mounty:DeleteProfile(p)
 
-    if (p > 1) then
-        _Data.Profiles[p] = nil
-        Mounty:Chat(string.format(L["chat.profile-deleted"], p))
-        Mounty:SwitchProfile(1, 0)
+    if not Mounty:ProfileCheckName(p, true) then
+        return
     end
+
+    StaticPopupDialogs["Mounty_Delete_Profile"] = {
+        text = CONFIRM_CONTINUE,
+        button1 = YES,
+        button2 = NO,
+        sound = IG_MAINMENU_OPEN,
+        timeout = 20,
+        whileDead = true,
+        hideOnEscape = true,
+        OnAccept = function(_, data)
+            _Data.Profiles[data.p] = nil
+            Mounty:Chat(string.format(L["chat.profile-deleted"], data.p))
+            Mounty:SwitchProfile(Mounty:ProfileNameDefault())
+        end
+    }
+
+    StaticPopup_Show("Mounty_Delete_Profile", nil, nil, { p = p })
 
 end
 
-function Mounty:SwitchProfile(p, pfrom)
+function Mounty:SwitchProfile(p_to, p_from)
 
-    if (pfrom > 0) then
+    if p_to == nil or p_to == "" then
+        Mounty:Alert(string.format(L["chat.profile-empty"], p_to))
+        return
+    end
 
-        if _Data.Profiles[pfrom] == nil then
+    if not Mounty:ProfileCheckName(p_to, true) then
+        return
+    end
 
-            Mounty:Chat(string.format(L["chat.profile-empty"], pfrom))
+    if Mounty:ProfileCheckName(p_from) then
+
+        if _Data.Profiles[p_from] == nil then
+
+            Mounty:Alert(string.format(L["chat.profile-empty"], p_from))
+
+        elseif p_from == p_to then
+
+            Mounty:Alert(string.format(L["chat.profile-same"]))
 
         else
 
-            _Data.Profiles[p] = TLV:TableCopy(_Data.Profiles[pfrom])
+            _Data.Profiles[p_to] = TLV:TableCopy(_Data.Profiles[p_from])
 
-            Mounty:Chat(string.format(L["chat.profile-copied"], p, pfrom))
+            Mounty:Chat(string.format(L["chat.profile-copied"], p_from, p_to))
 
         end
     end
 
-    Mounty:SelectProfile(p)
+    Mounty:SelectProfile(p_to)
     Mounty:OptionsRender()
 
-    Mounty:Chat(string.format(L["chat.profile-switched"], p))
+    Mounty:Chat(string.format(L["chat.profile-switched"], p_to))
 
 end
 
 function Mounty:SelectProfile(p)
+
+    if not Mounty:ProfileCheckName(p) then
+        return
+    end
 
     if _Data.Profiles[p] == nil then
         _Data.Profiles[p] = {}
@@ -944,9 +1020,9 @@ function Mounty:SelectProfile(p)
         end
     end
 
-    _Data_Profile = _Data.Profiles[p];
+    _Data.CurrentProfile = p
 
-    _Data.Profile = p
+    _Profile = _Data.Profiles[p];
 
 end
 
@@ -957,8 +1033,8 @@ function Mounty:Init()
 
     Mounty:Upgrade()
 
-    if _Data.Profile == nil then
-        _Data.Profile = 1
+    if _Data.CurrentProfile == nil then
+        _Data.CurrentProfile = Mounty:ProfileNameDefault()
     end
 
     if _Data.Profiles == nil then
@@ -973,7 +1049,7 @@ function Mounty:Init()
         _Data.AutoOpen = true
     end
 
-    Mounty:SelectProfile(_Data.Profile)
+    Mounty:SelectProfile(_Data.CurrentProfile)
 
     -- show quick start?
 
@@ -982,7 +1058,7 @@ function Mounty:Init()
     else
         _Data.QuickStart = true
         for t = 1, MountyTypes do
-            if _Data_Profile.Mounts[t][1] ~= 0 then
+            if _Profile.Mounts[t][1] ~= 0 then
                 _Data.QuickStart = false
             end
         end
@@ -1002,7 +1078,7 @@ function Mounty:Upgrade()
     if MountyData ~= nil then
         if MountyData.Mounts ~= nil then
 
-            if (MountyData.UpgradeToDragonflight == nil) then
+            if MountyData.UpgradeToDragonflight == nil then
                 MountyData.UpgradeToDragonflight = true
                 for t = MountyTypes, 4, -1 do
                     for i = 1, MountyMounts do
@@ -1023,16 +1099,16 @@ function Mounty:Upgrade()
 
         if MountyData ~= nil then
 
-            _Data.Profiles[1] = {}
-
-            _Data.Profiles[1].DurabilityMin = MountyData.DurabilityMin
-            _Data.Profiles[1].Hello = MountyData.Hello
-            _Data.Profiles[1].Iterator = MountyData.Iterator
-            _Data.Profiles[1].Mounts = MountyData.Mounts
-            _Data.Profiles[1].Random = MountyData.Random
-            _Data.Profiles[1].ShowOff = MountyData.ShowOff
-            _Data.Profiles[1].TaxiMode = MountyData.TaxiMode
-            _Data.Profiles[1].Together = MountyData.Together
+            _Data.Profiles[Mounty:ProfileNameDefault()] = {
+                DurabilityMin = MountyData.DurabilityMin,
+                Hello = MountyData.Hello,
+                Iterator = MountyData.Iterator,
+                Mounts = MountyData.Mounts,
+                Random = MountyData.Random,
+                ShowOff = MountyData.ShowOff,
+                TaxiMode = MountyData.TaxiMode,
+                Together = MountyData.Together
+            }
 
             _Data.DebugMode = MountyData.DebugMode
             _Data.AutoOpen = MountyData.AutoOpen
@@ -1051,7 +1127,7 @@ end
 
 function Mounty:OnEvent (event, arg1)
 
-    if (event == "ADDON_LOADED" and arg1 == MountyAddOnName) then
+    if event == "ADDON_LOADED" and arg1 == MountyAddOnName then
 
         Mounty.Init()
         self:UnregisterEvent("ADDON_LOADED")
@@ -1106,8 +1182,8 @@ SlashCmdList["MOUNTY"] = function(message)
     local mode, arg1, arg2 = string.split(" ", message, 3)
 
     mode = string.lower(mode or "")
-    arg1 = string.lower(arg1 or "")
-    arg2 = string.lower(arg2 or "")
+    arg1 = arg1 or ""
+    arg2 = arg2 or ""
 
     if mode == "magic" then
 
@@ -1116,7 +1192,7 @@ SlashCmdList["MOUNTY"] = function(message)
     elseif mode == "profile" then
 
         if arg1 == "" then
-            Mounty:Chat(string.format(L["chat.profile-current"], _Data.Profile))
+            Mounty:Chat(string.format(L["chat.profile-current"], _Data.CurrentProfile))
         else
             Mounty:ParseProfile(arg1, arg2)
         end
@@ -1155,12 +1231,12 @@ SlashCmdList["MOUNTY"] = function(message)
 
         if arg1 == "on" then
 
-            _Data_Profile.Together = true
+            _Profile.Together = true
             Mounty:Chat(L["chat.Together"] .. "|cff00f000" .. L["on"] .. "|r.")
 
         elseif arg1 == "off" then
 
-            _Data_Profile.Together = false
+            _Profile.Together = false
             Mounty:Chat(L["chat.Together"] .. "|cfff00000" .. L["off"] .. "|r.")
 
         end
@@ -1169,12 +1245,12 @@ SlashCmdList["MOUNTY"] = function(message)
 
         if arg1 == "on" then
 
-            _Data_Profile.ShowOff = true
+            _Profile.ShowOff = true
             Mounty:Chat(L["chat.Showoff"] .. "|cff00f000" .. L["on"] .. "|r.")
 
         elseif arg1 == "off" then
 
-            _Data_Profile.ShowOff = false
+            _Profile.ShowOff = false
             Mounty:Chat(L["chat.Showoff"] .. "|cfff00000" .. L["off"] .. "|r.")
 
         end
@@ -1183,12 +1259,12 @@ SlashCmdList["MOUNTY"] = function(message)
 
         if arg1 == "on" then
 
-            _Data_Profile.Random = true
+            _Profile.Random = true
             Mounty:Chat(L["chat.Random"] .. "|cff00f000" .. L["on"] .. "|r.")
 
         elseif arg1 == "off" then
 
-            _Data_Profile.Random = false
+            _Profile.Random = false
             Mounty:Chat(L["chat.Random"] .. "|cfff00000" .. L["off"] .. "|r.")
 
         end
@@ -1197,12 +1273,12 @@ SlashCmdList["MOUNTY"] = function(message)
 
         if arg1 == "on" then
 
-            _Data_Profile.TaxiMode = true
+            _Profile.TaxiMode = true
             Mounty:Chat(L["chat.Taxi"] .. "|cff00f000" .. L["on"] .. "|r.")
 
         elseif arg1 == "off" then
 
-            _Data_Profile.TaxiMode = false
+            _Profile.TaxiMode = false
             Mounty:Chat(L["chat.Taxi"] .. "|cfff00000" .. L["off"] .. "|r.")
 
         end
@@ -1214,5 +1290,7 @@ SlashCmdList["MOUNTY"] = function(message)
     else
 
         MountyOptionsFrame:Show();
+
     end
+
 end
