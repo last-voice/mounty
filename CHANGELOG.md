@@ -4,16 +4,13 @@ Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
 v2.4
 - Here come the profiles
-- Quite some refactoring
-- Still learning LUA
-
-v2.3.2.2
 - Version in Title
 - Version via chat command (/mounty version)
 - Strata fixes
-
-v2.3.2.1
-- Code improvement during start of new add on
+- Code improvement during start of another add on
+- Quite some refactoring
+- Still learning LUA
+- ! README update will follow
 
 v2.3.2
 - Much better Dragonflight check (I hope ;)
