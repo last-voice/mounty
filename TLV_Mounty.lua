@@ -801,6 +801,7 @@ function Mounty:OptionsRender()
     UIDropDownMenu_SetText(MountyOptionsFrame_ProfileDropdown, _Data.CurrentProfile)
 
     Mounty:OptionsRenderButtons()
+
 end
 
 function Mounty:OptionsRenderButtons()
@@ -825,6 +826,7 @@ function Mounty:OptionsRenderButtons()
             MountyOptionsFrame_Buttons[t][i]:Show() -- Muss sein, sonst werden die nicht immer neu gezeichnet ?!
         end
     end
+
 end
 
 function Mounty:AddJournalButton()
@@ -939,9 +941,11 @@ function Mounty:SwitchProfile(p_to, p_from)
     end
 
     Mounty:SelectProfile(p_to)
-    Mounty:OptionsRender()
-
     Mounty:Chat(string.format(L["chat.profile-switched"], p_to))
+
+    if (MountyOptionsFrame:IsVisible()) then
+        Mounty:OptionsRender()
+    end
 
 end
 
@@ -1136,6 +1140,16 @@ function Mounty:OnEvent (event, arg1)
 
 end
 
+function Mounty:OnShow ()
+
+    Mounty:OptionsRender()
+
+end
+
+function Mounty:OnHide ()
+
+end
+
 function MountyKeyHandler(keypress)
     Mounty:KeyHandler(keypress)
 end
@@ -1146,7 +1160,8 @@ MountyOptionsFrame:RegisterEvent("ADDON_LOADED")
 MountyOptionsFrame:RegisterEvent("PLAYER_LOGOUT")
 
 MountyOptionsFrame:SetScript("OnEvent", Mounty.OnEvent)
-MountyOptionsFrame:SetScript("OnShow", Mounty.OptionsRender)
+MountyOptionsFrame:SetScript("OnShow", Mounty.OnShow)
+MountyOptionsFrame:SetScript("OnHide", Mounty.OnHide)
 
 tinsert(UISpecialFrames, "MountyOptionsFrame");
 

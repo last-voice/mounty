@@ -1,4 +1,8 @@
-# The magic of Mounty #TLV
+# The magic of Mounty #TLV **
+
+## Always the perfect mount in any given situation!
+
+** Since v2.3 ready to wake some dragons
 
 ---
 
@@ -33,14 +37,15 @@ All this can be done with __Mounty #TLV__ and all this will happen _magically_ w
 
 # Manual
 
-## Always the perfect mount in any given situation!
+## So, always the perfect mount in any given situation!
 
 If you are lucky and got a few mounts in your collection, then it's quite simple to name the right mount to summon in every situation. Depending on the actual circumstances you are in.
 
-__Mounty #TLV__ offers __6 categories__ for your mounts:
+__Mounty #TLV__ offers __7 categories__ for your mounts:
 
 - __Ground mounts__ - Mounts, which are big fun to ride, always with their feet on the ground.
 - __Flying mounts__ - These can spread their wings or ignite their rockets to reach for the sky, with you on their back.
+- __Dragonflight__ - Two wings, spitting fire, dead eyes and faster than the devil. Ride the dragons!
 - __Water mounts__ - There are/were mounts which could walk on the water. At least there are few which are faster swimmers than others, so you don't have to hold your breath too long.
 - __Repair mounts__ - You got one of these, haven't you? Or do you still have to run miles to the next anvil, to get bat to 100% durability?
 - __Taxi mounts__ - A passenger's seat for a good friend is perfect for questing, farming, and fighting together hand in hand. Especially when your taxi has wings, and your friend doesn't know how to fly. He'll never forget your helping wing erm hand.
@@ -55,7 +60,10 @@ And you can assign this __one and only magic key__, which does its magic when pr
 Via checkboxes you can decide between the following:
 
 - _Taxi mode_ on/off: If on and you are in a group, prefer your taxi mount to summon and call for your friend to hop on.
-- _Don't fly mode_ on/off: Your winged mounts will (mostly) be ignored whilst in a party. Helpful if you joined friends, who can't fly yet and don't want to be left behind.
+- _Together mode_ on/off: Your winged mounts will (mostly) be ignored whilst in a party. Helpful if you joined friends, who can't fly yet and don't want to be left behind.
+- _Show off mode_: Whilst in resting areas you can rest. And let others know which jelly fish, erm mounts you've got and they hopefully haven't.
+
+### Here we go!
 
 In the end its quite simple. When the __magic key is pressed__, it goes like this:
 
@@ -67,13 +75,15 @@ You just killed thousands of enemies and your durability is lower than the thres
 
 You hang around with friends and your _taxi mode_ is on? My friend, we call for a __taxi mount__ to ride away together. Hop on!
 
-You are in a resting area? Time to impress everyone around with one of your favorite __show off mounts__.
+You are in a resting area and _show off mode_ is activated? Time to impress everyone around with one of your favorite __show off mounts__.
+
+You're on the Dragon isles and already experienced what it is like to be storm born? Mate, its time to wake the __dragon__!
 
 You're in a flight zone, all alone? Spread your wings or start your engines and up, up, up it goes with your favorite __fly mount__.
 
-You're in a flight zone with friends and didn't deactivate flying via _don't fly mode_? Jump on your __fly mount__ as race the skies with your friends.
+You're in a flight zone with friends but didn't activate _together mode_? Jump on your __fly mount__ and race the skies with your friends.
 
-It is sad that you can't fly, and it gets worse, cause you're swimming in cold water, but at least now you will summon your __water mount__ to get back to the beach asap.
+It is sad that you can't fly, and it gets worse, cause you're floating in cold water, but at least now you will summon your __water mount__ to get back to the beach asap.
 
 None of the above did come true: Now it's time to get back to where it all started by climbing on the back of these good old __ground mounts__ and take your ride to all five horizons.
 
@@ -81,19 +91,18 @@ Magic done. By __Mounty #TLV__.
 
 ### The full magic in less words
 
-```
-Magic key is pressed ->\
-Are you mounted and flying -> Do nothing\
-Are you mounted and not flying -> Dismount\
-You are not mounted ->\
-Your durability is lower than xx% (see options) -> Repair mount\
-You are party member, 'taxi mode' is on -> Taxi mount\
-You are in a resting area -> Show off mount\
-You are in a flight zone, all alone -> Fly mount\
-You are in a flight zone with friends and 'don't fly mode' is off -> Fly mount\
-You are swimming -> Water mount\
-else -> Ground mount\
-```
+>__Magic key is pressed, so now ...__\
+>Are you mounted and flying -> _Do nothing_\
+>Are you mounted and not flying -> _Dismount_\
+>You are not mounted ...\
+>Your durability is lower than xx% (see options) -> _Repair mount_\
+>You are party member, _taxi mode_ is on -> _Taxi mount_\
+>You are in a resting area, _show off mode_ is active -> _Show off mount_\
+>You're on the Dragon isles -> _Dragon_
+>You're in a flight zone, all alone -> _Fly mount_\
+>You're in a flight zone with friends and _together mode_ is off -> _Fly mount_\
+>You are swimming -> _Water mount_\
+>else -> _Ground mount_
 
 ### But there is still more than that
 
@@ -101,12 +110,12 @@ __Mounty #TLV__ will choose the perfect category as described above. But there m
 
 In this case there is a _fallback_:
 
-If a category is empty, it will then select one of your __flying mounts__.  And if there are none, too, it will select one of your __ground mounts__.  And if those are also missing, then there is only one last thing __Mounty #TLV__ can do for you: Randomly summon __any mount out of your whole collection__, preferring your favorites if there are any. 
+If a category is empty, it will then select one of your __flying mounts__.  And if there are none, too, it will select one of your __ground mounts__.  And if those are also missing, then there is only one last thing __Mounty #TLV__ can do for you: Randomly summon __any mount out of your whole collection__, preferring your favorites if there are any.
 
 ### Exceptions
 
-- Exception 1: In flyable resting areas only flyable show off mounts will be chosen.
-- Exception 2: As long as you haven't given to fly yet, ground mounts will always be prefered before fly mounts.
+- Exception 1: As long as you haven't given to fly yet, ground mounts will always be prefered before dragons and fly mounts.
+- Exception 2: In flyable resting areas only flyable show off mounts will be chosen.
 
 # How to configure and use
 
@@ -121,30 +130,37 @@ Drag & drop all your favorite mounts into the categories of your choice. Click r
 ## Options
 
 - __Random__ - If _on_, __Mounty #TLV__ will randomly summon a mount of the selected _category_. If _off_ then it will cycle through one by one.
-- __Don't fly__ - Whilst you are in a party: Even if you are in a flight zone and have learned to fly, you will not and stay on the ground. Looking for any reason? If you joined a friend who can't fly yet and you want to help him progress, farm, or quest, then it's quite fair to stay with him and keep eye level. Except ...
+- __Look at me!__ - In resting areas everybody should see one of your show off mounts. Because everybody must know, that you went fishing in Zereth Mortis for hundreds of hours, just to get this one and only jelly fish.
+- __Stay together__ - Whilst you are in a party: Even if you are in a flight zone and have learned to fly, you will not and stay on the ground. Looking for any reason? If you joined a friend who can't fly yet and you want to help him progress, farm, or quest, then it's quite fair to stay with him and keep eye level. Except ...
 - __Taxi mode__ - You want to help a friend and give him some rides whilst questing and farming together, then turn this on. When in a party and you summon your mount, your taxi mount will arrive. Where to?
 - __How to call ...__ - Say it! When your taxi arrives this short line of text will be chatted, so your friend will hop on and not let you wait. (Only if in group)
 - __Durability threshold__ - When your durability is lower than this, there's always a big hand for summoning your repair mount first. It's another kind of magic.
 - __Debug mode__ - Magic in numbers and letters. See for yourself what __Mounty #TLV__ let's you know via chat messages.
 
+### Profiles
+
+You can use different profiles like in many other addons.
+
 ## Command line
 
-Type in chat or use in macros
+Type in chat or use in macros:
+
+__Version__
+
+_/mounty version_  - to show the current version of the addon
 
 __Options__
 
 _/mounty_  - to open the options frame
 
-_/mounty debug on_ - to turn debug mode on\
-_/mounty debug off_ - to turn debug mode off\
-_/mounty auto on_ - to turn auto open mode on\
-_/mounty auto off_ - to turn auto open mode off\
-_/mounty fly on_ - to turn don't fly mode off(!)\
-_/mounty fly off_ - to turn don't fly mode on(!)\
-_/mounty random on_ - to turn random mode on\
-_/mounty random off_ - to turn random mode off\
-_/mounty taxi on_ - to turn taxi mode on\
-_/mounty taxi off_ - to turn taxi mode off
+__Switch options__
+
+_/mounty random on|off_ (Random or cycle throught)\
+_/mounty showoff on|off_ (Show off, show off!)\
+_/mounty together on|off_ (Let's stay together)\
+_/mounty taxi on|off_ (Use taxi mounts)\
+_/mounty auto on|off_ (Auto open options frame)\
+_/mounty debug on|off_ (Show debug info)\
 
 __Summoning__
 
@@ -158,6 +174,11 @@ _/mounty taxi_ - to summon taxi mount\
 _/mounty showoff_ - to summon show off mount\
 _/mounty random_ - to summon random mount
 
+_/mounty profile_ - to show the current used profile\
+_/mounty profile Heart_ - to switch to or create the profile Heart\
+_/mounty profile Wild Heart_ - to copy the settings of profile Heart to profile Wild\
+_/mounty profile delete Heart_ - to delete profile Heart 
+
 ## Binding keys
 
 __Use _system key bindings_ to assign your magic key.__
@@ -170,6 +191,7 @@ For example, my config is like this:
 - CTRL-# -> _Repair mount_
 - SHIFT-# -> _Taxi mount_
 - ALT-# -> _Water mount_
+- CTRL-ALT-# -> _Ground mount_
 - CTRL-Space -> _Show off mount_
 
 # Thank you!

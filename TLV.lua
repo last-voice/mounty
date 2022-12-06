@@ -28,6 +28,11 @@ end
 
 function TLV:Alert (alert)
 
+    if (alert == nil) then
+        StaticPopup_hide("TLV_ALERT")
+        return
+    end
+
     StaticPopupDialogs["TLV_ALERT"] = {
         text = alert,
         button1 = OKAY,

@@ -2,6 +2,9 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.4.1
+- READMEs up to date
+
 v2.4
 - Here come the profiles
 - Version in Title

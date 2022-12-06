@@ -1,4 +1,8 @@
-# Die Magie von Mounty #TLV
+# Die Magie von Mounty #TLV **
+
+## In jeder Situation das perfekte Mount!
+
+** Seit v2.3 sind die Drachen erwacht
 
 ---
 
@@ -25,7 +29,7 @@ Dann ist __Mounty #TLV__ genau das richtige Add-on für dich und mit nur __einem
 1. Installiere __Mounty #TLV__.
 2. Öffne WoWs _Reittiersammlung_. __Mounty #TLV__ sollte sich ebenfalls automatisch öffnen.
 3. Ziehe deine liebsten Reittiere mit der Maus in die entsprechenden Kategorien von __Mounty #TLV__.
-4. Öffne WoWs Tastaturbelegungen, wähle __Mounty #TLV__ und konfiguriere deine _magische Taste_. (z.B. ist meine #)
+4. Öffne WoWs Einstellungen für Tastaturbelegungen, wähle __Mounty #TLV__ und konfiguriere deine _magische Taste_. (z.B. ist meine #)
 5. Drücke deine _magische Taste_ um hier und jetzt immer das perfekte Reittier zu rufen.
 6. Genieße __Mounty #TLV__ und schau dir gerne auch alle weiteren Optionen und Mögichkeiten an.
 
@@ -33,28 +37,32 @@ Dann ist __Mounty #TLV__ genau das richtige Add-on für dich und mit nur __einem
 
 # Anleitung
 
-## In jeder Situation das perfekte Mount!
+## Also, in jeder Situation das perfekte Mount!
 
 Wenn du das Glück hast, Besitzer:in von mehreren Mounts zu sein, dann weißt du auch, dass sich darunter auch immer das beste befindet; und zwar je nach Situation, in der du dich gerade befindest.
 
-__Mounty #TLV__ unterscheidet zwischen __6 Kategorien für deine Mounts__:
+__Mounty #TLV__ unterscheidet zwischen __7 Kategorien für deine Mounts__:
 
 - __Boden-Mounts__ - Mounts und Vehikel, die richtig viel Spaß machen, dabei aber mit festen Füßen auf der Erde stehen.
 - __Flug-Mounts__ - Sie breiten ihre Flügel aus oder starten ihre Propeller, um den Himmel zu erobern. Mit dir fest in ihrem Sattel.
+- __Dragonflight__ - Zwei Flügel, Feuer im Rachen, kein Propeller und trotzdem schneller als der Teufel. Ride the Dragons!
 - __Wasser-Mounts__ - Es gibt oder gab Mounts, die sogar auf dem Wasser gehen konnten. In jedem Fall aber gibt es Mounts, die im Wasser schneller schwimmen als alle anderen, damit du nicht zu lange die Luft anhalten musst.
 - __Reparier-Mounts__ - Du weißt, welche ich damit meine und du hast so eins auch. - oder musst du immer wieder stundenlang bis zum nächsten Amboss laufen, um deine Rüstung wieder zum Glänzen zu bringen?
 - __Taxi-Mounts__ - Ein Beifahrer-Platz für einen guten Freund ist perfekt für gemeinsames Questen, farmen und kämpfen Hand in Hand. Vor allen Dingen, wenn dein Taxi Flügel hat, und dein Freund noch nicht gelernt hat zu fliegen. Er wird dir auf ewig dankbar sein.
 - __Angeber-Mounts__ - Du hast Stunden, Tage, sogar Wochen damit verbracht, dieses eine ganz besondere Mount deiner Träume zu ergattern. Es wird nie wieder ein besseres Mount geben. Vielleicht ab morgen wieder. Für heute aber musst du allen zeigen: Es ist für immer deins!
-  
-Du kannst __jeder dieser 6 Kategorien 10 verschiedene Lieblings-Mounts__ zuordnen. Einfach aus der Mount-Sammlung heraus mit der Maus herüberziehen.
+
+Du kannst __jeder dieser Kategorien 10 verschiedene Lieblings-Mounts__ zuordnen. Einfach aus der Mount-Sammlung heraus mit der Maus herüberziehen.
 Und du kannst __diese eine magische Taste__ belegen, die für dich zaubern wird.
 
 ## So wirkt die Magie
 
-Zwei Grundeinstellungen gibt es:
+Drei Grundeinstellungen gibt es:
 
 - _Taxi-Modus ein/aus_: Wer in dieser eingeschaltet ist und du in einer Gruppe bist, - dann werden Taxi-Mounts bevorzugt und deine Freunde aufgefordert, aufzuspringen.
 - _Nicht-fliegen-Modus an/aus_: Deine fliegenden Mounts bleiben im Stall, wenn du in einer Gruppe bist. Ideal wenn du einen Freund begleitest, der immer noch nicht fliegen kann. So bleibt ihr immer auf Augenhöhe und niemand zurück.
+- _Angeber-Modus an/aus_: Möchtest Du in Ruhebereichen Andere neidisch machen und dort immer eines Deiner Angeber-Mounts reiten?
+
+### Los geht es!
 
 Am Ende ist es ganz einfach. Wenn du __die magische Taste__ drückst, passiert folgendes:
 
@@ -66,7 +74,9 @@ Du hast gerade Tausende Gegner besiegt und deine Rüstung hängt in Fetzen herab
 
 Du bist in einer Gruppe mit Freunden und der Taximodus ist eingeschaltet? Mein Freund, wir rufen mein __Taxi-Mount__ und sausen gemeinsam davon. Los geht's!
 
-Du bist im Ruhebereich? Der perfekte Zeitpunkt, alle anderen mit einem __Angeber-Mount__ zu beeindrucken.
+Du bist im Ruhebereich und der Angeber-Modus ist eingeschaltet? Der perfekte Zeitpunkt, alle anderen mit einem __Angeber-Mount__ zu beeindrucken.
+
+Du bist auf den Dracheninseln und hast bereits erfahren dürfen, wie es ist, _storm born_ zu sein, dann weck den __Drachen__ auf.
 
 Du bist in einer Flug-Zone und in keiner Gruppe? Breite deine Flügel aus oder starte die Maschinen und hoch hinaus geht es in die Lüfte mit einem deiner liebsten __Flug-Mounts__.
 
@@ -80,19 +90,18 @@ Magisch, oder? Dank __Mounty #TLV__.
 
 ### Die ganze Magie in wenigen Worten
 
-``` 
-Die magische Taste wurde gedrückt ->\
-Du bist auf einem Mount und fliegst -> nichts passiert\
-Du bist auf einem Mount auf dem Boden -> Du sitzt ab\
-Du sitzt auf keinem Mount ->\
-Die Haltbarkeit deiner Rüstung ist unter xx% -> Reparier-Mount\
-Du bist in einer Gruppe, Taxi-Modus ist an -> Taxi-Mount\
-Du bist im Ruhebereich -> Angeber-Mount\
-Du bist in einer Flug-Zone, allein -> Flug-Mount\
-Du bist in einer Flug-Zone, in einer Gruppe und der Nicht-fliegen-Modus ist aus -> Flug-Mount\
-Du schwimmst im Wasser -> Wasser-Mount\
-sonst -> Boden-Mount\
-```
+>__Die magische Taste wurde gedrückt, und dann ...__\
+>Du bist auf einem Mount und fliegst -> _nichts passiert_\
+>Du bist auf einem Mount auf dem Boden -> _Du sitzt ab_\
+>Du sitzt auf keinem Mount ...\
+>Die Haltbarkeit deiner Rüstung ist unter xx% -> _Reparier-Mount-\
+>Du bist in einer Gruppe, Taxi-Modus ist an -> _Taxi-Mount_\
+>Du bist im Ruhebereich, Angeber-Modus ist an -> _Angeber-Mount_\
+>Du bist auf den Dracheninseln -> _Drachen_\
+>Du bist in einer Flug-Zone, allein -> _Flug-Mount_\
+>Du bist in einer Flug-Zone, in einer Gruppe und der Nicht-fliegen-Modus ist aus -> _Flug-Mount_\
+>Du schwimmst im Wasser -> _Wasser-Mount_\
+>sonst -> _Boden-Mount_\
 
 ### Und wenn eine Kategorie leer ist?
 
@@ -104,7 +113,7 @@ Wenn eine Kategorie leer ist, wird stattdessen eines deiner __Flug-Mounts__ ausg
 
 ### Sonderfälle
 
-- Sonderfall 1: Falls du noch nicht gelernt hast zu fliegen, werden Boden-Mounts immer bevorzugt.
+- Sonderfall 1: Flug-Mounts und Drachen werden nur dann gerufen, wenn Du auch gelernt hast, diese zu reiten.
 - Sonderfall 2: In Ruhebereichen, in denen du fliegen kannst, werden nur fliegende Angeber-Mounts ausgewählt.
 
 # Konfigurieren und benutzen
@@ -120,30 +129,37 @@ Ziehe mit der Maus deine favorisierten Mounts in die Kategorien deiner Wahl. Mit
 ## Optionen
 
 - __Zufall__ - Falls _eingeschaltet_, wird ein zufälliges Mount aus der jeweiligen _Kategorie_ ausgewählt. Falls _ausgeschaltet_, kommt eins nach dem anderen immer der Reihe nach und wieder von vorne.
-- __Nicht fliegen__ - Solang du in einer Gruppe bist: Auch wenn du fliegen könntest, du bleibst immer auf dem Boden. Was hat das für einen Sinn? Falls du einen Freund begleitest, der noch nicht fliegen kann, und diesem beim Questen, dann ist es schon fair, wenn du ihm nicht immer wieder davonfliegst, außer ...
+- __Seht her!__ - In Ruhebereichen wird automatisch eines Deiner Angeber-Reittiere aus dem Sack geholt, damit alle wissen, dass Du monatelang in Zereth Mortis geangelt hast.
+- __Zusammen bleiben__ - Solang du in einer Gruppe bist: Auch wenn du fliegen könntest, du bleibst immer auf dem Boden. Was hat das für einen Sinn? Falls du einen Freund begleitest, der noch nicht fliegen kann, und diesem beim Questen, dann ist es schon fair, wenn du ihm nicht immer wieder davonfliegst, außer ...
 - __Taxi-Modus__ - Unterwegs mit einem Freund, der mit deiner Unterstützung vorankommen will? Solange du in einer Gruppe bist, wird immer dein Taxi-Mount gerufen, so dass dein Freund bequem aufspringen kann und sich um nichts kümmern muss. Er hat ja dich.
 - __So rufst du ...__ - Mit deinem Taxi-Mount erscheint auch dieser Aufruf im Chat, damit dein Freund die Abfahrt nicht verpasst. (Nur in einer Gruppe)
 - __Haltbarkeit__ - Hier stellst du den Wert ein, der dafür sorgt, dass dein Reparier-Mount kommt, wenn deine Rüstung aussieht wie eine Murloc-Unterhose.
 - __Debug__ - Magie in Zahlen. Siehe selbst, was __Mounty #TLV__ dir alles im Chat verrät.
 
+### Profile
+
+Wie in vielen anderen Addons kannst Du verschiedene Profile anlegen.
+
 ## Kommandozeile
 
-Für den Chat oder Deine Makros
+Für den Chat oder Deine Makros:
+
+__Version__
+
+_/mounty version_  - zeigt die aktuelle Version des Addons
 
 __Optionen__
 
 _/mounty_  - um das Optionsfenster zu öffnen
 
-_/mounty debug on_ - schaltet den Debug-Modus ein\
-_/mounty debug off_ - schaltet den Debug-Modus ein\
-_/mounty auto on_ - schaltet den Auto-Öffnen-Modus ein\
-_/mounty auto off_ - schaltet den Auto-Öffnen-Modus aus\
-_/mounty fly on_ - schaltet den Nicht-fliegen-Modus aus(!)\
-_/mounty fly off_ - schaltet den Nicht-fliegen-Modus ein(!)\
-_/mounty random on_ - schaltet den Zufalls-Modus ein\
-_/mounty random off_ - schaltet den Zufalls-Modus aus\
-_/mounty taxi on_ - schaltet den Taxi-Modus ein\
-_/mounty taxi off_ - schaltet den Taxi-Modus ein\
+__Optionen umschalten__
+
+_/mounty random on|off_ (Zufällig oder in Reihenfolge)\
+_/mounty showoff on|off_ (Angeber, Angeber!)\
+_/mounty together on|off_ (Zusammen bleiben)\
+_/mounty taxi on|off_ (Taxi Reittiere verwenden)\
+_/mounty auto on|off_ (Optionen automatisch öffnen)\
+_/mounty debug on|off_ (Debug Infos anzeigen)\
 
 __Summoning__
 
@@ -157,6 +173,11 @@ _/mounty taxi_ - beschwört ein Taxi-Mount\
 _/mounty showoff_ - beschwört ein Angeber-Mount\
 _/mounty random_ - beschwört ein zufälliges Mount
 
+_/mounty profile_ - zeigt das aktuelle Profil\
+_/mounty profile Heart_ - schaltet auf das Profil Heart um und erstellt es falls nicht vorhanden\
+_/mounty profile Wild Heart_ - kopiert das Profil Heart zu Profil Wild\
+_/mounty profile delete Heart_ - löscht das Profil Heart
+
 ## Tastenbelegung
 
 Benutze die Einstellungen von WoW, um Tasten für __Mounty #TLV__ zu belegen.
@@ -165,11 +186,12 @@ Neben der _magischen Taste_ kannst du auch ein paar _Spezialtasten_ belegen, um 
 
 Hier zum Beispiel meine Konfiguration:
 
-- \# ->  _Magische Taste_
-- CTRL-# ->  _Reparier-Mount_
-- SHIFT-# ->  _Taxi-Mount_
-- ALT-# ->  _Wasser-Mount_
-- CTRL-Space ->  _Angeber-Mount_
+- \# -> _Magische Taste_
+- CTRL-# -> _Reparier-Mount_
+- SHIFT-# -> _Taxi-Mount_
+- ALT-# -> _Wasser-Mount_
+- CTRL-ALT-# -> _Boden-Reittier_
+- CTRL-Space -> _Angeber-Mount_
 
 # Dankeschön!
 
