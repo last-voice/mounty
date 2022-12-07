@@ -747,17 +747,17 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame_Profile:SetAutoFocus(false)
     MountyOptionsFrame_Profile:SetScript("OnEnterPressed", function(calling)
         calling:ClearFocus()
-        Mounty:SwitchProfile(calling:GetText())
+        Mounty:NewProfile(calling:GetText())
     end)
 
     temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 338, top + 3, 48, L["button.Add"])
     temp:SetScript("OnClick", function()
-        Mounty:SwitchProfile(MountyOptionsFrame_Profile:GetText())
+        Mounty:NewProfile(MountyOptionsFrame_Profile:GetText())
     end)
 
     temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 384, top + 3, 48, L["button.Copy"])
     temp:SetScript("OnClick", function()
-        Mounty:SwitchProfile(MountyOptionsFrame_Profile:GetText(), _Data.CurrentProfile)
+        Mounty:CopyProfile(MountyOptionsFrame_Profile:GetText(), _Data.CurrentProfile)
     end)
 
     top = top - control_top_delta_small - 4
@@ -879,8 +879,10 @@ function Mounty:ParseProfile(p1, p2)
 
     if string.lower(p1) == "delete" then
         Mounty:DeleteProfile(p2)
+    elseif p2 ~= nil then
+        Mounty:CopyProfile(p1, p2)
     else
-        Mounty:SwitchProfile(p1, p2)
+        Mounty:SwitchProfile(p1)
     end
 
 end
@@ -910,38 +912,76 @@ function Mounty:DeleteProfile(p)
 
 end
 
-function Mounty:SwitchProfile(p_to, p_from)
+function Mounty:NewProfile (p)
 
-    if p_to == nil or p_to == "" then
-        Mounty:Alert(string.format(L["chat.profile-empty"], p_to))
+    p = p or ""
+
+    if not Mounty:ProfileCheckName(p, true) then
         return
     end
 
-    if not Mounty:ProfileCheckName(p_to, true) then
+    if (_Data.Profiles[p] ~= nil) then
+        Mounty:Alert(string.format(L["chat.profile-already"], p))
         return
     end
 
-    if Mounty:ProfileCheckName(p_from) then
+    Mounty:SwitchProfile(p)
 
-        if _Data.Profiles[p_from] == nil then
+end
 
-            Mounty:Alert(string.format(L["chat.profile-empty"], p_from))
+function Mounty:CopyProfile (p, p_from)
 
-        elseif p_from == p_to then
+    p = p or ""
+    p_from = p_from or ""
 
-            Mounty:Alert(string.format(L["chat.profile-same"]))
-
-        else
-
-            _Data.Profiles[p_to] = TLV:TableCopy(_Data.Profiles[p_from])
-
-            Mounty:Chat(string.format(L["chat.profile-copied"], p_from, p_to))
-
-        end
+    if not Mounty:ProfileCheckName(p, true) then
+        return
     end
 
-    Mounty:SelectProfile(p_to)
-    Mounty:Chat(string.format(L["chat.profile-switched"], p_to))
+    if (_Data.Profiles[p] ~= nil) then
+        Mounty:Alert(string.format(L["chat.profile-already"], p))
+        return
+    end
+
+    if not Mounty:ProfileCheckName(p_from, true) then
+        return
+    end
+
+    if _Data.Profiles[p_from] == nil then
+
+        Mounty:Alert(string.format(L["chat.profile-empty"], p_from))
+
+    elseif p_from == p then
+
+        Mounty:Alert(string.format(L["chat.profile-already"], p))
+
+    else
+
+        _Data.Profiles[p] = TLV:TableCopy(_Data.Profiles[p_from])
+
+        Mounty:Chat(string.format(L["chat.profile-copied"], p_from, p))
+
+    end
+
+    Mounty:SwitchProfile(p)
+
+end
+
+function Mounty:SwitchProfile(p)
+
+    p = p or ""
+
+    if p == "" then
+        Mounty:Alert(string.format(L["chat.profile-empty"], p))
+        return
+    end
+
+    if not Mounty:ProfileCheckName(p, true) then
+        return
+    end
+
+    Mounty:SelectProfile(p)
+    Mounty:Chat(string.format(L["chat.profile-switched"], p))
 
     if (MountyOptionsFrame:IsVisible()) then
         Mounty:OptionsRender()
