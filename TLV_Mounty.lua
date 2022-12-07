@@ -53,15 +53,15 @@ Mounty.AddOnVersion = nil
 
 Mounty.MountyTestDragon = nil
 
-Mounty.DisableDialogBox = false -- When using chat commands
+Mounty.via_chat = false -- When using chat commands
 
 Mounty.MountyDebugForce = false
 
 function Mounty:Alert(msg)
 
-    Mounty:Chat(msg)
-
-    if (not Mounty.DisableDialogBox) then
+    if (Mounty.via_chat) then
+        Mounty:Chat(msg)
+    else
         TLV:Alert(msg)
     end
 
@@ -889,7 +889,7 @@ end
 
 function Mounty:ParseProfile(p1, p2, p3)
 
-    Mounty.DisableDialogBox = true
+    Mounty.via_chat = true
 
     if string.lower(p1) == "copy" then
 
@@ -909,7 +909,7 @@ function Mounty:ParseProfile(p1, p2, p3)
 
     end
 
-    Mounty.DisableDialogBox = false
+    Mounty.via_chat = false
 
 end
 
