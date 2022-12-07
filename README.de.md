@@ -174,8 +174,10 @@ _/mounty showoff_ - beschwört ein Angeber-Mount\
 _/mounty random_ - beschwört ein zufälliges Mount
 
 _/mounty profile_ - zeigt das aktuelle Profil\
+_/mounty profiles_ - listet alle Profile auf\
 _/mounty profile Heart_ - schaltet auf das Profil Heart um und erstellt es falls nicht vorhanden\
 _/mounty profile Wild Heart_ - kopiert das Profil Heart zu Profil Wild\
+_/mounty profile rename Wild Heart_ - benennt das Profil Wild in Heart um\
 _/mounty profile delete Heart_ - löscht das Profil Heart
 
 ## Tastenbelegung

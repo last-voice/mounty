@@ -2,6 +2,11 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.4.2
+- Profile can be renamed
+- Code refactoring 
+- READMEs up to date
+
 v2.4.1
 - READMEs up to date
 

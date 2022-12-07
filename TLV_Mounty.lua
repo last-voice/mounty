@@ -9,9 +9,6 @@ local TLV = TLV
 
 local L = Mounty.L
 
-local AddOnTitle
-local AddOnVersion
-
 local MountyOptionsFrame
 local MountyOptionsFrame_DebugMode
 local MountyOptionsFrame_AutoOpen
@@ -51,28 +48,36 @@ local MountyTypesLabel = {
 local MountyFallbackQueue = {}
 local MountyFallbackAlready = {}
 
-local MountyTestDragon
+Mounty.AddOnTitle = nil
+Mounty.AddOnVersion = nil
 
-local MountyDebugForce = false
+Mounty.MountyTestDragon = nil
+
+Mounty.DisableDialogBox = false -- When using chat commands
+
+Mounty.MountyDebugForce = false
 
 function Mounty:Alert(msg)
 
     Mounty:Chat(msg)
-    TLV:Alert(msg)
+
+    if (not Mounty.DisableDialogBox) then
+        TLV:Alert(msg)
+    end
 
 end
 
 function Mounty:Chat(msg)
 
     if DEFAULT_CHAT_FRAME then
-        DEFAULT_CHAT_FRAME:AddMessage("|cffa0a0ff" .. AddOnTitle .. " " .. AddOnVersion .. "|r: " .. msg, 1, 1, 0)
+        DEFAULT_CHAT_FRAME:AddMessage("|cffa0a0ff" .. Mounty.AddOnTitle .. " " .. Mounty.AddOnVersion .. "|r: " .. msg, 1, 1, 0)
     end
 
 end
 
 function Mounty:Debug(msg)
 
-    if _Data.DebugMode or MountyDebugForce then
+    if _Data.DebugMode or Mounty.MountyDebugForce then
         Mounty:Chat(msg)
     end
 end
@@ -233,24 +238,24 @@ end
 
 function Mounty:DragonsCanFlyHere()
 
-    if MountyTestDragon == nil then
+    if Mounty.MountyTestDragon == nil then
 
-        MountyTestDragon = 0
+        Mounty.MountyTestDragon = 0
 
         for k, v in ipairs(C_MountJournal.GetCollectedDragonridingMounts()) do
             local name, spellID, _, _, _, _, _, _, _, _, isCollected = C_MountJournal.GetMountInfoByID(v)
             if isCollected then
-                MountyTestDragon = spellID
+                Mounty.MountyTestDragon = spellID
                 Mounty:Debug("Test dragon found: " .. name .. " [" .. spellID .. "]")
             end
         end
     end
 
-    if MountyTestDragon == 0 then
+    if Mounty.MountyTestDragon == 0 then
         return false
     end
 
-    return (IsUsableSpell(MountyTestDragon))
+    return (IsUsableSpell(Mounty.MountyTestDragon))
 end
 
 function Mounty:Mount(category)
@@ -522,7 +527,7 @@ function Mounty:InitOptionsFrame()
     -- Title text
     temp = MountyOptionsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     temp:SetPoint("TOP", 0, -6)
-    temp:SetText(AddOnTitle .. " " .. AddOnVersion)
+    temp:SetText(Mounty.AddOnTitle .. " " .. Mounty.AddOnVersion)
 
     -- Quickstart
 
@@ -722,9 +727,11 @@ function Mounty:InitOptionsFrame()
 
         local info = UIDropDownMenu_CreateInfo()
 
-        for k, v in pairs(_Data.Profiles) do
+        local profiles = Mounty:ProfilesSorted()
 
-            info.text = k
+        for _, profile in ipairs(Mounty:ProfilesSorted()) do
+
+            info.text = profile
             info.func = function(p)
                 Mounty:SwitchProfile(p.value)
             end
@@ -735,29 +742,34 @@ function Mounty:InitOptionsFrame()
 
     end)
 
-    temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 152, top + 3, 48, L["button.Delete"])
-    temp:SetScript("OnClick", function()
-        Mounty:DeleteProfile(_Data.CurrentProfile)
-    end)
-
     MountyOptionsFrame_Profile = CreateFrame("EditBox", "MountyOptionsFrame_Profile", MountyOptionsFrame, "InputBoxTemplate")
-    MountyOptionsFrame_Profile:SetWidth(120)
+    MountyOptionsFrame_Profile:SetWidth(100)
     MountyOptionsFrame_Profile:SetHeight(16)
-    MountyOptionsFrame_Profile:SetPoint("TOPLEFT", 220, top)
+    MountyOptionsFrame_Profile:SetPoint("TOPLEFT", 170, top)
     MountyOptionsFrame_Profile:SetAutoFocus(false)
     MountyOptionsFrame_Profile:SetScript("OnEnterPressed", function(calling)
         calling:ClearFocus()
         Mounty:NewProfile(calling:GetText())
     end)
 
-    temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 338, top + 3, 48, L["button.Add"])
+    temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 270, top + 3, 50, L["button.Add"])
     temp:SetScript("OnClick", function()
         Mounty:NewProfile(MountyOptionsFrame_Profile:GetText())
     end)
 
-    temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 384, top + 3, 48, L["button.Copy"])
+    temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 318, top + 3, 50, L["button.Copy"])
     temp:SetScript("OnClick", function()
-        Mounty:CopyProfile(MountyOptionsFrame_Profile:GetText(), _Data.CurrentProfile)
+        Mounty:CopyProfile(_Data.CurrentProfile, MountyOptionsFrame_Profile:GetText())
+    end)
+
+    temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 366, top + 3, 50, L["button.Edit"])
+    temp:SetScript("OnClick", function()
+        Mounty:CopyProfile(_Data.CurrentProfile, MountyOptionsFrame_Profile:GetText(), true)
+    end)
+
+    temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 414, top + 3, 50, L["button.Delete"])
+    temp:SetScript("OnClick", function()
+        Mounty:DeleteProfile(_Data.CurrentProfile)
     end)
 
     top = top - control_top_delta_small - 4
@@ -859,31 +871,45 @@ end
 
 function Mounty:ProfileCheckName (p, alert)
 
-    local ok = true
+    local err = ""
 
     if p == nil or p == "" then
-        ok = false
+        err = "profile.empty"
     elseif p ~= string.match(p, "[a-zA-Z0-9]+") then
-        ok = false
+        err = "profile.error"
     end
 
-    if not ok and alert then
-        Mounty:Alert(L["chat.profile-error"])
+    if err ~= "" and alert then
+        Mounty:Alert(L[err])
     end
 
-    return ok
+    return err == ""
 
 end
 
-function Mounty:ParseProfile(p1, p2)
+function Mounty:ParseProfile(p1, p2, p3)
 
-    if string.lower(p1) == "delete" then
+    Mounty.DisableDialogBox = true
+
+    if string.lower(p1) == "copy" then
+
+        Mounty:CopyProfile(p2, p3)
+
+    elseif string.lower(p1) == "rename" then
+
+        Mounty:CopyProfile(p2, p3, true)
+
+    elseif string.lower(p1) == "delete" then
+
         Mounty:DeleteProfile(p2)
-    elseif p2 ~= nil then
-        Mounty:CopyProfile(p1, p2)
+
     else
+
         Mounty:SwitchProfile(p1)
+
     end
+
+    Mounty.DisableDialogBox = false
 
 end
 
@@ -893,35 +919,43 @@ function Mounty:DeleteProfile(p)
         return
     end
 
+    if _Data.Profiles[p] == nil then
+        Mounty:Alert(string.format(L["profile.none"], p))
+        return
+    end
+
     StaticPopupDialogs["Mounty_Delete_Profile"] = {
-        text = CONFIRM_CONTINUE,
+        text = L["profile.delete-confirm"],
         button1 = YES,
         button2 = NO,
         sound = IG_MAINMENU_OPEN,
         timeout = 20,
         whileDead = true,
         hideOnEscape = true,
-        OnAccept = function(_, data)
-            _Data.Profiles[data.p] = nil
-            Mounty:Chat(string.format(L["chat.profile-deleted"], data.p))
+        OnAccept = function(self, data, data2)
+            _Data.Profiles[data] = nil
+            Mounty:Chat(string.format(L["profile.deleted"], data))
             Mounty:SwitchProfile(Mounty:ProfileNameDefault())
         end
     }
 
-    StaticPopup_Show("Mounty_Delete_Profile", nil, nil, { p = p })
+    -- https://wowpedia.fandom.com/wiki/Creating_simple_pop-up_dialog_boxes
+
+    popup = StaticPopup_Show("Mounty_Delete_Profile", p) -- Ersetzt automatisch %s in L["profile.delete-confirm"] durch p
+    if (popup) then
+        popup.data = p -- setzt data im Objekt auf p
+    end
 
 end
 
 function Mounty:NewProfile (p)
-
-    p = p or ""
 
     if not Mounty:ProfileCheckName(p, true) then
         return
     end
 
     if (_Data.Profiles[p] ~= nil) then
-        Mounty:Alert(string.format(L["chat.profile-already"], p))
+        Mounty:Alert(string.format(L["profile.already"], p))
         return
     end
 
@@ -929,17 +963,14 @@ function Mounty:NewProfile (p)
 
 end
 
-function Mounty:CopyProfile (p, p_from)
-
-    p = p or ""
-    p_from = p_from or ""
+function Mounty:CopyProfile (p_from, p, rename)
 
     if not Mounty:ProfileCheckName(p, true) then
         return
     end
 
     if (_Data.Profiles[p] ~= nil) then
-        Mounty:Alert(string.format(L["chat.profile-already"], p))
+        Mounty:Alert(string.format(L["profile.already"], p))
         return
     end
 
@@ -949,18 +980,18 @@ function Mounty:CopyProfile (p, p_from)
 
     if _Data.Profiles[p_from] == nil then
 
-        Mounty:Alert(string.format(L["chat.profile-empty"], p_from))
+        Mounty:Alert(string.format(L["profile.none"], p_from))
+        return
 
-    elseif p_from == p then
+    end
 
-        Mounty:Alert(string.format(L["chat.profile-already"], p))
+    _Data.Profiles[p] = TLV:TableCopy(_Data.Profiles[p_from])
 
+    if (rename) then
+        _Data.Profiles[p_from] = nil
+        Mounty:Chat(string.format(L["profile.renamed"], p_from, p))
     else
-
-        _Data.Profiles[p] = TLV:TableCopy(_Data.Profiles[p_from])
-
-        Mounty:Chat(string.format(L["chat.profile-copied"], p_from, p))
-
+        Mounty:Chat(string.format(L["profile.copied"], p_from, p))
     end
 
     Mounty:SwitchProfile(p)
@@ -969,10 +1000,8 @@ end
 
 function Mounty:SwitchProfile(p)
 
-    p = p or ""
-
     if p == "" then
-        Mounty:Alert(string.format(L["chat.profile-empty"], p))
+        Mounty:Alert(string.format(L["profile.none"], p))
         return
     end
 
@@ -981,7 +1010,7 @@ function Mounty:SwitchProfile(p)
     end
 
     Mounty:SelectProfile(p)
-    Mounty:Chat(string.format(L["chat.profile-switched"], p))
+    Mounty:Chat(string.format(L["profile.switched"], p))
 
     if (MountyOptionsFrame:IsVisible()) then
         Mounty:OptionsRender()
@@ -1070,10 +1099,30 @@ function Mounty:SelectProfile(p)
 
 end
 
+function Mounty:ProfilesSorted (joined)
+
+    local profiles = {}
+
+    for k, v in pairs(_Data.Profiles) do
+
+        table.insert(profiles, k)
+
+    end
+
+    table.sort(profiles)
+
+    if (joined) then
+        profiles = table.concat(profiles, " ")
+    end
+
+    return profiles
+
+end
+
 function Mounty:Init()
 
-    AddOnTitle = GetAddOnMetadata(MountyAddOnName, "Title")
-    AddOnVersion = GetAddOnMetadata(MountyAddOnName, "Version")
+    Mounty.AddOnTitle = GetAddOnMetadata(MountyAddOnName, "Title")
+    Mounty.AddOnVersion = GetAddOnMetadata(MountyAddOnName, "Version")
 
     Mounty:Upgrade()
 
@@ -1234,22 +1283,27 @@ SlashCmdList["MOUNTY"] = function(message)
 
     message = message or ""
 
-    local mode, arg1, arg2 = string.split(" ", message, 3)
+    local mode, arg1, arg2, arg3 = string.split(" ", message, 4)
 
     mode = string.lower(mode or "")
     arg1 = arg1 or ""
     arg2 = arg2 or ""
+    arg3 = arg3 or ""
 
     if mode == "magic" then
 
         Mounty:KeyHandler()
 
+    elseif mode == "profiles" then
+
+        Mounty:Chat(string.format(L["profile.list"], Mounty:ProfilesSorted(true)))
+
     elseif mode == "profile" then
 
         if arg1 == "" then
-            Mounty:Chat(string.format(L["chat.profile-current"], _Data.CurrentProfile))
+            Mounty:Chat(string.format(L["profile.current"], _Data.CurrentProfile))
         else
-            Mounty:ParseProfile(arg1, arg2)
+            Mounty:ParseProfile(arg1, arg2, arg3)
         end
 
     elseif mode == "version" then
