@@ -35,6 +35,7 @@ L["options.Durability"] = "Das Repair kommt bei weniger als %d%% Rüstung."
 L["options.Hello"] = "So rufst du deinen Passagier"
 L["options.Helptext"] = "Mounts hier reinziehen. Rechtsklick, um Mount zu entfernen."
 L["options.Profile"] = "Profil"
+L["options.ShareProfiles"] = "Profile mit deinen anderen Charakteren teilen"
 
 L["profile.list"] = "Profile: |cff00f000%s|r"
 L["profile.switched"] = "Zu Profil |cff00f000%s|r gewechselt."

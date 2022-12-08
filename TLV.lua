@@ -5,6 +5,7 @@ function TLV:TableCopy(copy_from)
     local copy_to = {}
 
     for k, v in pairs(copy_from) do
+
         if type(v) == "table" then
             v = TLV:TableCopy(v)
         end

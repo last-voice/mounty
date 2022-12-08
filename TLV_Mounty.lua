@@ -1,16 +1,12 @@
 local MountyAddOnName, Mounty = ...
 
-MountyData = {}
-_Data = {}
-
-local _Profile = {}
-
 local TLV = TLV
 
 local L = Mounty.L
 
 local MountyOptionsFrame
 local MountyOptionsFrame_DebugMode
+local MountyOptionsFrame_ShareProfiles
 local MountyOptionsFrame_AutoOpen
 local MountyOptionsFrame_TaxiMode
 local MountyOptionsFrame_Together
@@ -65,7 +61,7 @@ end
 
 function Mounty:Debug(msg)
 
-    if _Data.DebugMode or Mounty.MountyDebugForce then
+    if _DataAccount.DebugMode or Mounty.MountyDebugForce then
         Mounty:Chat(msg)
     end
 end
@@ -128,7 +124,6 @@ function Mounty:SelectMountByType(typ, only_flyable_showoffs)
 
     local ids = {}
     local count = 0
-    local usable
     local picked
 
     for i = 1, MountyMounts do
@@ -136,20 +131,20 @@ function Mounty:SelectMountByType(typ, only_flyable_showoffs)
         if _Profile.Mounts[typ][i] > 0 then
 
             local mountID = C_MountJournal.GetMountFromSpell(_Profile.Mounts[typ][i])
-            local mname, _, _, _, isUsable = C_MountJournal.GetMountInfoByID(mountID)
+            local mname, _, _, _, usable = C_MountJournal.GetMountInfoByID(mountID)
 
             if only_flyable_showoffs then
                 local _, _, _, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
 
                 if mountTypeID ~= 248 then
                     -- 248 = mostly flyable
-                    isUsable = false
+                    usable = false
                 end
             end
 
-            Mounty:Debug("Usable: " .. "[" .. mountID .. "] " .. mname .. " -> " .. tostring(isUsable))
+            Mounty:Debug("Usable: " .. "[" .. mountID .. "] " .. mname .. " -> " .. tostring(usable))
 
-            if isUsable then
+            if usable then
                 count = count + 1
                 ids[count] = _Profile.Mounts[typ][i]
             end
@@ -230,7 +225,7 @@ function Mounty:DragonsCanFlyHere()
 
         Mounty.MountyTestDragon = 0
 
-        for k, v in ipairs(C_MountJournal.GetCollectedDragonridingMounts()) do
+        for _, v in ipairs(C_MountJournal.GetCollectedDragonridingMounts()) do
             local name, spellID, _, _, _, _, _, _, _, _, isCollected = C_MountJournal.GetMountInfoByID(v)
             if isCollected then
                 Mounty.MountyTestDragon = spellID
@@ -498,7 +493,7 @@ function Mounty:InitOptionsFrame()
 
     MountyOptionsFrame:Hide()
     MountyOptionsFrame:SetWidth(480)
-    MountyOptionsFrame:SetHeight(620)
+    MountyOptionsFrame:SetHeight(640)
     MountyOptionsFrame:SetPoint("CENTER")
 
     MountyOptionsFrame:SetFrameStrata("MEDIUM")
@@ -507,7 +502,7 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame:EnableMouse(true)
     MountyOptionsFrame:SetMovable(true)
     MountyOptionsFrame:RegisterForDrag("LeftButton")
-    MountyOptionsFrame:SetScript("OnDragStart", function(calling, button)
+    MountyOptionsFrame:SetScript("OnDragStart", function(calling)
         calling:StartMoving()
     end)
     MountyOptionsFrame:SetScript("OnDragStop", function(calling)
@@ -526,6 +521,7 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame_QuickStart:SetHeight(90)
     MountyOptionsFrame_QuickStart:SetPoint("BOTTOM", 0, -90)
     MountyOptionsFrame_QuickStart:SetFrameStrata("MEDIUM")
+    MountyOptionsFrame.Bg:SetFrameStrata("LOW")
 
     temp = MountyOptionsFrame_QuickStart:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     temp:SetPoint("TOP", 0, -6)
@@ -536,7 +532,7 @@ function Mounty:InitOptionsFrame()
     temp:SetJustifyH("LEFT")
     temp:SetText(L["quick.text"])
 
-    if not _Data.QuickStart then
+    if not _DataAccount.QuickStart then
         MountyOptionsFrame_QuickStart:Hide()
     end
 
@@ -650,7 +646,7 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame_DurabilityMinHigh:SetText("100%")
     MountyOptionsFrame_DurabilityMin:SetMinMaxValues(50, 100)
     MountyOptionsFrame_DurabilityMin:SetValueStep(1)
-    MountyOptionsFrame_DurabilityMin:SetScript("OnValueChanged", function(calling, value)
+    MountyOptionsFrame_DurabilityMin:SetScript("OnValueChanged", function(_, value)
         MountyOptionsFrame_DurabilityMinText:SetFormattedText(L["options.Durability"], math.floor(value + 0.5))
         _Profile.DurabilityMin = math.floor(value + 0.5)
     end)
@@ -711,13 +707,11 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame_ProfileDropdownLabel:SetPoint("BOTTOMLEFT", MountyOptionsFrame_ProfileDropdown, "TOPLEFT", 16, -2)
     MountyOptionsFrame_ProfileDropdownLabel:SetText(L["options.Profile"])
     UIDropDownMenu_SetWidth(MountyOptionsFrame_ProfileDropdown, 120)
-    UIDropDownMenu_SetText(MountyOptionsFrame_ProfileDropdown, _Data.CurrentProfile)
+    UIDropDownMenu_SetText(MountyOptionsFrame_ProfileDropdown, _DataCharacter.CurrentProfile)
     UIDropDownMenu_JustifyText(MountyOptionsFrame_ProfileDropdown, "LEFT")
-    UIDropDownMenu_Initialize(MountyOptionsFrame_ProfileDropdown, function(frame, level, menuList)
+    UIDropDownMenu_Initialize(MountyOptionsFrame_ProfileDropdown, function()
 
         local info = UIDropDownMenu_CreateInfo()
-
-        local profiles = Mounty:ProfilesSorted()
 
         for _, profile in ipairs(Mounty:ProfilesSorted()) do
 
@@ -749,18 +743,35 @@ function Mounty:InitOptionsFrame()
 
     temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 318, top + 3, 50, L["button.Copy"])
     temp:SetScript("OnClick", function()
-        Mounty:CopyProfile(_Data.CurrentProfile, MountyOptionsFrame_Profile:GetText())
+        Mounty:CopyProfile(_DataCharacter.CurrentProfile, MountyOptionsFrame_Profile:GetText())
     end)
 
     temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 366, top + 3, 50, L["button.Edit"])
     temp:SetScript("OnClick", function()
-        Mounty:CopyProfile(_Data.CurrentProfile, MountyOptionsFrame_Profile:GetText(), true)
+        Mounty:CopyProfile(_DataCharacter.CurrentProfile, MountyOptionsFrame_Profile:GetText(), true)
     end)
 
     temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 414, top + 3, 50, L["button.Delete"])
     temp:SetScript("OnClick", function()
-        Mounty:DeleteProfile(_Data.CurrentProfile)
+        Mounty:DeleteProfile(_DataCharacter.CurrentProfile)
     end)
+
+    -- Share profiles checkbox
+
+    top = top - control_top_delta_small
+
+    MountyOptionsFrame_ShareProfiles = CreateFrame("CheckButton", "MountyOptionsFrame_ShareProfiles", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    MountyOptionsFrame_ShareProfiles:SetPoint("TOPLEFT", 16, top)
+    MountyOptionsFrame_ShareProfilesText:SetText(L["options.ShareProfiles"])
+    MountyOptionsFrame_ShareProfiles:SetScript("OnClick", function(calling)
+        _DataCharacter.ShareProfiles = not _DataCharacter.ShareProfiles
+        _DataCharacter.CurrentProfile = nil
+        Mounty:Init()
+        Mounty:OptionsRender()
+
+    end)
+
+    -- Auto open checkbox
 
     top = top - control_top_delta_small - 4
 
@@ -768,8 +779,8 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame_AutoOpen:SetPoint("TOPLEFT", 16, top)
     MountyOptionsFrame_AutoOpenText:SetText(L["options.Autoopen"])
     MountyOptionsFrame_AutoOpen:SetScript("OnClick", function(calling)
-        _Data.AutoOpen = not _Data.AutoOpen
-        calling:SetChecked(_Data.AutoOpen)
+        _DataAccount.AutoOpen = not _DataAccount.AutoOpen
+        calling:SetChecked(_DataAccount.AutoOpen)
     end)
 
     -- DebugMode checkbox
@@ -780,8 +791,8 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame_DebugMode:SetPoint("TOPLEFT", 16, top)
     MountyOptionsFrame_DebugModeText:SetText(L["options.Debug"])
     MountyOptionsFrame_DebugMode:SetScript("OnClick", function(calling)
-        _Data.DebugMode = not _Data.DebugMode
-        calling:SetChecked(_Data.DebugMode)
+        _DataAccount.DebugMode = not _DataAccount.DebugMode
+        calling:SetChecked(_DataAccount.DebugMode)
     end)
 
 end
@@ -795,12 +806,14 @@ function Mounty:OptionsRender()
     MountyOptionsFrame_Hello:SetText(_Profile.Hello)
     MountyOptionsFrame_DurabilityMin:SetValue(_Profile.DurabilityMin)
 
-    MountyOptionsFrame_DebugMode:SetChecked(_Data.DebugMode)
-    MountyOptionsFrame_AutoOpen:SetChecked(_Data.AutoOpen)
+    MountyOptionsFrame_ShareProfiles:SetChecked(_DataCharacter.ShareProfiles)
+
+    MountyOptionsFrame_DebugMode:SetChecked(_DataAccount.DebugMode)
+    MountyOptionsFrame_AutoOpen:SetChecked(_DataAccount.AutoOpen)
 
     MountyOptionsFrame_Profile:SetText("")
 
-    UIDropDownMenu_SetText(MountyOptionsFrame_ProfileDropdown, _Data.CurrentProfile)
+    UIDropDownMenu_SetText(MountyOptionsFrame_ProfileDropdown, _DataCharacter.CurrentProfile)
 
     Mounty:OptionsRenderButtons()
 
@@ -883,7 +896,7 @@ function Mounty:DeleteProfile(p)
         return
     end
 
-    if _Data.Profiles[p] == nil then
+    if _Profiles[p] == nil then
 
         TLV:Alert(string.format(L["profile.none"], p))
         return
@@ -898,8 +911,8 @@ function Mounty:DeleteProfile(p)
         timeout = 20,
         whileDead = true,
         hideOnEscape = true,
-        OnAccept = function(self, data, data2)
-            _Data.Profiles[data] = nil
+        OnAccept = function(_, data)
+            _Profiles[data] = nil
             Mounty:SwitchProfile(Mounty:ProfileNameDefault())
         end
     }
@@ -919,7 +932,7 @@ function Mounty:NewProfile (p)
         return
     end
 
-    if (_Data.Profiles[p] ~= nil) then
+    if (_Profiles[p] ~= nil) then
         TLV:Alert(string.format(L["profile.already"], p))
         return
     end
@@ -934,7 +947,7 @@ function Mounty:CopyProfile (p_from, p, rename)
         return
     end
 
-    if (_Data.Profiles[p] ~= nil) then
+    if (_Profiles[p] ~= nil) then
         TLV:Alert(string.format(L["profile.already"], p))
         return
     end
@@ -943,17 +956,17 @@ function Mounty:CopyProfile (p_from, p, rename)
         return
     end
 
-    if _Data.Profiles[p_from] == nil then
+    if _Profiles[p_from] == nil then
 
         TLV:Alert(string.format(L["profile.none"], p_from))
         return
 
     end
 
-    _Data.Profiles[p] = TLV:TableCopy(_Data.Profiles[p_from])
+    _Profiles[p] = TLV:TableCopy(_Profiles[p_from])
 
     if (rename) then
-        _Data.Profiles[p_from] = nil
+        _Profiles[p_from] = nil
     end
 
     Mounty:SwitchProfile(p)
@@ -985,78 +998,70 @@ function Mounty:SelectProfile(p)
         return
     end
 
-    if _Data.Profiles[p] == nil then
-        _Data.Profiles[p] = {}
+    if _Profiles[p] == nil then
+        _Profiles[p] = {}
     end
 
-    if _Data.Profiles[p].DebugMode == nil then
-        _Data.Profiles[p].DebugMode = false
+    if _Profiles[p].TaxiMode == nil then
+        _Profiles[p].TaxiMode = false
     end
 
-    if _Data.Profiles[p].AutoOpen == nil then
-        _Data.Profiles[p].AutoOpen = true
+    if _Profiles[p].DoNotFly == nil then
+        _Profiles[p].DoNotFly = false
     end
 
-    if _Data.Profiles[p].TaxiMode == nil then
-        _Data.Profiles[p].TaxiMode = false
+    if _Profiles[p].Together == nil then
+        _Profiles[p].Together = _Profiles[p].DoNotFly -- renamed
     end
 
-    if _Data.Profiles[p].DoNotFly == nil then
-        _Data.Profiles[p].DoNotFly = false
+    if _Profiles[p].DoNotShowOff == nil then
+        _Profiles[p].DoNotShowOff = false
     end
 
-    if _Data.Profiles[p].Together == nil then
-        _Data.Profiles[p].Together = _Data.Profiles[p].DoNotFly -- renamed
+    if _Profiles[p].ShowOff == nil then
+        _Profiles[p].ShowOff = not _Profiles[p].DoNotShowOff
     end
 
-    if _Data.Profiles[p].DoNotShowOff == nil then
-        _Data.Profiles[p].DoNotShowOff = false
+    if _Profiles[p].Random == nil then
+        _Profiles[p].Random = false
     end
 
-    if _Data.Profiles[p].ShowOff == nil then
-        _Data.Profiles[p].ShowOff = not _Data.Profiles[p].DoNotShowOff
+    if _Profiles[p].DurabilityMin == nil then
+        _Profiles[p].DurabilityMin = 75
     end
 
-    if _Data.Profiles[p].Random == nil then
-        _Data.Profiles[p].Random = false
+    if _Profiles[p].Hello == nil then
+        _Profiles[p].Hello = L["options.Hello-Default"]
     end
 
-    if _Data.Profiles[p].DurabilityMin == nil then
-        _Data.Profiles[p].DurabilityMin = 75
+    if _Profiles[p].Mounts == nil then
+        _Profiles[p].Mounts = {}
     end
 
-    if _Data.Profiles[p].Hello == nil then
-        _Data.Profiles[p].Hello = L["options.Hello-Default"]
-    end
-
-    if _Data.Profiles[p].Mounts == nil then
-        _Data.Profiles[p].Mounts = {}
-    end
-
-    if _Data.Profiles[p].Iterator == nil then
-        _Data.Profiles[p].Iterator = {}
+    if _Profiles[p].Iterator == nil then
+        _Profiles[p].Iterator = {}
     end
 
     for t = 1, MountyTypes do
 
-        if _Data.Profiles[p].Iterator[t] == nil then
-            _Data.Profiles[p].Iterator[t] = 0
+        if _Profiles[p].Iterator[t] == nil then
+            _Profiles[p].Iterator[t] = 0
         end
 
-        if _Data.Profiles[p].Mounts[t] == nil then
-            _Data.Profiles[p].Mounts[t] = {}
+        if _Profiles[p].Mounts[t] == nil then
+            _Profiles[p].Mounts[t] = {}
         end
 
         for i = 1, MountyMounts do
-            if _Data.Profiles[p].Mounts[t][i] == nil then
-                _Data.Profiles[p].Mounts[t][i] = 0
+            if _Profiles[p].Mounts[t][i] == nil then
+                _Profiles[p].Mounts[t][i] = 0
             end
         end
     end
 
-    _Data.CurrentProfile = p
+    _DataCharacter.CurrentProfile = p
 
-    _Profile = _Data.Profiles[p];
+    _Profile = _Profiles[p];
 
 end
 
@@ -1064,7 +1069,7 @@ function Mounty:ProfilesSorted (joined)
 
     local profiles = {}
 
-    for k, v in pairs(_Data.Profiles) do
+    for k, _ in pairs(_Profiles) do
 
         table.insert(profiles, k)
 
@@ -1085,96 +1090,53 @@ function Mounty:Init()
     Mounty.AddOnTitle = GetAddOnMetadata(MountyAddOnName, "Title")
     Mounty.AddOnVersion = GetAddOnMetadata(MountyAddOnName, "Version")
 
-    Mounty:Upgrade()
-
-    if _Data.CurrentProfile == nil then
-        _Data.CurrentProfile = Mounty:ProfileNameDefault()
+    if _DataCharacter.ShareProfiles == nil then
+        _DataCharacter.ShareProfiles = false
     end
 
-    if _Data.Profiles == nil then
-        _Data.Profiles = {}
+    if _DataCharacter.CurrentProfile == nil then
+        _DataCharacter.CurrentProfile = Mounty:ProfileNameDefault()
     end
 
-    if _Data.DebugMode == nil then
-        _Data.DebugMode = false
+    if (_DataCharacter.Profiles == nil) then
+        _DataCharacter.Profiles = {}
     end
 
-    if _Data.AutoOpen == nil then
-        _Data.AutoOpen = true
+    if (_DataAccount.Profiles == nil) then
+        _DataAccount.Profiles = {}
     end
 
-    Mounty:SelectProfile(_Data.CurrentProfile)
+    if (_DataCharacter.ShareProfiles) then
+        _Profiles = _DataAccount.Profiles -- Pointer per Reference!
+    else
+        _Profiles = _DataCharacter.Profiles -- Pointer per Reference!
+    end
+
+    if _Profiles == nil then
+        _Profiles = {}
+    end
+
+    if _DataAccount.DebugMode == nil then
+        _DataAccount.DebugMode = false
+    end
+
+    if _DataAccount.AutoOpen == nil then
+        _DataAccount.AutoOpen = true
+    end
+
+    Mounty:SelectProfile(_DataCharacter.CurrentProfile)
 
     -- show quick start?
 
-    if _Data.QuickStart == nil then
-        _Data.QuickStart = true
+    if _DataAccount.QuickStart == nil then
+        _DataAccount.QuickStart = true
     else
-        _Data.QuickStart = true
+        _DataAccount.QuickStart = true
         for t = 1, MountyTypes do
             if _Profile.Mounts[t][1] ~= 0 then
-                _Data.QuickStart = false
+                _DataAccount.QuickStart = false
             end
         end
-    end
-
-    --
-
-    Mounty:InitOptionsFrame()
-
-end
-
-function Mounty:Upgrade()
-
-    -- MountyData not deleted yet
-    -- New category Dragonflight
-
-    if MountyData ~= nil then
-        if MountyData.Mounts ~= nil then
-
-            if MountyData.UpgradeToDragonflight == nil then
-                MountyData.UpgradeToDragonflight = true
-                for t = MountyTypes, 4, -1 do
-                    for i = 1, MountyMounts do
-                        MountyData.Mounts[t][i] = MountyData.Mounts[t - 1][i]
-                        MountyData.Mounts[t - 1][i] = 0
-                    end
-                end
-            end
-
-        end
-    end
-
-    -- MountyProfiles
-
-    if _Data.Profiles == nil then
-
-        _Data.Profiles = {}
-
-        if MountyData ~= nil then
-
-            _Data.Profiles[Mounty:ProfileNameDefault()] = {
-                DurabilityMin = MountyData.DurabilityMin,
-                Hello = MountyData.Hello,
-                Iterator = MountyData.Iterator,
-                Mounts = MountyData.Mounts,
-                Random = MountyData.Random,
-                ShowOff = MountyData.ShowOff,
-                TaxiMode = MountyData.TaxiMode,
-                Together = MountyData.Together
-            }
-
-            _Data.DebugMode = MountyData.DebugMode
-            _Data.AutoOpen = MountyData.AutoOpen
-
-        end
-
-    end
-
-    -- MountyData no more
-
-    if MountyData ~= nil then
-        MountyData = nil
     end
 
 end
@@ -1183,7 +1145,12 @@ function Mounty:OnEvent (event, arg1)
 
     if event == "ADDON_LOADED" and arg1 == MountyAddOnName then
 
-        Mounty.Init()
+        Mounty:Upgrade()
+
+        Mounty:Init()
+
+        Mounty:InitOptionsFrame()
+
         self:UnregisterEvent("ADDON_LOADED")
 
     end
@@ -1224,7 +1191,7 @@ EventRegistry:RegisterCallback("MountJournal.OnShow", function()
 end, MountyAddOnName .. 'Button')
 
 EventRegistry:RegisterCallback("MountJournal.OnShow", function()
-    if _Data.AutoOpen then
+    if _DataAccount.AutoOpen then
         MountyOptionsFrame:ClearAllPoints()
         MountyOptionsFrame:SetPoint("TOPLEFT", CollectionsJournal, "TOPRIGHT", 0, 0)
         MountyOptionsFrame:Show()
@@ -1232,7 +1199,7 @@ EventRegistry:RegisterCallback("MountJournal.OnShow", function()
 end, MountyAddOnName)
 
 EventRegistry:RegisterCallback("MountJournal.OnHide", function()
-    if _Data.AutoOpen then
+    if _DataAccount.AutoOpen then
         MountyOptionsFrame:Hide()
     end
 end, MountyAddOnName)
@@ -1256,10 +1223,10 @@ SlashCmdList["MOUNTY"] = function(message)
     elseif mode == "profile" then
 
         if arg1 == "" then
-            Mounty:Chat(string.format(L["profile.current"], _Data.CurrentProfile))
+            Mounty:Chat(string.format(L["profile.current"], _DataCharacter.CurrentProfile))
         else
             Mounty:SwitchProfile(p1)
-            if (p1 == _Data.CurrentProfile) then
+            if (p1 == _DataCharacter.CurrentProfile) then
                 Mounty:Chat(string.format(L["profile.switched"], p))
             end
         end
@@ -1272,12 +1239,12 @@ SlashCmdList["MOUNTY"] = function(message)
 
         if arg1 == "on" then
 
-            _Data.DebugMode = true
+            _DataAccount.DebugMode = true
             Mounty:Chat(L["chat.Debug"] .. "|cff00f000" .. L["on"] .. "|r.")
 
         elseif arg1 == "off" then
 
-            _Data.DebugMode = false
+            _DataAccount.DebugMode = false
             Mounty:Chat(L["chat.Debug"] .. "|cfff00000" .. L["off"] .. "|r.")
         end
 
@@ -1285,12 +1252,12 @@ SlashCmdList["MOUNTY"] = function(message)
 
         if arg1 == "on" then
 
-            _Data.AutoOpen = true
+            _DataAccount.AutoOpen = true
             Mounty:Chat(L["chat.Autoopen"] .. "|cff00f000" .. L["on"] .. "|r.")
 
         elseif arg1 == "off" then
 
-            _Data.AutoOpen = false
+            _DataAccount.AutoOpen = false
             Mounty:Chat(L["chat.Autoopen"] .. "|cfff00000" .. L["off"] .. "|r.")
         end
 

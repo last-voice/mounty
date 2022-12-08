@@ -30,6 +30,7 @@ L["options.Hello"] = "How to call a passenger"
 L["options.Hello-Default"] = "Taxi!"
 L["options.Helptext"] = "Drag mounts into here. Right click to remove a mount."
 L["options.Profile"] = "Profile"
+L["options.ShareProfiles"] = "Share profiles with your other characters"
 
 L["profile.switched"] = "Switched to profile |cff00f000%s|r."
 L["profile.delete-confirm"] = "Delete profile |cff00f000%s|r?"

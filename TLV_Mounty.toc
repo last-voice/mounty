@@ -2,7 +2,8 @@
 ## Title: Mounty #TLV
 ## Notes: Selects the perfect mount with magic
 ## Author: the_last_voice
-## SavedVariablesPerCharacter: MountyData, _Data
+## SavedVariablesPerCharacter: MountyData, _Data, _DataCharacter
+## SavedVariables: _DataAccount
 ## Version: v2.4.1
 
 localization\enUS.lua
@@ -10,4 +11,5 @@ localization\deDE.lua
 localization\esES.lua
 
 TLV.lua
+TLV_Upgrade.lua
 TLV_Mounty.lua

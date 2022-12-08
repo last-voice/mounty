@@ -3,7 +3,8 @@
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
 v2.4.3
-- removed some chat commands - it became too complicated - sorry!
+- Profiles can now be use account wide an so be shared between your characters
+- Removed some chat commands - it became too complicated - sorry!
 
 v2.4.2.1
 - Fixed background strata bug
