@@ -513,6 +513,7 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame:SetPoint("CENTER")
 
     MountyOptionsFrame:SetFrameStrata("MEDIUM")
+    MountyOptionsFrame.Bg:SetFrameStrata("LOW")
 
     MountyOptionsFrame:EnableMouse(true)
     MountyOptionsFrame:SetMovable(true)
