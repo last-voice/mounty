@@ -1,6 +1,7 @@
 local MountyAddOnName, Mounty = ...
 
-local TLV = TLV
+local _Profiles = {}
+local _Profile = {}
 
 local L = Mounty.L
 
@@ -50,6 +51,12 @@ Mounty.AddOnVersion = nil
 Mounty.MountyTestDragon = nil
 
 Mounty.MountyDebugForce = false
+
+function Mounty:Alert(msg)
+
+    TLV:Alert("|cffa0a0ff" .. Mounty.AddOnTitle .. " " .. Mounty.AddOnVersion .. "|r\n\n" .. msg)
+
+end
 
 function Mounty:Chat(msg)
 
@@ -496,8 +503,8 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame:SetHeight(640)
     MountyOptionsFrame:SetPoint("CENTER")
 
-    MountyOptionsFrame:SetFrameStrata("MEDIUM")
-    MountyOptionsFrame.Bg:SetFrameStrata("LOW")
+    MountyOptionsFrame:SetFrameStrata("HIGH")
+    --    MountyOptionsFrame.Bg:SetFrameStrata("LOW")
 
     MountyOptionsFrame:EnableMouse(true)
     MountyOptionsFrame:SetMovable(true)
@@ -520,8 +527,8 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame_QuickStart:SetWidth(480)
     MountyOptionsFrame_QuickStart:SetHeight(90)
     MountyOptionsFrame_QuickStart:SetPoint("BOTTOM", 0, -90)
-    MountyOptionsFrame_QuickStart:SetFrameStrata("MEDIUM")
-    MountyOptionsFrame.Bg:SetFrameStrata("LOW")
+    MountyOptionsFrame_QuickStart:SetFrameStrata("HIGH")
+    --    MountyOptionsFrame_QuickStart.Bg:SetFrameStrata("LOW")
 
     temp = MountyOptionsFrame_QuickStart:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     temp:SetPoint("TOP", 0, -6)
@@ -716,6 +723,7 @@ function Mounty:InitOptionsFrame()
         for _, profile in ipairs(Mounty:ProfilesSorted()) do
 
             info.text = profile
+            info.checked = profile == _DataCharacter.CurrentProfile
             info.func = function(p)
                 Mounty:SwitchProfile(p.value)
             end
@@ -741,14 +749,14 @@ function Mounty:InitOptionsFrame()
         Mounty:NewProfile(MountyOptionsFrame_Profile:GetText())
     end)
 
-    temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 318, top + 3, 50, L["button.Copy"])
+    temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 318, top + 3, 50, L["button.Duplicate"])
     temp:SetScript("OnClick", function()
-        Mounty:CopyProfile(_DataCharacter.CurrentProfile, MountyOptionsFrame_Profile:GetText())
+        Mounty:DuplicateProfile(_DataCharacter.CurrentProfile, MountyOptionsFrame_Profile:GetText())
     end)
 
     temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 366, top + 3, 50, L["button.Edit"])
     temp:SetScript("OnClick", function()
-        Mounty:CopyProfile(_DataCharacter.CurrentProfile, MountyOptionsFrame_Profile:GetText(), true)
+        Mounty:DuplicateProfile(_DataCharacter.CurrentProfile, MountyOptionsFrame_Profile:GetText(), true)
     end)
 
     temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 414, top + 3, 50, L["button.Delete"])
@@ -763,12 +771,22 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame_ShareProfiles = CreateFrame("CheckButton", "MountyOptionsFrame_ShareProfiles", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     MountyOptionsFrame_ShareProfiles:SetPoint("TOPLEFT", 16, top)
     MountyOptionsFrame_ShareProfilesText:SetText(L["options.ShareProfiles"])
-    MountyOptionsFrame_ShareProfiles:SetScript("OnClick", function(calling)
+    MountyOptionsFrame_ShareProfiles:SetScript("OnClick", function()
         _DataCharacter.ShareProfiles = not _DataCharacter.ShareProfiles
         _DataCharacter.CurrentProfile = nil
         Mounty:Init()
         Mounty:OptionsRender()
 
+    end)
+
+    temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 270, top, 98, L["button.CopyC2A"])
+    temp:SetScript("OnClick", function()
+        Mounty:CopyProfiles("c>a")
+    end)
+
+    temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 366, top, 98, L["button.CopyA2C"])
+    temp:SetScript("OnClick", function()
+        Mounty:CopyProfiles("a>c")
     end)
 
     -- Auto open checkbox
@@ -878,12 +896,12 @@ function Mounty:ProfileCheckName (p, alert)
 
     if p == nil or p == "" then
         err = "profile.empty"
-    elseif p ~= string.match(p, "[a-zA-Z0-9]+") then
+    elseif p ~= string.match(p, "[a-zA-Z0-9_]+") then
         err = "profile.error"
     end
 
     if err ~= "" and alert then
-        TLV:Alert(L[err])
+        Mounty:Alert(L[err])
     end
 
     return err == ""
@@ -898,7 +916,7 @@ function Mounty:DeleteProfile(p)
 
     if _Profiles[p] == nil then
 
-        TLV:Alert(string.format(L["profile.none"], p))
+        Mounty:Alert(string.format(L["profile.none"], p))
         return
 
     end
@@ -919,7 +937,7 @@ function Mounty:DeleteProfile(p)
 
     -- https://wowpedia.fandom.com/wiki/Creating_simple_pop-up_dialog_boxes
 
-    popup = StaticPopup_Show("Mounty_Delete_Profile", p) -- Ersetzt automatisch %s in L["profile.delete-confirm"] durch p
+    local popup = StaticPopup_Show("Mounty_Delete_Profile", p) -- Ersetzt automatisch %s in L["profile.delete-confirm"] durch p
     if (popup) then
         popup.data = p -- setzt data im Objekt auf p
     end
@@ -933,7 +951,7 @@ function Mounty:NewProfile (p)
     end
 
     if (_Profiles[p] ~= nil) then
-        TLV:Alert(string.format(L["profile.already"], p))
+        Mounty:Alert(string.format(L["profile.already"], p))
         return
     end
 
@@ -941,14 +959,14 @@ function Mounty:NewProfile (p)
 
 end
 
-function Mounty:CopyProfile (p_from, p, rename)
+function Mounty:DuplicateProfile (p_from, p, rename)
 
     if not Mounty:ProfileCheckName(p, true) then
         return
     end
 
     if (_Profiles[p] ~= nil) then
-        TLV:Alert(string.format(L["profile.already"], p))
+        Mounty:Alert(string.format(L["profile.already"], p))
         return
     end
 
@@ -958,12 +976,12 @@ function Mounty:CopyProfile (p_from, p, rename)
 
     if _Profiles[p_from] == nil then
 
-        TLV:Alert(string.format(L["profile.none"], p_from))
+        Mounty:Alert(string.format(L["profile.none"], p_from))
         return
 
     end
 
-    _Profiles[p] = TLV:TableCopy(_Profiles[p_from])
+    _Profiles[p] = TLV:TableDuplicate(_Profiles[p_from])
 
     if (rename) then
         _Profiles[p_from] = nil
@@ -976,7 +994,7 @@ end
 function Mounty:SwitchProfile(p)
 
     if p == "" then
-        TLV:Alert(string.format(L["profile.empty"], p))
+        Mounty:Alert(string.format(L["profile.empty"], p))
         return
     end
 
@@ -1085,17 +1103,70 @@ function Mounty:ProfilesSorted (joined)
 
 end
 
+function Mounty:CopyProfiles(mode)
+
+    StaticPopupDialogs["Mounty_Copy_Profiles"] = {
+        text = L["profile.copy-confirm"],
+        button1 = YES,
+        button2 = NO,
+        sound = IG_MAINMENU_OPEN,
+        timeout = 20,
+        whileDead = true,
+        hideOnEscape = true,
+        OnAccept = function(_, data)
+
+            local Profiles_Src
+            local Profiles_Dst
+
+            if (data == "c>a") then
+                Profiles_Src = _DataCharacter.Profiles
+                Profiles_Dst = _DataAccount.Profiles
+            else
+                Profiles_Src = _DataAccount.Profiles
+                Profiles_Dst = _DataCharacter.Profiles
+            end
+
+            for k, _ in pairs(Profiles_Src) do
+
+                local i = 1
+                local dk = k
+
+                while (Profiles_Dst[dk] ~= nil) do
+                    dk = string.format("%s_%d", k, i)
+                    i = i + 1
+                end
+
+                Profiles_Dst[dk] = TLV:TableDuplicate(Profiles_Src[k])
+
+            end
+
+        end
+    }
+
+    -- https://wowpedia.fandom.com/wiki/Creating_simple_pop-up_dialog_boxes
+
+    local popup = StaticPopup_Show("Mounty_Copy_Profiles", L["profile.copy-" .. mode])
+    if (popup) then
+        popup.data = mode -- setzt data im Objekt auf mode
+    end
+
+end
+
 function Mounty:Init()
 
     Mounty.AddOnTitle = GetAddOnMetadata(MountyAddOnName, "Title")
     Mounty.AddOnVersion = GetAddOnMetadata(MountyAddOnName, "Version")
 
-    if _DataCharacter.ShareProfiles == nil then
-        _DataCharacter.ShareProfiles = false
+    if (_DataAccount == nil) then
+        _DataAccount = {}
     end
 
-    if _DataCharacter.CurrentProfile == nil then
-        _DataCharacter.CurrentProfile = Mounty:ProfileNameDefault()
+    if (_DataCharacter == nil) then
+        _DataCharacter = {}
+    end
+
+    if _DataCharacter.ShareProfiles == nil then
+        _DataCharacter.ShareProfiles = false
     end
 
     if (_DataCharacter.Profiles == nil) then
@@ -1114,6 +1185,19 @@ function Mounty:Init()
 
     if _Profiles == nil then
         _Profiles = {}
+    end
+
+    if _DataCharacter.CurrentProfile == nil then
+
+        local profiles = Mounty:ProfilesSorted()
+
+        _DataCharacter.CurrentProfile = profiles[1]
+
+        if _Profiles[_DataCharacter.CurrentProfile] == nil then
+            _DataCharacter.CurrentProfile = Mounty:ProfileNameDefault()
+
+        end
+
     end
 
     if _DataAccount.DebugMode == nil then

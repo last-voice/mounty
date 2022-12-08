@@ -1,18 +1,18 @@
 TLV = {}
 
-function TLV:TableCopy(copy_from)
+function TLV:TableDuplicate(src)
 
-    local copy_to = {}
+    local dest = {}
 
-    for k, v in pairs(copy_from) do
+    for k, v in pairs(src) do
 
         if type(v) == "table" then
-            v = TLV:TableCopy(v)
+            v = TLV:TableDuplicate(v)
         end
-        copy_to[k] = v
+        dest[k] = v
     end
 
-    return copy_to
+    return dest
 
 end
 

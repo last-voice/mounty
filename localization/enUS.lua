@@ -1,5 +1,5 @@
 local L = {}
-local _G = _G
+-- local _G = _G
 
 _G["BINDING_NAME_MOUNTY_MAGIC"] = "Summon magic mount"
 _G["BINDING_NAME_MOUNTY_GROUND"] = "Summon ground mount"
@@ -39,6 +39,9 @@ L["profile.error"] = "Please use |cff00f000letters and digits|r only."
 L["profile.empty"] = "Please enter a |cff00f000profile name|r."
 L["profile.none"] = "Profile |cff00f000%s|r not found."
 L["profile.already"] = "Profile |cff00f000%s|r already exists."
+L["profile.copy-confirm"] = "Copy profiles %s?\n\nNothing will be overwritten nor deleted."
+L["profile.copy-c>a"] = "from |cff00f000this char|r to |cff00f000account wide shared|r"
+L["profile.copy-a>c"] = "from |cff00f000account wide shared|r to |cff00f000this char|r"
 
 L["chat.Debug"] = "Debug: "
 L["chat.Autoopen"] = "Auto open & close: "
@@ -52,9 +55,11 @@ L["off"] = "off"
 
 L["button.OK"] = "OK"
 L["button.Add"] = "Add"
-L["button.Copy"] = "Copy"
+L["button.Duplicate"] = "Copy"
 L["button.Delete"] = "Delete"
 L["button.Edit"] = "Edit"
+L["button.CopyC2A"] = "Char > Account"
+L["button.CopyA2C"] = "Account > Char"
 
 L["Mount journal - Open Mounty"] = "Mounty #TLV"
 

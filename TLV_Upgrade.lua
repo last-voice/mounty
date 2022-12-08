@@ -6,12 +6,13 @@ function Mounty:Upgrade()
 
     if MountyData ~= nil then
 
-        if MountyData.Mounts ~= nil then
+        if MountyData.UpgradeToDragonflight == nil then
 
-            if MountyData.UpgradeToDragonflight == nil then
-                MountyData.UpgradeToDragonflight = true
-                for t = MountyTypes, 4, -1 do
-                    for i = 1, MountyMounts do
+            MountyData.UpgradeToDragonflight = true
+
+            if MountyData.Mounts ~= nil then
+                for t = 7, 4, -1 do
+                    for i = 1, 10 do
                         MountyData.Mounts[t][i] = MountyData.Mounts[t - 1][i]
                         MountyData.Mounts[t - 1][i] = 0
                     end
@@ -57,7 +58,7 @@ function Mounty:Upgrade()
         _DataCharacter.ShareProfiles = false
         _DataCharacter.CurrentProfile = _Data.CurrentProfile
 
-        _DataCharacter.Profiles = TLV:TableCopy(_Data.Profiles)
+        _DataCharacter.Profiles = TLV:TableDuplicate(_Data.Profiles)
 
         _Data = nil
 
