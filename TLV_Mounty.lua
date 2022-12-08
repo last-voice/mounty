@@ -53,19 +53,7 @@ Mounty.AddOnVersion = nil
 
 Mounty.MountyTestDragon = nil
 
-Mounty.via_chat = false -- When using chat commands
-
 Mounty.MountyDebugForce = false
-
-function Mounty:Alert(msg)
-
-    if (Mounty.via_chat) then
-        Mounty:Chat(msg)
-    else
-        TLV:Alert(msg)
-    end
-
-end
 
 function Mounty:Chat(msg)
 
@@ -338,6 +326,7 @@ function Mounty:KeyHandler(keypress)
         keypress = "magic"
     end
 
+    Mounty:Debug("--- --- --- --- --- --- ---")
     Mounty:Debug("Key pressed: " .. keypress)
 
     if keypress == "forceoff" then
@@ -881,36 +870,10 @@ function Mounty:ProfileCheckName (p, alert)
     end
 
     if err ~= "" and alert then
-        Mounty:Alert(L[err])
+        TLV:Alert(L[err])
     end
 
     return err == ""
-
-end
-
-function Mounty:ParseProfile(p1, p2, p3)
-
-    Mounty.via_chat = true
-
-    if string.lower(p1) == "copy" then
-
-        Mounty:CopyProfile(p2, p3)
-
-    elseif string.lower(p1) == "rename" then
-
-        Mounty:CopyProfile(p2, p3, true)
-
-    elseif string.lower(p1) == "delete" then
-
-        Mounty:DeleteProfile(p2)
-
-    else
-
-        Mounty:SwitchProfile(p1)
-
-    end
-
-    Mounty.via_chat = false
 
 end
 
@@ -921,8 +884,10 @@ function Mounty:DeleteProfile(p)
     end
 
     if _Data.Profiles[p] == nil then
-        Mounty:Alert(string.format(L["profile.none"], p))
+
+        TLV:Alert(string.format(L["profile.none"], p))
         return
+
     end
 
     StaticPopupDialogs["Mounty_Delete_Profile"] = {
@@ -935,7 +900,6 @@ function Mounty:DeleteProfile(p)
         hideOnEscape = true,
         OnAccept = function(self, data, data2)
             _Data.Profiles[data] = nil
-            Mounty:Chat(string.format(L["profile.deleted"], data))
             Mounty:SwitchProfile(Mounty:ProfileNameDefault())
         end
     }
@@ -956,7 +920,7 @@ function Mounty:NewProfile (p)
     end
 
     if (_Data.Profiles[p] ~= nil) then
-        Mounty:Alert(string.format(L["profile.already"], p))
+        TLV:Alert(string.format(L["profile.already"], p))
         return
     end
 
@@ -971,7 +935,7 @@ function Mounty:CopyProfile (p_from, p, rename)
     end
 
     if (_Data.Profiles[p] ~= nil) then
-        Mounty:Alert(string.format(L["profile.already"], p))
+        TLV:Alert(string.format(L["profile.already"], p))
         return
     end
 
@@ -981,7 +945,7 @@ function Mounty:CopyProfile (p_from, p, rename)
 
     if _Data.Profiles[p_from] == nil then
 
-        Mounty:Alert(string.format(L["profile.none"], p_from))
+        TLV:Alert(string.format(L["profile.none"], p_from))
         return
 
     end
@@ -990,9 +954,6 @@ function Mounty:CopyProfile (p_from, p, rename)
 
     if (rename) then
         _Data.Profiles[p_from] = nil
-        Mounty:Chat(string.format(L["profile.renamed"], p_from, p))
-    else
-        Mounty:Chat(string.format(L["profile.copied"], p_from, p))
     end
 
     Mounty:SwitchProfile(p)
@@ -1002,7 +963,7 @@ end
 function Mounty:SwitchProfile(p)
 
     if p == "" then
-        Mounty:Alert(string.format(L["profile.none"], p))
+        TLV:Alert(string.format(L["profile.empty"], p))
         return
     end
 
@@ -1011,7 +972,6 @@ function Mounty:SwitchProfile(p)
     end
 
     Mounty:SelectProfile(p)
-    Mounty:Chat(string.format(L["profile.switched"], p))
 
     if (MountyOptionsFrame:IsVisible()) then
         Mounty:OptionsRender()
@@ -1284,27 +1244,24 @@ SlashCmdList["MOUNTY"] = function(message)
 
     message = message or ""
 
-    local mode, arg1, arg2, arg3 = string.split(" ", message, 4)
+    local mode, arg1 = string.split(" ", message, 2)
 
     mode = string.lower(mode or "")
     arg1 = arg1 or ""
-    arg2 = arg2 or ""
-    arg3 = arg3 or ""
 
     if mode == "magic" then
 
         Mounty:KeyHandler()
-
-    elseif mode == "profiles" then
-
-        Mounty:Chat(string.format(L["profile.list"], Mounty:ProfilesSorted(true)))
 
     elseif mode == "profile" then
 
         if arg1 == "" then
             Mounty:Chat(string.format(L["profile.current"], _Data.CurrentProfile))
         else
-            Mounty:ParseProfile(arg1, arg2, arg3)
+            Mounty:SwitchProfile(p1)
+            if (p1 == _Data.CurrentProfile) then
+                Mounty:Chat(string.format(L["profile.switched"], p))
+            end
         end
 
     elseif mode == "version" then

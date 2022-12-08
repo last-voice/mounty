@@ -174,12 +174,10 @@ _/mounty taxi_ - to summon taxi mount\
 _/mounty showoff_ - to summon show off mount\
 _/mounty random_ - to summon random mount
 
+__Profiles__
+
 _/mounty profile_ - to show the current used profile\
-_/mounty profiles_ - to list all profiles\
 _/mounty profile Heart_ - to switch to or create the profile Heart\
-_/mounty profile Wild Heart_ - to copy the settings of profile Heart to profile Wild\
-_/mounty profile rename Heart Wild_ - to rename profile Heart to Wild\ 
-_/mounty profile delete Heart_ - to delete profile Heart 
 
 ## Binding keys
 
