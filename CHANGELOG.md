@@ -7,6 +7,7 @@ v2.4.3
 - Profiles can also be copied from account to char and vice versa
 - In Dragonflight resting areas dragons are no preferred before show offs
 - Removed some chat commands - it became too complicated - sorry!
+- README up to date
 
 v2.4.2.1
 - Fixed background strata bug
