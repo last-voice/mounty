@@ -880,7 +880,13 @@ end
 
 function Mounty:ProfileNameDefault ()
 
-    local default = UnitName("player")
+    local profiles = Mounty:ProfilesSorted()
+
+    local default = profiles[1]
+
+    if _Profiles[default] == nil then
+        default = UnitName("player")
+    end
 
     if not Mounty:ProfileCheckName(default) then
         default = "Mounty"
