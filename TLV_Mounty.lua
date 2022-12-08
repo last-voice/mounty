@@ -388,13 +388,13 @@ function Mounty:KeyHandler(keypress)
 
             category = "taxi"
 
-        elseif resting and showoff then
-
-            category = "showoff"
-
         elseif dragonflight then
 
             category = "dragonflight"
+
+        elseif resting and showoff then
+
+            category = "showoff"
 
         elseif flyable then
 

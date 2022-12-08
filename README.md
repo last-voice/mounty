@@ -75,9 +75,9 @@ You just killed thousands of enemies and your durability is lower than the thres
 
 You hang around with friends and your _taxi mode_ is on? My friend, we call for a __taxi mount__ to ride away together. Hop on!
 
-You are in a resting area and _show off mode_ is activated? Time to impress everyone around with one of your favorite __show off mounts__.
+You're on the Dragon isles in a dragon flight zone and you already experienced what it is like to be storm born? Mate, its time to wake the __dragon__!
 
-You're on the Dragon isles and already experienced what it is like to be storm born? Mate, its time to wake the __dragon__!
+You are in a resting area and _show off mode_ is activated? Time to impress everyone around with one of your favorite __show off mounts__.
 
 You're in a flight zone, all alone? Spread your wings or start your engines and up, up, up it goes with your favorite __fly mount__.
 
@@ -97,8 +97,8 @@ Magic done. By __Mounty #TLV__.
 >You are not mounted ...\
 >Your durability is lower than xx% (see options) -> _Repair mount_\
 >You are party member, _taxi mode_ is on -> _Taxi mount_\
+>You're on the Dragon isles and in a dragon flight zone -> _Dragon_
 >You are in a resting area, _show off mode_ is active -> _Show off mount_\
->You're on the Dragon isles -> _Dragon_
 >You're in a flight zone, all alone -> _Fly mount_\
 >You're in a flight zone with friends and _together mode_ is off -> _Fly mount_\
 >You are swimming -> _Water mount_\

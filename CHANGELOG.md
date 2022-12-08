@@ -5,6 +5,7 @@ Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 v2.4.3
 - Profiles can now be used account wide an so be shared between your characters
 - Profiles can also be copied from account to char and vice versa
+- In Dragonflight resting areas dragons are no preferred before show offs
 - Removed some chat commands - it became too complicated - sorry!
 
 v2.4.2.1

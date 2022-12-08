@@ -76,9 +76,9 @@ Du bist in einer Gruppe mit Freunden und der Taximodus ist eingeschaltet? Mein F
 
 Du bist im Ruhebereich und der Angeber-Modus ist eingeschaltet? Der perfekte Zeitpunkt, alle anderen mit einem __Angeber-Mount__ zu beeindrucken.
 
-Du bist auf den Dracheninseln und hast bereits erfahren dürfen, wie es ist, _storm born_ zu sein, dann weck den __Drachen__ auf.
-
 Du bist in einer Flug-Zone und in keiner Gruppe? Breite deine Flügel aus oder starte die Maschinen und hoch hinaus geht es in die Lüfte mit einem deiner liebsten __Flug-Mounts__.
+
+Du bist auf den Dracheninseln in einer Drachenflugzone und hast bereits erfahren dürfen, wie es ist, _storm born_ zu sein, dann weck den __Drachen__ auf.
 
 Du bist in einer Flug-Zone, in einer Gruppe, und der Nicht-fliegen-Modus ist nicht eingeschaltet? Spring auf dein __Flug-Mount__ und jage gemeinsam mit deinen Freunden durch die Wolken.
 
@@ -96,8 +96,8 @@ Magisch, oder? Dank __Mounty #TLV__.
 >Du sitzt auf keinem Mount ...\
 >Die Haltbarkeit deiner Rüstung ist unter xx% -> _Reparier-Mount-\
 >Du bist in einer Gruppe, Taxi-Modus ist an -> _Taxi-Mount_\
+>Du bist auf den Dracheninseln in einer Drachenflugzone -> _Drachen_\
 >Du bist im Ruhebereich, Angeber-Modus ist an -> _Angeber-Mount_\
->Du bist auf den Dracheninseln -> _Drachen_\
 >Du bist in einer Flug-Zone, allein -> _Flug-Mount_\
 >Du bist in einer Flug-Zone, in einer Gruppe und der Nicht-fliegen-Modus ist aus -> _Flug-Mount_\
 >Du schwimmst im Wasser -> _Wasser-Mount_\
