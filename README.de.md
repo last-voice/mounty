@@ -140,6 +140,8 @@ Ziehe mit der Maus deine favorisierten Mounts in die Kategorien deiner Wahl. Mit
 
 Wie in vielen anderen Addons kannst Du verschiedene Profile anlegen.
 
+Außerdem kannst du je Charakter zwischen _individuellen Profilen_ oder _accountweiten Profilen_ wählen. Und du kannt Profile sogar zwischen _global_ und _accountweit_ hin und her kopieren. Safety first: Profile werden weder gelöscht noch überschrieben. Falls doppelt, werden sie umbenannt. 
+
 ## Kommandozeile
 
 Für den Chat oder Deine Makros:
@@ -161,7 +163,7 @@ _/mounty taxi on|off_ (Taxi Reittiere verwenden)\
 _/mounty auto on|off_ (Optionen automatisch öffnen)\
 _/mounty debug on|off_ (Debug Infos anzeigen)\
 
-__Summoning__
+__Mounts beschwören__
 
 _/mounty magic_ - und __Mounty #TLV__ wirkt seinen Zauber
 
@@ -173,7 +175,7 @@ _/mounty taxi_ - beschwört ein Taxi-Mount\
 _/mounty showoff_ - beschwört ein Angeber-Mount\
 _/mounty random_ - beschwört ein zufälliges Mount
 
-__Profiles__
+__Profile__
 
 _/mounty profile_ - zeigt das aktuelle Profil\
 _/mounty profile Heart_ - schaltet auf das Profil Heart um und erstellt es falls nicht vorhanden\

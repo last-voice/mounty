@@ -141,6 +141,8 @@ Drag & drop all your favorite mounts into the categories of your choice. Click r
 
 You can use different profiles like in many other addons.
 
+Also you can switch between _account wide profiles_ or _individual profiles for each character_. And you can even copy profiles from global to individual and vice versa. Safety first: profiles will never be deleted nor overwritten but renamed if already existent.
+
 ## Command line
 
 Type in chat or use in macros:
