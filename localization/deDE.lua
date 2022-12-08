@@ -1,4 +1,4 @@
-if (GetLocale() ~= "deDE") then
+if (GetLocale() ~= "d2eDE") then
     return
 end
 
@@ -69,6 +69,8 @@ L["Mount journal - Open Mounty"] = "Mounty #TLV"
 
 L["quick.title"] = "Quick-Start"
 L["quick.text"] = "- Ziehe deine liebsten Reittiere mit der Maus in die entsprechenden Kategorien von Mounty #TLV.\n- Öffne WoWs Tastaturbelegungen, wähle Mounty #TLV und konfiguriere deine magische Taste.\n- Drücke deine magische Taste um hier und jetzt immer das perfekte Reittier zu rufen.\n- Genieße Mounty #TLV und schau dir gerne auch alle weiteren Optionen und Mögichkeiten an."
+
+L["changelog.Account"] = "|cff00f000Neue Option|r\n\nProfile können nun |cff00f000accountweit|r zwischen deinen Charakteren |cff00f000geteilt|r werden."
 
 local _, Mounty = ...
 Mounty.L = setmetatable(L, { __index = Mounty.L })

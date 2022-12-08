@@ -1,5 +1,7 @@
 local _, Mounty = ...
 
+local L = Mounty.L
+
 function Mounty:Upgrade()
 
     -- MountyData > _Data
@@ -47,13 +49,20 @@ function Mounty:Upgrade()
 
     if _Data ~= nil then
 
-        _DataAccount = {}
         _DataCharacter = {}
 
-        _DataAccount.AutoOpen = _Data.Autoopen
-        _DataAccount.DebugMode = _Data.DebugMode
+        if _DataAccount == nil then -- attention, if multiple chars upddgrade!
 
-        _DataAccount.QuickStart = _Data.QuickStart
+            _DataAccount = {}
+
+            _DataAccount.AutoOpen = _Data.Autoopen
+            _DataAccount.DebugMode = _Data.DebugMode
+
+            _DataAccount.QuickStart = _Data.QuickStart
+
+            Mounty:Alert (L["changelog.Account"])
+
+        end
 
         _DataCharacter.ShareProfiles = false
         _DataCharacter.CurrentProfile = _Data.CurrentProfile

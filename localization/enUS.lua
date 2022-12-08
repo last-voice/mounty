@@ -66,5 +66,7 @@ L["Mount journal - Open Mounty"] = "Mounty #TLV"
 L["quick.title"] = "Quick start"
 L["quick.text"] = "- Pull your favourite mounts from the mount journal into the categories of Mounty #TLV.\n- Open WoW's settings for key bindings, select Mounty #TLV and configure your magic key to mount.\n- Press your magic key to pick up the perfect mount for here and now.\n- Enjoy Mounty #TLV and take a look and all the other options and possibilities."
 
+L["changelog.Account"] = "|cff00f000New option|r\n\nProfiles may now be |cff00f000shared|r between all your |cff00f000account's chars|r."
+
 local _, Mounty = ...
 Mounty.L = L

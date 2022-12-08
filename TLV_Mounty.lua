@@ -774,7 +774,7 @@ function Mounty:InitOptionsFrame()
     MountyOptionsFrame_ShareProfiles:SetScript("OnClick", function()
         _DataCharacter.ShareProfiles = not _DataCharacter.ShareProfiles
         _DataCharacter.CurrentProfile = nil
-        Mounty:Init()
+        Mounty:InitSavedVariables()
         Mounty:OptionsRender()
 
     end)
@@ -1157,6 +1157,16 @@ function Mounty:Init()
     Mounty.AddOnTitle = GetAddOnMetadata(MountyAddOnName, "Title")
     Mounty.AddOnVersion = GetAddOnMetadata(MountyAddOnName, "Version")
 
+    Mounty:Upgrade()
+
+    Mounty:InitSavedVariables()
+
+    Mounty:InitOptionsFrame()
+
+end
+
+function Mounty:InitSavedVariables()
+
     if (_DataAccount == nil) then
         _DataAccount = {}
     end
@@ -1229,11 +1239,7 @@ function Mounty:OnEvent (event, arg1)
 
     if event == "ADDON_LOADED" and arg1 == MountyAddOnName then
 
-        Mounty:Upgrade()
-
         Mounty:Init()
-
-        Mounty:InitOptionsFrame()
 
         self:UnregisterEvent("ADDON_LOADED")
 
