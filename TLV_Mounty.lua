@@ -1158,19 +1158,6 @@ function Mounty:CopyProfiles(mode)
 
 end
 
-function Mounty:Init()
-
-    Mounty.AddOnTitle = GetAddOnMetadata(MountyAddOnName, "Title")
-    Mounty.AddOnVersion = GetAddOnMetadata(MountyAddOnName, "Version")
-
-    Mounty:Upgrade()
-
-    Mounty:InitSavedVariables()
-
-    Mounty:InitOptionsFrame()
-
-end
-
 function Mounty:InitSavedVariables()
 
     if (_DataAccount == nil) then
@@ -1238,6 +1225,19 @@ function Mounty:InitSavedVariables()
             end
         end
     end
+
+end
+
+function Mounty:Init()
+
+    Mounty.AddOnTitle = GetAddOnMetadata(MountyAddOnName, "Title")
+    Mounty.AddOnVersion = GetAddOnMetadata(MountyAddOnName, "Version")
+
+    Mounty:Upgrade()
+
+    Mounty:InitSavedVariables()
+
+    Mounty:InitOptionsFrame()
 
 end
 

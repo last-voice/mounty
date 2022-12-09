@@ -2,6 +2,14 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.4.3.2
+
+- Another bugfix in upgrade routine, this time well tested ^^
+
+v2.4.3.1
+
+- Bugfix in upgrade routine
+
 v2.4.3
 - Profiles can now be used account wide an so be shared between your characters
 - Profiles can also be copied from account to char and vice versa

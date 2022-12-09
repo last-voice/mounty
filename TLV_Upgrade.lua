@@ -10,7 +10,11 @@ function Mounty:Upgrade()
 
         if MountyData.UpgradeToDragonflight == nil then
 
+            -- Upgrade to Dragonflight
+
             MountyData.UpgradeToDragonflight = true
+
+            MountyData.Mounts[7] = {}
 
             if MountyData.Mounts ~= nil then
                 for t = 7, 4, -1 do
@@ -23,21 +27,27 @@ function Mounty:Upgrade()
 
         end
 
-        _Data.Profiles = {}
+        -- MountyData > _Data
 
-        _Data.Profiles[Mounty:ProfileNameDefault()] = {
-            DurabilityMin = MountyData.DurabilityMin,
-            Hello = MountyData.Hello,
-            Iterator = MountyData.Iterator,
-            Mounts = MountyData.Mounts,
-            Random = MountyData.Random,
-            ShowOff = MountyData.ShowOff,
-            TaxiMode = MountyData.TaxiMode,
-            Together = MountyData.Together
+        _Data = {
+
+            Profiles = {
+                ["Mounty"] = {
+                    DurabilityMin = MountyData.DurabilityMin,
+                    Hello = MountyData.Hello,
+                    Iterator = MountyData.Iterator,
+                    Mounts = MountyData.Mounts,
+                    Random = MountyData.Random,
+                    ShowOff = MountyData.ShowOff,
+                    TaxiMode = MountyData.TaxiMode,
+                    Together = MountyData.DoNotFly
+                }
+            },
+
+            DebugMode = MountyData.DebugMode,
+            AutoOpen = MountyData.AutoOpen
+
         }
-
-        _Data.DebugMode = MountyData.DebugMode
-        _Data.AutoOpen = MountyData.AutoOpen
 
         -- MountyData no more
 
@@ -49,25 +59,29 @@ function Mounty:Upgrade()
 
     if _Data ~= nil then
 
-        _DataCharacter = {}
 
-        if _DataAccount == nil then -- attention, if multiple chars upddgrade!
+        if _DataAccount == nil then
+            -- attention, if multiple chars upddgrade!
 
-            _DataAccount = {}
+            _DataAccount = {
 
-            _DataAccount.AutoOpen = _Data.Autoopen
-            _DataAccount.DebugMode = _Data.DebugMode
+                AutoOpen = _Data.Autoopen,
+                DebugMode = _Data.DebugMode,
 
-            _DataAccount.QuickStart = _Data.QuickStart
+                QuickStart = _Data.QuickStart
+            }
 
-            Mounty:Alert (L["changelog.Account"])
+            Mounty:Alert(L["changelog.Account"])
 
         end
 
-        _DataCharacter.ShareProfiles = false
-        _DataCharacter.CurrentProfile = _Data.CurrentProfile
+        _DataCharacter = {
 
-        _DataCharacter.Profiles = TLV:TableDuplicate(_Data.Profiles)
+            ShareProfiles = false,
+            CurrentProfile = _Data.CurrentProfile,
+
+            Profiles = TLV:TableDuplicate(_Data.Profiles)
+        }
 
         _Data = nil
 
