@@ -31,6 +31,14 @@ L["options.Hello-Default"] = "Taxi!"
 L["options.Helptext"] = "Drag mounts into here. Right click to remove a mount."
 L["options.Profile"] = "Profile"
 L["options.ShareProfiles"] = "Share profiles with your other characters"
+L["options.Already"] = "The mount is already assigned to this category."
+
+L["expanded.Add"] = "Add from journal"
+L["expanded.Refresh"] = "Refresh"
+L["expanded.Clear"] = "Clear"
+L["expanded.refresh-confirm"] = "|cff00f000Close all gaps|r of the current category?"
+L["expanded.clear-confirm"] = "|cff00f000Empty|r the current category?"
+L["expanded.add-journal-confirm"] = "|cff00f000Add|r all |cff00f000currently filtered and collected mounts|r from the journal to the current category?"
 
 L["profile.switched"] = "Switched to profile |cff00f000%s|r."
 L["profile.delete-confirm"] = "Delete profile |cff00f000%s|r?"
@@ -66,7 +74,7 @@ L["Mount journal - Open Mounty"] = "Mounty #TLV"
 L["quick.title"] = "Quick start"
 L["quick.text"] = "- Pull your favourite mounts from the mount journal into the categories of Mounty #TLV.\n- Open WoW's settings for key bindings, select Mounty #TLV and configure your magic key to mount.\n- Press your magic key to pick up the perfect mount for here and now.\n- Enjoy Mounty #TLV and take a look and all the other options and possibilities."
 
-L["changelog.Account"] = "|cff00f000New option|r\n\nProfiles may now be |cff00f000shared|r between all your |cff00f000account's chars|r."
+L["upgrade"] = "You can now assign |cff00f000110 mounts|r to each category."
 
 local _, Mounty = ...
 Mounty.L = L

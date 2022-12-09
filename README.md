@@ -51,7 +51,7 @@ __Mounty #TLV__ offers __7 categories__ for your mounts:
 - __Taxi mounts__ - A passenger's seat for a good friend is perfect for questing, farming, and fighting together hand in hand. Especially when your taxi has wings, and your friend doesn't know how to fly. He'll never forget your helping wing erm hand.
 - __Show off mounts__ - You spent hours, days, weeks to get this special one, the mount of your dreams. There will never be a better one. Until tomorrow. But for now, everybody around must see: You got it!
 
-You can assign up to __10 different favorite mounts to every category__ per drag & drop from your mount collection.
+You can assign up to __110 different favorite mounts to every category__ per drag & drop from your mount collection.
 
 And you can assign this __one and only magic key__, which does its magic when pressed.
 
@@ -126,6 +126,10 @@ __Mounty #TLV__'s option frame will also open __automatically with the mount jou
 And __Mounty #TLV__'s option frame can be opened __by clicking a button__ in the mount journal's bottom right corner.
 
 Drag & drop all your favorite mounts into the categories of your choice. Click right on a mount to remove it from a category.
+
+Using the __plus button__ you can open another frame to assign __additional 100 mounts__ to a category. Here you can also easily __transfer all filtered mounts from the mount journal__ into a category with 1 click, erm 2 clicks.
+
+__WARNING:__ __Mounty #TLV__ __does never check__ if your assignments per category make any sense! You can assign any mount to every category. So: Please be reasonable!
 
 ## Options
 

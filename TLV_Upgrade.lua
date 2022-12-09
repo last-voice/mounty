@@ -4,6 +4,8 @@ local L = Mounty.L
 
 function Mounty:Upgrade()
 
+    local alert = ""
+
     -- MountyData > _Data
 
     if MountyData ~= nil then
@@ -71,8 +73,6 @@ function Mounty:Upgrade()
                 QuickStart = _Data.QuickStart
             }
 
-            Mounty:Alert(L["changelog.Account"])
-
         end
 
         _DataCharacter = {
@@ -84,6 +84,22 @@ function Mounty:Upgrade()
         }
 
         _Data = nil
+
+    end
+
+    -- 110
+
+    if _DataAccount ~= nil then
+
+        if _DataAccount.UpgradeTo110 == nil then
+
+            -- Upgrade to 110
+
+            _DataAccount.UpgradeTo110 = true
+
+            Mounty:Alert(L["upgrade"])
+
+        end
 
     end
 

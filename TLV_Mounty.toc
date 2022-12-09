@@ -4,7 +4,7 @@
 ## Author: the_last_voice
 ## SavedVariablesPerCharacter: MountyData, _Data, _DataCharacter
 ## SavedVariables: _DataAccount
-## Version: v2.4.3.2
+## Version: v2.5
 
 localization\enUS.lua
 localization\deDE.lua

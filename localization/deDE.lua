@@ -1,4 +1,4 @@
-if (GetLocale() ~= "d2eDE") then
+if (GetLocale() ~= "de2DE") then
     return
 end
 
@@ -35,6 +35,14 @@ L["options.Hello-Default"] = "Taxi!"
 L["options.Helptext"] = "Mounts hier reinziehen. Rechtsklick, um Mount zu entfernen."
 L["options.Profile"] = "Profil"
 L["options.ShareProfiles"] = "Profile mit deinen anderen Charakteren teilen"
+L["options.Already"] = "Das Reittier ist bereits in dieser Kategorie."
+
+L["expanded.Add"] = "Aus Sammlung hinzufügen"
+L["expanded.Refresh"] = "Ordnen"
+L["expanded.Clear"] = "Leeren"
+L["expanded.refresh-confirm"] = "Alle |cff00f000Lücken|r der aktuellen Kategorie schließen?"
+L["expanded.clear-confirm"] = "Die aktuelle Kategoirie |cff00f000leeren|r?"
+L["expanded.add-journal-confirm"] = "Alle |cff00f000aktuell gefilterten, gesammelten Reittiere|r zur Kategorie |cff00f000hinzufügen|r?"
 
 L["profile.switched"] = "Zu Profil |cff00f000%s|r gewechselt."
 L["profile.delete-confirm"] = "Das Profil |cff00f000%s|r wirklich löschen?"
@@ -70,7 +78,7 @@ L["Mount journal - Open Mounty"] = "Mounty #TLV"
 L["quick.title"] = "Quick-Start"
 L["quick.text"] = "- Ziehe deine liebsten Reittiere mit der Maus in die entsprechenden Kategorien von Mounty #TLV.\n- Öffne WoWs Tastaturbelegungen, wähle Mounty #TLV und konfiguriere deine magische Taste.\n- Drücke deine magische Taste um hier und jetzt immer das perfekte Reittier zu rufen.\n- Genieße Mounty #TLV und schau dir gerne auch alle weiteren Optionen und Mögichkeiten an."
 
-L["changelog.Account"] = "|cff00f000Neue Option|r\n\nProfile können nun |cff00f000accountweit|r zwischen deinen Charakteren |cff00f000geteilt|r werden."
+L["upgrade"] = "Du kannst nun jeder Kategorie |cff00f000110 Reittiere|r zuordnen."
 
 local _, Mounty = ...
 Mounty.L = setmetatable(L, { __index = Mounty.L })

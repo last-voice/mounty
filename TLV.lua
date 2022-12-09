@@ -16,11 +16,11 @@ function TLV:TableDuplicate(src)
 
 end
 
-function TLV:Button(parent, point, x, y, width, text)
+function TLV:Button(parent, point, x, y, width, height, text)
 
     local temp = CreateFrame("Button", nil, parent, "UIPanelButtonTemplate")
     temp:SetPoint(point, x, y)
-    temp:SetSize(width, 21)
+    temp:SetSize(width, height)
     temp:SetText(text)
 
     return temp

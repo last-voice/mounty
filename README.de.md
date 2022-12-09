@@ -51,7 +51,7 @@ __Mounty #TLV__ unterscheidet zwischen __7 Kategorien für deine Mounts__:
 - __Taxi-Mounts__ - Ein Beifahrer-Platz für einen guten Freund ist perfekt für gemeinsames Questen, farmen und kämpfen Hand in Hand. Vor allen Dingen, wenn dein Taxi Flügel hat, und dein Freund noch nicht gelernt hat zu fliegen. Er wird dir auf ewig dankbar sein.
 - __Angeber-Mounts__ - Du hast Stunden, Tage, sogar Wochen damit verbracht, dieses eine ganz besondere Mount deiner Träume zu ergattern. Es wird nie wieder ein besseres Mount geben. Vielleicht ab morgen wieder. Für heute aber musst du allen zeigen: Es ist für immer deins!
 
-Du kannst __jeder dieser Kategorien 10 verschiedene Lieblings-Mounts__ zuordnen. Einfach aus der Mount-Sammlung heraus mit der Maus herüberziehen.
+Du kannst __jeder dieser Kategorien 110 verschiedene Lieblings-Mounts__ zuordnen. Einfach aus der Mount-Sammlung heraus mit der Maus herüberziehen.
 Und du kannst __diese eine magische Taste__ belegen, die für dich zaubern wird.
 
 ## So wirkt die Magie
@@ -125,6 +125,10 @@ Das Optionsfenster öffnet sich auch __automatisch zusammen mit Deiner Reittier-
 Außerdem kannst Du die Optionen auch mit einem __Button in der Reittiersammlung__ (unten/rechts) öffnen.
 
 Ziehe mit der Maus deine favorisierten Mounts in die Kategorien deiner Wahl. Mit einem Rechtsklick kannst du einzelne Mounts wieder entfernen.
+
+Mit dem __Plus-Button__ kannst Du ein weiteres Fenster öffnen, um einer Kategorie __100 weitere Reittiere__ zuzuordnen. Dort kannst Du auch bequem __alle in der Reittier-Sammlung gefilterten Reittiere in einem Rutsch übernehmen__.
+
+__ACHTUNG:__ __Mounty #TLV__ __überprüft nie__, ob deine Zuordnungen sinnvoll sind! Du kannst grundsätzlich jedes Reittier in jede Kategorie packen. Also: Mach' bitte keinen Unsinn!
 
 ## Optionen
 
