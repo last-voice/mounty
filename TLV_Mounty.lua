@@ -17,6 +17,7 @@ local MountyOptionsFrame_DurabilityMin
 local MountyOptionsFrame_Hello
 local MountyOptionsFrame_Profile
 local MountyOptionsFrame_ProfileDropdown
+local MountyOptionsFrame_JournalButton
 local MountyOptionsFrame_Buttons = {}
 
 local MountyQuickStartFrame
@@ -379,7 +380,7 @@ function Mounty:KeyHandler(keypress)
 
         Mounty:Debug("Magic key")
 
-        if together and not alone then
+        if not alone and together then
             flyable = false
         end
 
@@ -540,20 +541,37 @@ function Mounty:Tooltip(calling, expanded)
     end
 end
 
+function Mounty:SettingsFrameTemplateSetBg (SettingsFrameTemplateFrame)
+
+    -- To modify the template SettingsFrameTemplate as needed
+
+    SettingsFrameTemplateFrame.Bg.TopSection:SetColorTexture(0, 0, 0, 0.9)
+
+    SettingsFrameTemplateFrame.Bg.BottomEdge:SetColorTexture(0, 0, 0, 0.9)
+
+    SettingsFrameTemplateFrame.Bg.BottomLeft:SetColorTexture(0, 0, 0, 0.9)
+    SettingsFrameTemplateFrame.Bg.BottomLeft:SetVertexColor(1, 1, 1, 1)
+
+    SettingsFrameTemplateFrame.Bg.BottomRight:SetColorTexture(0, 0, 0, 0.9)
+    SettingsFrameTemplateFrame.Bg.BottomRight:SetVertexColor(1, 1, 1, 1)
+
+end
+
 function Mounty:InitFrameOptions()
 
     local top
     local temp
 
-    local control_top_delta = 40
-    local control_top_delta_small = 20
+    local delta = 10
 
     MountyOptionsFrame:Hide()
     MountyOptionsFrame:SetWidth(500)
-    MountyOptionsFrame:SetHeight(640)
+    MountyOptionsFrame:SetHeight(660)
     MountyOptionsFrame:SetPoint("CENTER")
 
     MountyOptionsFrame:SetFrameStrata("HIGH")
+
+    Mounty:SettingsFrameTemplateSetBg(MountyOptionsFrame)
 
     MountyOptionsFrame:EnableMouse(true)
     MountyOptionsFrame:SetMovable(true)
@@ -570,120 +588,7 @@ function Mounty:InitFrameOptions()
     temp:SetPoint("TOP", 0, -6)
     temp:SetText(Mounty.AddOnTitle .. " " .. Mounty.AddOnVersion)
 
-    -- Random checkbox
-
-    top = -40
-
-    MountyOptionsFrame_Random = CreateFrame("CheckButton", "MountyOptionsFrame_Random", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
-    MountyOptionsFrame_Random:SetPoint("TOPLEFT", 16, top)
-    MountyOptionsFrame_RandomText:SetText(L["options.Random"])
-    MountyOptionsFrame_Random:SetScript("OnClick", function(calling)
-        _Profile.Random = not _Profile.Random
-        calling:SetChecked(_Profile.Random)
-    end)
-
-    -- Open Mounts
-
-    temp = CreateFrame("Button", "MountyOptionsFrame_OpenMounts", MountyOptionsFrame)
-    temp:SetSize(32, 32)
-    temp:SetNormalTexture("Interface\\Icons\\Ability_Mount_RidingHorse")
-    temp:SetPoint("TOPRIGHT", -20, top)
-    temp:SetScript("OnClick", function()
-        ToggleCollectionsJournal(1)
-    end)
-
-    -- Open Quick start
-
-    temp = CreateFrame("Button", "MountyOptionsFrame_OpenMounts", MountyOptionsFrame)
-    temp:SetSize(32, 32)
-    temp:SetNormalTexture("Interface\\Icons\\INV_Misc_QuestionMark")
-    temp:SetPoint("TOPRIGHT", -20, top - 40)
-    temp:SetScript("OnClick", function()
-        if MountyQuickStartFrame:IsVisible() then
-            MountyQuickStartFrame:Hide()
-        else
-            MountyQuickStartFrame:Show()
-        end
-    end)
-
-    -- ShowOff checkbox
-
-    top = top - control_top_delta_small
-
-    MountyOptionsFrame_ShowOff = CreateFrame("CheckButton", "MountyOptionsFrame_ShowOff", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
-    MountyOptionsFrame_ShowOff:SetPoint("TOPLEFT", 16, top)
-    MountyOptionsFrame_ShowOffText:SetText(L["options.Look"])
-    MountyOptionsFrame_ShowOff:SetScript("OnClick", function(calling)
-        _Profile.ShowOff = not _Profile.ShowOff
-        calling:SetChecked(_Profile.ShowOff)
-    end)
-
-    -- Together checkbox
-
-    top = top - control_top_delta_small
-
-    MountyOptionsFrame_Together = CreateFrame("CheckButton", "MountyOptionsFrame_Together", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
-    MountyOptionsFrame_Together:SetPoint("TOPLEFT", 16, top)
-    MountyOptionsFrame_TogetherText:SetText(L["options.Stay"])
-    MountyOptionsFrame_Together:SetScript("OnClick", function(calling)
-        _Profile.Together = not _Profile.Together
-        calling:SetChecked(_Profile.Together)
-    end)
-
-    -- TaxiMode checkbox
-
-    top = top - control_top_delta_small
-
-    MountyOptionsFrame_TaxiMode = CreateFrame("CheckButton", "MountyOptionsFrame_TaxiMode", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
-    MountyOptionsFrame_TaxiMode:SetPoint("TOPLEFT", 16, top)
-    MountyOptionsFrame_TaxiModeText:SetText(L["options.Taxi"])
-    MountyOptionsFrame_TaxiMode:SetScript("OnClick", function(calling)
-        _Profile.TaxiMode = not _Profile.TaxiMode
-        calling:SetChecked(_Profile.TaxiMode)
-    end)
-
-    -- Taxi!
-
-    top = top - control_top_delta - 10
-
-    MountyOptionsFrame_Hello = CreateFrame("EditBox", "MountyOptionsFrame_Hello", MountyOptionsFrame, "InputBoxTemplate")
-    MountyOptionsFrame_Hello:SetWidth(335)
-    MountyOptionsFrame_Hello:SetHeight(16)
-    MountyOptionsFrame_Hello:SetPoint("TOPLEFT", 25, top)
-    MountyOptionsFrame_Hello:SetAutoFocus(false)
-    MountyOptionsFrame_Hello:CreateFontString("MountyOptionsFrame_HelloLabel", "OVERLAY", "GameFontNormalSmall")
-    MountyOptionsFrame_HelloLabel:SetPoint("BOTTOMLEFT", MountyOptionsFrame_Hello, "TOPLEFT", 0, 4)
-    MountyOptionsFrame_HelloLabel:SetText(L["options.Hello"])
-    MountyOptionsFrame_Hello:SetScript("OnEnterPressed", function(calling)
-        _Profile.Hello = calling:GetText()
-        calling:ClearFocus()
-    end)
-    MountyOptionsFrame_Hello:SetScript("OnEscapePressed", function(calling)
-        calling:SetText(_Profile.Hello)
-    end)
-
-    temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 360, top + 3, 32, 21, L["button.OK"])
-    temp:SetScript("OnClick", function()
-        _Profile.Hello = MountyOptionsFrame_Hello:GetText()
-        MountyOptionsFrame_Hello:ClearFocus()
-    end)
-
-    -- Durability slider
-
-    top = top - control_top_delta
-
-    MountyOptionsFrame_DurabilityMin = CreateFrame("Slider", "MountyOptionsFrame_DurabilityMin", MountyOptionsFrame, "OptionsSliderTemplate")
-    MountyOptionsFrame_DurabilityMin:SetWidth(335)
-    MountyOptionsFrame_DurabilityMin:SetHeight(16)
-    MountyOptionsFrame_DurabilityMin:SetPoint("TOPLEFT", 25, top)
-    MountyOptionsFrame_DurabilityMinLow:SetText("50%")
-    MountyOptionsFrame_DurabilityMinHigh:SetText("100%")
-    MountyOptionsFrame_DurabilityMin:SetMinMaxValues(50, 100)
-    MountyOptionsFrame_DurabilityMin:SetValueStep(1)
-    MountyOptionsFrame_DurabilityMin:SetScript("OnValueChanged", function(_, value)
-        MountyOptionsFrame_DurabilityMinText:SetFormattedText(L["options.Durability"], math.floor(value + 0.5))
-        _Profile.DurabilityMin = math.floor(value + 0.5)
-    end)
+    top = -20
 
     -- Mounts
 
@@ -691,7 +596,7 @@ function Mounty:InitFrameOptions()
 
         MountyOptionsFrame_Buttons[category] = {}
 
-        top = top - control_top_delta
+        top = top - delta * 4
 
         temp = MountyOptionsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
         temp:SetPoint("TOPLEFT", 16, top - 10)
@@ -737,15 +642,107 @@ function Mounty:InitFrameOptions()
 
     -- Helptext
 
-    top = top - control_top_delta + 8
+    top = top - delta * 3
 
     temp = MountyOptionsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
     temp:SetPoint("TOPLEFT", 90, top - 3)
     temp:SetText(L["options.Helptext"])
 
+    -- Random checkbox
+
+    top = top - delta * 2
+
+    MountyOptionsFrame_Random = CreateFrame("CheckButton", "MountyOptionsFrame_Random", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    MountyOptionsFrame_Random:SetPoint("TOPLEFT", 16, top)
+    MountyOptionsFrame_RandomText:SetText(L["options.Random"])
+    MountyOptionsFrame_Random:SetScript("OnClick", function(calling)
+        _Profile.Random = not _Profile.Random
+        calling:SetChecked(_Profile.Random)
+    end)
+
+    -- ShowOff checkbox
+
+    top = top - delta * 2
+
+    MountyOptionsFrame_ShowOff = CreateFrame("CheckButton", "MountyOptionsFrame_ShowOff", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    MountyOptionsFrame_ShowOff:SetPoint("TOPLEFT", 16, top)
+    MountyOptionsFrame_ShowOffText:SetText(L["options.Look"])
+    MountyOptionsFrame_ShowOff:SetScript("OnClick", function(calling)
+        _Profile.ShowOff = not _Profile.ShowOff
+        calling:SetChecked(_Profile.ShowOff)
+    end)
+
+    -- Together checkbox
+
+    top = top - delta * 2
+
+    MountyOptionsFrame_Together = CreateFrame("CheckButton", "MountyOptionsFrame_Together", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    MountyOptionsFrame_Together:SetPoint("TOPLEFT", 16, top)
+    MountyOptionsFrame_TogetherText:SetText(L["options.Stay"])
+    MountyOptionsFrame_Together:SetScript("OnClick", function(calling)
+        _Profile.Together = not _Profile.Together
+        calling:SetChecked(_Profile.Together)
+    end)
+
+    -- TaxiMode checkbox
+
+    top = top - delta * 2
+
+    MountyOptionsFrame_TaxiMode = CreateFrame("CheckButton", "MountyOptionsFrame_TaxiMode", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    MountyOptionsFrame_TaxiMode:SetPoint("TOPLEFT", 16, top)
+    MountyOptionsFrame_TaxiModeText:SetText(L["options.Taxi"])
+    MountyOptionsFrame_TaxiMode:SetScript("OnClick", function(calling)
+        _Profile.TaxiMode = not _Profile.TaxiMode
+        --        calling:SetChecked(_Profile.TaxiMode)
+        Mounty:OptionsRender()
+    end)
+
+    -- Taxi!
+
+    top = top - delta * 5
+
+    MountyOptionsFrame_Hello = CreateFrame("EditBox", "MountyOptionsFrame_Hello", MountyOptionsFrame, "InputBoxTemplate")
+    MountyOptionsFrame_Hello:SetWidth(335)
+    MountyOptionsFrame_Hello:SetHeight(16)
+    MountyOptionsFrame_Hello:SetPoint("TOPLEFT", 25, top)
+    MountyOptionsFrame_Hello:SetAutoFocus(false)
+    MountyOptionsFrame_Hello:CreateFontString("MountyOptionsFrame_HelloLabel", "OVERLAY", "GameFontNormalSmall")
+    MountyOptionsFrame_HelloLabel:SetPoint("BOTTOMLEFT", MountyOptionsFrame_Hello, "TOPLEFT", 0, 4)
+    MountyOptionsFrame_HelloLabel:SetText(L["options.Hello"])
+    MountyOptionsFrame_Hello:SetScript("OnEnterPressed", function(calling)
+        _Profile.Hello = calling:GetText()
+        calling:ClearFocus()
+    end)
+    MountyOptionsFrame_Hello:SetScript("OnEscapePressed", function(calling)
+        calling:SetText(_Profile.Hello)
+    end)
+
+    temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 360, top + 3, 32, 21, L["button.OK"])
+    temp:SetScript("OnClick", function()
+        _Profile.Hello = MountyOptionsFrame_Hello:GetText()
+        MountyOptionsFrame_Hello:ClearFocus()
+    end)
+
+    -- Durability slider
+
+    top = top - delta * 4
+
+    MountyOptionsFrame_DurabilityMin = CreateFrame("Slider", "MountyOptionsFrame_DurabilityMin", MountyOptionsFrame, "OptionsSliderTemplate")
+    MountyOptionsFrame_DurabilityMin:SetWidth(335)
+    MountyOptionsFrame_DurabilityMin:SetHeight(16)
+    MountyOptionsFrame_DurabilityMin:SetPoint("TOPLEFT", 25, top)
+    MountyOptionsFrame_DurabilityMinLow:SetText("50%")
+    MountyOptionsFrame_DurabilityMinHigh:SetText("100%")
+    MountyOptionsFrame_DurabilityMin:SetMinMaxValues(50, 100)
+    MountyOptionsFrame_DurabilityMin:SetValueStep(1)
+    MountyOptionsFrame_DurabilityMin:SetScript("OnValueChanged", function(_, value)
+        MountyOptionsFrame_DurabilityMinText:SetFormattedText(L["options.Durability"], math.floor(value + 0.5))
+        _Profile.DurabilityMin = math.floor(value + 0.5)
+    end)
+
     -- Current profile
 
-    top = top - control_top_delta
+    top = top - delta * 5
 
     MountyOptionsFrame_ProfileDropdown = CreateFrame("FRAME", "MountyOptionsFrame_ProfileDropdown", MountyOptionsFrame, "UIDropDownMenuTemplate")
     MountyOptionsFrame_ProfileDropdown:SetPoint("TOPLEFT", 0, top + 6);
@@ -783,6 +780,8 @@ function Mounty:InitFrameOptions()
         Mounty:NewProfile(calling:GetText())
     end)
 
+    -- Profile buttons 1
+
     temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 270, top + 3, 50, 21, L["button.Add"])
     temp:SetScript("OnClick", function()
         Mounty:NewProfile(MountyOptionsFrame_Profile:GetText())
@@ -805,7 +804,7 @@ function Mounty:InitFrameOptions()
 
     -- Share profiles checkbox
 
-    top = top - control_top_delta_small
+    top = top - delta * 2
 
     MountyOptionsFrame_ShareProfiles = CreateFrame("CheckButton", "MountyOptionsFrame_ShareProfiles", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     MountyOptionsFrame_ShareProfiles:SetPoint("TOPLEFT", 16, top)
@@ -817,6 +816,8 @@ function Mounty:InitFrameOptions()
         Mounty:OptionsRender()
 
     end)
+
+    -- Profile buttons 2
 
     temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 270, top, 98, 21, L["button.CopyC2A"])
     temp:SetScript("OnClick", function()
@@ -830,19 +831,20 @@ function Mounty:InitFrameOptions()
 
     -- Auto open checkbox
 
-    top = top - control_top_delta_small - 4
+    top = top - delta * 3
 
     MountyOptionsFrame_AutoOpen = CreateFrame("CheckButton", "MountyOptionsFrame_AutoOpen", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     MountyOptionsFrame_AutoOpen:SetPoint("TOPLEFT", 16, top)
     MountyOptionsFrame_AutoOpenText:SetText(L["options.Autoopen"])
     MountyOptionsFrame_AutoOpen:SetScript("OnClick", function(calling)
         _DataAccount.AutoOpen = not _DataAccount.AutoOpen
-        calling:SetChecked(_DataAccount.AutoOpen)
+        --        calling:SetChecked(_DataAccount.AutoOpen)
+        Mounty:OptionsRender()
     end)
 
     -- DebugMode checkbox
 
-    top = top - control_top_delta_small
+    top = top - delta * 2
 
     MountyOptionsFrame_DebugMode = CreateFrame("CheckButton", "MountyOptionsFrame_DebugMode", MountyOptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     MountyOptionsFrame_DebugMode:SetPoint("TOPLEFT", 16, top)
@@ -852,24 +854,56 @@ function Mounty:InitFrameOptions()
         calling:SetChecked(_DataAccount.DebugMode)
     end)
 
+    -- Open Mounts
+
+    MountyOptionsFrame_JournalButton = TLV:Button(MountyOptionsFrame, "TOPLEFT", 270, top, 98, 21, L["button.Journal"])
+    MountyOptionsFrame_JournalButton:SetScript("OnClick", function()
+        ToggleCollectionsJournal(1)
+    end)
+
+    --    if (_DataAccount.AutoOpen) then
+    --        MountyOptionsFrame_JournalButton:Hide()
+    --    end
+
+    -- Open Quick start
+
+    temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 366, top, 98, 21, L["button.Help"])
+    temp:SetScript("OnClick", function()
+        if MountyQuickStartFrame:IsVisible() then
+            MountyQuickStartFrame:Hide()
+        else
+            MountyQuickStartFrame:Show()
+        end
+    end)
+
+
 end
 
 function Mounty:InitFrameQuickStart()
 
-    MountyQuickStartFrame = CreateFrame("Frame", nil, MountyOptionsFrame, "SettingsFrameTemplate")
-    MountyQuickStartFrame:SetWidth(500)
-    MountyQuickStartFrame:SetHeight(90)
-    MountyQuickStartFrame:SetPoint("BOTTOM", 0, -90)
-    MountyQuickStartFrame:SetFrameStrata("HIGH")
+    MountyQuickStartFrame = CreateFrame("Frame", "MountyQuickStartFrame", MountyOptionsFrame, "SettingsFrameTemplate")
+    MountyQuickStartFrame:SetWidth(490)
+    MountyQuickStartFrame:SetHeight(150)
+    MountyQuickStartFrame:SetPoint("CENTER", 0, 0)
+    MountyQuickStartFrame:SetFrameStrata("DIALOG")
+
+    Mounty:SettingsFrameTemplateSetBg(MountyQuickStartFrame)
 
     temp = MountyQuickStartFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     temp:SetPoint("TOP", 0, -6)
     temp:SetText(L["quick.title"])
 
     temp = MountyQuickStartFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-    temp:SetPoint("TOPLEFT", 32, -32)
+    temp:SetPoint("TOP", 0, -32)
     temp:SetJustifyH("LEFT")
     temp:SetText(L["quick.text"])
+
+    temp = CreateFrame("EditBox", nil, MountyQuickStartFrame, "InputBoxTemplate")
+    temp:SetWidth(400)
+    temp:SetHeight(16)
+    temp:SetPoint("TOP", 0, -120)
+    temp:SetAutoFocus(false)
+    temp:SetText(L["readme.URL"])
 
     if not _DataAccount.QuickStart then
         MountyQuickStartFrame:Hide()
@@ -881,11 +915,13 @@ function Mounty:InitFrameExpanded()
 
     local temp
 
-    MountyExpandedFrame = CreateFrame("Frame", nil, MountyOptionsFrame, "SettingsFrameTemplate")
+    MountyExpandedFrame = CreateFrame("Frame", "MountyExpandedFrame", MountyOptionsFrame, "SettingsFrameTemplate")
     MountyExpandedFrame:SetWidth(288)
     MountyExpandedFrame:SetHeight(360)
     MountyExpandedFrame:SetPoint("TOPRIGHT", 288, -200)
     MountyExpandedFrame:SetFrameStrata("HIGH")
+
+    Mounty:SettingsFrameTemplateSetBg(MountyExpandedFrame)
 
     MountyExpandedFrame:EnableMouse(true)
     MountyExpandedFrame:SetMovable(true)
@@ -1175,6 +1211,20 @@ function Mounty:OptionsRender()
     MountyOptionsFrame_Profile:SetText("")
 
     UIDropDownMenu_SetText(MountyOptionsFrame_ProfileDropdown, _DataCharacter.CurrentProfile)
+
+    if (_Profile.TaxiMode) then
+        MountyOptionsFrame_Together:Disable()
+        MountyOptionsFrame_Together:SetAlpha(0.4)
+    else
+        MountyOptionsFrame_Together:Enable()
+        MountyOptionsFrame_Together:SetAlpha(1)
+    end
+
+    if (_DataAccount.AutoOpen) then
+        MountyOptionsFrame_JournalButton:Hide()
+    else
+        MountyOptionsFrame_JournalButton:Show()
+    end
 
     Mounty:OptionsRenderButtons()
 
@@ -1790,6 +1840,10 @@ SlashCmdList["MOUNTY"] = function(message)
             Mounty:Chat(L["chat.Taxi"] .. "|cfff00000" .. L["off"] .. "|r.")
 
         end
+
+    elseif mode == "dbg" then
+
+        --    TLV:TableDebug(MountyQuickStartFrame)
 
     elseif mode ~= "" and mode ~= nil then
 

@@ -2,9 +2,12 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.5.1
+- Make up
+
 v2.5
 - 110 mounts per category!
-- Easy transfer all filtered mounts from mount journal into selected category
+- Easily transfer all filtered mounts from mount journal into selected category
 
 v2.4.3.2
 - Another bugfix in upgrade routine, this time well tested ^^

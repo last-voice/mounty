@@ -1,9 +1,8 @@
-if (GetLocale() ~= "de2DE") then
+if (GetLocale() ~= "deDE") then
     return
 end
 
 local L = {}
--- local _G = _G
 
 _G["BINDING_NAME_MOUNTY_MAGIC"] = "Magisches Mount"
 _G["BINDING_NAME_MOUNTY_GROUND"] = "Boden-Mount"
@@ -23,14 +22,14 @@ L["mode.Taxi"] = "Taxi"
 L["mode.Show off"] = "Angeberei"
 L["mode.Random"] = "Zufällig"
 
-L["options.Random"] = "Zufällig (Wenn nicht angehakt, kommen die Mounts je Kategorie der Reihe nach)"
-L["options.Look"] = "Seht her! Angeberei in Ruhebereichen"
-L["options.Stay"] = "Als Gruppe zusammen bleiben, nicht fliegen (außer als Taxi)"
-L["options.Taxi"] = "Taxi-Modus"
+L["options.Random"] = "Zufällig (anstatt der Reihe nach)"
+L["options.Look"] = "Seht her! (In Ruhebereichen angeben)"
+L["options.Stay"] = "In der Gruppe am Boden bleiben und nicht fliegen (außer du bist das Taxi)"
+L["options.Taxi"] = "Taxi-Modus (In einer Gruppe immer dein Taxi-Reittier rufen)"
 L["options.Debug"] = "Debug-Modus (nur englisch)"
 L["options.Autoopen"] = "Automatisch mit der Reittiersammlung öffnen und schließen"
 L["options.Durability"] = "Das Repair kommt bei weniger als %d%% Rüstung."
-L["options.Hello"] = "So rufst du deinen Passagier"
+L["options.Hello"] = "So rufst du deinen Taxi-Gast"
 L["options.Hello-Default"] = "Taxi!"
 L["options.Helptext"] = "Mounts hier reinziehen. Rechtsklick, um Mount zu entfernen."
 L["options.Profile"] = "Profil"
@@ -70,13 +69,17 @@ L["button.Add"] = "Neu"
 L["button.Duplicate"] = "Kopie"
 L["button.Delete"] = "Löschen"
 L["button.Edit"] = "Ändern"
-L["button.CopyC2A"] = "Char > Account"
-L["button.CopyA2C"] = "Account > Char"
+L["button.CopyC2A"] = "Char>Account"
+L["button.CopyA2C"] = "Account>Char"
+L["button.Journal"] = "Reittiere"
+L["button.Help"] = "Hilfe"
 
 L["Mount journal - Open Mounty"] = "Mounty #TLV"
 
 L["quick.title"] = "Quick-Start"
-L["quick.text"] = "- Ziehe deine liebsten Reittiere mit der Maus in die entsprechenden Kategorien von Mounty #TLV.\n- Öffne WoWs Tastaturbelegungen, wähle Mounty #TLV und konfiguriere deine magische Taste.\n- Drücke deine magische Taste um hier und jetzt immer das perfekte Reittier zu rufen.\n- Genieße Mounty #TLV und schau dir gerne auch alle weiteren Optionen und Mögichkeiten an."
+L["quick.text"] = "- Ziehe deine liebsten Reittiere mit der Maus in die entsprechenden Kategorien von Mounty #TLV.\n- Öffne WoWs Tastaturbelegungen, wähle Mounty #TLV und konfiguriere deine magische Taste.\n- Drücke deine magische Taste um hier und jetzt immer das perfekte Reittier zu rufen.\n- Genieße Mounty #TLV und schau dir gerne auch alle weiteren Optionen und Mögichkeiten an.\n\nIn der README findest du eine detaillierte Beschreibung."
+
+L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.de.md"
 
 L["upgrade"] = "Du kannst nun jeder Kategorie |cff00f000110 Reittiere|r zuordnen."
 

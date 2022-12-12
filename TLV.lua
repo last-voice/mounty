@@ -1,5 +1,36 @@
 TLV = {}
 
+function TLV:TableDebug(src, depth)
+
+    local line
+
+    depth = depth or 0
+
+    for k, v in pairs(src) do
+
+        line = ""
+
+        for s = 1, depth do
+            line = line .. "  "
+        end
+
+        line = line .. k .. " = "
+
+        if type(v) == "table" then
+            print(line .. "(table)")
+            TLV:TableDebug(v, depth + 1)
+        elseif type(v) == "string" then
+            print(line .. "(string) " .. v)
+        elseif type(v) == "number" then
+            print(line .. "(number) " .. v)
+        else
+            print(line .. "(" .. type(v) .. ")")
+        end
+
+    end
+
+end
+
 function TLV:TableDuplicate(src)
 
     local dest = {}
