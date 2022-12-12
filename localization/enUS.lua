@@ -1,5 +1,4 @@
 local L = {}
--- local _G = _G
 
 _G["BINDING_NAME_MOUNTY_MAGIC"] = "Summon magic mount"
 _G["BINDING_NAME_MOUNTY_GROUND"] = "Summon ground mount"
