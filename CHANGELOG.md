@@ -2,6 +2,9 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.5.1.1
+- Colors
+
 v2.5.1
 - Make up
 

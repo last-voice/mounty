@@ -1,8 +1,8 @@
-local _, Mounty = ...
+local _, TLVaddon = ...
 
-local L = Mounty.L
+local L = TLVaddon.L
 
-function Mounty:Upgrade()
+function TLVaddon:Upgrade()
 
     local alert = ""
 
@@ -97,7 +97,7 @@ function Mounty:Upgrade()
 
             _DataAccount.UpgradeTo110 = true
 
-            Mounty:Alert(L["upgrade"])
+            TLVaddon:Alert(L["upgrade"])
 
         end
 

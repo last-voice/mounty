@@ -83,5 +83,5 @@ L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.de.md"
 
 L["upgrade"] = "Du kannst nun jeder Kategorie |cff00f000110 Reittiere|r zuordnen."
 
-local _, Mounty = ...
-Mounty.L = setmetatable(L, { __index = Mounty.L })
+local _, TLVaddon = ...
+TLVaddon.L = setmetatable(L, { __index = TLVaddon.L })

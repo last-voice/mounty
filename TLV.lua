@@ -1,4 +1,18 @@
-TLV = {}
+local _, TLVaddon = ...
+
+local TLV = {}
+
+function TLV:AddOnTitle ()
+
+    if (TLVaddon ~= nil) then
+        if (TLVaddon.AddOnTitle ~= nil and TLVaddon.AddOnVersion ~= nil) then
+            return (TLVaddon.AddOnTitle .. " " .. TLVaddon.AddOnVersion)
+        end
+    end
+
+    return "untitled"
+
+end
 
 function TLV:TableDebug(src, depth)
 
@@ -66,7 +80,7 @@ function TLV:Alert (alert)
     end
 
     StaticPopupDialogs["TLV_ALERT"] = {
-        text = alert,
+        text = "|cfff0b040" .. TLV:AddOnTitle () .. "|r\n\n" .. alert,
         button1 = OKAY,
         sound = IG_MAINMENU_OPEN,
         timeout = 0,
@@ -77,3 +91,23 @@ function TLV:Alert (alert)
     StaticPopup_Show("TLV_ALERT")
 
 end
+
+function TLV:Chat(msg)
+
+    if DEFAULT_CHAT_FRAME then
+        DEFAULT_CHAT_FRAME:AddMessage("|cfff0b040" .. TLV:AddOnTitle () .. "|r: " .. msg, 1, 1, 0)
+    end
+
+end
+
+TLV.DebugModeForce = false
+
+function TLV:Debug(msg)
+
+    if _DataAccount.DebugMode or TLV.DebugModeForce then
+        TLV:Chat(msg)
+    end
+
+end
+
+TLVaddon.TLV = TLV

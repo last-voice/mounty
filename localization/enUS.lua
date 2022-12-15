@@ -79,5 +79,5 @@ L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.md"
 
 L["upgrade"] = "You can now assign |cff00f000110 mounts|r to each category."
 
-local _, Mounty = ...
-Mounty.L = L
+local _, TLVaddon = ...
+TLVaddon.L = L

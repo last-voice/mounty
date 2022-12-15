@@ -1,9 +1,10 @@
-local MountyAddOnName, Mounty = ...
+local TLVaddonName, TLVaddon = ...
 
 local _Profiles = {}
 local _Profile = {}
 
-local L = Mounty.L
+local L = TLVaddon.L
+local TLV = TLVaddon.TLV
 
 local MountyOptionsFrame
 local MountyOptionsFrame_DebugMode
@@ -51,35 +52,9 @@ local MountyCategoriesLabel = {
 local MountyFallbackQueue = {}
 local MountyFallbackAlready = {}
 
-Mounty.AddOnTitle = nil
-Mounty.AddOnVersion = nil
+TLVaddon.MountyTestDragon = nil
 
-Mounty.MountyTestDragon = nil
-
-Mounty.MountyDebugForce = false
-
-function Mounty:Alert(msg)
-
-    TLV:Alert("|cffa0a0ff" .. Mounty.AddOnTitle .. " " .. Mounty.AddOnVersion .. "|r\n\n" .. msg)
-
-end
-
-function Mounty:Chat(msg)
-
-    if DEFAULT_CHAT_FRAME then
-        DEFAULT_CHAT_FRAME:AddMessage("|cffa0a0ff" .. Mounty.AddOnTitle .. " " .. Mounty.AddOnVersion .. "|r: " .. msg, 1, 1, 0)
-    end
-
-end
-
-function Mounty:Debug(msg)
-
-    if _DataAccount.DebugMode or Mounty.MountyDebugForce then
-        Mounty:Chat(msg)
-    end
-end
-
-function Mounty:Durability()
+function TLVaddon:Durability()
 
     local curTotal = 0
     local maxTotal = 0
@@ -94,12 +69,12 @@ function Mounty:Durability()
 
     local durability = math.floor((100 * curTotal / maxTotal) + 0.5)
 
-    Mounty:Debug("Durability: |cffa0a0ff" .. durability .. "%|r")
+    TLV:Debug("Durability: |cfff01000" .. durability .. "%|r")
 
     return durability
 end
 
-function Mounty:Fallback(category)
+function TLVaddon:Fallback(category)
 
     MountyFallbackAlready[category] = true
 
@@ -116,20 +91,20 @@ function Mounty:Fallback(category)
 
     if FallbackTo == MountyFlying then
 
-        Mounty:Debug("Fallback: '" .. L["mode.Flying"] .. "'")
+        TLV:Debug("Fallback: '" .. L["mode.Flying"] .. "'")
         return MountyFlying
 
     elseif FallbackTo == MountyGround then
 
-        Mounty:Debug("Fallback: '" .. L["mode.Ground"] .. "'")
+        TLV:Debug("Fallback: '" .. L["mode.Ground"] .. "'")
         return MountyGround
     end
 
-    Mounty:Debug("Fallback: '" .. L["mode.Random"] .. "'")
+    TLV:Debug("Fallback: '" .. L["mode.Random"] .. "'")
     return 0
 end
 
-function Mounty:SelectMountByCategory(category, only_flyable_showoffs)
+function TLVaddon:SelectMountByCategory(category, only_flyable_showoffs)
 
     if category == 0 then
         return 0
@@ -155,7 +130,7 @@ function Mounty:SelectMountByCategory(category, only_flyable_showoffs)
                 end
             end
 
-            Mounty:Debug("Usable: " .. "[" .. mountID .. "] " .. mname .. " -> " .. tostring(usable))
+            TLV:Debug("Usable: " .. "[" .. mountID .. "] " .. mname .. " -> " .. tostring(usable))
 
             if usable then
                 count = count + 1
@@ -177,24 +152,24 @@ function Mounty:SelectMountByCategory(category, only_flyable_showoffs)
             picked = _Profile.Iterator[category]
         end
 
-        Mounty:Debug("Selected: " .. picked .. " of " .. count)
+        TLV:Debug("Selected: " .. picked .. " of " .. count)
 
         return ids[picked]
     end
 
-    Mounty:Debug("No mount found in category.")
+    TLV:Debug("No mount found in category.")
 
-    return Mounty:SelectMountByCategory(Mounty:Fallback(category), false)
+    return TLVaddon:SelectMountByCategory(TLVaddon:Fallback(category), false)
 end
 
-function Mounty:MountSpellID(mountID)
+function TLVaddon:MountSpellID(mountID)
 
     local _, spellID = C_MountJournal.GetMountInfoByID(mountID)
 
     return spellID
 end
 
-function Mounty:MountUsableBySpellID(spellID)
+function TLVaddon:MountUsableBySpellID(spellID)
 
     local mountID = C_MountJournal.GetMountFromSpell(spellID)
     local _, _, icon = C_MountJournal.GetMountInfoByID(mountID)
@@ -202,13 +177,13 @@ function Mounty:MountUsableBySpellID(spellID)
     return icon
 end
 
-function Mounty:UserCanFlyHere()
+function TLVaddon:UserCanFlyHere()
 
     return IsFlyableArea() and (C_Spell.DoesSpellExist(34090) or C_Spell.DoesSpellExist(90265)) -- riding has been learned
     --    return IsFlyableArea() and (IsPlayerSpell(34090) or IsPlayerSpell(90265)) -- riding has been learned
 end
 
-function Mounty:IsInDragonflight()
+function TLVaddon:IsInDragonflight()
 
     local mapID = C_Map.GetBestMapForUnit("player");
 
@@ -226,35 +201,35 @@ function Mounty:IsInDragonflight()
     return (map_info and map_info.mapID == 1978) -- Dragonflight
 end
 
-function Mounty:UserCanDragonflyHere()
+function TLVaddon:UserCanDragonflyHere()
     -- Not used, using Mounty:DragonCanFlyHere instead
-    return Mounty:IsInDragonflight() and C_Spell.DoesSpellExist(376777) -- dragon riding has been learned
+    return TLVaddon:IsInDragonflight() and C_Spell.DoesSpellExist(376777) -- dragon riding has been learned
     -- return Mounty:IsInDragonflight() and IsPlayerSpell(376777) -- dragon riding has been learned
 end
 
-function Mounty:DragonsCanFlyHere()
+function TLVaddon:DragonsCanFlyHere()
 
-    if Mounty.MountyTestDragon == nil then
+    if TLVaddon.MountyTestDragon == nil then
 
-        Mounty.MountyTestDragon = 0
+        TLVaddon.MountyTestDragon = 0
 
         for _, v in ipairs(C_MountJournal.GetCollectedDragonridingMounts()) do
             local name, spellID, _, _, _, _, _, _, _, _, isCollected = C_MountJournal.GetMountInfoByID(v)
             if isCollected then
-                Mounty.MountyTestDragon = spellID
-                Mounty:Debug("Test dragon found: " .. name .. " [" .. spellID .. "]")
+                TLVaddon.MountyTestDragon = spellID
+                TLV:Debug("Test dragon found: " .. name .. " [" .. spellID .. "]")
             end
         end
     end
 
-    if Mounty.MountyTestDragon == 0 then
+    if TLVaddon.MountyTestDragon == 0 then
         return false
     end
 
-    return (IsUsableSpell(Mounty.MountyTestDragon))
+    return (IsUsableSpell(TLVaddon.MountyTestDragon))
 end
 
-function Mounty:Mount(mode)
+function TLVaddon:Mount(mode)
 
     local mountID = 0
     local spellID = 0
@@ -292,7 +267,7 @@ function Mounty:Mount(mode)
 
         category = MountyShowOff
 
-        if Mounty:UserCanFlyHere() then
+        if TLVaddon:UserCanFlyHere() then
             only_flyable_showoffs = true
         end
 
@@ -302,40 +277,40 @@ function Mounty:Mount(mode)
         category = 0
     end
 
-    Mounty:Debug("Mode: " .. mode)
-    Mounty:Debug("Category: " .. category)
+    TLV:Debug("Mode: " .. mode)
+    TLV:Debug("Category: " .. category)
 
     if category > 0 then
 
         MountyFallbackAlready = {} -- Muss wieder auf leer gesetzt werden
 
-        if Mounty:UserCanFlyHere() then
+        if TLVaddon:UserCanFlyHere() then
             MountyFallbackQueue = { MountyFlying, MountyGround }
         else
             MountyFallbackQueue = { MountyGround, MountyFlying }
         end
 
-        spellID = Mounty:SelectMountByCategory(category, only_flyable_showoffs)
+        spellID = TLVaddon:SelectMountByCategory(category, only_flyable_showoffs)
 
         if spellID > 0 then
             mountID = C_MountJournal.GetMountFromSpell(spellID)
         end
     end
 
-    Mounty:Debug("mountID: " .. mountID)
-    Mounty:Debug("spellID: " .. spellID)
+    TLV:Debug("mountID: " .. mountID)
+    TLV:Debug("spellID: " .. spellID)
 
     C_MountJournal.SummonByID(mountID)
 end
 
-function Mounty:KeyHandler(keypress)
+function TLVaddon:KeyHandler(keypress)
 
     if keypress == nil then
         keypress = "magic"
     end
 
-    Mounty:Debug("--- --- --- --- --- --- ---")
-    Mounty:Debug("Key pressed: " .. keypress)
+    TLV:Debug("--- --- --- --- --- --- ---")
+    TLV:Debug("Key pressed: " .. keypress)
 
     if keypress == "forceoff" then
 
@@ -348,7 +323,7 @@ function Mounty:KeyHandler(keypress)
     elseif IsMounted() then
 
         if IsFlying() then
-            Mounty:Debug("You are mounted and flying.")
+            TLV:Debug("You are mounted and flying.")
             return
         end
 
@@ -361,24 +336,24 @@ function Mounty:KeyHandler(keypress)
 
     if keypress == "ground" or keypress == "repair" or keypress == "random" or keypress == "showoff" or keypress == "water" or keypress == "taxi" then
 
-        Mounty:Debug("Dedicated key")
+        TLV:Debug("Dedicated key")
 
-        Mounty:Mount(keypress)
+        TLVaddon:Mount(keypress)
 
     else
 
         -- magic
 
         local resting = IsResting()
-        local dragonflight = Mounty:DragonsCanFlyHere()
+        local dragonflight = TLVaddon:DragonsCanFlyHere()
         local alone = not IsInGroup()
-        local flyable = Mounty:UserCanFlyHere()
+        local flyable = TLVaddon:UserCanFlyHere()
         local swimming = IsSwimming()
         local taximode = _Profile.TaxiMode
         local together = _Profile.Together
         local showoff = _Profile.ShowOff
 
-        Mounty:Debug("Magic key")
+        TLV:Debug("Magic key")
 
         if not alone and together then
             flyable = false
@@ -386,7 +361,7 @@ function Mounty:KeyHandler(keypress)
 
         local mode
 
-        if Mounty:Durability() < _Profile.DurabilityMin then
+        if TLVaddon:Durability() < _Profile.DurabilityMin then
 
             mode = "repair"
 
@@ -415,11 +390,11 @@ function Mounty:KeyHandler(keypress)
             mode = "ground"
         end
 
-        Mounty:Mount(mode)
+        TLVaddon:Mount(mode)
     end
 end
 
-function Mounty:AddMount(calling, expanded)
+function TLVaddon:AddMount(calling, expanded)
 
     local infoType, mountID = GetCursorInfo()
 
@@ -427,7 +402,7 @@ function Mounty:AddMount(calling, expanded)
     local index = calling.MountyIndex
 
     if expanded then
-        category = Mounty:ValidCategory(MountyExpandedFrame.MountyCategory)
+        category = TLVaddon:ValidCategory(MountyExpandedFrame.MountyCategory)
     end
 
     if not category then
@@ -438,17 +413,17 @@ function Mounty:AddMount(calling, expanded)
 
         ClearCursor()
 
-        local spellID = Mounty:MountSpellID(mountID)
+        local spellID = TLVaddon:MountSpellID(mountID)
 
         if spellID == 0 then
 
-            Mounty:Debug("Fail: spellID = 0 | " .. infoType .. " " .. category .. " " .. mountID)
+            TLV:Debug("Fail: spellID = 0 | " .. infoType .. " " .. category .. " " .. mountID)
 
-        elseif Mounty:AlreadyInCategory(category, spellID) then
+        elseif TLVaddon:AlreadyInCategory(category, spellID) then
 
-            Mounty:Alert(L["options.Already"])
+            TLV:Alert(L["options.Already"])
 
-            Mounty:Debug("Fail: Already | " .. infoType .. " " .. category .. " " .. mountID .. " " .. spellID)
+            TLV:Debug("Fail: Already | " .. infoType .. " " .. category .. " " .. mountID .. " " .. spellID)
 
         else
 
@@ -461,9 +436,9 @@ function Mounty:AddMount(calling, expanded)
 
             end
 
-            Mounty:Debug("Mount saved: " .. infoType .. " " .. category .. " " .. index .. " " .. mountID .. " " .. spellID)
+            TLV:Debug("Mount saved: " .. infoType .. " " .. category .. " " .. index .. " " .. mountID .. " " .. spellID)
             _Profile.Mounts[category][index] = spellID
-            Mounty:OptionsRenderButtons()
+            TLVaddon:OptionsRenderButtons()
         end
 
         GameTooltip:Hide()
@@ -472,20 +447,20 @@ function Mounty:AddMount(calling, expanded)
 
 end
 
-function Mounty:RemoveMount(calling, expanded)
+function TLVaddon:RemoveMount(calling, expanded)
 
     local category = calling.MountyCategory or 0
     local index = calling.MountyIndex
 
     if expanded then
-        category = Mounty:ValidCategory(MountyExpandedFrame.MountyCategory)
+        category = TLVaddon:ValidCategory(MountyExpandedFrame.MountyCategory)
     end
 
     if not category then
         return
     end
 
-    Mounty:Debug("Mount removed: " .. category .. " " .. index)
+    TLV:Debug("Mount removed: " .. category .. " " .. index)
 
     if index < MountyMounts then
 
@@ -501,13 +476,13 @@ function Mounty:RemoveMount(calling, expanded)
 
     end
 
-    Mounty:OptionsRenderButtons()
+    TLVaddon:OptionsRenderButtons()
 
     GameTooltip:Hide()
 
 end
 
-function Mounty:AlreadyInCategory (category, spellID)
+function TLVaddon:AlreadyInCategory (category, spellID)
 
     for i = 1, MountyMountsExpanded do
         if _Profile.Mounts[category][i] == spellID then
@@ -519,13 +494,13 @@ function Mounty:AlreadyInCategory (category, spellID)
 
 end
 
-function Mounty:Tooltip(calling, expanded)
+function TLVaddon:Tooltip(calling, expanded)
 
     local category = calling.MountyCategory or 0
     local index = calling.MountyIndex
 
     if expanded then
-        category = Mounty:ValidCategory(MountyExpandedFrame.MountyCategory)
+        category = TLVaddon:ValidCategory(MountyExpandedFrame.MountyCategory)
     end
 
     if not category then
@@ -541,7 +516,7 @@ function Mounty:Tooltip(calling, expanded)
     end
 end
 
-function Mounty:SettingsFrameTemplateSetBg (SettingsFrameTemplateFrame)
+function TLVaddon:SettingsFrameTemplateSetBg (SettingsFrameTemplateFrame)
 
     -- To modify the template SettingsFrameTemplate as needed
 
@@ -557,7 +532,7 @@ function Mounty:SettingsFrameTemplateSetBg (SettingsFrameTemplateFrame)
 
 end
 
-function Mounty:InitFrameOptions()
+function TLVaddon:InitFrameOptions()
 
     local top
     local temp
@@ -571,7 +546,7 @@ function Mounty:InitFrameOptions()
 
     MountyOptionsFrame:SetFrameStrata("HIGH")
 
-    Mounty:SettingsFrameTemplateSetBg(MountyOptionsFrame)
+    TLVaddon:SettingsFrameTemplateSetBg(MountyOptionsFrame)
 
     MountyOptionsFrame:EnableMouse(true)
     MountyOptionsFrame:SetMovable(true)
@@ -586,7 +561,7 @@ function Mounty:InitFrameOptions()
     -- Title text
     temp = MountyOptionsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     temp:SetPoint("TOP", 0, -6)
-    temp:SetText(Mounty.AddOnTitle .. " " .. Mounty.AddOnVersion)
+    temp:SetText(TLV:AddOnTitle())
 
     top = -20
 
@@ -614,13 +589,13 @@ function Mounty:InitFrameOptions()
             MountyOptionsFrame_Buttons[category][i]:SetPoint("TOPLEFT", 48 + i * 38, top)
             MountyOptionsFrame_Buttons[category][i]:SetScript("OnMouseUp", function(calling, button)
                 if button == "LeftButton" then
-                    Mounty:AddMount(calling, false)
+                    TLVaddon:AddMount(calling, false)
                 elseif button == "RightButton" then
-                    Mounty:RemoveMount(calling, false)
+                    TLVaddon:RemoveMount(calling, false)
                 end
             end)
             MountyOptionsFrame_Buttons[category][i]:SetScript("OnEnter", function(calling)
-                Mounty:Tooltip(calling, false)
+                TLVaddon:Tooltip(calling, false)
             end)
             MountyOptionsFrame_Buttons[category][i]:SetScript("OnLeave", function()
                 GameTooltip:Hide()
@@ -634,7 +609,7 @@ function Mounty:InitFrameOptions()
             MountyExpandedFrame_Title:SetText("+ " .. MountyCategoriesLabel[calling.MountyCategory])
             MountyExpandedFrame.MountyCategory = calling.MountyCategory
             MountyExpandedFrame:Show()
-            Mounty:OptionsRenderExpandedButtons()
+            TLVaddon:OptionsRenderExpandedButtons()
 
         end)
 
@@ -694,7 +669,7 @@ function Mounty:InitFrameOptions()
     MountyOptionsFrame_TaxiMode:SetScript("OnClick", function(calling)
         _Profile.TaxiMode = not _Profile.TaxiMode
         --        calling:SetChecked(_Profile.TaxiMode)
-        Mounty:OptionsRender()
+        TLVaddon:OptionsRender()
     end)
 
     -- Taxi!
@@ -756,12 +731,12 @@ function Mounty:InitFrameOptions()
 
         local info = UIDropDownMenu_CreateInfo()
 
-        for _, profile in ipairs(Mounty:ProfilesSorted()) do
+        for _, profile in ipairs(TLVaddon:ProfilesSorted()) do
 
             info.text = profile
             info.checked = profile == _DataCharacter.CurrentProfile
             info.func = function(p)
-                Mounty:SwitchProfile(p.value)
+                TLVaddon:SwitchProfile(p.value)
             end
 
             UIDropDownMenu_AddButton(info)
@@ -777,29 +752,29 @@ function Mounty:InitFrameOptions()
     MountyOptionsFrame_Profile:SetAutoFocus(false)
     MountyOptionsFrame_Profile:SetScript("OnEnterPressed", function(calling)
         calling:ClearFocus()
-        Mounty:NewProfile(calling:GetText())
+        TLVaddon:NewProfile(calling:GetText())
     end)
 
     -- Profile buttons 1
 
     temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 270, top + 3, 50, 21, L["button.Add"])
     temp:SetScript("OnClick", function()
-        Mounty:NewProfile(MountyOptionsFrame_Profile:GetText())
+        TLVaddon:NewProfile(MountyOptionsFrame_Profile:GetText())
     end)
 
     temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 318, top + 3, 50, 21, L["button.Duplicate"])
     temp:SetScript("OnClick", function()
-        Mounty:DuplicateProfile(_DataCharacter.CurrentProfile, MountyOptionsFrame_Profile:GetText())
+        TLVaddon:DuplicateProfile(_DataCharacter.CurrentProfile, MountyOptionsFrame_Profile:GetText())
     end)
 
     temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 366, top + 3, 50, 21, L["button.Edit"])
     temp:SetScript("OnClick", function()
-        Mounty:DuplicateProfile(_DataCharacter.CurrentProfile, MountyOptionsFrame_Profile:GetText(), true)
+        TLVaddon:DuplicateProfile(_DataCharacter.CurrentProfile, MountyOptionsFrame_Profile:GetText(), true)
     end)
 
     temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 414, top + 3, 50, 21, L["button.Delete"])
     temp:SetScript("OnClick", function()
-        Mounty:DeleteProfile(_DataCharacter.CurrentProfile)
+        TLVaddon:DeleteProfile(_DataCharacter.CurrentProfile)
     end)
 
     -- Share profiles checkbox
@@ -812,8 +787,8 @@ function Mounty:InitFrameOptions()
     MountyOptionsFrame_ShareProfiles:SetScript("OnClick", function()
         _DataCharacter.ShareProfiles = not _DataCharacter.ShareProfiles
         _DataCharacter.CurrentProfile = nil
-        Mounty:InitSavedVariables()
-        Mounty:OptionsRender()
+        TLVaddon:InitSavedVariables()
+        TLVaddon:OptionsRender()
 
     end)
 
@@ -821,12 +796,12 @@ function Mounty:InitFrameOptions()
 
     temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 270, top, 98, 21, L["button.CopyC2A"])
     temp:SetScript("OnClick", function()
-        Mounty:CopyProfiles("c>a")
+        TLVaddon:CopyProfiles("c>a")
     end)
 
     temp = TLV:Button(MountyOptionsFrame, "TOPLEFT", 366, top, 98, 21, L["button.CopyA2C"])
     temp:SetScript("OnClick", function()
-        Mounty:CopyProfiles("a>c")
+        TLVaddon:CopyProfiles("a>c")
     end)
 
     -- Auto open checkbox
@@ -839,7 +814,7 @@ function Mounty:InitFrameOptions()
     MountyOptionsFrame_AutoOpen:SetScript("OnClick", function(calling)
         _DataAccount.AutoOpen = not _DataAccount.AutoOpen
         --        calling:SetChecked(_DataAccount.AutoOpen)
-        Mounty:OptionsRender()
+        TLVaddon:OptionsRender()
     end)
 
     -- DebugMode checkbox
@@ -879,7 +854,7 @@ function Mounty:InitFrameOptions()
 
 end
 
-function Mounty:InitFrameQuickStart()
+function TLVaddon:InitFrameQuickStart()
 
     MountyQuickStartFrame = CreateFrame("Frame", "MountyQuickStartFrame", MountyOptionsFrame, "SettingsFrameTemplate")
     MountyQuickStartFrame:SetWidth(490)
@@ -887,7 +862,7 @@ function Mounty:InitFrameQuickStart()
     MountyQuickStartFrame:SetPoint("CENTER", 0, 0)
     MountyQuickStartFrame:SetFrameStrata("DIALOG")
 
-    Mounty:SettingsFrameTemplateSetBg(MountyQuickStartFrame)
+    TLVaddon:SettingsFrameTemplateSetBg(MountyQuickStartFrame)
 
     temp = MountyQuickStartFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     temp:SetPoint("TOP", 0, -6)
@@ -911,7 +886,7 @@ function Mounty:InitFrameQuickStart()
 
 end
 
-function Mounty:InitFrameExpanded()
+function TLVaddon:InitFrameExpanded()
 
     local temp
 
@@ -921,7 +896,7 @@ function Mounty:InitFrameExpanded()
     MountyExpandedFrame:SetPoint("TOPRIGHT", 288, -200)
     MountyExpandedFrame:SetFrameStrata("HIGH")
 
-    Mounty:SettingsFrameTemplateSetBg(MountyExpandedFrame)
+    TLVaddon:SettingsFrameTemplateSetBg(MountyExpandedFrame)
 
     MountyExpandedFrame:EnableMouse(true)
     MountyExpandedFrame:SetMovable(true)
@@ -964,13 +939,13 @@ function Mounty:InitFrameExpanded()
             MountyExpandedFrame_Buttons[index]:SetPoint("TOPLEFT", 18 + (x - 1) * 26, top)
             MountyExpandedFrame_Buttons[index]:SetScript("OnMouseUp", function(calling, button)
                 if button == "LeftButton" then
-                    Mounty:AddMount(calling, true)
+                    TLVaddon:AddMount(calling, true)
                 elseif button == "RightButton" then
-                    Mounty:RemoveMount(calling, true)
+                    TLVaddon:RemoveMount(calling, true)
                 end
             end)
             MountyExpandedFrame_Buttons[index]:SetScript("OnEnter", function(calling)
-                Mounty:Tooltip(calling, true)
+                TLVaddon:Tooltip(calling, true)
             end)
             MountyExpandedFrame_Buttons[index]:SetScript("OnLeave", function()
                 GameTooltip:Hide()
@@ -984,26 +959,26 @@ function Mounty:InitFrameExpanded()
 
     temp = TLV:Button(MountyExpandedFrame, "TOPLEFT", 18, top, 192, 21, L["expanded.Add"])
     temp:SetScript("OnClick", function()
-        Mounty:AddMountsFromJournalToCategory()
+        TLVaddon:AddMountsFromJournalToCategory()
     end)
 
     temp = TLV:Button(MountyExpandedFrame, "TOPLEFT", 216, top, 60, 21, L["expanded.Refresh"])
     temp:SetScript("OnClick", function()
-        Mounty:RefreshCategory()
+        TLVaddon:RefreshCategory()
     end)
 
     top = top - 24
 
     temp = TLV:Button(MountyExpandedFrame, "TOPLEFT", 216, top, 60, 21, L["expanded.Clear"])
     temp:SetScript("OnClick", function()
-        Mounty:ClearCategory()
+        TLVaddon:ClearCategory()
     end)
 
     MountyExpandedFrame:Hide()
 
 end
 
-function Mounty:AddMountsFromJournalToCategory()
+function TLVaddon:AddMountsFromJournalToCategory()
 
     StaticPopupDialogs["Mounty_AddMountsFromJournal"] = {
         text = L["expanded.add-journal-confirm"],
@@ -1019,13 +994,13 @@ function Mounty:AddMountsFromJournalToCategory()
 
             local empty
 
-            category = Mounty:ValidCategory(MountyExpandedFrame.MountyCategory)
+            category = TLVaddon:ValidCategory(MountyExpandedFrame.MountyCategory)
 
             if not category then
                 return
             end
 
-            Mounty:ReorderCategory(category)
+            TLVaddon:ReorderCategory(category)
 
             -- find 1st empty slot
 
@@ -1051,7 +1026,7 @@ function Mounty:AddMountsFromJournalToCategory()
 
                     if _Profile.Mounts[category][empty] == 0 then
 
-                        if not Mounty:AlreadyInCategory(category, spellID) then
+                        if not TLVaddon:AlreadyInCategory(category, spellID) then
 
                             local _, spellID, _, _, _, _, _, _, _, _, isCollected = C_MountJournal.GetMountInfoByID(mountID);
 
@@ -1070,9 +1045,9 @@ function Mounty:AddMountsFromJournalToCategory()
 
             end
 
-            Mounty:OptionsRenderButtons()
+            TLVaddon:OptionsRenderButtons()
 
-            Mounty:Debug("Added " .. added .. " new mounts to the current category.")
+            TLV:Debug("Added " .. added .. " new mounts to the current category.")
 
         end
     }
@@ -1083,7 +1058,7 @@ function Mounty:AddMountsFromJournalToCategory()
 
 end
 
-function Mounty:RefreshCategory()
+function TLVaddon:RefreshCategory()
 
     StaticPopupDialogs["Mounty_RefreshExpanded"] = {
         text = L["expanded.refresh-confirm"],
@@ -1095,15 +1070,15 @@ function Mounty:RefreshCategory()
         hideOnEscape = true,
         OnAccept = function()
 
-            local category = Mounty:ValidCategory(MountyExpandedFrame.MountyCategory)
+            local category = TLVaddon:ValidCategory(MountyExpandedFrame.MountyCategory)
 
             if not category then
                 return
             end
 
-            Mounty:ReorderCategory(category)
+            TLVaddon:ReorderCategory(category)
 
-            Mounty:OptionsRenderButtons()
+            TLVaddon:OptionsRenderButtons()
 
         end
     }
@@ -1114,7 +1089,7 @@ function Mounty:RefreshCategory()
 
 end
 
-function Mounty:ClearCategory()
+function TLVaddon:ClearCategory()
 
     StaticPopupDialogs["Mounty_ClearExpanded"] = {
         text = L["expanded.clear-confirm"],
@@ -1126,7 +1101,7 @@ function Mounty:ClearCategory()
         hideOnEscape = true,
         OnAccept = function()
 
-            local category = Mounty:ValidCategory(MountyExpandedFrame.MountyCategory)
+            local category = TLVaddon:ValidCategory(MountyExpandedFrame.MountyCategory)
 
             if not category then
                 return
@@ -1136,7 +1111,7 @@ function Mounty:ClearCategory()
                 _Profile.Mounts[category][i] = 0
             end
 
-            Mounty:OptionsRenderButtons()
+            TLVaddon:OptionsRenderButtons()
 
         end
     }
@@ -1147,7 +1122,7 @@ function Mounty:ClearCategory()
 
 end
 
-function Mounty:ReorderCategory (category)
+function TLVaddon:ReorderCategory (category)
 
     local j
 
@@ -1172,7 +1147,7 @@ function Mounty:ReorderCategory (category)
 
 end
 
-function Mounty:ValidCategory (category)
+function TLVaddon:ValidCategory (category)
 
     if category == nil then
         return false
@@ -1186,15 +1161,15 @@ function Mounty:ValidCategory (category)
 
 end
 
-function Mounty:InitFrames()
+function TLVaddon:InitFrames()
 
-    Mounty:InitFrameOptions()
-    Mounty:InitFrameQuickStart()
-    Mounty:InitFrameExpanded()
+    TLVaddon:InitFrameOptions()
+    TLVaddon:InitFrameQuickStart()
+    TLVaddon:InitFrameExpanded()
 
 end
 
-function Mounty:OptionsRender()
+function TLVaddon:OptionsRender()
 
     MountyOptionsFrame_Random:SetChecked(_Profile.Random)
     MountyOptionsFrame_Together:SetChecked(_Profile.Together)
@@ -1226,11 +1201,11 @@ function Mounty:OptionsRender()
         MountyOptionsFrame_JournalButton:Show()
     end
 
-    Mounty:OptionsRenderButtons()
+    TLVaddon:OptionsRenderButtons()
 
 end
 
-function Mounty:OptionsRenderButtons()
+function TLVaddon:OptionsRenderButtons()
 
     local icon
 
@@ -1254,11 +1229,11 @@ function Mounty:OptionsRenderButtons()
 
     end
 
-    Mounty:OptionsRenderExpandedButtons()
+    TLVaddon:OptionsRenderExpandedButtons()
 
 end
 
-function Mounty:OptionsRenderExpandedButtons()
+function TLVaddon:OptionsRenderExpandedButtons()
 
     if not MountyExpandedFrame:IsVisible() then
         return
@@ -1266,7 +1241,7 @@ function Mounty:OptionsRenderExpandedButtons()
 
     local icon
 
-    local category = Mounty:ValidCategory(MountyExpandedFrame.MountyCategory)
+    local category = TLVaddon:ValidCategory(MountyExpandedFrame.MountyCategory)
 
     if not category then
         return
@@ -1291,7 +1266,7 @@ function Mounty:OptionsRenderExpandedButtons()
 
 end
 
-function Mounty:AddJournalButton()
+function TLVaddon:AddJournalButton()
 
     local temp = TLV:Button(MountJournal, "BOTTOMRIGHT", -6, 3, 128, 21, L["Mount journal - Open Mounty"])
     temp:SetScript("OnClick", function()
@@ -1306,9 +1281,9 @@ function Mounty:AddJournalButton()
 
 end
 
-function Mounty:ProfileNameDefault ()
+function TLVaddon:ProfileNameDefault ()
 
-    local profiles = Mounty:ProfilesSorted()
+    local profiles = TLVaddon:ProfilesSorted()
 
     local default = profiles[1]
 
@@ -1316,7 +1291,7 @@ function Mounty:ProfileNameDefault ()
         default = UnitName("player")
     end
 
-    if not Mounty:ProfileCheckName(default) then
+    if not TLVaddon:ProfileCheckName(default) then
         default = "Mounty"
     end
 
@@ -1324,7 +1299,7 @@ function Mounty:ProfileNameDefault ()
 
 end
 
-function Mounty:ProfileCheckName (p, alert)
+function TLVaddon:ProfileCheckName (p, alert)
 
     local err = ""
 
@@ -1335,22 +1310,22 @@ function Mounty:ProfileCheckName (p, alert)
     end
 
     if err ~= "" and alert then
-        Mounty:Alert(L[err])
+        TLV:Alert(L[err])
     end
 
     return err == ""
 
 end
 
-function Mounty:DeleteProfile(p)
+function TLVaddon:DeleteProfile(p)
 
-    if not Mounty:ProfileCheckName(p, true) then
+    if not TLVaddon:ProfileCheckName(p, true) then
         return
     end
 
     if _Profiles[p] == nil then
 
-        Mounty:Alert(string.format(L["profile.none"], p))
+        TLV:Alert(string.format(L["profile.none"], p))
         return
 
     end
@@ -1365,7 +1340,7 @@ function Mounty:DeleteProfile(p)
         hideOnEscape = true,
         OnAccept = function(_, data)
             _Profiles[data] = nil
-            Mounty:SwitchProfile(Mounty:ProfileNameDefault())
+            TLVaddon:SwitchProfile(TLVaddon:ProfileNameDefault())
         end
     }
 
@@ -1378,39 +1353,39 @@ function Mounty:DeleteProfile(p)
 
 end
 
-function Mounty:NewProfile (p)
+function TLVaddon:NewProfile (p)
 
-    if not Mounty:ProfileCheckName(p, true) then
+    if not TLVaddon:ProfileCheckName(p, true) then
         return
     end
 
     if _Profiles[p] ~= nil then
-        Mounty:Alert(string.format(L["profile.already"], p))
+        TLV:Alert(string.format(L["profile.already"], p))
         return
     end
 
-    Mounty:SwitchProfile(p)
+    TLVaddon:SwitchProfile(p)
 
 end
 
-function Mounty:DuplicateProfile (p_from, p, rename)
+function TLVaddon:DuplicateProfile (p_from, p, rename)
 
-    if not Mounty:ProfileCheckName(p, true) then
+    if not TLVaddon:ProfileCheckName(p, true) then
         return
     end
 
     if _Profiles[p] ~= nil then
-        Mounty:Alert(string.format(L["profile.already"], p))
+        TLV:Alert(string.format(L["profile.already"], p))
         return
     end
 
-    if not Mounty:ProfileCheckName(p_from, true) then
+    if not TLVaddon:ProfileCheckName(p_from, true) then
         return
     end
 
     if _Profiles[p_from] == nil then
 
-        Mounty:Alert(string.format(L["profile.none"], p_from))
+        TLV:Alert(string.format(L["profile.none"], p_from))
         return
 
     end
@@ -1421,32 +1396,32 @@ function Mounty:DuplicateProfile (p_from, p, rename)
         _Profiles[p_from] = nil
     end
 
-    Mounty:SwitchProfile(p)
+    TLVaddon:SwitchProfile(p)
 
 end
 
-function Mounty:SwitchProfile(p)
+function TLVaddon:SwitchProfile(p)
 
     if p == "" then
-        Mounty:Alert(string.format(L["profile.empty"], p))
+        TLV:Alert(string.format(L["profile.empty"], p))
         return
     end
 
-    if not Mounty:ProfileCheckName(p, true) then
+    if not TLVaddon:ProfileCheckName(p, true) then
         return
     end
 
-    Mounty:SelectProfile(p)
+    TLVaddon:SelectProfile(p)
 
     if MountyOptionsFrame:IsVisible() then
-        Mounty:OptionsRender()
+        TLVaddon:OptionsRender()
     end
 
 end
 
-function Mounty:SelectProfile(p)
+function TLVaddon:SelectProfile(p)
 
-    if not Mounty:ProfileCheckName(p) then
+    if not TLVaddon:ProfileCheckName(p) then
         return
     end
 
@@ -1517,7 +1492,7 @@ function Mounty:SelectProfile(p)
 
 end
 
-function Mounty:ProfilesSorted (joined)
+function TLVaddon:ProfilesSorted (joined)
 
     local profiles = {}
 
@@ -1537,7 +1512,7 @@ function Mounty:ProfilesSorted (joined)
 
 end
 
-function Mounty:CopyProfiles(mode)
+function TLVaddon:CopyProfiles(mode)
 
     StaticPopupDialogs["Mounty_Copy_Profiles"] = {
         text = L["profile.copy-confirm"],
@@ -1586,7 +1561,7 @@ function Mounty:CopyProfiles(mode)
 
 end
 
-function Mounty:InitSavedVariables()
+function TLVaddon:InitSavedVariables()
 
     if _DataAccount == nil then
         _DataAccount = {}
@@ -1620,12 +1595,12 @@ function Mounty:InitSavedVariables()
 
     if _DataCharacter.CurrentProfile == nil then
 
-        local profiles = Mounty:ProfilesSorted()
+        local profiles = TLVaddon:ProfilesSorted()
 
         _DataCharacter.CurrentProfile = profiles[1]
 
         if _Profiles[_DataCharacter.CurrentProfile] == nil then
-            _DataCharacter.CurrentProfile = Mounty:ProfileNameDefault()
+            _DataCharacter.CurrentProfile = TLVaddon:ProfileNameDefault()
 
         end
 
@@ -1639,7 +1614,7 @@ function Mounty:InitSavedVariables()
         _DataAccount.AutoOpen = true
     end
 
-    Mounty:SelectProfile(_DataCharacter.CurrentProfile)
+    TLVaddon:SelectProfile(_DataCharacter.CurrentProfile)
 
     -- show quick start?
 
@@ -1656,24 +1631,24 @@ function Mounty:InitSavedVariables()
 
 end
 
-function Mounty:Init()
+function TLVaddon:Init()
 
-    Mounty.AddOnTitle = GetAddOnMetadata(MountyAddOnName, "Title")
-    Mounty.AddOnVersion = GetAddOnMetadata(MountyAddOnName, "Version")
+    TLVaddon.AddOnTitle = GetAddOnMetadata(TLVaddonName, "Title")
+    TLVaddon.AddOnVersion = GetAddOnMetadata(TLVaddonName, "Version")
 
-    Mounty:Upgrade()
+    TLVaddon:Upgrade()
 
-    Mounty:InitSavedVariables()
+    TLVaddon:InitSavedVariables()
 
-    Mounty:InitFrames()
+    TLVaddon:InitFrames()
 
 end
 
-function Mounty:OnEvent (event, arg1)
+function MountyOptionsFrame:OnEvent (event, arg1)
 
-    if event == "ADDON_LOADED" and arg1 == MountyAddOnName then
+    if event == "ADDON_LOADED" and arg1 == TLVaddonName then
 
-        Mounty:Init()
+        TLVaddon:Init()
 
         self:UnregisterEvent("ADDON_LOADED")
 
@@ -1681,38 +1656,37 @@ function Mounty:OnEvent (event, arg1)
 
 end
 
-function Mounty:OnShow ()
+function TLVaddon:OnShow ()
 
-    Mounty:OptionsRender()
+    TLVaddon:OptionsRender()
 
 end
 
-function Mounty:OnHide ()
+function TLVaddon:OnHide ()
 
 end
 
 function MountyKeyHandler(keypress)
-    Mounty:KeyHandler(keypress)
+    TLVaddon:KeyHandler(keypress)
 end
 
 MountyOptionsFrame = CreateFrame("Frame", "MountyOptionsFrame", UIParent, "SettingsFrameTemplate")
 
 MountyOptionsFrame:RegisterEvent("ADDON_LOADED")
-MountyOptionsFrame:RegisterEvent("PLAYER_LOGOUT")
 
-MountyOptionsFrame:SetScript("OnEvent", Mounty.OnEvent)
-MountyOptionsFrame:SetScript("OnShow", Mounty.OnShow)
-MountyOptionsFrame:SetScript("OnHide", Mounty.OnHide)
+MountyOptionsFrame:SetScript("OnEvent", TLVaddon.OnEvent)
+MountyOptionsFrame:SetScript("OnShow", TLVaddon.OnShow)
+MountyOptionsFrame:SetScript("OnHide", TLVaddon.OnHide)
 
 tinsert(UISpecialFrames, "MountyOptionsFrame");
 
 EventRegistry:RegisterCallback("MountJournal.OnShow", function()
-    if CollectionsJournal.selectedTab == COLLECTIONS_JOURNAL_TAB_INDEX_MOUNTS and not Mounty.MountyJournalButtonAdded then
-        EventRegistry:UnregisterCallback("MountJournal.OnShow", MountyAddOnName .. 'Button')
-        Mounty:AddJournalButton()
-        Mounty.MountyJournalButtonAdded = true
+    if CollectionsJournal.selectedTab == COLLECTIONS_JOURNAL_TAB_INDEX_MOUNTS and not TLVaddon.MountyJournalButtonAdded then
+        EventRegistry:UnregisterCallback("MountJournal.OnShow", TLVaddonName .. 'Button')
+        TLVaddon:AddJournalButton()
+        TLVaddon.MountyJournalButtonAdded = true
     end
-end, MountyAddOnName .. 'Button')
+end, TLVaddonName .. 'Button')
 
 EventRegistry:RegisterCallback("MountJournal.OnShow", function()
     if _DataAccount.AutoOpen then
@@ -1720,18 +1694,18 @@ EventRegistry:RegisterCallback("MountJournal.OnShow", function()
         MountyOptionsFrame:SetPoint("TOPLEFT", CollectionsJournal, "TOPRIGHT", 0, 0)
         MountyOptionsFrame:Show()
     end
-end, MountyAddOnName)
+end, TLVaddonName)
 
 EventRegistry:RegisterCallback("MountJournal.OnHide", function()
     if _DataAccount.AutoOpen then
         MountyOptionsFrame:Hide()
     end
-end, MountyAddOnName)
+end, TLVaddonName)
 
 -- /mounty
 
-SLASH_MOUNTY1 = "/mounty"
-SlashCmdList["MOUNTY"] = function(message)
+SLASH_TLV_MOUNTY1 = "/mounty"
+SlashCmdList["TLV_MOUNTY"] = function(message)
 
     message = message or ""
 
@@ -1742,34 +1716,34 @@ SlashCmdList["MOUNTY"] = function(message)
 
     if mode == "magic" then
 
-        Mounty:KeyHandler()
+        TLVaddon:KeyHandler()
 
     elseif mode == "profile" then
 
         if arg1 == "" then
-            Mounty:Chat(string.format(L["profile.current"], _DataCharacter.CurrentProfile))
+            TLV:Chat(string.format(L["profile.current"], _DataCharacter.CurrentProfile))
         else
-            Mounty:SwitchProfile(p1)
+            TLVaddon:SwitchProfile(p1)
             if p1 == _DataCharacter.CurrentProfile then
-                Mounty:Chat(string.format(L["profile.switched"], p))
+                TLV:Chat(string.format(L["profile.switched"], p))
             end
         end
 
     elseif mode == "version" then
 
-        Mounty:Chat("<-- ;)")
+        TLV:Chat("<-- ;)")
 
     elseif mode == "debug" then
 
         if arg1 == "on" then
 
             _DataAccount.DebugMode = true
-            Mounty:Chat(L["chat.Debug"] .. "|cff00f000" .. L["on"] .. "|r.")
+            TLV:Chat(L["chat.Debug"] .. "|cff00f010" .. L["on"] .. "|r.")
 
         elseif arg1 == "off" then
 
             _DataAccount.DebugMode = false
-            Mounty:Chat(L["chat.Debug"] .. "|cfff00000" .. L["off"] .. "|r.")
+            TLV:Chat(L["chat.Debug"] .. "|cfff01000" .. L["off"] .. "|r.")
         end
 
     elseif mode == "auto" then
@@ -1777,12 +1751,12 @@ SlashCmdList["MOUNTY"] = function(message)
         if arg1 == "on" then
 
             _DataAccount.AutoOpen = true
-            Mounty:Chat(L["chat.Autoopen"] .. "|cff00f000" .. L["on"] .. "|r.")
+            TLV:Chat(L["chat.Autoopen"] .. "|cff00f010" .. L["on"] .. "|r.")
 
         elseif arg1 == "off" then
 
             _DataAccount.AutoOpen = false
-            Mounty:Chat(L["chat.Autoopen"] .. "|cfff00000" .. L["off"] .. "|r.")
+            TLV:Chat(L["chat.Autoopen"] .. "|cfff01000" .. L["off"] .. "|r.")
         end
 
     elseif mode == "together" then
@@ -1790,12 +1764,12 @@ SlashCmdList["MOUNTY"] = function(message)
         if arg1 == "on" then
 
             _Profile.Together = true
-            Mounty:Chat(L["chat.Together"] .. "|cff00f000" .. L["on"] .. "|r.")
+            TLV:Chat(L["chat.Together"] .. "|cff00f010" .. L["on"] .. "|r.")
 
         elseif arg1 == "off" then
 
             _Profile.Together = false
-            Mounty:Chat(L["chat.Together"] .. "|cfff00000" .. L["off"] .. "|r.")
+            TLV:Chat(L["chat.Together"] .. "|cfff01000" .. L["off"] .. "|r.")
 
         end
 
@@ -1804,12 +1778,12 @@ SlashCmdList["MOUNTY"] = function(message)
         if arg1 == "on" then
 
             _Profile.ShowOff = true
-            Mounty:Chat(L["chat.Showoff"] .. "|cff00f000" .. L["on"] .. "|r.")
+            TLV:Chat(L["chat.Showoff"] .. "|cff00f010" .. L["on"] .. "|r.")
 
         elseif arg1 == "off" then
 
             _Profile.ShowOff = false
-            Mounty:Chat(L["chat.Showoff"] .. "|cfff00000" .. L["off"] .. "|r.")
+            TLV:Chat(L["chat.Showoff"] .. "|cfff01000" .. L["off"] .. "|r.")
 
         end
 
@@ -1818,12 +1792,12 @@ SlashCmdList["MOUNTY"] = function(message)
         if arg1 == "on" then
 
             _Profile.Random = true
-            Mounty:Chat(L["chat.Random"] .. "|cff00f000" .. L["on"] .. "|r.")
+            TLV:Chat(L["chat.Random"] .. "|cff00f010" .. L["on"] .. "|r.")
 
         elseif arg1 == "off" then
 
             _Profile.Random = false
-            Mounty:Chat(L["chat.Random"] .. "|cfff00000" .. L["off"] .. "|r.")
+            TLV:Chat(L["chat.Random"] .. "|cfff01000" .. L["off"] .. "|r.")
 
         end
 
@@ -1832,12 +1806,12 @@ SlashCmdList["MOUNTY"] = function(message)
         if arg1 == "on" then
 
             _Profile.TaxiMode = true
-            Mounty:Chat(L["chat.Taxi"] .. "|cff00f000" .. L["on"] .. "|r.")
+            TLV:Chat(L["chat.Taxi"] .. "|cff00f010" .. L["on"] .. "|r.")
 
         elseif arg1 == "off" then
 
             _Profile.TaxiMode = false
-            Mounty:Chat(L["chat.Taxi"] .. "|cfff00000" .. L["off"] .. "|r.")
+            TLV:Chat(L["chat.Taxi"] .. "|cfff01000" .. L["off"] .. "|r.")
 
         end
 
@@ -1847,7 +1821,7 @@ SlashCmdList["MOUNTY"] = function(message)
 
     elseif mode ~= "" and mode ~= nil then
 
-        Mounty:Mount(mode)
+        TLVaddon:Mount(mode)
 
     else
 
