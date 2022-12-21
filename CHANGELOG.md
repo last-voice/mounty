@@ -2,6 +2,9 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.5.2.3
+- TLVlib in separate repo
+
 v2.5.2.2
 - The + buttons now toggle the expanded frame
 
