@@ -55,6 +55,10 @@ You can assign up to __110 different favorite mounts to every category__ per dra
 
 And you can assign this __one and only magic key__, which does its magic when pressed.
 
+### 3 more, just for you
+
+Since v2.5.2 you can use __3 additional custom categories__. Those don't play any part in the magic of __Mounty #TLV__, but you can summon them via key bindings. Your very special mounts for these very special moments.
+
 ## The magic that happens
 
 Via checkboxes you can decide between the following:
@@ -146,6 +150,8 @@ __WARNING:__ __Mounty #TLV__ __does never check__ if your assignments per catego
 You can use different profiles like in many other addons.
 
 Also you can switch between _account wide profiles_ or _individual profiles for each character_. And you can even copy profiles from global to individual and vice versa. Safety first: profiles will never be deleted nor overwritten but renamed if already existent.
+
+Also there is a new button in the mount journal to open __Mounty #TLV__. This can be positioned or be hidden by a slider. 
 
 ## Command line
 

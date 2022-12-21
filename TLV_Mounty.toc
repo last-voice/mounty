@@ -4,11 +4,11 @@
 ## Author: the_last_voice
 ## SavedVariablesPerCharacter: MountyData, _Data, _DataCharacter
 ## SavedVariables: _DataAccount
-## Version: v2.5.1.1
+## Version: v2.5.2
 
 localization\enUS.lua
 localization\deDE.lua
 
-TLV.lua
+TLVlib.lua
 TLV_Upgrade.lua
 TLV_Mounty.lua

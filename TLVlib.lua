@@ -1,20 +1,18 @@
-local _, TLVaddon = ...
+local TLV_AddOn_Name, TLV_AddOn = ...
 
-local TLV = {}
+local TLVlib = {}
 
-function TLV:AddOnTitle ()
+function TLVlib:AddOnHeader ()
 
-    if (TLVaddon ~= nil) then
-        if (TLVaddon.AddOnTitle ~= nil and TLVaddon.AddOnVersion ~= nil) then
-            return (TLVaddon.AddOnTitle .. " " .. TLVaddon.AddOnVersion)
-        end
+    if (TLVlib.AddOnTitle ~= nil and TLVlib.AddOnVersion ~= nil) then
+        return (TLVlib.AddOnTitle .. " " .. TLVlib.AddOnVersion)
     end
 
     return "untitled"
 
 end
 
-function TLV:TableDebug(src, depth)
+function TLVlib:TableDebug(src, depth)
 
     local line
 
@@ -32,7 +30,7 @@ function TLV:TableDebug(src, depth)
 
         if type(v) == "table" then
             print(line .. "(table)")
-            TLV:TableDebug(v, depth + 1)
+            TLVlib:TableDebug(v, depth + 1)
         elseif type(v) == "string" then
             print(line .. "(string) " .. v)
         elseif type(v) == "number" then
@@ -45,14 +43,14 @@ function TLV:TableDebug(src, depth)
 
 end
 
-function TLV:TableDuplicate(src)
+function TLVlib:TableDuplicate(src)
 
     local dest = {}
 
     for k, v in pairs(src) do
 
         if type(v) == "table" then
-            v = TLV:TableDuplicate(v)
+            v = TLVlib:TableDuplicate(v)
         end
         dest[k] = v
     end
@@ -61,7 +59,7 @@ function TLV:TableDuplicate(src)
 
 end
 
-function TLV:Button(parent, point, x, y, width, height, text)
+function TLVlib:Button(parent, point, x, y, width, height, text)
 
     local temp = CreateFrame("Button", nil, parent, "UIPanelButtonTemplate")
     temp:SetPoint(point, x, y)
@@ -72,7 +70,7 @@ function TLV:Button(parent, point, x, y, width, height, text)
 
 end
 
-function TLV:Alert (alert)
+function TLVlib:Alert (alert)
 
     if (alert == nil) then
         StaticPopup_hide("TLV_ALERT")
@@ -80,7 +78,7 @@ function TLV:Alert (alert)
     end
 
     StaticPopupDialogs["TLV_ALERT"] = {
-        text = "|cfff0b040" .. TLV:AddOnTitle () .. "|r\n\n" .. alert,
+        text = "|cfff0b040" .. TLVlib:AddOnHeader() .. "|r\n\n" .. alert,
         button1 = OKAY,
         sound = IG_MAINMENU_OPEN,
         timeout = 0,
@@ -92,22 +90,29 @@ function TLV:Alert (alert)
 
 end
 
-function TLV:Chat(msg)
+function TLVlib:Chat(msg)
 
     if DEFAULT_CHAT_FRAME then
-        DEFAULT_CHAT_FRAME:AddMessage("|cfff0b040" .. TLV:AddOnTitle () .. "|r: " .. msg, 1, 1, 0)
+        DEFAULT_CHAT_FRAME:AddMessage(TLVlib:AddOnHeader() .. ": " .. msg, 1, 1, 0)
     end
 
 end
 
-TLV.DebugModeForce = false
+TLVlib.DebugModeForce = false
 
-function TLV:Debug(msg)
+function TLVlib:Debug(msg)
 
-    if _DataAccount.DebugMode or TLV.DebugModeForce then
-        TLV:Chat(msg)
+    if _DataAccount.DebugMode or TLVlib.DebugModeForce then
+        TLVlib:Chat(msg)
     end
 
 end
 
-TLVaddon.TLV = TLV
+function TLVlib:Init ()
+
+    TLVlib.AddOnTitle = GetAddOnMetadata(TLV_AddOn_Name, "Title")
+    TLVlib.AddOnVersion = GetAddOnMetadata(TLV_AddOn_Name, "Version")
+
+end
+
+TLV_AddOn.TLVlib = TLVlib

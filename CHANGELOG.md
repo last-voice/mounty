@@ -2,6 +2,17 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.5.2.1
+- The button in the mount journal can now be positioned or be hidden (cheers to Khedrak)
+- Changed the grid size for a more compact design
+- README ist up to date
+
+v2.5.2
+- Now all categories have their own key binding
+- Also there a 3 more categories custom 1 to 3 for your free use
+- Refactored code again for more OOP
+- README will be up to date soon
+
 v2.5.1.1
 - Colors
 

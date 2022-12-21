@@ -54,6 +54,10 @@ __Mounty #TLV__ unterscheidet zwischen __7 Kategorien für deine Mounts__:
 Du kannst __jeder dieser Kategorien 110 verschiedene Lieblings-Mounts__ zuordnen. Einfach aus der Mount-Sammlung heraus mit der Maus herüberziehen.
 Und du kannst __diese eine magische Taste__ belegen, die für dich zaubern wird.
 
+### Nur für dich
+
+Außerdem gibt es seit Version v2.5.2 __3 custom Kategorien__ zu deiner freien Verfügung. Die spielen zwar keine Rolle, was die Magie von __Mounty #TLV__ angeht, können aber mit einer Taste deiner Wahl aufgerufen werden. Dein ganz besonderen Mounts für ganz besondere Anlässe.
+
 ## So wirkt die Magie
 
 Drei Grundeinstellungen gibt es:
@@ -146,6 +150,8 @@ Wie in vielen anderen Addons kannst Du verschiedene Profile anlegen.
 
 Außerdem kannst du je Charakter zwischen _individuellen Profilen_ oder _accountweiten Profilen_ wählen. Und du kannt Profile sogar zwischen _global_ und _accountweit_ hin und her kopieren. Safety first: Profile werden weder gelöscht noch überschrieben. Falls doppelt, werden sie umbenannt. 
 
+In der Reittiersammlung ist auch ein neuer Button, um __Mounty #TLV__ von dort aus zu öffnen. Diesen kannst  du verschieben oder ausblenden.
+
 ## Kommandozeile
 
 Für den Chat oder Deine Makros:
@@ -184,7 +190,7 @@ __Profile__
 _/mounty profile_ - zeigt das aktuelle Profil\
 _/mounty profile Heart_ - schaltet auf das Profil Heart um und erstellt es falls nicht vorhanden\
 
-## Tastenbelegung
+## Tastaturbelegung
 
 Benutze die Einstellungen von WoW, um Tasten für __Mounty #TLV__ zu belegen.
 

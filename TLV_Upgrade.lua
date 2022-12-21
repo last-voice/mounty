@@ -1,10 +1,9 @@
-local _, TLVaddon = ...
+local Mounty_Name, Mounty = ...
 
-local L = TLVaddon.L
+local L = Mounty.L
+local TLVlib = Mounty.TLVlib
 
-function TLVaddon:Upgrade()
-
-    local alert = ""
+function Mounty:Upgrade()
 
     -- MountyData > _Data
 
@@ -89,15 +88,34 @@ function TLVaddon:Upgrade()
 
     -- 110
 
+    --if _DataAccount ~= nil then
+    --
+    --    if _DataAccount.UpgradeTo110 == nil then
+    --
+    --        -- Upgrade to 110
+    --
+    --        _DataAccount.UpgradeTo110 = true
+    --
+    --        Mounty:Alert(L["upgrade"])
+    --
+    --    end
+    --
+    --end
+
+    -- 3 Customs
+
     if _DataAccount ~= nil then
 
-        if _DataAccount.UpgradeTo110 == nil then
+        local version = _DataAccount.Version or ""
+
+        if version < "v020502" then
 
             -- Upgrade to 110
 
-            _DataAccount.UpgradeTo110 = true
+            _DataAccount.UpgradeTo110 = nil
+            _DataAccount.Version = "v020502"
 
-            TLVaddon:Alert(L["upgrade"])
+            TLVlib:Alert(L["upgrade"])
 
         end
 
