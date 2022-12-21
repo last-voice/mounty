@@ -2,6 +2,9 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.5.3.2
+- Peeps, I'm working on another. So i changed the file structure of Mounty too. This caused quite some chaos. Finally, this version should be stable again. Sorry!
+
 v2.5.3.1
 - stupid me :-/
 
