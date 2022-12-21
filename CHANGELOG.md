@@ -2,6 +2,9 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.5.2.2
+- The + buttons now toggle the expanded frame
+
 v2.5.2.1
 - The button in the mount journal can now be positioned or be hidden (cheers to Khedrak)
 - Changed the grid size for a more compact design

@@ -626,11 +626,18 @@ function Mounty:InitOptionsFrame()
         temp.MountyCategory = category
         temp:SetScript("OnClick", function(calling)
 
-            Mounty.ExpandedFrame_Title:SetText("+ " .. Mounty.CategoriesLabel[calling.MountyCategory])
-            Mounty.ExpandedFrame.MountyCategory = calling.MountyCategory
-            Mounty.ExpandedFrame:Show()
-            Mounty:OptionsRenderExpandedButtons()
+            if Mounty.ExpandedFrame:IsVisible() and Mounty.ExpandedFrame.MountyCategory == calling.MountyCategory then
 
+                Mounty.ExpandedFrame:Hide()
+
+            else
+
+                Mounty.ExpandedFrame_Title:SetText("+ " .. Mounty.CategoriesLabel[calling.MountyCategory])
+                Mounty.ExpandedFrame.MountyCategory = calling.MountyCategory
+                Mounty.ExpandedFrame:Show()
+                Mounty:OptionsRenderExpandedButtons()
+
+            end
         end)
 
     end
@@ -1234,7 +1241,7 @@ function Mounty:OptionsRender()
         Mounty.OptionsFrame_Together:SetAlpha(1)
     end
 
-    if (_DataAccount.AutoOpen) then
+    if _DataAccount.AutoOpen then
         Mounty.OptionsFrame_JournalButton:Hide()
     else
         Mounty.OptionsFrame_JournalButton:Show()
