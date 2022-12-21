@@ -2,6 +2,13 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.5.3.1
+- stupid me :-/
+
+v2.5.3
+- SORRY, bad bug prevented Mounty to upgrade from older versions. This is now fixed.
+- Also changed the too generic name of saved variable.
+
 v2.5.2.3
 - TLVlib in separate repo
 

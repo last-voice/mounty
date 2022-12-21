@@ -36,6 +36,12 @@ Mounty.FallbackAlready = {}
 
 Mounty.TestDragon = nil
 
+function Mounty:IsDebug ()
+
+    return _Mounty_A.DebugMode or false
+
+end
+
 function Mounty:Durability()
 
     local curTotal = 0
@@ -752,7 +758,7 @@ function Mounty:InitOptionsFrame()
     temp:SetPoint("BOTTOMLEFT", Mounty.OptionsFrame_ProfileDropdown, "TOPLEFT", 20, -2)
     temp:SetText(L["options.Profile"])
     UIDropDownMenu_SetWidth(Mounty.OptionsFrame_ProfileDropdown, 100)
-    UIDropDownMenu_SetText(Mounty.OptionsFrame_ProfileDropdown, _DataCharacter.CurrentProfile)
+    UIDropDownMenu_SetText(Mounty.OptionsFrame_ProfileDropdown, _Mounty_C.CurrentProfile)
     UIDropDownMenu_JustifyText(Mounty.OptionsFrame_ProfileDropdown, "LEFT")
     UIDropDownMenu_Initialize(Mounty.OptionsFrame_ProfileDropdown, function()
 
@@ -761,7 +767,7 @@ function Mounty:InitOptionsFrame()
         for _, profile in ipairs(Mounty:ProfilesSorted()) do
 
             info.text = profile
-            info.checked = profile == _DataCharacter.CurrentProfile
+            info.checked = profile == _Mounty_C.CurrentProfile
             info.func = function(p)
                 Mounty:SwitchProfile(p.value)
             end
@@ -793,17 +799,17 @@ function Mounty:InitOptionsFrame()
 
     temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left + 48, top + 3, 50, 22, L["button.Duplicate"])
     temp:SetScript("OnClick", function()
-        Mounty:DuplicateProfile(_DataCharacter.CurrentProfile, Mounty.OptionsFrame_Profile:GetText())
+        Mounty:DuplicateProfile(_Mounty_C.CurrentProfile, Mounty.OptionsFrame_Profile:GetText())
     end)
 
     temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left + 96, top + 3, 50, 22, L["button.Edit"])
     temp:SetScript("OnClick", function()
-        Mounty:DuplicateProfile(_DataCharacter.CurrentProfile, Mounty.OptionsFrame_Profile:GetText(), true)
+        Mounty:DuplicateProfile(_Mounty_C.CurrentProfile, Mounty.OptionsFrame_Profile:GetText(), true)
     end)
 
     temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left + 144, top + 3, 50, 22, L["button.Delete"])
     temp:SetScript("OnClick", function()
-        Mounty:DeleteProfile(_DataCharacter.CurrentProfile)
+        Mounty:DeleteProfile(_Mounty_C.CurrentProfile)
     end)
 
     -- Share profiles checkbox
@@ -814,8 +820,8 @@ function Mounty:InitOptionsFrame()
     Mounty.OptionsFrame_ShareProfiles:SetPoint("TOPLEFT", 16, top)
     Mounty_OptionsFrame_ShareProfilesText:SetText(L["options.ShareProfiles"])
     Mounty.OptionsFrame_ShareProfiles:SetScript("OnClick", function()
-        _DataCharacter.ShareProfiles = not _DataCharacter.ShareProfiles
-        _DataCharacter.CurrentProfile = nil
+        _Mounty_C.ShareProfiles = not _Mounty_C.ShareProfiles
+        _Mounty_C.CurrentProfile = nil
         Mounty:InitSavedVariables()
         Mounty:OptionsRender()
 
@@ -841,8 +847,8 @@ function Mounty:InitOptionsFrame()
     Mounty.OptionsFrame_AutoOpen:SetPoint("TOPLEFT", 16, top)
     Mounty_OptionsFrame_AutoOpenText:SetText(L["options.Autoopen"])
     Mounty.OptionsFrame_AutoOpen:SetScript("OnClick", function(calling)
-        _DataAccount.AutoOpen = not _DataAccount.AutoOpen
-        --        calling:SetChecked(_DataAccount.AutoOpen)
+        _Mounty_A.AutoOpen = not _Mounty_A.AutoOpen
+        --        calling:SetChecked(_Mounty_A.AutoOpen)
         Mounty:OptionsRender()
     end)
 
@@ -860,7 +866,7 @@ function Mounty:InitOptionsFrame()
     Mounty.OptionsFrame_JournalButtonOffset:SetValueStep(1)
     Mounty.OptionsFrame_JournalButtonOffset:SetScript("OnValueChanged", function(_, value)
         Mounty_OptionsFrame_JournalButtonOffsetText:SetFormattedText(L["options.JournalButtonOffset"], value)
-        _DataAccount.JournalButtonOffset = value
+        _Mounty_A.JournalButtonOffset = value
         Mounty:OptionsRender()
     end)
 
@@ -872,8 +878,8 @@ function Mounty:InitOptionsFrame()
     Mounty.OptionsFrame_DebugMode:SetPoint("TOPLEFT", 16, top)
     Mounty_OptionsFrame_DebugModeText:SetText(L["options.Debug"])
     Mounty.OptionsFrame_DebugMode:SetScript("OnClick", function(calling)
-        _DataAccount.DebugMode = not _DataAccount.DebugMode
-        calling:SetChecked(_DataAccount.DebugMode)
+        _Mounty_A.DebugMode = not _Mounty_A.DebugMode
+        calling:SetChecked(_Mounty_A.DebugMode)
     end)
 
     -- Open Mounts
@@ -923,7 +929,7 @@ function Mounty:InitQuickStartFrame()
     temp:SetAutoFocus(false)
     temp:SetText(L["readme.URL"])
 
-    if not _DataAccount.QuickStart then
+    if not _Mounty_A.QuickStart then
         Mounty.QuickStartFrame:Hide()
     end
 
@@ -1222,16 +1228,16 @@ function Mounty:OptionsRender()
     Mounty.OptionsFrame_TaxiMode:SetChecked(Mounty.CurrentProfile.TaxiMode)
     Mounty.OptionsFrame_Hello:SetText(Mounty.CurrentProfile.Hello)
     Mounty.OptionsFrame_DurabilityMin:SetValue(Mounty.CurrentProfile.DurabilityMin)
-    Mounty.OptionsFrame_JournalButtonOffset:SetValue(_DataAccount.JournalButtonOffset)
+    Mounty.OptionsFrame_JournalButtonOffset:SetValue(_Mounty_A.JournalButtonOffset)
 
-    Mounty.OptionsFrame_ShareProfiles:SetChecked(_DataCharacter.ShareProfiles)
+    Mounty.OptionsFrame_ShareProfiles:SetChecked(_Mounty_C.ShareProfiles)
 
-    Mounty.OptionsFrame_DebugMode:SetChecked(_DataAccount.DebugMode)
-    Mounty.OptionsFrame_AutoOpen:SetChecked(_DataAccount.AutoOpen)
+    Mounty.OptionsFrame_DebugMode:SetChecked(_Mounty_A.DebugMode)
+    Mounty.OptionsFrame_AutoOpen:SetChecked(_Mounty_A.AutoOpen)
 
     Mounty.OptionsFrame_Profile:SetText("")
 
-    UIDropDownMenu_SetText(Mounty.OptionsFrame_ProfileDropdown, _DataCharacter.CurrentProfile)
+    UIDropDownMenu_SetText(Mounty.OptionsFrame_ProfileDropdown, _Mounty_C.CurrentProfile)
 
     if Mounty.CurrentProfile.TaxiMode then
         Mounty.OptionsFrame_Together:Disable()
@@ -1241,7 +1247,7 @@ function Mounty:OptionsRender()
         Mounty.OptionsFrame_Together:SetAlpha(1)
     end
 
-    if _DataAccount.AutoOpen then
+    if _Mounty_A.AutoOpen then
         Mounty.OptionsFrame_JournalButton:Hide()
     else
         Mounty.OptionsFrame_JournalButton:Show()
@@ -1249,10 +1255,10 @@ function Mounty:OptionsRender()
 
     if Mounty.JournalButton ~= nil then
 
-        if _DataAccount.JournalButtonOffset == 1 then
+        if _Mounty_A.JournalButtonOffset == 1 then
             Mounty.JournalButton:Hide()
         else
-            Mounty.JournalButton:SetPoint("BOTTOMRIGHT", -6 + _DataAccount.JournalButtonOffset, 4)
+            Mounty.JournalButton:SetPoint("BOTTOMRIGHT", -6 + _Mounty_A.JournalButtonOffset, 4)
             Mounty.JournalButton:Show()
         end
 
@@ -1325,7 +1331,7 @@ end
 
 function Mounty:AddJournalButton()
 
-    Mounty.JournalButton = TLVlib:Button(MountJournal, "BOTTOMRIGHT", -6 + _DataAccount.JournalButtonOffset, 4, 128, 22, L["Mount journal - Open Mounty"])
+    Mounty.JournalButton = TLVlib:Button(MountJournal, "BOTTOMRIGHT", -6 + _Mounty_A.JournalButtonOffset, 4, 128, 22, L["Mount journal - Open Mounty"])
     Mounty.JournalButton:SetScript("OnClick", function()
         if Mounty.OptionsFrame:IsVisible() then
             Mounty.OptionsFrame:Hide()
@@ -1336,7 +1342,7 @@ function Mounty:AddJournalButton()
         end
     end)
 
-    if _DataAccount.JournalButtonOffset == 1 then
+    if _Mounty_A.JournalButtonOffset == 1 then
         Mounty.JournalButton:Hide()
     end
 
@@ -1547,7 +1553,7 @@ function Mounty:SelectProfile(p)
         end
     end
 
-    _DataCharacter.CurrentProfile = p
+    _Mounty_C.CurrentProfile = p
 
     Mounty.CurrentProfile = Mounty.Profiles[p];
 
@@ -1589,11 +1595,11 @@ function Mounty:CopyProfiles(mode)
             local Profiles_Dst
 
             if data == "c>a" then
-                Profiles_Src = _DataCharacter.Profiles
-                Profiles_Dst = _DataAccount.Profiles
+                Profiles_Src = _Mounty_C.Profiles
+                Profiles_Dst = _Mounty_A.Profiles
             else
-                Profiles_Src = _DataAccount.Profiles
-                Profiles_Dst = _DataCharacter.Profiles
+                Profiles_Src = _Mounty_A.Profiles
+                Profiles_Dst = _Mounty_C.Profiles
             end
 
             for k, _ in pairs(Profiles_Src) do
@@ -1624,72 +1630,72 @@ end
 
 function Mounty:InitSavedVariables()
 
-    if _DataAccount == nil then
-        _DataAccount = {}
+    if _Mounty_A == nil then
+        _Mounty_A = {}
     end
 
-    if _DataCharacter == nil then
-        _DataCharacter = {}
+    if _Mounty_C == nil then
+        _Mounty_C = {}
     end
 
-    if _DataCharacter.ShareProfiles == nil then
-        _DataCharacter.ShareProfiles = false
+    if _Mounty_C.ShareProfiles == nil then
+        _Mounty_C.ShareProfiles = false
     end
 
-    if _DataCharacter.Profiles == nil then
-        _DataCharacter.Profiles = {}
+    if _Mounty_C.Profiles == nil then
+        _Mounty_C.Profiles = {}
     end
 
-    if _DataAccount.Profiles == nil then
-        _DataAccount.Profiles = {}
+    if _Mounty_A.Profiles == nil then
+        _Mounty_A.Profiles = {}
     end
 
-    if _DataCharacter.ShareProfiles then
-        Mounty.Profiles = _DataAccount.Profiles -- Pointer per Reference!
+    if _Mounty_C.ShareProfiles then
+        Mounty.Profiles = _Mounty_A.Profiles -- Pointer per Reference!
     else
-        Mounty.Profiles = _DataCharacter.Profiles -- Pointer per Reference!
+        Mounty.Profiles = _Mounty_C.Profiles -- Pointer per Reference!
     end
 
     if Mounty.Profiles == nil then
         Mounty.Profiles = {}
     end
 
-    if _DataCharacter.CurrentProfile == nil then
+    if _Mounty_C.CurrentProfile == nil then
 
         local profiles = Mounty:ProfilesSorted()
 
-        _DataCharacter.CurrentProfile = profiles[1]
+        _Mounty_C.CurrentProfile = profiles[1]
 
-        if Mounty.Profiles[_DataCharacter.CurrentProfile] == nil then
-            _DataCharacter.CurrentProfile = Mounty:ProfileNameDefault()
+        if Mounty.Profiles[_Mounty_C.CurrentProfile] == nil then
+            _Mounty_C.CurrentProfile = Mounty:ProfileNameDefault()
 
         end
 
     end
 
-    if _DataAccount.DebugMode == nil then
-        _DataAccount.DebugMode = false
+    if _Mounty_A.DebugMode == nil then
+        _Mounty_A.DebugMode = false
     end
 
-    if _DataAccount.AutoOpen == nil then
-        _DataAccount.AutoOpen = true
+    if _Mounty_A.AutoOpen == nil then
+        _Mounty_A.AutoOpen = true
     end
 
-    if _DataAccount.JournalButtonOffset == nil then
-        _DataAccount.JournalButtonOffset = 0
+    if _Mounty_A.JournalButtonOffset == nil then
+        _Mounty_A.JournalButtonOffset = 0
     end
 
-    Mounty:SelectProfile(_DataCharacter.CurrentProfile)
+    Mounty:SelectProfile(_Mounty_C.CurrentProfile)
 
     -- show quick start?
 
-    if _DataAccount.QuickStart == nil then
-        _DataAccount.QuickStart = true
+    if _Mounty_A.QuickStart == nil then
+        _Mounty_A.QuickStart = true
     else
-        _DataAccount.QuickStart = true
+        _Mounty_A.QuickStart = true
         for category = 1, Mounty.NumCategories do
             if Mounty.CurrentProfile.Mounts[category][1] ~= 0 then
-                _DataAccount.QuickStart = false
+                _Mounty_A.QuickStart = false
             end
         end
     end
@@ -1719,7 +1725,7 @@ EventRegistry:RegisterCallback("MountJournal.OnShow", function()
     end
 
     -- auto open mounty with mount journal
-    if _DataAccount.AutoOpen then
+    if _Mounty_A.AutoOpen then
         Mounty.OptionsFrame:ClearAllPoints()
         Mounty.OptionsFrame:SetPoint("TOPLEFT", CollectionsJournal, "TOPRIGHT", 0, 0)
         Mounty.OptionsFrame:Show()
@@ -1728,7 +1734,7 @@ EventRegistry:RegisterCallback("MountJournal.OnShow", function()
 end, Mounty_Name)
 
 EventRegistry:RegisterCallback("MountJournal.OnHide", function()
-    if _DataAccount.AutoOpen then
+    if _Mounty_A.AutoOpen then
         Mounty.OptionsFrame:Hide()
     end
 end, Mounty_Name)
@@ -1751,9 +1757,9 @@ function Mounty:Init (event, arg1)
 
 end
 
-local TLV_Event_Frame = CreateFrame("Frame")
-TLV_Event_Frame:RegisterEvent("ADDON_LOADED")
-TLV_Event_Frame:SetScript("OnEvent", Mounty.Init)
+local TLV_Init_Frame = CreateFrame("Frame")
+TLV_Init_Frame:RegisterEvent("ADDON_LOADED")
+TLV_Init_Frame:SetScript("OnEvent", Mounty.Init)
 
 -- /mounty
 
@@ -1774,10 +1780,10 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
     elseif mode == "profile" then
 
         if arg1 == "" then
-            TLVlib:Chat(string.format(L["profile.current"], _DataCharacter.CurrentProfile))
+            TLVlib:Chat(string.format(L["profile.current"], _Mounty_C.CurrentProfile))
         else
             Mounty:SwitchProfile(p1)
-            if p1 == _DataCharacter.CurrentProfile then
+            if p1 == _Mounty_C.CurrentProfile then
                 TLVlib:Chat(string.format(L["profile.switched"], p))
             end
         end
@@ -1790,12 +1796,12 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
         if arg1 == "on" then
 
-            _DataAccount.DebugMode = true
+            _Mounty_A.DebugMode = true
             TLVlib:Chat(L["chat.Debug"] .. "|cff00f010" .. L["on"] .. "|r.")
 
         elseif arg1 == "off" then
 
-            _DataAccount.DebugMode = false
+            _Mounty_A.DebugMode = false
             TLVlib:Chat(L["chat.Debug"] .. "|cfff01000" .. L["off"] .. "|r.")
         end
 
@@ -1803,12 +1809,12 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
         if arg1 == "on" then
 
-            _DataAccount.AutoOpen = true
+            _Mounty_A.AutoOpen = true
             TLVlib:Chat(L["chat.Autoopen"] .. "|cff00f010" .. L["on"] .. "|r.")
 
         elseif arg1 == "off" then
 
-            _DataAccount.AutoOpen = false
+            _Mounty_A.AutoOpen = false
             TLVlib:Chat(L["chat.Autoopen"] .. "|cfff01000" .. L["off"] .. "|r.")
         end
 

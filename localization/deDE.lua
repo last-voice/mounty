@@ -92,5 +92,5 @@ L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.de.md"
 
 L["upgrade"] = "Du hast nun 3 weitere Kategorien zu deiner freien Verfügung\n(via Tastaturbelegung)."
 
-local _, TLVaddon = ...
-TLVaddon.L = setmetatable(L, { __index = TLVaddon.L })
+local _, TLV_AddOn = ...
+TLV_AddOn.L = setmetatable(L, { __index = TLV_AddOn.L })

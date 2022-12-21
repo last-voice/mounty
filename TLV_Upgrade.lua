@@ -79,7 +79,7 @@ function Mounty:Upgrade()
             ShareProfiles = false,
             CurrentProfile = _Data.CurrentProfile,
 
-            Profiles = TLV:TableDuplicate(_Data.Profiles)
+            Profiles = TLVlib:TableDuplicate(_Data.Profiles)
         }
 
         _Data = nil
@@ -102,18 +102,32 @@ function Mounty:Upgrade()
     --
     --end
 
+    if _DataAccount ~= nil then
+        -- do not use generic names for SavedVariables !!!
+        _Mounty_A = TLVlib:TableDuplicate(_DataAccount)
+        _DataAccount = nil
+    end
+
+    if _DataCharacter ~= nil then
+        -- do not use generic names for SavedVariables !!!
+        _Mounty_C = TLVlib:TableDuplicate(_DataCharacter)
+        _DataCharacter = nil
+    end
+
+    -- ALERT -- ALERT -- ALERT -- ALERT -- ALERT -- ALERT -- ALERT --
+
     -- 3 Customs
 
-    if _DataAccount ~= nil then
+    if _Mounty_A ~= nil then
 
-        local version = _DataAccount.Version or ""
+        local version = _Mounty_A.Version or ""
 
         if version < "v020502" then
 
             -- Upgrade to 110
 
-            _DataAccount.UpgradeTo110 = nil
-            _DataAccount.Version = "v020502"
+            _Mounty_A.UpgradeTo110 = nil
+            _Mounty_A.Version = "v020502"
 
             TLVlib:Alert(L["upgrade"])
 

@@ -88,5 +88,5 @@ L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.md"
 
 L["upgrade"] = "You may now freely use 3 custom categories\n(via key bindings)."
 
-local _, TLVaddon = ...
-TLVaddon.L = L
+local _, TLV_AddOn = ...
+TLV_AddOn.L = L
