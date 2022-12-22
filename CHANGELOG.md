@@ -6,7 +6,7 @@ v2.5.4
 - New feature: Copy mounts by double clicking
 
 v2.5.3.2
-- Peeps, I'm working on another. So i changed the file structure of Mounty too. This caused quite some chaos. Finally, this version should be stable again. Sorry!
+- Peeps, I'm working on another add on. So i changed the file structure of Mounty too. This caused quite some chaos. Finally, this version should be stable again. Sorry!
 
 v2.5.3.1
 - stupid me :-/
