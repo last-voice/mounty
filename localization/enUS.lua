@@ -36,7 +36,7 @@ L["options.Durability"] = "Summon repair mount if durability is less than %d%%."
 L["options.JournalButtonOffset"] = "Offset of the button in mount journal: %d (1 to hide)."
 L["options.Hello"] = "How to call your taxi passenger"
 L["options.Hello-Default"] = "Taxi!"
-L["options.Helptext"] = "Drag mounts into here. Right click to remove a mount."
+L["options.Helptext"] = "Drag mounts into here | Double click = Copy | Right click = Delete"
 L["options.Profile"] = "Profile"
 L["options.ShareProfiles"] = "Share profiles with your other characters"
 L["options.Already"] = "The mount is already assigned to this category."
@@ -86,7 +86,7 @@ L["quick.text"] = "- Pull your favourite mounts from the mount journal into the 
 
 L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.md"
 
-L["upgrade"] = "You may now freely use 3 custom categories\n(via key bindings)."
+L["upgrade"] = "You can now |cfff07070copy|r mounts by double clicking."
 
 local _, TLV_AddOn = ...
 TLV_AddOn.L = L

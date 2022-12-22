@@ -130,6 +130,8 @@ Außerdem kannst Du die Optionen auch mit einem __Button in der Reittiersammlung
 
 Ziehe mit der Maus deine favorisierten Mounts in die Kategorien deiner Wahl. Mit einem Rechtsklick kannst du einzelne Mounts wieder entfernen.
 
+Du kannst zugeordnete Reittiere auch __per Doppelklick kopieren__.
+
 Mit dem __Plus-Button__ kannst Du ein weiteres Fenster öffnen, um einer Kategorie __100 weitere Reittiere__ zuzuordnen. Dort kannst Du auch bequem __alle in der Reittier-Sammlung gefilterten Reittiere in einem Rutsch übernehmen__.
 
 __ACHTUNG:__ __Mounty #TLV__ __überprüft nie__, ob deine Zuordnungen sinnvoll sind! Du kannst grundsätzlich jedes Reittier in jede Kategorie packen. Also: Mach' bitte keinen Unsinn!

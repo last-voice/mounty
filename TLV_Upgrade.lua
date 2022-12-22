@@ -116,18 +116,20 @@ function Mounty:Upgrade()
 
     -- ALERT -- ALERT -- ALERT -- ALERT -- ALERT -- ALERT -- ALERT --
 
-    -- 3 Customs
+    -- Double Click
 
     if _Mounty_A ~= nil then
 
         local version = _Mounty_A.Version or ""
 
-        if version < "v020502" then
+        local alert_if_lower = "v020504"
+
+        if version < alert_if_lower then
 
             -- Upgrade to 110
 
             _Mounty_A.UpgradeTo110 = nil
-            _Mounty_A.Version = "v020502"
+            _Mounty_A.Version = alert_if_lower
 
             TLVlib:Alert(L["upgrade"])
 

@@ -129,7 +129,9 @@ __Mounty #TLV__'s option frame will also open __automatically with the mount jou
 
 And __Mounty #TLV__'s option frame can be opened __by clicking a button__ in the mount journal's bottom right corner.
 
-Drag & drop all your favorite mounts into the categories of your choice. Click right on a mount to remove it from a category.
+__Drag & drop__ all your favorite mounts into the categories of your choice. Click right on a mount to remove it from a category.
+
+You may __copy__ an already assigned mount to another category by __double clicking__.
 
 Using the __plus button__ you can open another frame to assign __additional 100 mounts__ to a category. Here you can also easily __transfer all filtered mounts from the mount journal__ into a category with 1 click, erm 2 clicks.
 

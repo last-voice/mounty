@@ -405,6 +405,35 @@ function Mounty:KeyHandler(keypress)
     end
 end
 
+function Mounty:PickupMountBySpellID(pickupSpellID)
+
+    C_MountJournal.SetDefaultFilters()
+
+    local pickup_ID = -1
+
+    for i = 1, C_MountJournal.GetNumDisplayedMounts() do
+
+        local _, spellID = C_MountJournal.GetDisplayedMountInfo(i)
+
+        if (spellID == pickupSpellID) then
+            pickup_ID = i
+            break
+        end
+
+    end
+
+    if (pickup_ID ~= -1) then
+
+        C_MountJournal.Pickup(pickup_ID)
+
+        return true
+
+    end
+
+    return false
+
+end
+
 function Mounty:AddMount(calling, expanded)
 
     local infoType, mountID = GetCursorInfo()
@@ -453,6 +482,31 @@ function Mounty:AddMount(calling, expanded)
         end
 
         GameTooltip:Hide()
+
+    end
+
+end
+
+function Mounty:CopyMount(calling, expanded)
+
+    local category = calling.MountyCategory or 0
+    local index = calling.MountyIndex
+
+    if expanded then
+        category = Mounty:ValidCategory(Mounty.ExpandedFrame.MountyCategory)
+    end
+
+    if not category then
+        return
+    end
+
+    if (Mounty:PickupMountBySpellID(Mounty.CurrentProfile.Mounts[category][index])) then
+
+        TLVlib:Debug("Mount picked up: " .. category .. " " .. index)
+
+    else
+
+        TLVlib:Debug("Something went wrong: Couldn't pick up mount " .. category .. " " .. index)
 
     end
 
@@ -616,6 +670,9 @@ function Mounty:InitOptionsFrame()
                 elseif button == "RightButton" then
                     Mounty:RemoveMount(calling, false)
                 end
+            end)
+            Mounty.OptionsFrame_Buttons[category][i]:SetScript("OnDoubleClick", function(calling)
+                Mounty:CopyMount(calling, false)
             end)
             Mounty.OptionsFrame_Buttons[category][i]:SetScript("OnEnter", function(calling)
                 Mounty:Tooltip(calling, false)
@@ -994,6 +1051,9 @@ function Mounty:InitExpandedFrame()
                 elseif button == "RightButton" then
                     Mounty:RemoveMount(calling, true)
                 end
+            end)
+            Mounty.ExpandedFrame_Buttons[index]:SetScript("OnDoubleClick", function(calling)
+                Mounty:CopyMount(calling, true)
             end)
             Mounty.ExpandedFrame_Buttons[index]:SetScript("OnEnter", function(calling)
                 Mounty:Tooltip(calling, true)

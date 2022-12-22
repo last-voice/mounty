@@ -40,7 +40,7 @@ L["options.Durability"] = "Das Repair kommt bei weniger als %d%% Rüstung."
 L["options.JournalButtonOffset"] = "Offset des Buttons in der Reittiersammlung: %d (1 = verstecken)."
 L["options.Hello"] = "So rufst du deinen Taxi-Gast"
 L["options.Hello-Default"] = "Taxi!"
-L["options.Helptext"] = "Mounts hier reinziehen. Rechtsklick, um Mount zu entfernen."
+L["options.Helptext"] = "Mounts hier reinziehen | Doppleklick = Kopieren | Rechtsklick = Löschen"
 L["options.Profile"] = "Profil"
 L["options.ShareProfiles"] = "Profile mit deinen anderen Charakteren teilen"
 L["options.Already"] = "Das Reittier ist bereits in dieser Kategorie."
@@ -90,7 +90,7 @@ L["quick.text"] = "- Ziehe deine liebsten Reittiere mit der Maus in die entsprec
 
 L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.de.md"
 
-L["upgrade"] = "Du hast nun 3 weitere Kategorien zu deiner freien Verfügung\n(via Tastaturbelegung)."
+L["upgrade"] = "Mit |cfff07070Doppelklicks|r kannst Du ab jetzt auch Reittiere |cfff07070kopieren|r."
 
 local _, TLV_AddOn = ...
 TLV_AddOn.L = setmetatable(L, { __index = TLV_AddOn.L })
