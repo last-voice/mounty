@@ -63,7 +63,7 @@ Since v2.5.2 you can use __3 additional custom categories__. Those don't play an
 
 Via checkboxes you can decide between the following:
 
-- Khedrak mode - dismount anyway, no matter how high you fly and deep the fall (or else __Mounty #TLV__ will keep you safe on your mount whilst flying)
+- _Parachute mode_ - dismount anyway, no matter how high you fly and deep the fall (or else __Mounty #TLV__ will keep you safe on your mount whilst flying)
 - _Taxi mode_ on/off: If on and you are in a group, prefer your taxi mount to summon and call for your friend to hop on.
 - _Together mode_ on/off: Your winged mounts will (mostly) be ignored whilst in a party. Helpful if you joined friends, who can't fly yet and don't want to be left behind.
 - _Show off mode_: Whilst in resting areas you can rest. And let others know which jelly fish, erm mounts you've got and they hopefully haven't.
@@ -74,7 +74,7 @@ In the end its quite simple. When the __magic key is pressed__, it goes like thi
 
 Are you already on a mount? Then __dismount__ and get down unless you're flying high and might fall at Hogger's feet. Then do nothing.
 
-But beware: If Khedra mode ist enabled, __Mounty #TLV__ will dismount you at any height and it's up to you to make __a proper touch down__.
+But beware: If parachute mode ist enabled, __Mounty #TLV__ will dismount you at any height and it's up to you to make __a proper touch down__.
 
 You were not already mounted? Then let's do the real magic and get you __the mount you crave__ for.
 
@@ -102,7 +102,7 @@ Magic done. By __Mounty #TLV__.
 >\
 >__You are not mounted ...__\
 >... and not flying -> _Dismount_\
->... and flying, with Khedrak enabled -> _Dismount_\
+>... and flying, with parachute enabled -> _Dismount_\
 >... and flying -> _Do nothing_\
 >\
 >__You are not mounted ...__\
@@ -178,7 +178,7 @@ __Switch options__
 
 _/mounty random on|off_ (Random or cycle throught)\
 _/mounty showoff on|off_ (Show off, show off!)\
-_/mounty khedrak on|off_ (Dismount at any height)\
+_/mounty parachute on|off_ (Dismount at any height)\
 _/mounty together on|off_ (Let's stay together)\
 _/mounty taxi on|off_ (Use taxi mounts)\
 _/mounty auto on|off_ (Auto open options frame)\

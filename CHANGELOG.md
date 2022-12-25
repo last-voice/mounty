@@ -3,7 +3,8 @@
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
 v2.5.5
-- Introducing optional Khedrak mode - dismount anyway, no matter how high you fly and deep the fall 
+- Introducing optional parachute mode - dismount anyway, no matter how high you fly and deep the fall (cheers to Khedrak, again)
+- I myself use ElvUI so I didn't take a closer look at Mounty's layout without - fixed this now 
 
 v2.5.4
 - New feature: Copy mounts by double clicking

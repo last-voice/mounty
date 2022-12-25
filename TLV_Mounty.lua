@@ -322,7 +322,7 @@ function Mounty:KeyHandler(keypress)
 
     elseif IsMounted() then
 
-        if IsFlying() and not _Mounty_A.Khedrak then
+        if IsFlying() and not _Mounty_A.Parachute then
             TLVlib:Debug("You are mounted and flying.")
             return
         end
@@ -613,7 +613,7 @@ function Mounty:InitOptionsFrame()
     Mounty.OptionsFrame:SetScript("OnShow", Mounty.OnShow)
     Mounty.OptionsFrame:SetScript("OnHide", Mounty.OnHide)
 
-    Mounty.OptionsFrame:SetWidth(440)
+    Mounty.OptionsFrame:SetWidth(490)
     Mounty.OptionsFrame:SetPoint("CENTER")
 
     Mounty.OptionsFrame:SetFrameStrata("HIGH")
@@ -662,7 +662,7 @@ function Mounty:InitOptionsFrame()
             Mounty.OptionsFrame_Buttons[category][i]:SetDisabledTexture("Interface\\Buttons\\UI-EmptySlot")
             Mounty.OptionsFrame_Buttons[category][i]:GetDisabledTexture():SetTexCoord(0.15, 0.85, 0.15, 0.85)
             Mounty.OptionsFrame_Buttons[category][i]:SetHighlightTexture("Interface\\Buttons\\UI-StopButton")
-            Mounty.OptionsFrame_Buttons[category][i]:SetPoint("TOPLEFT", 48 + i * 32, top)
+            Mounty.OptionsFrame_Buttons[category][i]:SetPoint("TOPLEFT", 60 + i * 32, top)
             Mounty.OptionsFrame_Buttons[category][i]:SetScript("OnMouseUp", function(calling, button)
                 if button == "LeftButton" then
                     Mounty:AddMount(calling, false)
@@ -684,7 +684,7 @@ function Mounty:InitOptionsFrame()
 
         end
 
-        temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", 48 + (plusi + 1) * 32 + 2, top, 24, 32, "+")
+        temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", 64 + (plusi + 1) * 32 + 2, top, 24, 32, "+")
         temp.MountyCategory = category
         temp:SetScript("OnClick", function(calling)
 
@@ -714,7 +714,7 @@ function Mounty:InitOptionsFrame()
 
     -- Random checkbox
 
-    top = top - delta * 2
+    top = top - 22
 
     Mounty.OptionsFrame_Random = CreateFrame("CheckButton", "Mounty_OptionsFrame_Random", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     Mounty.OptionsFrame_Random:SetPoint("TOPLEFT", 16, top)
@@ -726,7 +726,7 @@ function Mounty:InitOptionsFrame()
 
     -- ShowOff checkbox
 
-    top = top - delta * 2
+    top = top - 22
 
     Mounty.OptionsFrame_ShowOff = CreateFrame("CheckButton", "Mounty_OptionsFrame_ShowOff", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     Mounty.OptionsFrame_ShowOff:SetPoint("TOPLEFT", 16, top)
@@ -738,7 +738,7 @@ function Mounty:InitOptionsFrame()
 
     -- Together checkbox
 
-    top = top - delta * 2
+    top = top - 22
 
     Mounty.OptionsFrame_Together = CreateFrame("CheckButton", "Mounty_OptionsFrame_Together", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     Mounty.OptionsFrame_Together:SetPoint("TOPLEFT", 16, top)
@@ -750,7 +750,7 @@ function Mounty:InitOptionsFrame()
 
     -- TaxiMode checkbox
 
-    top = top - delta * 2
+    top = top - 22
 
     Mounty.OptionsFrame_TaxiMode = CreateFrame("CheckButton", "Mounty_OptionsFrame_TaxiMode", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     Mounty.OptionsFrame_TaxiMode:SetPoint("TOPLEFT", 16, top)
@@ -792,7 +792,7 @@ function Mounty:InitOptionsFrame()
     top = top - delta * 5
 
     Mounty.OptionsFrame_DurabilityMin = CreateFrame("Slider", "Mounty_OptionsFrame_DurabilityMin", Mounty.OptionsFrame, "OptionsSliderTemplate")
-    Mounty.OptionsFrame_DurabilityMin:SetWidth(335)
+    Mounty.OptionsFrame_DurabilityMin:SetWidth(440)
     Mounty.OptionsFrame_DurabilityMin:SetHeight(16)
     Mounty.OptionsFrame_DurabilityMin:SetPoint("TOPLEFT", 25, top)
     Mounty_OptionsFrame_DurabilityMinLow:SetText("50%")
@@ -837,7 +837,7 @@ function Mounty:InitOptionsFrame()
     Mounty.OptionsFrame_Profile = CreateFrame("EditBox", nil, Mounty.OptionsFrame, "InputBoxTemplate")
     Mounty.OptionsFrame_Profile:SetWidth(80)
     Mounty.OptionsFrame_Profile:SetHeight(16)
-    Mounty.OptionsFrame_Profile:SetPoint("TOPLEFT", 150, top)
+    Mounty.OptionsFrame_Profile:SetPoint("TOPLEFT", 155, top)
     Mounty.OptionsFrame_Profile:SetAutoFocus(false)
     Mounty.OptionsFrame_Profile:SetScript("OnEnterPressed", function(calling)
         calling:ClearFocus()
@@ -846,31 +846,31 @@ function Mounty:InitOptionsFrame()
 
     -- Profile buttons 1
 
-    local left = 232
+    local left = 242
 
-    temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left, top + 3, 50, 22, L["button.Add"])
+    temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left, top + 3, 60, 22, L["button.Add"])
     temp:SetScript("OnClick", function()
         Mounty:NewProfile(Mounty.OptionsFrame_Profile:GetText())
     end)
 
-    temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left + 48, top + 3, 50, 22, L["button.Duplicate"])
+    temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left + 58, top + 3, 60, 22, L["button.Duplicate"])
     temp:SetScript("OnClick", function()
         Mounty:DuplicateProfile(_Mounty_C.CurrentProfile, Mounty.OptionsFrame_Profile:GetText())
     end)
 
-    temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left + 96, top + 3, 50, 22, L["button.Edit"])
+    temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left + 116, top + 3, 60, 22, L["button.Edit"])
     temp:SetScript("OnClick", function()
         Mounty:DuplicateProfile(_Mounty_C.CurrentProfile, Mounty.OptionsFrame_Profile:GetText(), true)
     end)
 
-    temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left + 144, top + 3, 50, 22, L["button.Delete"])
+    temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left + 174, top + 3, 60, 22, L["button.Delete"])
     temp:SetScript("OnClick", function()
         Mounty:DeleteProfile(_Mounty_C.CurrentProfile)
     end)
 
     -- Share profiles checkbox
 
-    top = top - delta * 2
+    top = top - 22
 
     Mounty.OptionsFrame_ShareProfiles = CreateFrame("CheckButton", "Mounty_OptionsFrame_ShareProfiles", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     Mounty.OptionsFrame_ShareProfiles:SetPoint("TOPLEFT", 16, top)
@@ -885,31 +885,31 @@ function Mounty:InitOptionsFrame()
 
     -- Profile buttons 2
 
-    temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left, top, 98, 22, L["button.CopyC2A"])
+    temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left+40, top, 98, 22, L["button.CopyC2A"])
     temp:SetScript("OnClick", function()
         Mounty:CopyProfiles("c>a")
     end)
 
-    temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left + 96, top, 98, 22, L["button.CopyA2C"])
+    temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left + 40+96, top, 98, 22, L["button.CopyA2C"])
     temp:SetScript("OnClick", function()
         Mounty:CopyProfiles("a>c")
     end)
 
-    -- Khedrak checkbox
+    -- Parachute checkbox
 
     top = top - delta * 4
 
-    Mounty.OptionsFrame_Khedrak = CreateFrame("CheckButton", "Mounty_OptionsFrame_Khedrak", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
-    Mounty.OptionsFrame_Khedrak:SetPoint("TOPLEFT", 16, top)
-    Mounty_OptionsFrame_KhedrakText:SetText(L["options.Khedrak"])
-    Mounty.OptionsFrame_Khedrak:SetScript("OnClick", function(calling)
-        _Mounty_A.Khedrak = not _Mounty_A.Khedrak
-        calling:SetChecked(_Mounty_A.Khedrak)
+    Mounty.OptionsFrame_Parachute = CreateFrame("CheckButton", "Mounty_OptionsFrame_Parachute", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    Mounty.OptionsFrame_Parachute:SetPoint("TOPLEFT", 16, top)
+    Mounty_OptionsFrame_ParachuteText:SetText(L["options.Parachute"])
+    Mounty.OptionsFrame_Parachute:SetScript("OnClick", function(calling)
+        _Mounty_A.Parachute = not _Mounty_A.Parachute
+        calling:SetChecked(_Mounty_A.Parachute)
     end)
 
     -- Auto open checkbox
 
-    top = top - delta * 3
+    top = top - 22
 
     Mounty.OptionsFrame_AutoOpen = CreateFrame("CheckButton", "Mounty_OptionsFrame_AutoOpen", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     Mounty.OptionsFrame_AutoOpen:SetPoint("TOPLEFT", 16, top)
@@ -925,7 +925,7 @@ function Mounty:InitOptionsFrame()
     top = top - delta * 5
 
     Mounty.OptionsFrame_JournalButtonOffset = CreateFrame("Slider", "Mounty_OptionsFrame_JournalButtonOffset", Mounty.OptionsFrame, "OptionsSliderTemplate")
-    Mounty.OptionsFrame_JournalButtonOffset:SetWidth(335)
+    Mounty.OptionsFrame_JournalButtonOffset:SetWidth(440)
     Mounty.OptionsFrame_JournalButtonOffset:SetHeight(16)
     Mounty.OptionsFrame_JournalButtonOffset:SetPoint("TOPLEFT", 25, top)
     Mounty_OptionsFrame_JournalButtonOffsetLow:SetText("-425")
@@ -940,7 +940,7 @@ function Mounty:InitOptionsFrame()
 
     -- DebugMode checkbox
 
-    top = top - delta * 3
+    top = top - delta * 4
 
     Mounty.OptionsFrame_DebugMode = CreateFrame("CheckButton", "Mounty_OptionsFrame_DebugMode", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     Mounty.OptionsFrame_DebugMode:SetPoint("TOPLEFT", 16, top)
@@ -952,14 +952,14 @@ function Mounty:InitOptionsFrame()
 
     -- Open Mounts
 
-    Mounty.OptionsFrame_JournalButton = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left, top, 98, 22, L["button.Journal"])
+    Mounty.OptionsFrame_JournalButton = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left + 40, top, 98, 22, L["button.Journal"])
     Mounty.OptionsFrame_JournalButton:SetScript("OnClick", function()
         ToggleCollectionsJournal(1)
     end)
 
     -- Open Quick start
 
-    temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left + 96, top, 98, 22, L["button.Help"])
+    temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left + 40 + 96, top, 98, 22, L["button.Help"])
     temp:SetScript("OnClick", function()
         if Mounty.QuickStartFrame:IsVisible() then
             Mounty.QuickStartFrame:Hide()
@@ -968,7 +968,7 @@ function Mounty:InitOptionsFrame()
         end
     end)
 
-    Mounty.OptionsFrame:SetHeight(-top + 30)
+    Mounty.OptionsFrame:SetHeight(-top + 34)
 
 
 end
@@ -976,7 +976,7 @@ end
 function Mounty:InitQuickStartFrame()
 
     Mounty.QuickStartFrame = CreateFrame("Frame", nil, Mounty.OptionsFrame, "SettingsFrameTemplate")
-    Mounty.QuickStartFrame:SetWidth(490)
+    Mounty.QuickStartFrame:SetWidth(640)
     Mounty.QuickStartFrame:SetHeight(150)
     Mounty.QuickStartFrame:SetPoint("CENTER", 0, 0)
     Mounty.QuickStartFrame:SetFrameStrata("DIALOG")
@@ -1305,7 +1305,7 @@ function Mounty:OptionsRender()
 
     Mounty.OptionsFrame_ShareProfiles:SetChecked(_Mounty_C.ShareProfiles)
 
-    Mounty.OptionsFrame_Khedrak:SetChecked(_Mounty_A.Khedrak)
+    Mounty.OptionsFrame_Parachute:SetChecked(_Mounty_A.Parachute)
     Mounty.OptionsFrame_DebugMode:SetChecked(_Mounty_A.DebugMode)
     Mounty.OptionsFrame_AutoOpen:SetChecked(_Mounty_A.AutoOpen)
 
@@ -1743,8 +1743,8 @@ function Mounty:InitSavedVariables()
 
     end
 
-    if _Mounty_A.Khedrak == nil then
-        _Mounty_A.Khedrak = false
+    if _Mounty_A.Parachute == nil then
+        _Mounty_A.Parachute = false
     end
 
     if _Mounty_A.DebugMode == nil then
@@ -1892,17 +1892,17 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
             TLVlib:Chat(L["chat.Autoopen"] .. "|cfff01000" .. L["off"] .. "|r.")
         end
 
-    elseif mode == "khedrak" then
+    elseif mode == "parachute" then
 
         if arg1 == "on" then
 
-            _Mounty_A.Khedrak = true
-            TLVlib:Chat(L["chat.Khedrak"] .. "|cff00f010" .. L["on"] .. "|r.")
+            _Mounty_A.Parachute = true
+            TLVlib:Chat(L["chat.Parachute"] .. "|cff00f010" .. L["on"] .. "|r.")
 
         elseif arg1 == "off" then
 
-            _Mounty_A.Khedrak = false
-            TLVlib:Chat(L["chat.Khedrak"] .. "|cfff01000" .. L["off"] .. "|r.")
+            _Mounty_A.Parachute = false
+            TLVlib:Chat(L["chat.Parachute"] .. "|cfff01000" .. L["off"] .. "|r.")
 
         end
 
