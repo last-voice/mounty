@@ -32,7 +32,8 @@ L["mode.Custom3"] = "|cfff07070Custom 3|r"
 
 L["options.Random"] = "Zufällig (anstatt der Reihe nach)"
 L["options.Look"] = "Seht her! (In Ruhebereichen angeben)"
-L["options.Stay"] = "In der Gruppe am Boden bleiben und nicht fliegen (außer du bist das Taxi)"
+L["options.Khedrak"] = "Khedrak-Modus - In jedem Fall absitzen, egal wie hoch du fliegst und tief du fällst"
+L["options.Together"] = "In der Gruppe am Boden bleiben und nicht fliegen (außer du bist das Taxi)"
 L["options.Taxi"] = "Taxi-Modus (In einer Gruppe immer dein Taxi-Reittier rufen)"
 L["options.Debug"] = "Debug-Modus (nur englisch)"
 L["options.Autoopen"] = "Automatisch mit der Reittiersammlung öffnen und schließen"
@@ -65,6 +66,7 @@ L["profile.copy-a>c"] = "von |cff00f010accountweit|r zu |cff00f010diesem Charakt
 
 L["chat.Debug"] = "Debug: "
 L["chat.Autoopen"] = "Auto öffnen: "
+L["chat.Khedrak"] = "Khedrak-Modus: "
 L["chat.Together"] = "Zusammen bleiben: "
 L["chat.Showoff"] = "Angeberei: "
 L["chat.Random"] = "Zufall: "
@@ -90,7 +92,7 @@ L["quick.text"] = "- Ziehe deine liebsten Reittiere mit der Maus in die entsprec
 
 L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.de.md"
 
-L["upgrade"] = "Mit |cfff07070Doppelklicks|r kannst Du ab jetzt auch Reittiere |cfff07070kopieren|r."
+L["upgrade"] = "Jetzt mit |cfff07070Khedrak-Modus|r.\nAuf eigene Gefahr!"
 
 local _, TLV_AddOn = ...
 TLV_AddOn.L = setmetatable(L, { __index = TLV_AddOn.L })

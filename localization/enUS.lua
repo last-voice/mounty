@@ -28,7 +28,8 @@ L["mode.Custom3"] = "|cfff07070Custom 3|r"
 
 L["options.Random"] = "Random (instead of one by one)"
 L["options.Look"] = "Look at me! (Show off in resting areas)"
-L["options.Stay"] = "In group: Stay on ground together and don't fly (except you summon your taxi mount)"
+L["options.Khedrak"] = "Khedrak mode - dismount anyway, no matter how high you fly and deep the fall"
+L["options.Together"] = "In group: Stay on ground together and don't fly (except you summon your taxi mount)"
 L["options.Taxi"] = "Taxi mode (Always summon taxi mount when in group)"
 L["options.Debug"] = "Debug mode"
 L["options.Autoopen"] = "Auto open and close with mount journal"
@@ -61,6 +62,7 @@ L["profile.copy-a>c"] = "from |cff00f010account wide shared|r to |cff00f010this 
 
 L["chat.Debug"] = "Debug: "
 L["chat.Autoopen"] = "Auto open & close: "
+L["chat.Khedrak"] = "Khedrak mode: "
 L["chat.Together"] = "Together mode: "
 L["chat.Showoff"] = "Show off mode: "
 L["chat.Random"] = "Random: "
@@ -86,7 +88,7 @@ L["quick.text"] = "- Pull your favourite mounts from the mount journal into the 
 
 L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.md"
 
-L["upgrade"] = "You can now |cfff07070copy|r mounts by double clicking."
+L["upgrade"] = "Introducing |cfff07070Khedrak mode|r.\nAt your own risk!"
 
 local _, TLV_AddOn = ...
 TLV_AddOn.L = L

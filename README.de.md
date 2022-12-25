@@ -62,6 +62,7 @@ Außerdem gibt es seit Version v2.5.2 __3 custom Kategorien__ zu deiner freien V
 
 Drei Grundeinstellungen gibt es:
 
+- Khedrak-Modus - In jedem Fall absitzen, egal wie hoch du fliegst und tief du fällst (ansonsten hält __Mounty #TLV__ dich fest im Sattel wenn du fliegst)
 - _Taxi-Modus ein/aus_: Wer in dieser eingeschaltet ist und du in einer Gruppe bist, - dann werden Taxi-Mounts bevorzugt und deine Freunde aufgefordert, aufzuspringen.
 - _Nicht-fliegen-Modus an/aus_: Deine fliegenden Mounts bleiben im Stall, wenn du in einer Gruppe bist. Ideal wenn du einen Freund begleitest, der immer noch nicht fliegen kann. So bleibt ihr immer auf Augenhöhe und niemand zurück.
 - _Angeber-Modus an/aus_: Möchtest Du in Ruhebereichen Andere neidisch machen und dort immer eines Deiner Angeber-Mounts reiten?
@@ -71,6 +72,8 @@ Drei Grundeinstellungen gibt es:
 Am Ende ist es ganz einfach. Wenn du __die magische Taste__ drückst, passiert folgendes:
 
 Du sitzt bereits auf einem Mount? Dann __bitte absteigen__, außer du fliegst in den Wolken und würdest Hogger vor die Füße fallen. Dann bleibe bitte einfach sitzen!
+
+Aber Achtung: Wenn der Khedrak-Modus aktiv ist, schmeißt __Mounty #TLV__ dich in jedem Fall aus den Sattel und du musst selbst für eine weiche Landung sorgen.
 
 Du sitzt auf keinem Mount? Dann lassen wir die Magie spielen und für dich __das perfekte Mount__ herbeizaubern lassen.
 
@@ -95,9 +98,13 @@ Magisch, oder? Dank __Mounty #TLV__.
 ### Die ganze Magie in wenigen Worten
 
 >__Die magische Taste wurde gedrückt, und dann ...__\
->Du bist auf einem Mount und fliegst -> _nichts passiert_\
->Du bist auf einem Mount auf dem Boden -> _Du sitzt ab_\
->Du sitzt auf keinem Mount ...\
+>\
+>__Du sitzt auf einem Mount ...__\
+>... mit den Füßen oder Rädern auf dem Boden -> _Du sitzt ab_\
+>... und fliegst, und Khedrak-Modus ist aktiv -> _Du sitzt ab_\
+>... und fliegst -> _nichts passiert_\
+>\
+>__Du sitzt auf keinem Mount ...__\
 >Die Haltbarkeit deiner Rüstung ist unter xx% -> _Reparier-Mount-\
 >Du bist in einer Gruppe, Taxi-Modus ist an -> _Taxi-Mount_\
 >Du bist auf den Dracheninseln in einer Drachenflugzone -> _Drachen_\
@@ -105,7 +112,7 @@ Magisch, oder? Dank __Mounty #TLV__.
 >Du bist in einer Flug-Zone, allein -> _Flug-Mount_\
 >Du bist in einer Flug-Zone, in einer Gruppe und der Nicht-fliegen-Modus ist aus -> _Flug-Mount_\
 >Du schwimmst im Wasser -> _Wasser-Mount_\
->sonst -> _Boden-Mount_\
+>sonst -> _Boden-Mount_
 
 ### Und wenn eine Kategorie leer ist?
 
@@ -170,6 +177,7 @@ __Optionen umschalten__
 
 _/mounty random on|off_ (Zufällig oder in Reihenfolge)\
 _/mounty showoff on|off_ (Angeber, Angeber!)\
+_/mounty khedrak on|off_ (Immer absitzen, bei jeder Höhe)\
 _/mounty together on|off_ (Zusammen bleiben)\
 _/mounty taxi on|off_ (Taxi Reittiere verwenden)\
 _/mounty auto on|off_ (Optionen automatisch öffnen)\

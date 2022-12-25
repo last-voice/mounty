@@ -2,6 +2,9 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.5.5
+- Introducing optional Khedrak mode - dismount anyway, no matter how high you fly and deep the fall 
+
 v2.5.4
 - New feature: Copy mounts by double clicking
 

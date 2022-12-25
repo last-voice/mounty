@@ -322,7 +322,7 @@ function Mounty:KeyHandler(keypress)
 
     elseif IsMounted() then
 
-        if IsFlying() then
+        if IsFlying() and not _Mounty_A.Khedrak then
             TLVlib:Debug("You are mounted and flying.")
             return
         end
@@ -614,7 +614,6 @@ function Mounty:InitOptionsFrame()
     Mounty.OptionsFrame:SetScript("OnHide", Mounty.OnHide)
 
     Mounty.OptionsFrame:SetWidth(440)
-    Mounty.OptionsFrame:SetHeight(690)
     Mounty.OptionsFrame:SetPoint("CENTER")
 
     Mounty.OptionsFrame:SetFrameStrata("HIGH")
@@ -743,7 +742,7 @@ function Mounty:InitOptionsFrame()
 
     Mounty.OptionsFrame_Together = CreateFrame("CheckButton", "Mounty_OptionsFrame_Together", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     Mounty.OptionsFrame_Together:SetPoint("TOPLEFT", 16, top)
-    Mounty_OptionsFrame_TogetherText:SetText(L["options.Stay"])
+    Mounty_OptionsFrame_TogetherText:SetText(L["options.Together"])
     Mounty.OptionsFrame_Together:SetScript("OnClick", function(calling)
         Mounty.CurrentProfile.Together = not Mounty.CurrentProfile.Together
         calling:SetChecked(Mounty.CurrentProfile.Together)
@@ -896,9 +895,21 @@ function Mounty:InitOptionsFrame()
         Mounty:CopyProfiles("a>c")
     end)
 
-    -- Auto open checkbox
+    -- Khedrak checkbox
 
     top = top - delta * 4
+
+    Mounty.OptionsFrame_Khedrak = CreateFrame("CheckButton", "Mounty_OptionsFrame_Khedrak", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    Mounty.OptionsFrame_Khedrak:SetPoint("TOPLEFT", 16, top)
+    Mounty_OptionsFrame_KhedrakText:SetText(L["options.Khedrak"])
+    Mounty.OptionsFrame_Khedrak:SetScript("OnClick", function(calling)
+        _Mounty_A.Khedrak = not _Mounty_A.Khedrak
+        calling:SetChecked(_Mounty_A.Khedrak)
+    end)
+
+    -- Auto open checkbox
+
+    top = top - delta * 3
 
     Mounty.OptionsFrame_AutoOpen = CreateFrame("CheckButton", "Mounty_OptionsFrame_AutoOpen", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     Mounty.OptionsFrame_AutoOpen:SetPoint("TOPLEFT", 16, top)
@@ -956,6 +967,8 @@ function Mounty:InitOptionsFrame()
             Mounty.QuickStartFrame:Show()
         end
     end)
+
+    Mounty.OptionsFrame:SetHeight(-top + 30)
 
 
 end
@@ -1292,6 +1305,7 @@ function Mounty:OptionsRender()
 
     Mounty.OptionsFrame_ShareProfiles:SetChecked(_Mounty_C.ShareProfiles)
 
+    Mounty.OptionsFrame_Khedrak:SetChecked(_Mounty_A.Khedrak)
     Mounty.OptionsFrame_DebugMode:SetChecked(_Mounty_A.DebugMode)
     Mounty.OptionsFrame_AutoOpen:SetChecked(_Mounty_A.AutoOpen)
 
@@ -1560,12 +1574,8 @@ function Mounty:SelectProfile(p)
         Mounty.Profiles[p].TaxiMode = false
     end
 
-    if Mounty.Profiles[p].DoNotFly == nil then
-        Mounty.Profiles[p].DoNotFly = false
-    end
-
     if Mounty.Profiles[p].Together == nil then
-        Mounty.Profiles[p].Together = Mounty.Profiles[p].DoNotFly -- renamed
+        Mounty.Profiles[p].Together = false
     end
 
     if Mounty.Profiles[p].DoNotShowOff == nil then
@@ -1733,6 +1743,10 @@ function Mounty:InitSavedVariables()
 
     end
 
+    if _Mounty_A.Khedrak == nil then
+        _Mounty_A.Khedrak = false
+    end
+
     if _Mounty_A.DebugMode == nil then
         _Mounty_A.DebugMode = false
     end
@@ -1876,6 +1890,20 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
             _Mounty_A.AutoOpen = false
             TLVlib:Chat(L["chat.Autoopen"] .. "|cfff01000" .. L["off"] .. "|r.")
+        end
+
+    elseif mode == "khedrak" then
+
+        if arg1 == "on" then
+
+            _Mounty_A.Khedrak = true
+            TLVlib:Chat(L["chat.Khedrak"] .. "|cff00f010" .. L["on"] .. "|r.")
+
+        elseif arg1 == "off" then
+
+            _Mounty_A.Khedrak = false
+            TLVlib:Chat(L["chat.Khedrak"] .. "|cfff01000" .. L["off"] .. "|r.")
+
         end
 
     elseif mode == "together" then
