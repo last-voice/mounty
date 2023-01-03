@@ -34,35 +34,36 @@ L["options.Random"] = "Zufällig (anstatt der Reihe nach)"
 L["options.Look"] = "Seht her! (In Ruhebereichen angeben)"
 L["options.Parachute"] = "Fallschirm-Modus - Immer absitzen, egal wie hoch du fliegst und tief du fällst"
 L["options.Together"] = "In der Gruppe am Boden bleiben und nicht fliegen (außer du bist das Taxi)"
+L["options.PreferSwimming"] = "Im Wasser Wasser-Mounts nutzen, auch wenn du fliegen kannst"
 L["options.Taxi"] = "Taxi-Modus (In einer Gruppe immer dein Taxi-Reittier rufen)"
 L["options.Debug"] = "Debug-Modus (nur englisch)"
 L["options.Autoopen"] = "Automatisch mit der Reittiersammlung öffnen und schließen"
 L["options.Durability"] = "Das Repair kommt bei weniger als %d%% Rüstung."
-L["options.JournalButtonOffset"] = "Offset des Buttons in der Reittiersammlung: %d (1 = verstecken)."
+L["options.JournalButtonOffset"] = "Offset des Buttons in der Reittiersammlung: %d (1 = verstecken)"
 L["options.Hello"] = "So rufst du deinen Taxi-Gast"
 L["options.Hello-Default"] = "Taxi!"
 L["options.Helptext"] = "Mounts hier reinziehen | Doppleklick = Kopieren | Rechtsklick = Löschen"
 L["options.Profile"] = "Profil"
 L["options.ShareProfiles"] = "Profile mit deinen anderen Charakteren teilen"
-L["options.Already"] = "Das Reittier ist bereits in dieser Kategorie."
+L["options.popup.Already"] = "Das Reittier ist bereits in dieser Kategorie."
 
 L["expanded.Add"] = "Aus Sammlung hinzufügen"
 L["expanded.Refresh"] = "Ordnen"
 L["expanded.Clear"] = "Leeren"
-L["expanded.refresh-confirm"] = "Alle |cff00f010Lücken|r der aktuellen Kategorie schließen?"
-L["expanded.clear-confirm"] = "Die aktuelle Kategoirie |cff00f010leeren|r?"
-L["expanded.add-journal-confirm"] = "Alle |cff00f010aktuell gefilterten, gesammelten Reittiere|r zur Kategorie |cff00f010hinzufügen|r?"
+L["expanded.popup.refresh-confirm"] = "Alle |cff00f010Lücken|r der aktuellen Kategorie schließen?"
+L["expanded.popup.clear-confirm"] = "Die aktuelle Kategoirie |cff00f010leeren|r?"
+L["expanded.popup.add-journal-confirm"] = "Alle |cff00f010aktuell gefilterten, gesammelten Reittiere|r zur Kategorie |cff00f010hinzufügen|r?"
 
 L["profile.switched"] = "Zu Profil |cff00f010%s|r gewechselt."
-L["profile.delete-confirm"] = "Das Profil |cff00f010%s|r wirklich löschen?"
 L["profile.current"] = "Aktuelles Profil: |cff00f010%s|r"
-L["profile.error"] = "Bitte nur |cff00f010Buchstaben und Ziffern|r verwenden."
-L["profile.empty"] = "Bitte gib einen |cff00f010Profilnamen|r ein."
-L["profile.none"] = "Das Profil |cff00f010%s|r existiert nicht."
-L["profile.already"] = "Das Profil |cff00f010%s|r existiert bereits."
-L["profile.copy-confirm"] = "Profile %s kopieren?\n\nEs wird nichts überschrieben oder gelöscht."
 L["profile.copy-c>a"] = "von |cff00f010diesem Charakter|r zu |cff00f010accountweit|r"
 L["profile.copy-a>c"] = "von |cff00f010accountweit|r zu |cff00f010diesem Charakter|r"
+L["profile.popup.delete-confirm"] = "Das Profil |cff00f010%s|r wirklich löschen?"
+L["profile.popup.copy-confirm"] = "Profile %s kopieren?\n\nEs wird nichts überschrieben oder gelöscht."
+L["profile.popup.error"] = "Bitte nur |cff00f010Buchstaben und Ziffern|r verwenden."
+L["profile.popup.empty"] = "Bitte gib einen |cff00f010Profilnamen|r ein."
+L["profile.popup.none"] = "Das Profil |cff00f010%s|r existiert nicht."
+L["profile.popup.already"] = "Das Profil |cff00f010%s|r existiert bereits."
 
 L["chat.Debug"] = "Debug: "
 L["chat.Autoopen"] = "Auto öffnen: "
@@ -87,12 +88,34 @@ L["button.Help"] = "Hilfe"
 
 L["Mount journal - Open Mounty"] = "Mounty #TLV"
 
+L["help"] = "Wie bitte?\n
+/mounty  - um das Optionsfenster zu öffnen\n
+/mounty magic - und Mounty #TLV wirkt seinen Zauber\n
+/mounty ground - beschwört ein Boden-Mount\n
+/mounty fly - beschwört ein Flug-Mount\n
+/mounty water - beschwört ein Wasser-Mount\n
+/mounty repair - beschwört ein Reparier-Mount\n
+/mounty taxi - beschwört ein Taxi-Mount\n
+/mounty showoff - beschwört ein Angeber-Mount\n
+/mounty random - beschwört ein zufälliges Mount\n
+/mounty random on|off (Zufällig oder in Reihenfolge)\n
+/mounty showoff on|off (Angeber, Angeber!)\n
+/mounty parachute on|off (Immer absitzen, bei jeder Höhe)\n
+/mounty together on|off (Zusammen bleiben)\n
+/mounty swim on|off (Lieber schwimmen als fliegen)\n
+/mounty taxi on|off (Taxi-Mounts verwenden)\n
+/mounty auto on|off (Optionen automatisch öffnen)\n
+/mounty debug on|off (Debug Infos anzeigen)\n
+/mounty profile - zeigt das aktuelle Profil\n
+/mounty profile Heart - schaltet auf das Profil Heart um und erstellt es falls nicht vorhanden\n
+/mounty version - zeigt die aktuelle Version des Addons"
+
 L["quick.title"] = "Quick-Start"
 L["quick.text"] = "- Ziehe deine liebsten Reittiere mit der Maus in die entsprechenden Kategorien von Mounty #TLV.\n- Öffne WoWs Tastaturbelegungen, wähle Mounty #TLV und konfiguriere deine magische Taste.\n- Drücke deine magische Taste um hier und jetzt immer das perfekte Reittier zu rufen.\n- Genieße Mounty #TLV und schau dir gerne auch alle weiteren Optionen und Mögichkeiten an.\n\nIn der README findest du eine detaillierte Beschreibung."
 
 L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.de.md"
 
-L["upgrade"] = "Jetzt mit |cfff07070Fallschirm-Modus|r.\nAuf eigene Gefahr!"
+L["upgrade.popup"] = "Jetzt mit |cfff07070Fallschirm-Modus|r.\nAuf eigene Gefahr!"
 
 local _, TLV_AddOn = ...
 TLV_AddOn.L = setmetatable(L, { __index = TLV_AddOn.L })

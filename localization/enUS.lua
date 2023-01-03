@@ -30,6 +30,7 @@ L["options.Random"] = "Random (instead of one by one)"
 L["options.Look"] = "Look at me! (Show off in resting areas)"
 L["options.Parachute"] = "Parachute mode - dismount anyway, no matter how high you fly and deep the fall"
 L["options.Together"] = "In group: Stay on ground together and don't summon flying mounts (except taxi)"
+L["options.PreferSwimming"] = "In water: Use water mounts, even if flying is possible"
 L["options.Taxi"] = "Taxi mode (Always summon taxi mount when in group)"
 L["options.Debug"] = "Debug mode"
 L["options.Autoopen"] = "Auto open and close with mount journal"
@@ -40,23 +41,23 @@ L["options.Hello-Default"] = "Taxi!"
 L["options.Helptext"] = "Drag mounts into here | Double click = Copy | Right click = Delete"
 L["options.Profile"] = "Profile"
 L["options.ShareProfiles"] = "Share profiles with your other characters"
-L["options.Already"] = "The mount is already assigned to this category."
+L["options.popup.Already"] = "The mount is already assigned to this category."
 
 L["expanded.Add"] = "Add from journal"
 L["expanded.Refresh"] = "Refresh"
 L["expanded.Clear"] = "Clear"
-L["expanded.refresh-confirm"] = "|cff00f010Close all gaps|r of the current category?"
-L["expanded.clear-confirm"] = "|cff00f010Empty|r the current category?"
-L["expanded.add-journal-confirm"] = "|cff00f010Add|r all |cff00f010currently filtered and collected mounts|r from the journal to the current category?"
+L["expanded.popup.refresh-confirm"] = "|cff00f010Close all gaps|r of the current category?"
+L["expanded.popup.clear-confirm"] = "|cff00f010Empty|r the current category?"
+L["expanded.popup.add-journal-confirm"] = "|cff00f010Add|r all |cff00f010currently filtered and collected mounts|r from the journal to the current category?"
 
 L["profile.switched"] = "Switched to profile |cff00f010%s|r."
-L["profile.delete-confirm"] = "Delete profile |cff00f010%s|r?"
+L["profile.popup.delete-confirm"] = "Delete profile |cff00f010%s|r?"
 L["profile.current"] = "Current profile: |cff00f010%s|r"
-L["profile.error"] = "Please use |cff00f010letters and digits|r only."
-L["profile.empty"] = "Please enter a |cff00f010profile name|r."
-L["profile.none"] = "Profile |cff00f010%s|r not found."
-L["profile.already"] = "Profile |cff00f010%s|r already exists."
-L["profile.copy-confirm"] = "Copy profiles %s?\n\nNothing will be overwritten nor deleted."
+L["profile.popup.error"] = "Please use |cff00f010letters and digits|r only."
+L["profile.popup.empty"] = "Please enter a |cff00f010profile name|r."
+L["profile.popup.none"] = "Profile |cff00f010%s|r not found."
+L["profile.popup.already"] = "Profile |cff00f010%s|r already exists."
+L["profile.popup.copy-confirm"] = "Copy profiles %s?\n\nNothing will be overwritten nor deleted."
 L["profile.copy-c>a"] = "from |cff00f010this char|r to |cff00f010account wide shared|r"
 L["profile.copy-a>c"] = "from |cff00f010account wide shared|r to |cff00f010this char|r"
 
@@ -83,12 +84,34 @@ L["button.Help"] = "Help"
 
 L["Mount journal - Open Mounty"] = "Mounty #TLV"
 
+L["help"] = "Insert coin and try again!\n
+/mounty  - to open the options frame\n
+/mounty magic - to let Mounty #TLV's magic happen\n
+/mounty ground - to summon ground mount\n
+/mounty fly - to summon fly mount\n
+/mounty water - to summon water mount\n
+/mounty repair - to summon repair mount\n
+/mounty taxi - to summon taxi mount\n
+/mounty showoff - to summon show off mount\n
+/mounty random - to summon random mount\n
+/mounty random on|off (Random or cycle throught)\n
+/mounty showoff on|off (Show off, show off!)\n
+/mounty parachute on|off (Dismount at any height)\n
+/mounty together on|off (Let's stay together)\n
+/mounty swim on|off (Rather swim than fly)\n
+/mounty taxi on|off (Use taxi mounts)\n
+/mounty auto on|off (Auto open options frame)\n
+/mounty debug on|off (Show debug info)\n
+/mounty profile - to show the current used profile\n
+/mounty profile Heart - to switch to or create the profile Heart\n
+/mounty version - to show the current version of the addon"
+
 L["quick.title"] = "Quick start"
 L["quick.text"] = "- Pull your favourite mounts from the mount journal into the categories of Mounty #TLV.\n- Open WoW's settings for key bindings, select Mounty #TLV and configure your magic key to mount.\n- Press your magic key to pick up the perfect mount for here and now.\n- Enjoy Mounty #TLV and take a look and all the other options and possibilities.\n\nTake a look at the README for all details."
 
 L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.md"
 
-L["upgrade"] = "Introducing |cfff07070parachute mode|r.\nAt your own risk!"
+L["upgrade.popup"] = "Introducing |cfff07070parachute mode|r.\nAt your own risk!"
 
 local _, TLV_AddOn = ...
 TLV_AddOn.L = L

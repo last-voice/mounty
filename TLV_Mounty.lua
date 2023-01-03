@@ -275,6 +275,7 @@ function Mounty:Mount(mode)
     elseif mode == "random" then
 
         category = 0
+
     end
 
     TLVlib:Debug("Mode: " .. mode)
@@ -305,6 +306,19 @@ end
 
 function Mounty:KeyHandler(keypress)
 
+    local mounted = IsMounted()
+    local flying = IsFlying()
+    local resting = IsResting()
+    local dragonflight = Mounty:DragonsCanFlyHere()
+    local alone = not IsInGroup()
+    local flyable = Mounty:UserCanFlyHere()
+    local swimming = IsSwimming()
+    local taximode = Mounty.CurrentProfile.TaxiMode
+    local together = Mounty.CurrentProfile.Together
+    local preferswimming = Mounty.CurrentProfile.PreferSwimming
+    local showoff = Mounty.CurrentProfile.ShowOff
+    local parachute = _Mounty_A.Parachute
+
     if keypress == nil then
         keypress = "magic"
     end
@@ -314,15 +328,15 @@ function Mounty:KeyHandler(keypress)
 
     if keypress == "forceoff" then
 
-        if IsMounted() then
+        if mounted then
             Dismount()
         end
 
         return
 
-    elseif IsMounted() then
+    elseif mounted then
 
-        if IsFlying() and not _Mounty_A.Parachute then
+        if flying and not parachute then
             TLVlib:Debug("You are mounted and flying.")
             return
         end
@@ -334,35 +348,9 @@ function Mounty:KeyHandler(keypress)
         end
     end
 
-    if keypress == "ground" or
-            keypress == "fly" or
-            keypress == "dragonflight" or
-            keypress == "repair" or
-            keypress == "random" or
-            keypress == "showoff" or
-            keypress == "water" or
-            keypress == "taxi" or
-            keypress == "custom1" or
-            keypress == "custom2" or
-            keypress == "custom3"
-    then
-
-        TLVlib:Debug("Dedicated key")
-
-        Mounty:Mount(keypress)
-
-    else
+    if keypress == "magic" then
 
         -- magic
-
-        local resting = IsResting()
-        local dragonflight = Mounty:DragonsCanFlyHere()
-        local alone = not IsInGroup()
-        local flyable = Mounty:UserCanFlyHere()
-        local swimming = IsSwimming()
-        local taximode = Mounty.CurrentProfile.TaxiMode
-        local together = Mounty.CurrentProfile.Together
-        local showoff = Mounty.CurrentProfile.ShowOff
 
         TLVlib:Debug("Magic key")
 
@@ -380,6 +368,18 @@ function Mounty:KeyHandler(keypress)
 
             mode = "taxi"
 
+        elseif swimming then
+
+            mode = "water"
+
+            if not preferswimming then
+                if dragonflight then
+                    mode = "dragonflight"
+                elseif flyable then
+                    mode = "fly"
+                end
+            end
+
         elseif dragonflight then
 
             mode = "dragonflight"
@@ -392,17 +392,21 @@ function Mounty:KeyHandler(keypress)
 
             mode = "fly"
 
-        elseif swimming then
-
-            mode = "water"
-
         else
 
             mode = "ground"
         end
 
         Mounty:Mount(mode)
+
+    else
+
+        TLVlib:Debug("Dedicated key")
+
+        Mounty:Mount(keypress)
+
     end
+
 end
 
 function Mounty:PickupMountBySpellID(pickupSpellID)
@@ -461,7 +465,7 @@ function Mounty:AddMount(calling, expanded)
 
         elseif Mounty:AlreadyInCategory(category, spellID) then
 
-            TLVlib:Alert(L["options.Already"])
+            TLVlib:Alert(L["options.popup.Already"])
 
             TLVlib:Debug("Fail: Already | " .. infoType .. " " .. category .. " " .. mountID .. " " .. spellID)
 
@@ -709,7 +713,7 @@ function Mounty:InitOptionsFrame()
     top = top - delta * 4
 
     temp = Mounty.OptionsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-    temp:SetPoint("TOPLEFT", 90, top - 3)
+    temp:SetPoint("TOPLEFT", 102, top - 3)
     temp:SetText(L["options.Helptext"])
 
     -- Random checkbox
@@ -746,6 +750,18 @@ function Mounty:InitOptionsFrame()
     Mounty.OptionsFrame_Together:SetScript("OnClick", function(calling)
         Mounty.CurrentProfile.Together = not Mounty.CurrentProfile.Together
         calling:SetChecked(Mounty.CurrentProfile.Together)
+    end)
+
+    -- Prefer Swimming checkbox
+
+    top = top - 22
+
+    Mounty.OptionsFrame_PreferSwimming = CreateFrame("CheckButton", "Mounty_OptionsFrame_PreferSwimming", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    Mounty.OptionsFrame_PreferSwimming:SetPoint("TOPLEFT", 16, top)
+    Mounty_OptionsFrame_PreferSwimmingText:SetText(L["options.PreferSwimming"])
+    Mounty.OptionsFrame_PreferSwimming:SetScript("OnClick", function(calling)
+        Mounty.CurrentProfile.PreferSwimming = not Mounty.CurrentProfile.PreferSwimming
+        calling:SetChecked(Mounty.CurrentProfile.PreferSwimming)
     end)
 
     -- TaxiMode checkbox
@@ -885,12 +901,12 @@ function Mounty:InitOptionsFrame()
 
     -- Profile buttons 2
 
-    temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left+40, top, 98, 22, L["button.CopyC2A"])
+    temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left + 40, top, 98, 22, L["button.CopyC2A"])
     temp:SetScript("OnClick", function()
         Mounty:CopyProfiles("c>a")
     end)
 
-    temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left + 40+96, top, 98, 22, L["button.CopyA2C"])
+    temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left + 40 + 96, top, 98, 22, L["button.CopyA2C"])
     temp:SetScript("OnClick", function()
         Mounty:CopyProfiles("a>c")
     end)
@@ -1105,7 +1121,7 @@ end
 function Mounty:AddMountsFromJournalToCategory()
 
     StaticPopupDialogs["Mounty_AddMountsFromJournal"] = {
-        text = L["expanded.add-journal-confirm"],
+        text = L["expanded.popup.add-journal-confirm"],
         button1 = YES,
         button2 = NO,
         sound = IG_MAINMENU_OPEN,
@@ -1185,7 +1201,7 @@ end
 function Mounty:RefreshCategory()
 
     StaticPopupDialogs["Mounty_RefreshExpanded"] = {
-        text = L["expanded.refresh-confirm"],
+        text = L["expanded.popup.refresh-confirm"],
         button1 = YES,
         button2 = NO,
         sound = IG_MAINMENU_OPEN,
@@ -1216,7 +1232,7 @@ end
 function Mounty:ClearCategory()
 
     StaticPopupDialogs["Mounty_ClearExpanded"] = {
-        text = L["expanded.clear-confirm"],
+        text = L["expanded.popup.clear-confirm"],
         button1 = YES,
         button2 = NO,
         sound = IG_MAINMENU_OPEN,
@@ -1297,6 +1313,7 @@ function Mounty:OptionsRender()
 
     Mounty.OptionsFrame_Random:SetChecked(Mounty.CurrentProfile.Random)
     Mounty.OptionsFrame_Together:SetChecked(Mounty.CurrentProfile.Together)
+    Mounty.OptionsFrame_PreferSwimming:SetChecked(Mounty.CurrentProfile.PreferSwimming)
     Mounty.OptionsFrame_ShowOff:SetChecked(Mounty.CurrentProfile.ShowOff)
     Mounty.OptionsFrame_TaxiMode:SetChecked(Mounty.CurrentProfile.TaxiMode)
     Mounty.OptionsFrame_Hello:SetText(Mounty.CurrentProfile.Hello)
@@ -1445,9 +1462,9 @@ function Mounty:ProfileCheckName (p, alert)
     local err = ""
 
     if p == nil or p == "" then
-        err = "profile.empty"
+        err = "profile.popup.empty"
     elseif p ~= string.match(p, "[a-zA-Z0-9_]+") then
-        err = "profile.error"
+        err = "profile.popup.error"
     end
 
     if err ~= "" and alert then
@@ -1466,13 +1483,13 @@ function Mounty:DeleteProfile(p)
 
     if Mounty.Profiles[p] == nil then
 
-        TLVlib:Alert(string.format(L["profile.none"], p))
+        TLVlib:Alert(string.format(L["profile.popup.none"], p))
         return
 
     end
 
     StaticPopupDialogs["Mounty_Delete_Profile"] = {
-        text = L["profile.delete-confirm"],
+        text = L["profile.popup.delete-confirm"],
         button1 = YES,
         button2 = NO,
         sound = IG_MAINMENU_OPEN,
@@ -1487,7 +1504,7 @@ function Mounty:DeleteProfile(p)
 
     -- https://wowpedia.fandom.com/wiki/Creating_simple_pop-up_dialog_boxes
 
-    local popup = StaticPopup_Show("Mounty_Delete_Profile", p) -- Ersetzt automatisch %s in L["profile.delete-confirm"] durch p
+    local popup = StaticPopup_Show("Mounty_Delete_Profile", p) -- Ersetzt automatisch %s in L["profile.popup.delete-confirm"] durch p
     if popup then
         popup.data = p -- setzt data im Objekt auf p
     end
@@ -1501,7 +1518,7 @@ function Mounty:NewProfile (p)
     end
 
     if Mounty.Profiles[p] ~= nil then
-        TLVlib:Alert(string.format(L["profile.already"], p))
+        TLVlib:Alert(string.format(L["profile.popup.already"], p))
         return
     end
 
@@ -1516,7 +1533,7 @@ function Mounty:DuplicateProfile (p_from, p, rename)
     end
 
     if Mounty.Profiles[p] ~= nil then
-        TLVlib:Alert(string.format(L["profile.already"], p))
+        TLVlib:Alert(string.format(L["profile.popup.already"], p))
         return
     end
 
@@ -1526,7 +1543,7 @@ function Mounty:DuplicateProfile (p_from, p, rename)
 
     if Mounty.Profiles[p_from] == nil then
 
-        TLVlib:Alert(string.format(L["profile.none"], p_from))
+        TLVlib:Alert(string.format(L["profile.popup.none"], p_from))
         return
 
     end
@@ -1544,7 +1561,7 @@ end
 function Mounty:SwitchProfile(p)
 
     if p == "" then
-        TLVlib:Alert(string.format(L["profile.empty"], p))
+        TLVlib:Alert(string.format(L["profile.popup.empty"], p))
         return
     end
 
@@ -1576,6 +1593,10 @@ function Mounty:SelectProfile(p)
 
     if Mounty.Profiles[p].Together == nil then
         Mounty.Profiles[p].Together = false
+    end
+
+    if Mounty.Profiles[p].PreferSwimming == nil then
+        Mounty.Profiles[p].PreferSwimming = false
     end
 
     if Mounty.Profiles[p].DoNotShowOff == nil then
@@ -1652,7 +1673,7 @@ end
 function Mounty:CopyProfiles(mode)
 
     StaticPopupDialogs["Mounty_Copy_Profiles"] = {
-        text = L["profile.copy-confirm"],
+        text = L["profile.popup.copy-confirm"],
         button1 = YES,
         button2 = NO,
         sound = IG_MAINMENU_OPEN,
@@ -1842,123 +1863,108 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
     message = message or ""
 
-    local mode, arg1 = string.split(" ", message, 2)
+    local mode, arg1, arg2 = string.split(" ", message, 3)
 
     mode = string.lower(mode or "")
     arg1 = arg1 or ""
+    arg2 = arg2 or ""
 
-    if mode == "magic" then
+    local okay = true
+
+    if mode == "" then
+
+        Mounty.OptionsFrame:Show();
+
+    elseif mode == "magic" then
 
         Mounty:KeyHandler()
+
+    elseif mode == "version" then
+
+        TLVlib:Chat("<-- ;)")
 
     elseif mode == "profile" then
 
         if arg1 == "" then
             TLVlib:Chat(string.format(L["profile.current"], _Mounty_C.CurrentProfile))
         else
-            Mounty:SwitchProfile(p1)
-            if p1 == _Mounty_C.CurrentProfile then
-                TLVlib:Chat(string.format(L["profile.switched"], p))
+            Mounty:SwitchProfile(arg1)
+            if arg1 == _Mounty_C.CurrentProfile then
+                TLVlib:Chat(string.format(L["profile.switched"], arg1))
             end
         end
 
-    elseif mode == "version" then
+    elseif mode == "set" then
 
-        TLVlib:Chat("<-- ;)")
+        local suffix
 
-    elseif mode == "debug" then
+        if arg2 == "on" then
 
-        if arg1 == "on" then
+            suffix = "|cff00f010" .. L["on"] .. "|r."
 
-            _Mounty_A.DebugMode = true
-            TLVlib:Chat(L["chat.Debug"] .. "|cff00f010" .. L["on"] .. "|r.")
+        elseif arg2 == "off" then
 
-        elseif arg1 == "off" then
+            suffix = "|cfff01000" .. L["off"] .. "|r."
 
-            _Mounty_A.DebugMode = false
-            TLVlib:Chat(L["chat.Debug"] .. "|cfff01000" .. L["off"] .. "|r.")
-        end
+        else
 
-    elseif mode == "auto" then
-
-        if arg1 == "on" then
-
-            _Mounty_A.AutoOpen = true
-            TLVlib:Chat(L["chat.Autoopen"] .. "|cff00f010" .. L["on"] .. "|r.")
-
-        elseif arg1 == "off" then
-
-            _Mounty_A.AutoOpen = false
-            TLVlib:Chat(L["chat.Autoopen"] .. "|cfff01000" .. L["off"] .. "|r.")
-        end
-
-    elseif mode == "parachute" then
-
-        if arg1 == "on" then
-
-            _Mounty_A.Parachute = true
-            TLVlib:Chat(L["chat.Parachute"] .. "|cff00f010" .. L["on"] .. "|r.")
-
-        elseif arg1 == "off" then
-
-            _Mounty_A.Parachute = false
-            TLVlib:Chat(L["chat.Parachute"] .. "|cfff01000" .. L["off"] .. "|r.")
+            okay = false
 
         end
 
-    elseif mode == "together" then
+        if okay then
 
-        if arg1 == "on" then
+            if arg1 == "debug" then
 
-            Mounty.CurrentProfile.Together = true
-            TLVlib:Chat(L["chat.Together"] .. "|cff00f010" .. L["on"] .. "|r.")
+                _Mounty_A.DebugMode = (arg2 == "on")
+                TLVlib:Chat(L["chat.Debug"] .. suffix)
 
-        elseif arg1 == "off" then
+            elseif arg1 == "auto" then
 
-            Mounty.CurrentProfile.Together = false
-            TLVlib:Chat(L["chat.Together"] .. "|cfff01000" .. L["off"] .. "|r.")
+                _Mounty_A.AutoOpen = (arg2 == "on")
+                TLVlib:Chat(L["chat.Autoopen"] .. suffix)
 
-        end
+            elseif arg1 == "parachute" then
 
-    elseif mode == "showoff" then
+                _Mounty_A.Parachute = (arg2 == "on")
+                TLVlib:Chat(L["chat.Parachute"] .. suffix)
 
-        if arg1 == "on" then
+            elseif arg1 == "together" then
 
-            Mounty.CurrentProfile.ShowOff = true
-            TLVlib:Chat(L["chat.Showoff"] .. "|cff00f010" .. L["on"] .. "|r.")
+                Mounty.CurrentProfile.Together = (arg2 == "on")
+                TLVlib:Chat(L["chat.Together"] .. suffix)
 
-        elseif arg1 == "off" then
+            elseif arg1 == "swim" then
 
-            Mounty.CurrentProfile.ShowOff = false
-            TLVlib:Chat(L["chat.Showoff"] .. "|cfff01000" .. L["off"] .. "|r.")
+                Mounty.CurrentProfile.PreferSwimming = (arg2 == "on")
+                TLVlib:Chat(L["chat.PreferSwimming"] .. suffix)
 
-        end
+            elseif arg1 == "showoff" then
 
-    elseif mode == "random" then
+                Mounty.CurrentProfile.ShowOff = (arg2 == "on")
+                TLVlib:Chat(L["chat.Showoff"] .. suffix)
 
-        if arg1 == "on" then
+            elseif arg1 == "random" then
 
-            Mounty.CurrentProfile.Random = true
-            TLVlib:Chat(L["chat.Random"] .. "|cff00f010" .. L["on"] .. "|r.")
+                Mounty.CurrentProfile.Random = (arg2 == "on")
+                TLVlib:Chat(L["chat.Random"] .. suffix)
 
-        elseif arg1 == "off" then
+            elseif arg1 == "taxi" then
 
-            Mounty.CurrentProfile.Random = false
-            TLVlib:Chat(L["chat.Random"] .. "|cfff01000" .. L["off"] .. "|r.")
+                Mounty.CurrentProfile.TaxiMode = (arg2 == "on")
+                TLVlib:Chat(L["chat.Taxi"] .. suffix)
 
-        end
+            else
 
-    elseif mode == "taxi" then
+                okay = false
 
-        if arg1 == "on" then
+            end
 
-            Mounty.CurrentProfile.TaxiMode = true
-            TLVlib:Chat(L["chat.Taxi"] .. "|cff00f010" .. L["on"] .. "|r.")
+            if okay then
 
-        elseif arg1 == "off" then
+                Mounty:OptionsRender()
 
-            Mounty.CurrentProfile.TaxiMode = false
-            TLVlib:Chat(L["chat.Taxi"] .. "|cfff01000" .. L["off"] .. "|r.")
+            end
 
         end
 
@@ -1966,14 +1972,28 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
         --    TLVlib:TableDebug(Mounty.QuickStartFrame)
 
-    elseif mode ~= "" and mode ~= nil then
+    elseif mode == "dragonflight"
+            or mode == "fly"
+            or mode == "ground"
+            or mode == "water"
+            or mode == "repair"
+            or mode == "taxi"
+            or mode == "showoff"
+            or mode == "random"
+            or mode == "custom1"
+            or mode == "custom2"
+            or mode == "custom3"
+    then
 
         Mounty:Mount(mode)
 
-    else
+    end
 
-        Mounty.OptionsFrame:Show();
+    if not okay then
+
+        TLVlib:Chat(L["help"])
 
     end
 
 end
+

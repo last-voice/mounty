@@ -96,7 +96,7 @@ function Mounty:Upgrade()
     --
     --        _DataAccount.UpgradeTo110 = true
     --
-    --        Mounty:Alert(L["upgrade"])
+    --        Mounty:Alert(L["upgrade.popup"])
     --
     --    end
     --
@@ -131,7 +131,7 @@ function Mounty:Upgrade()
             _Mounty_A.UpgradeTo110 = nil
             _Mounty_A.Version = alert_if_lower
 
-            TLVlib:Alert(L["upgrade"])
+            TLVlib:Alert(L["upgrade.popup"])
 
         end
 

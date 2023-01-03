@@ -28,9 +28,9 @@ Dann ist __Mounty #TLV__ genau das richtige Add-on für dich und mit nur __einem
 
 1. Installiere __Mounty #TLV__.
 2. Öffne WoWs _Reittiersammlung_. __Mounty #TLV__ sollte sich ebenfalls automatisch öffnen.
-3. Ziehe deine liebsten Reittiere mit der Maus in die entsprechenden Kategorien von __Mounty #TLV__.
+3. Ziehe deine liebsten Mounts mit der Maus in die entsprechenden Kategorien von __Mounty #TLV__.
 4. Öffne WoWs Einstellungen für Tastaturbelegungen, wähle __Mounty #TLV__ und konfiguriere deine _magische Taste_. (z.B. ist meine #)
-5. Drücke deine _magische Taste_ um hier und jetzt immer das perfekte Reittier zu rufen.
+5. Drücke deine _magische Taste_ um hier und jetzt immer das perfekte Mount zu rufen.
 6. Genieße __Mounty #TLV__ und schau dir gerne auch alle weiteren Optionen und Mögichkeiten an.
 
 ---
@@ -51,7 +51,7 @@ __Mounty #TLV__ unterscheidet zwischen __7 Kategorien für deine Mounts__:
 - __Taxi-Mounts__ - Ein Beifahrer-Platz für einen guten Freund ist perfekt für gemeinsames Questen, farmen und kämpfen Hand in Hand. Vor allen Dingen, wenn dein Taxi Flügel hat, und dein Freund noch nicht gelernt hat zu fliegen. Er wird dir auf ewig dankbar sein.
 - __Angeber-Mounts__ - Du hast Stunden, Tage, sogar Wochen damit verbracht, dieses eine ganz besondere Mount deiner Träume zu ergattern. Es wird nie wieder ein besseres Mount geben. Vielleicht ab morgen wieder. Für heute aber musst du allen zeigen: Es ist für immer deins!
 
-Du kannst __jeder dieser Kategorien 110 verschiedene Lieblings-Mounts__ zuordnen. Einfach aus der Mount-Sammlung heraus mit der Maus herüberziehen.
+Du kannst __jeder dieser Kategorien 110 verschiedene Lieblings-Mounts__ zuordnen. Einfach aus der Reittiersammlung heraus mit der Maus herüberziehen.
 Und du kannst __diese eine magische Taste__ belegen, die für dich zaubern wird.
 
 ### Nur für dich
@@ -120,7 +120,7 @@ __Mounty #TLV__ wird immer für dich das perfekte Mount aussuchen. Aber vielleic
 
 In diesem Fall gibt es einen _Fallback_:
 
-Wenn eine Kategorie leer ist, wird stattdessen eines deiner __Flug-Mounts__ ausgesucht. Solltest du auch dort keins zugeordnet haben, greift die Magie auf deine __Boden-Mounts__ zurück. Und wenn auch die fehlen, kann __Mounty #TLV__ nur noch eines für dich tun: Zufällig __irgendeins deiner gesamten Mount-Sammlung__ auswählen, wobei immerhin deine Favoriten bevorzugt werden.
+Wenn eine Kategorie leer ist, wird stattdessen eines deiner __Flug-Mounts__ ausgesucht. Solltest du auch dort keins zugeordnet haben, greift die Magie auf deine __Boden-Mounts__ zurück. Und wenn auch die fehlen, kann __Mounty #TLV__ nur noch eines für dich tun: Zufällig __irgendeins deiner gesamten Reittiersammlung__ auswählen, wobei immerhin deine Favoriten bevorzugt werden.
 
 ### Sonderfälle
 
@@ -131,22 +131,22 @@ Wenn eine Kategorie leer ist, wird stattdessen eines deiner __Flug-Mounts__ ausg
 
 Tippe __/mounty im Chat__ und das Optionsfenster öffnet sich.
 
-Das Optionsfenster öffnet sich auch __automatisch zusammen mit Deiner Reittier-Sammlung__, sofern die Option nicht deaktiviert ist.
+Das Optionsfenster öffnet sich auch __automatisch zusammen mit Deiner Reittiersammlung__, sofern die Option nicht deaktiviert ist.
 
 Außerdem kannst Du die Optionen auch mit einem __Button in der Reittiersammlung__ (unten/rechts) öffnen.
 
 Ziehe mit der Maus deine favorisierten Mounts in die Kategorien deiner Wahl. Mit einem Rechtsklick kannst du einzelne Mounts wieder entfernen.
 
-Du kannst zugeordnete Reittiere auch __per Doppelklick kopieren__.
+Du kannst zugeordnete Mounts auch __per Doppelklick kopieren__.
 
-Mit dem __Plus-Button__ kannst Du ein weiteres Fenster öffnen, um einer Kategorie __100 weitere Reittiere__ zuzuordnen. Dort kannst Du auch bequem __alle in der Reittier-Sammlung gefilterten Reittiere in einem Rutsch übernehmen__.
+Mit dem __Plus-Button__ kannst Du ein weiteres Fenster öffnen, um einer Kategorie __100 weitere Mounts__ zuzuordnen. Dort kannst Du auch bequem __alle in der Reittiersammlung gefilterten Mounts in einem Rutsch übernehmen__.
 
-__ACHTUNG:__ __Mounty #TLV__ __überprüft nie__, ob deine Zuordnungen sinnvoll sind! Du kannst grundsätzlich jedes Reittier in jede Kategorie packen. Also: Mach' bitte keinen Unsinn!
+__ACHTUNG:__ __Mounty #TLV__ __überprüft nie__, ob deine Zuordnungen sinnvoll sind! Du kannst grundsätzlich jedes Mount in jede Kategorie packen. Also: Mach' bitte keinen Unsinn!
 
 ## Optionen
 
 - __Zufall__ - Falls _eingeschaltet_, wird ein zufälliges Mount aus der jeweiligen _Kategorie_ ausgewählt. Falls _ausgeschaltet_, kommt eins nach dem anderen immer der Reihe nach und wieder von vorne.
-- __Seht her!__ - In Ruhebereichen wird automatisch eines Deiner Angeber-Reittiere aus dem Sack geholt, damit alle wissen, dass Du monatelang in Zereth Mortis geangelt hast.
+- __Seht her!__ - In Ruhebereichen wird automatisch eines Deiner Angeber-Mounts aus dem Sack geholt, damit alle wissen, dass Du monatelang in Zereth Mortis geangelt hast.
 - __Zusammen bleiben__ - Solang du in einer Gruppe bist: Auch wenn du fliegen könntest, du bleibst immer auf dem Boden. Was hat das für einen Sinn? Falls du einen Freund begleitest, der noch nicht fliegen kann, und diesem beim Questen, dann ist es schon fair, wenn du ihm nicht immer wieder davonfliegst, außer ...
 - __Taxi-Modus__ - Unterwegs mit einem Freund, der mit deiner Unterstützung vorankommen will? Solange du in einer Gruppe bist, wird immer dein Taxi-Mount gerufen, so dass dein Freund bequem aufspringen kann und sich um nichts kümmern muss. Er hat ja dich.
 - __So rufst du ...__ - Mit deinem Taxi-Mount erscheint auch dieser Aufruf im Chat, damit dein Freund die Abfahrt nicht verpasst. (Nur in einer Gruppe)
@@ -167,11 +167,11 @@ Für den Chat oder Deine Makros:
 
 __Version__
 
-_/mounty version_  - zeigt die aktuelle Version des Addons
+_/mounty version_ - zeigt die aktuelle Version des Addons
 
 __Optionen__
 
-_/mounty_  - um das Optionsfenster zu öffnen
+_/mounty_ - um das Optionsfenster zu öffnen
 
 __Optionen umschalten__
 
@@ -179,7 +179,8 @@ _/mounty random on|off_ (Zufällig oder in Reihenfolge)\
 _/mounty showoff on|off_ (Angeber, Angeber!)\
 _/mounty parachute on|off_ (Immer absitzen, bei jeder Höhe)\
 _/mounty together on|off_ (Zusammen bleiben)\
-_/mounty taxi on|off_ (Taxi Reittiere verwenden)\
+_/mounty swim on|off_ (Lieber schwimmen als fliegen)\
+_/mounty taxi on|off_ (Taxi-Mounts verwenden)\
 _/mounty auto on|off_ (Optionen automatisch öffnen)\
 _/mounty debug on|off_ (Debug Infos anzeigen)\
 
@@ -212,7 +213,7 @@ Hier zum Beispiel meine Konfiguration:
 - CTRL-# -> _Reparier-Mount_
 - SHIFT-# -> _Taxi-Mount_
 - ALT-# -> _Wasser-Mount_
-- CTRL-ALT-# -> _Boden-Reittier_
+- CTRL-ALT-# -> _Boden-Mount_
 - CTRL-Space -> _Angeber-Mount_
 
 # Dankeschön!

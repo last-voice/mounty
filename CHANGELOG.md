@@ -2,6 +2,12 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.5.6
+- New option to use water mount rather than flying mount when swimming
+- Much better command line handling
+- Minor improvements
+- Minor bug fixes
+
 v2.5.5
 - Introducing optional parachute mode - dismount anyway, no matter how high you fly and deep the fall (cheers to Khedrak, again)
 - I myself use ElvUI so I didn't take a closer look at Mounty's layout without - fixed this now 

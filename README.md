@@ -168,11 +168,11 @@ Type in chat or use in macros:
 
 __Version__
 
-_/mounty version_  - to show the current version of the addon
+_/mounty version_ - to show the current version of the addon
 
 __Options__
 
-_/mounty_  - to open the options frame
+_/mounty_ - to open the options frame
 
 __Switch options__
 
@@ -180,6 +180,7 @@ _/mounty random on|off_ (Random or cycle throught)\
 _/mounty showoff on|off_ (Show off, show off!)\
 _/mounty parachute on|off_ (Dismount at any height)\
 _/mounty together on|off_ (Let's stay together)\
+_/mounty swim on|off_ (Rather swim than fly)\
 _/mounty taxi on|off_ (Use taxi mounts)\
 _/mounty auto on|off_ (Auto open options frame)\
 _/mounty debug on|off_ (Show debug info)\
