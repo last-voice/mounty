@@ -4,6 +4,7 @@ Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
 v2.5.6
 - New option to use water mount rather than flying mount when swimming
+- Dragonflight check modified bc of user feedback of strange behaviour
 - Much better command line handling
 - Minor improvements
 - Minor bug fixes

@@ -171,41 +171,18 @@ function Mounty:UserCanFlyHere()
     --    return IsFlyableArea() and (IsPlayerSpell(34090) or IsPlayerSpell(90265)) -- riding has been learned
 end
 
-function Mounty:IsInDragonflight()
-
-    local mapID = C_Map.GetBestMapForUnit("player");
-
-    local map_info = C_Map.GetMapInfo(mapID)
-
-    while (map_info and map_info.mapType > 2) do
-
-        if map_info.parentMapID == 0 then
-            return false
-        end
-
-        map_info = C_Map.GetMapInfo(map_info.parentMapID)
-    end
-
-    return (map_info and map_info.mapID == 1978) -- Dragonflight
-end
-
-function Mounty:UserCanDragonflyHere()
-    -- Not used, using Mounty:DragonCanFlyHere instead
-    return Mounty:IsInDragonflight() and C_Spell.DoesSpellExist(376777) -- dragon riding has been learned
-    -- return Mounty:IsInDragonflight() and IsPlayerSpell(376777) -- dragon riding has been learned
-end
-
-function Mounty:DragonsCanFlyHere()
+function Mounty:YourDragonsCanFlyHere()
 
     if Mounty.TestDragon == nil then
 
         Mounty.TestDragon = 0
 
-        for _, v in ipairs(C_MountJournal.GetCollectedDragonridingMounts()) do
-            local name, spellID, _, _, _, _, _, _, _, _, isCollected = C_MountJournal.GetMountInfoByID(v)
-            if isCollected then
-                Mounty.TestDragon = spellID
-                TLVlib:Debug("Test dragon found: " .. name .. " [" .. spellID .. "]")
+        for _, mountID in ipairs(C_MountJournal.GetCollectedDragonridingMounts()) do
+            local name, spellID = C_MountJournal.GetMountInfoByID(mountID)
+            if Mounty.TestDragon == 0 then
+                Mounty.TestDragon = mountID
+                -- Mounty.TestDragon = spellID
+                TLVlib:Debug("Test dragon found: " .. name .. " [" .. mountID .. "]")
             end
         end
     end
@@ -214,7 +191,10 @@ function Mounty:DragonsCanFlyHere()
         return false
     end
 
-    return (IsUsableSpell(Mounty.TestDragon))
+    local isUsable, errorText = C_MountJournal.GetMountUsabilityByID(Mounty.TestDragon, true);
+
+    return isUsable
+
 end
 
 function Mounty:Mount(mode)
@@ -309,7 +289,7 @@ function Mounty:KeyHandler(keypress)
     local mounted = IsMounted()
     local flying = IsFlying()
     local resting = IsResting()
-    local dragonflight = Mounty:DragonsCanFlyHere()
+    local dragonflight = Mounty:YourDragonsCanFlyHere()
     local alone = not IsInGroup()
     local flyable = Mounty:UserCanFlyHere()
     local swimming = IsSwimming()
