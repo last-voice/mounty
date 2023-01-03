@@ -42,6 +42,19 @@ function Mounty:IsDebug ()
 
 end
 
+function Mounty:CheckIfCasting ()
+
+    if UnitCastingInfo("player") ~= nil then
+
+        TLVlib:Debug("You are already casting a spell.")
+        return true
+
+    end
+
+    return false
+
+end
+
 function Mounty:Durability()
 
     local curTotal = 0
@@ -101,19 +114,26 @@ function Mounty:SelectMountByCategory(category, only_flyable_showoffs)
     local ids = {}
     local count = 0
     local picked
+    local usable
+    local mountID
+    local mname
 
     for i = 1, Mounty.NumMountsExpanded do
 
         if Mounty.CurrentProfile.Mounts[category][i] > 0 then
 
-            local mountID = C_MountJournal.GetMountFromSpell(Mounty.CurrentProfile.Mounts[category][i])
-            local mname, _, _, _, usable = C_MountJournal.GetMountInfoByID(mountID)
+            usable = IsUsableSpell(Mounty.CurrentProfile.Mounts[category][i])
 
-            if only_flyable_showoffs then
+            mountID = C_MountJournal.GetMountFromSpell(Mounty.CurrentProfile.Mounts[category][i])
+            mname = C_MountJournal.GetMountInfoByID(mountID)
+
+            if usable and only_flyable_showoffs then
+
                 local _, _, _, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
 
                 if mountTypeID ~= 248 then
                     -- 248 = mostly flyable
+                    -- 402 = dragonflight, but why?
                     usable = false
                 end
             end
@@ -125,6 +145,7 @@ function Mounty:SelectMountByCategory(category, only_flyable_showoffs)
                 ids[count] = Mounty.CurrentProfile.Mounts[category][i]
             end
         end
+
     end
 
     if count > 0 then
@@ -145,7 +166,7 @@ function Mounty:SelectMountByCategory(category, only_flyable_showoffs)
         return ids[picked]
     end
 
-    TLVlib:Debug("No mount found in category.")
+    TLVlib:Debug("No (usable) mount found in category.")
 
     return Mounty:SelectMountByCategory(Mounty:Fallback(category), false)
 end
@@ -171,29 +192,29 @@ function Mounty:UserCanFlyHere()
     --    return IsFlyableArea() and (IsPlayerSpell(34090) or IsPlayerSpell(90265)) -- riding has been learned
 end
 
-function Mounty:YourDragonsCanFlyHere()
+function Mounty:YouCanRideDragonsHere()
 
-    if Mounty.TestDragon == nil then
+    local ridingmounts = C_MountJournal.GetCollectedDragonridingMounts()
 
-        Mounty.TestDragon = 0
+    if (ridingmounts[1] ~= nil) then
+        -- dragonride mount found in collection
 
-        for _, mountID in ipairs(C_MountJournal.GetCollectedDragonridingMounts()) do
-            local name, spellID = C_MountJournal.GetMountInfoByID(mountID)
-            if Mounty.TestDragon == 0 then
-                Mounty.TestDragon = mountID
-                -- Mounty.TestDragon = spellID
-                TLVlib:Debug("Test dragon found: " .. name .. " [" .. mountID .. "]")
-            end
+        -- local isUsable, error = C_MountJournal.GetMountUsabilityByID(ridingmounts[1], false); always true, weil das mount grundsätzlich benutzt werden kann ???
+        -- local name, _, _, _, isUsable = C_MountJournal.GetMountInfoByID(ridingmounts[1]) always true, weil das mount grundsätzlich benutzt werden kann ???
+
+        local name, spellID = C_MountJournal.GetMountInfoByID(ridingmounts[1])
+
+        local isUsable = IsUsableSpell(spellID)
+
+        if (isUsable) then
+            TLVlib:Debug("Dragon '" .. name .. "' found and you can ride it here.")
         end
+
+        return isUsable
+
     end
 
-    if Mounty.TestDragon == 0 then
-        return false
-    end
-
-    local isUsable, errorText = C_MountJournal.GetMountUsabilityByID(Mounty.TestDragon, true);
-
-    return isUsable
+    return false
 
 end
 
@@ -202,6 +223,10 @@ function Mounty:Mount(mode)
     local mountID = 0
     local spellID = 0
     local only_flyable_showoffs = false
+
+    if (Mounty:CheckIfCasting()) then
+        return
+    end
 
     local category = Mounty.TypeGround
 
@@ -251,7 +276,6 @@ function Mounty:Mount(mode)
             only_flyable_showoffs = true
         end
 
-
     elseif mode == "random" then
 
         category = 0
@@ -289,15 +313,19 @@ function Mounty:KeyHandler(keypress)
     local mounted = IsMounted()
     local flying = IsFlying()
     local resting = IsResting()
-    local dragonflight = Mounty:YourDragonsCanFlyHere()
+    local dragonflight = Mounty:YouCanRideDragonsHere()
     local alone = not IsInGroup()
     local flyable = Mounty:UserCanFlyHere()
     local swimming = IsSwimming()
     local taximode = Mounty.CurrentProfile.TaxiMode
     local together = Mounty.CurrentProfile.Together
-    local preferswimming = Mounty.CurrentProfile.PreferSwimming
+    local alternateswimming = Mounty.CurrentProfile.AlternateSwimming
     local showoff = Mounty.CurrentProfile.ShowOff
     local parachute = _Mounty_A.Parachute
+
+    if (Mounty:CheckIfCasting()) then
+        return
+    end
 
     if keypress == nil then
         keypress = "magic"
@@ -326,6 +354,7 @@ function Mounty:KeyHandler(keypress)
         if keypress == "magic" then
             return
         end
+
     end
 
     if keypress == "magic" then
@@ -338,6 +367,21 @@ function Mounty:KeyHandler(keypress)
             flyable = false
         end
 
+        if not alternateswimming then
+            Mounty.ForceWaterMount = false
+        else
+
+            -- alternate
+            if (swimming) then
+                Mounty.ForceWaterMount = not Mounty.ForceWaterMount
+            else
+                Mounty.ForceWaterMount = false
+            end
+
+        end
+
+        TLVlib:Debug("ForceWaterMount: " .. tostring(Mounty.ForceWaterMount))
+
         local mode
 
         if Mounty:Durability() < Mounty.CurrentProfile.DurabilityMin then
@@ -348,29 +392,25 @@ function Mounty:KeyHandler(keypress)
 
             mode = "taxi"
 
-        elseif swimming then
+        elseif swimming and Mounty.ForceWaterMount then
 
             mode = "water"
-
-            if not preferswimming then
-                if dragonflight then
-                    mode = "dragonflight"
-                elseif flyable then
-                    mode = "fly"
-                end
-            end
 
         elseif dragonflight then
 
             mode = "dragonflight"
 
-        elseif resting and showoff then
+        elseif resting and showoff and not swimming then
 
             mode = "showoff"
 
         elseif flyable then
 
             mode = "fly"
+
+        elseif swimming then
+
+            mode = "water"
 
         else
 
@@ -732,16 +772,16 @@ function Mounty:InitOptionsFrame()
         calling:SetChecked(Mounty.CurrentProfile.Together)
     end)
 
-    -- Prefer Swimming checkbox
+    -- Alternate Swimming checkbox
 
     top = top - 22
 
-    Mounty.OptionsFrame_PreferSwimming = CreateFrame("CheckButton", "Mounty_OptionsFrame_PreferSwimming", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
-    Mounty.OptionsFrame_PreferSwimming:SetPoint("TOPLEFT", 16, top)
-    Mounty_OptionsFrame_PreferSwimmingText:SetText(L["options.PreferSwimming"])
-    Mounty.OptionsFrame_PreferSwimming:SetScript("OnClick", function(calling)
-        Mounty.CurrentProfile.PreferSwimming = not Mounty.CurrentProfile.PreferSwimming
-        calling:SetChecked(Mounty.CurrentProfile.PreferSwimming)
+    Mounty.OptionsFrame_AlternateSwimming = CreateFrame("CheckButton", "Mounty_OptionsFrame_AlternateSwimming", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    Mounty.OptionsFrame_AlternateSwimming:SetPoint("TOPLEFT", 16, top)
+    Mounty_OptionsFrame_AlternateSwimmingText:SetText(L["options.AlternateSwimming"])
+    Mounty.OptionsFrame_AlternateSwimming:SetScript("OnClick", function(calling)
+        Mounty.CurrentProfile.AlternateSwimming = not Mounty.CurrentProfile.AlternateSwimming
+        calling:SetChecked(Mounty.CurrentProfile.AlternateSwimming)
     end)
 
     -- TaxiMode checkbox
@@ -1293,7 +1333,7 @@ function Mounty:OptionsRender()
 
     Mounty.OptionsFrame_Random:SetChecked(Mounty.CurrentProfile.Random)
     Mounty.OptionsFrame_Together:SetChecked(Mounty.CurrentProfile.Together)
-    Mounty.OptionsFrame_PreferSwimming:SetChecked(Mounty.CurrentProfile.PreferSwimming)
+    Mounty.OptionsFrame_AlternateSwimming:SetChecked(Mounty.CurrentProfile.AlternateSwimming)
     Mounty.OptionsFrame_ShowOff:SetChecked(Mounty.CurrentProfile.ShowOff)
     Mounty.OptionsFrame_TaxiMode:SetChecked(Mounty.CurrentProfile.TaxiMode)
     Mounty.OptionsFrame_Hello:SetText(Mounty.CurrentProfile.Hello)
@@ -1575,8 +1615,8 @@ function Mounty:SelectProfile(p)
         Mounty.Profiles[p].Together = false
     end
 
-    if Mounty.Profiles[p].PreferSwimming == nil then
-        Mounty.Profiles[p].PreferSwimming = false
+    if Mounty.Profiles[p].AlternateSwimming == nil then
+        Mounty.Profiles[p].AlternateSwimming = false
     end
 
     if Mounty.Profiles[p].DoNotShowOff == nil then
@@ -1916,8 +1956,8 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
             elseif arg1 == "swim" then
 
-                Mounty.CurrentProfile.PreferSwimming = (arg2 == "on")
-                TLVlib:Chat(L["chat.PreferSwimming"] .. suffix)
+                Mounty.CurrentProfile.AlternateSwimming = (arg2 == "on")
+                TLVlib:Chat(L["chat.AlternateSwimming"] .. suffix)
 
             elseif arg1 == "showoff" then
 

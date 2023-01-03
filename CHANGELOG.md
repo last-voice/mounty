@@ -2,9 +2,11 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
-v2.5.6
-- New option to use water mount rather than flying mount when swimming
-- Dragonflight check modified bc of user feedback of strange behaviour
+v2.6
+- New option to alternate between water mount and flying mounts whilst swimming
+- Mounty will not do anything anymore if player is already casting any spell
+- Dragonflight check modified because of a user'S feedback of strange behaviour (different approach)
+- Optimized check for usability of mounts at time and place
 - Much better command line handling
 - Minor improvements
 - Minor bug fixes

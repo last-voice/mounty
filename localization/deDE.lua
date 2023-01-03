@@ -34,7 +34,7 @@ L["options.Random"] = "Zufällig (anstatt der Reihe nach)"
 L["options.Look"] = "Seht her! (In Ruhebereichen angeben)"
 L["options.Parachute"] = "Fallschirm-Modus - Immer absitzen, egal wie hoch du fliegst und tief du fällst"
 L["options.Together"] = "In der Gruppe am Boden bleiben und nicht fliegen (außer du bist das Taxi)"
-L["options.PreferSwimming"] = "Im Wasser Wasser-Mounts nutzen, auch wenn du fliegen kannst"
+L["options.AlternateSwimming"] = "Im Wasser abwechselnd Wasser- und Flug-Mounts nutzen"
 L["options.Taxi"] = "Taxi-Modus (In einer Gruppe immer dein Taxi-Reittier rufen)"
 L["options.Debug"] = "Debug-Modus (nur englisch)"
 L["options.Autoopen"] = "Automatisch mit der Reittiersammlung öffnen und schließen"
@@ -88,7 +88,7 @@ L["button.Help"] = "Hilfe"
 
 L["Mount journal - Open Mounty"] = "Mounty #TLV"
 
-L["help"] = "Wie bitte?\n
+L["help"] = [[Wie bitte?\n
 /mounty  - um das Optionsfenster zu öffnen\n
 /mounty magic - und Mounty #TLV wirkt seinen Zauber\n
 /mounty ground - beschwört ein Boden-Mount\n
@@ -108,10 +108,14 @@ L["help"] = "Wie bitte?\n
 /mounty debug on|off (Debug Infos anzeigen)\n
 /mounty profile - zeigt das aktuelle Profil\n
 /mounty profile Heart - schaltet auf das Profil Heart um und erstellt es falls nicht vorhanden\n
-/mounty version - zeigt die aktuelle Version des Addons"
+/mounty version - zeigt die aktuelle Version des Addons]]
 
 L["quick.title"] = "Quick-Start"
-L["quick.text"] = "- Ziehe deine liebsten Reittiere mit der Maus in die entsprechenden Kategorien von Mounty #TLV.\n- Öffne WoWs Tastaturbelegungen, wähle Mounty #TLV und konfiguriere deine magische Taste.\n- Drücke deine magische Taste um hier und jetzt immer das perfekte Reittier zu rufen.\n- Genieße Mounty #TLV und schau dir gerne auch alle weiteren Optionen und Mögichkeiten an.\n\nIn der README findest du eine detaillierte Beschreibung."
+L["quick.text"] = [[- Ziehe deine liebsten Reittiere mit der Maus in die entsprechenden Kategorien von Mounty #TLV.\n
+- Öffne WoWs Tastaturbelegungen, wähle Mounty #TLV und konfiguriere deine magische Taste.\n
+- Drücke deine magische Taste um hier und jetzt immer das perfekte Reittier zu rufen.\n
+- Genieße Mounty #TLV und schau dir gerne auch alle weiteren Optionen und Mögichkeiten an.\n\n
+In der README findest du eine detaillierte Beschreibung.]]
 
 L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.de.md"
 
