@@ -30,21 +30,21 @@ L["mode.Custom1"] = "|cfff07070Custom 1|r"
 L["mode.Custom2"] = "|cfff07070Custom 2|r"
 L["mode.Custom3"] = "|cfff07070Custom 3|r"
 
-L["options.Random"] = "Zufällig (anstatt der Reihe nach)"
-L["options.Look"] = "Seht her! (In Ruhebereichen angeben)"
-L["options.Parachute"] = "Fallschirm-Modus - Immer absitzen, egal wie hoch du fliegst und tief du fällst"
-L["options.Together"] = "In der Gruppe am Boden bleiben und nicht fliegen (außer du bist das Taxi)"
-L["options.AlternateSwimming"] = "Im Wasser abwechselnd Wasser- und Flug-Mounts nutzen"
-L["options.Taxi"] = "Taxi-Modus (In einer Gruppe immer dein Taxi-Reittier rufen)"
-L["options.Debug"] = "Debug-Modus (nur englisch)"
-L["options.Autoopen"] = "Automatisch mit der Reittiersammlung öffnen und schließen"
-L["options.Durability"] = "Das Repair kommt bei weniger als %d%% Rüstung."
-L["options.JournalButtonOffset"] = "Offset des Buttons in der Reittiersammlung: %d (1 = verstecken)"
+L["options.Random"] = "Zufällig anstatt eins nach dem anderen (Zufalls-Modus)"
+L["options.Look"] = "In Ruhebereichen mit Angeber-Mounts protzen (Angeber-Modus)"
+L["options.Together"] = "In der Gruppe am Boden bleiben und nicht fliegen (Nicht-fliegen-Modus)"
+L["options.Amphibian"] = "Im Wasser abwechselnd Wasser- und Flug-Mounts beschwören (Amphibien-Modus)"
+L["options.Taxi"] = "In einer Gruppe immer dein Taxi-Reittier rufen (Taxi-Modus)"
 L["options.Hello"] = "So rufst du deinen Taxi-Gast"
 L["options.Hello-Default"] = "Taxi!"
-L["options.Helptext"] = "Mounts hier reinziehen | Doppleklick = Kopieren | Rechtsklick = Löschen"
+L["options.Durability"] = "Service! - Das Reparier-Mount kommt bei weniger als %d%% Rüstung."
 L["options.Profile"] = "Profil"
 L["options.ShareProfiles"] = "Profile mit deinen anderen Charakteren teilen"
+L["options.Parachute"] = "Immer absitzen, egal wie hoch du fliegst und tief du fällst (Fallschirm-Modus)"
+L["options.Autoopen"] = "Automatisch mit der Reittiersammlung öffnen und schließen (Auto-öffnen-Modus)"
+L["options.Debug"] = "Zeige wilde Infos im Chat (Debug-Modus, nur englisch)"
+L["options.JournalButtonOffset"] = "Offset des Buttons in der Reittiersammlung: %d (1 = verstecken)"
+L["options.Helptext"] = "Mounts hier reinziehen | Doppleklick = Kopieren | Rechtsklick = Löschen"
 L["options.popup.Already"] = "Das Reittier ist bereits in dieser Kategorie."
 
 L["expanded.Add"] = "Aus Sammlung hinzufügen"
@@ -94,7 +94,7 @@ L["help"] = [[It's a kind of magic ...
 |cfff0b040Reittier beschwören|r
 /mounty magic||dragonflight||fly||ground||random||repair||showoff||taxi||water
 |cfff0b040Optionen setzen|r
-/mounty set alternate||auto||debug||parachute||random||showoff||taxi||together on||off
+/mounty set amphibian||auto||debug||parachute||random||showoff||taxi||together on||off
 |cfff0b040Profile|r
 /mounty profile (Aktuelles Profil anzeigen)
 /mounty profile Heart (Profil Heart auswählen oder erstellen)

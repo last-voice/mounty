@@ -26,21 +26,21 @@ L["mode.Custom1"] = "|cfff07070Custom 1|r"
 L["mode.Custom2"] = "|cfff07070Custom 2|r"
 L["mode.Custom3"] = "|cfff07070Custom 3|r"
 
-L["options.Random"] = "Random (instead of one by one)"
-L["options.Look"] = "Look at me! (Show off in resting areas)"
-L["options.Parachute"] = "Parachute mode - dismount anyway, no matter how high you fly and deep the fall"
-L["options.Together"] = "In group: Stay on ground together and don't summon flying mounts (except taxi)"
-L["options.AlternateSwimming"] = "Whilst swimming alternate between water mounts and flying mounts"
-L["options.Taxi"] = "Taxi mode (Always summon taxi mount when in group)"
-L["options.Debug"] = "Debug mode"
-L["options.Autoopen"] = "Auto open and close with mount journal"
-L["options.Durability"] = "Summon repair mount if durability is less than %d%%."
-L["options.JournalButtonOffset"] = "Offset of the button in mount journal: %d (1 to hide)."
+L["options.Random"] = "Choose random mount instead of one by one (Random mode)"
+L["options.Look"] = "Show off in resting areas (Show off mode)"
+L["options.Together"] = "Stay together whilst in group and don't summon flying mounts (Together mode)"
+L["options.Amphibian"] = "Whilst swimming alternate between water and flying mounts (Amphibian mode)"
+L["options.Taxi"] = "Always summon taxi mount when in group (Taxi mode)"
 L["options.Hello"] = "How to call your taxi passenger"
 L["options.Hello-Default"] = "Taxi!"
-L["options.Helptext"] = "Drag mounts into here | Double click = Copy | Right click = Delete"
+L["options.Durability"] = "Service! - Summon your repair mount if durability is below %d%%."
 L["options.Profile"] = "Profile"
 L["options.ShareProfiles"] = "Share profiles with your other characters"
+L["options.Parachute"] = "Dismount anyway, no matter how high you fly and deep the fall (Parachute mode)"
+L["options.Autoopen"] = "Auto open and close with mount journal (Auto open mode)"
+L["options.Debug"] = "Show lots of weird data in the chat (Debug mode)"
+L["options.JournalButtonOffset"] = "Offset of the button in mount journal: %d (1 to hide)."
+L["options.Helptext"] = "Drag mounts into here | Double click = Copy | Right click = Delete"
 L["options.popup.Already"] = "The mount is already assigned to this category."
 
 L["expanded.Add"] = "Add from journal"
@@ -90,7 +90,7 @@ L["help"] = [[It's a kind of magic ...
 |cfff0b040Summon mount|r
 /mounty magic||dragonflight||fly||ground||random||repair||showoff||taxi||water
 |cfff0b040Set options|r
-/mounty set alternate||auto||debug||parachute||random||showoff||taxi||together on||off
+/mounty set amphibian||auto||debug||parachute||random||showoff||taxi||together on||off
 |cfff0b040Profiles|r
 /mounty profile (Show current profile)
 /mounty profile Heart (Select or create profile Heart)

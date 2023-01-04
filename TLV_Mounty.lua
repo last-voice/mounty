@@ -319,7 +319,7 @@ function Mounty:KeyHandler(keypress)
     local swimming = IsSwimming()
     local taximode = Mounty.CurrentProfile.TaxiMode
     local together = Mounty.CurrentProfile.Together
-    local alternateswimming = Mounty.CurrentProfile.AlternateSwimming
+    local amphibian = Mounty.CurrentProfile.Amphibian
     local showoff = Mounty.CurrentProfile.ShowOff
     local parachute = _Mounty_A.Parachute
 
@@ -367,11 +367,11 @@ function Mounty:KeyHandler(keypress)
             flyable = false
         end
 
-        if not alternateswimming then
+        if not amphibian then
             Mounty.ForceWaterMount = false
         else
 
-            -- alternate
+            -- amphibian
             if (swimming) then
                 Mounty.ForceWaterMount = not Mounty.ForceWaterMount
             else
@@ -388,10 +388,6 @@ function Mounty:KeyHandler(keypress)
 
             mode = "repair"
 
-        elseif not alone and taximode then
-
-            mode = "taxi"
-
         elseif swimming and Mounty.ForceWaterMount then
 
             mode = "water"
@@ -399,6 +395,10 @@ function Mounty:KeyHandler(keypress)
         elseif dragonflight then
 
             mode = "dragonflight"
+
+        elseif not alone and taximode then
+
+            mode = "taxi"
 
         elseif resting and showoff and not swimming then
 
@@ -760,6 +760,18 @@ function Mounty:InitOptionsFrame()
         calling:SetChecked(Mounty.CurrentProfile.ShowOff)
     end)
 
+    -- Amphibian checkbox
+
+    top = top - 22
+
+    Mounty.OptionsFrame_Amphibian = CreateFrame("CheckButton", "Mounty_OptionsFrame_Amphibian", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    Mounty.OptionsFrame_Amphibian:SetPoint("TOPLEFT", 16, top)
+    Mounty_OptionsFrame_AmphibianText:SetText(L["options.Amphibian"])
+    Mounty.OptionsFrame_Amphibian:SetScript("OnClick", function(calling)
+        Mounty.CurrentProfile.Amphibian = not Mounty.CurrentProfile.Amphibian
+        calling:SetChecked(Mounty.CurrentProfile.Amphibian)
+    end)
+
     -- Together checkbox
 
     top = top - 22
@@ -770,18 +782,6 @@ function Mounty:InitOptionsFrame()
     Mounty.OptionsFrame_Together:SetScript("OnClick", function(calling)
         Mounty.CurrentProfile.Together = not Mounty.CurrentProfile.Together
         calling:SetChecked(Mounty.CurrentProfile.Together)
-    end)
-
-    -- Alternate Swimming checkbox
-
-    top = top - 22
-
-    Mounty.OptionsFrame_AlternateSwimming = CreateFrame("CheckButton", "Mounty_OptionsFrame_AlternateSwimming", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
-    Mounty.OptionsFrame_AlternateSwimming:SetPoint("TOPLEFT", 16, top)
-    Mounty_OptionsFrame_AlternateSwimmingText:SetText(L["options.AlternateSwimming"])
-    Mounty.OptionsFrame_AlternateSwimming:SetScript("OnClick", function(calling)
-        Mounty.CurrentProfile.AlternateSwimming = not Mounty.CurrentProfile.AlternateSwimming
-        calling:SetChecked(Mounty.CurrentProfile.AlternateSwimming)
     end)
 
     -- TaxiMode checkbox
@@ -1337,7 +1337,7 @@ function Mounty:OptionsRender()
 
     Mounty.OptionsFrame_Random:SetChecked(Mounty.CurrentProfile.Random)
     Mounty.OptionsFrame_Together:SetChecked(Mounty.CurrentProfile.Together)
-    Mounty.OptionsFrame_AlternateSwimming:SetChecked(Mounty.CurrentProfile.AlternateSwimming)
+    Mounty.OptionsFrame_Amphibian:SetChecked(Mounty.CurrentProfile.Amphibian)
     Mounty.OptionsFrame_ShowOff:SetChecked(Mounty.CurrentProfile.ShowOff)
     Mounty.OptionsFrame_TaxiMode:SetChecked(Mounty.CurrentProfile.TaxiMode)
     Mounty.OptionsFrame_Hello:SetText(Mounty.CurrentProfile.Hello)
@@ -1619,8 +1619,8 @@ function Mounty:SelectProfile(p)
         Mounty.Profiles[p].Together = false
     end
 
-    if Mounty.Profiles[p].AlternateSwimming == nil then
-        Mounty.Profiles[p].AlternateSwimming = false
+    if Mounty.Profiles[p].Amphibian == nil then
+        Mounty.Profiles[p].Amphibian = false
     end
 
     if Mounty.Profiles[p].DoNotShowOff == nil then
@@ -1938,10 +1938,10 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
         if okay then
 
-            if arg1 == "alternate" then
+            if arg1 == "amphibian" then
 
-                Mounty.CurrentProfile.AlternateSwimming = (arg2 == "on")
-                TLVlib:Chat(L["chat.AlternateSwimming"] .. suffix)
+                Mounty.CurrentProfile.Amphibian = (arg2 == "on")
+                TLVlib:Chat(L["chat.Amphibian"] .. suffix)
 
             elseif arg1 == "auto" then
 

@@ -61,28 +61,29 @@ Since v2.5.2 you can use __3 additional custom categories__. Those don't play an
 
 ## The magic that happens
 
-Via checkboxes you can decide between the following:
-
-- _Parachute mode_ - dismount anyway, no matter how high you fly and deep the fall (or else __Mounty #TLV__ will keep you safe on your mount whilst flying)
-- _Taxi mode_ on/off: If on and you are in a group, prefer your taxi mount to summon and call for your friend to hop on.
-- _Together mode_ on/off: Your winged mounts will (mostly) be ignored whilst in a party. Helpful if you joined friends, who can't fly yet and don't want to be left behind.
-- _Show off mode_: Whilst in resting areas you can rest. And let others know which jelly fish, erm mounts you've got and they hopefully haven't.
+There is a well defined logic behind the _magic_ of __Mounty #TLV__ and you can even customize it with some options (see _Options_ below).
 
 ### Here we go!
 
 In the end its quite simple. When the __magic key is pressed__, it goes like this:
 
-Are you already on a mount? Then __dismount__ and get down unless you're flying high and might fall at Hogger's feet. Then do nothing.
+__Are you already on a mount?__
 
-But beware: If parachute mode ist enabled, __Mounty #TLV__ will dismount you at any height and it's up to you to make __a proper touch down__.
+Then __dismount__ and get down unless you're flying high and might fall at Hogger's feet. Then do nothing.
 
-You were not already mounted? Then let's do the real magic and get you __the mount you crave__ for.
+But beware: If _parachute mode_ ist enabled, __Mounty #TLV__ will dismount you at any height and it's up to you to make __a proper touch down__.
+
+__You have not mounted yet?__
+
+Then let's do the real magic and get you __the mount you crave__ for.
 
 You just killed thousands of enemies and your durability is lower than the threshold via options? Summon your __repair mount__ and be reborn.
 
-You hang around with friends and your _taxi mode_ is on? My friend, we call for a __taxi mount__ to ride away together. Hop on!
+You're soaking wet, swimming and surrounded by endless water? If _amphibian mode_ is active, your __water mount__ will appear every second summoning!
 
 You're on the Dragon isles in a dragon flight zone and you already experienced what it is like to be storm born? Mate, its time to wake the __dragon__!
+
+You hang around with friends and your _taxi mode_ is on? My friend, we call for a __taxi mount__ to ride away together. Hop on!
 
 You are in a resting area and _show off mode_ is activated? Time to impress everyone around with one of your favorite __show off mounts__.
 
@@ -107,11 +108,12 @@ Magic done. By __Mounty #TLV__.
 >\
 >__You are not mounted ...__\
 >Your durability is lower than xx% (see options) -> _Repair mount_\
->You are party member, _taxi mode_ is on -> _Taxi mount_\
->You're on the Dragon isles and in a flight zone -> _Dragon_
+>You are swimming, _Amphibia mode_ is on -> (every second time) _Water mount_\
+>You are on the Dragon isles and in a flight zone -> _Dragon_
+>You are a party member, _taxi mode_ is on -> _Taxi mount_\
 >You are in a resting area, _show off mode_ is active -> _Show off mount_\
->You're in a flight zone, all alone -> _Fly mount_\
->You're in a flight zone with friends and _together mode_ is off -> _Fly mount_\
+>You are in a flight zone, all alone -> _Fly mount_\
+>You are in a flight zone with friends and _together mode_ is off -> _Fly mount_\
 >You are swimming -> _Water mount_\
 >else -> _Ground mount_
 
@@ -121,7 +123,7 @@ __Mounty #TLV__ will choose the perfect category as described above. But there m
 
 In this case there is a _fallback_:
 
-If a category is empty, it will then select one of your __flying mounts__.  And if there are none, too, it will select one of your __ground mounts__.  And if those are also missing, then there is only one last thing __Mounty #TLV__ can do for you: Randomly summon __any mount out of your whole collection__, preferring your favorites if there are any.
+If a category is empty, it will then select one of your __flying mounts__. And if there are none, too, it will select one of your __ground mounts__. And if those are also missing, then there is only one last thing __Mounty #TLV__ can do for you: Randomly summon __any mount out of your whole collection__, preferring your favorites if there are any.
 
 ### Exceptions
 
@@ -146,12 +148,23 @@ __WARNING:__ __Mounty #TLV__ __does never check__ if your assignments per catego
 
 ## Options
 
-- __Random__ - If _on_, __Mounty #TLV__ will randomly summon a mount of the selected _category_. If _off_ then it will cycle through one by one.
-- __Look at me!__ - In resting areas everybody should see one of your show off mounts. Because everybody must know, that you went fishing in Zereth Mortis for hundreds of hours, just to get this one and only jelly fish.
-- __Stay together__ - Whilst you are in a party: Even if you are in a flight zone and have learned to fly, you will not and stay on the ground. Looking for any reason? If you joined a friend who can't fly yet and you want to help him progress, farm, or quest, then it's quite fair to stay with him and keep eye level. Except ...
-- __Taxi mode__ - You want to help a friend and give him some rides whilst questing and farming together, then turn this on. When in a party and you summon your mount, your taxi mount will arrive. Where to?
+### Per profile
+
+- __Random mode__ - If _on_, __Mounty #TLV__ will randomly summon a mount of the selected _category_. If _off_ then it will cycle through one by one.
+- __Show off mode__ - In resting areas everybody should see one of your show off mounts. Because everybody must know, that you went fishing in Zereth Mortis for hundreds of hours, just to get this one and only jelly fish.
+- __Amphibian mode__ - Whilst swimming, alternate between water and flying mounts, because you might want to dive or you might want to fly away. Who knows?
+- __Together mode__ - Whilst you are in a party: Even if you are in a flight zone and have learned to fly, you won't take off but stay on the ground. Looking for any reason? If you're questing or farming with a friend who can't fly yet, then it's quite fair to stay with him and keep eye level. Except ...
+- __Taxi mode__ - You want to help a friend and give him some rides whilst questing and farming together, then turn this on. When in a party and you summon your mount, your taxi mount will arrive. Where do we go?
 - __How to call ...__ - Say it! When your taxi arrives this short line of text will be chatted, so your friend will hop on and not let you wait. (Only if in group)
-- __Durability threshold__ - When your durability is lower than this, there's always a big hand for summoning your repair mount first. It's another kind of magic.
+- __Service!__ - When your durability is lower than this and you look like Hogger's prey, give a big hand for your repair mount to appear.
+
+### Account wide
+
+
+Via checkboxes you can decide between the following:
+
+- __Parachute mode__ - Always dismount anyway, no matter how high you fly and deep the fall. If disabled __Mounty #TLV__ will keep you safe on your mount whilst flying.
+- __Auto open mode__ - The option frame will open and close automatically with the mount journal.
 - __Debug mode__ - Magic in numbers and letters. See for yourself what __Mounty #TLV__ let's you know via chat messages.
 
 ### Profiles
@@ -176,7 +189,7 @@ _/mounty_ - to open the options frame
 
 __Switch options__
 
-_/mounty set alternate on|off_ (Alternate between swimming and flying)\
+_/mounty set amphibian on|off_ (Alternate between swimming and flying)\
 _/mounty set auto on|off_ (Auto open options frame)\
 _/mounty set debug on|off_ (Show debug info)\
 _/mounty set parachute on|off_ (Dismount at any height)\

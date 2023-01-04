@@ -60,34 +60,36 @@ Außerdem gibt es seit Version v2.5.2 __3 custom Kategorien__ zu deiner freien V
 
 ## So wirkt die Magie
 
-Drei Grundeinstellungen gibt es:
-
-- _Fallschirm-Modus_ - In jedem Fall absitzen, egal wie hoch du fliegst und tief du fällst (ansonsten hält __Mounty #TLV__ dich fest im Sattel wenn du fliegst)
-- _Taxi-Modus ein/aus_: Wer in dieser eingeschaltet ist und du in einer Gruppe bist, - dann werden Taxi-Mounts bevorzugt und deine Freunde aufgefordert, aufzuspringen.
-- _Nicht-fliegen-Modus an/aus_: Deine fliegenden Mounts bleiben im Stall, wenn du in einer Gruppe bist. Ideal wenn du einen Freund begleitest, der immer noch nicht fliegen kann. So bleibt ihr immer auf Augenhöhe und niemand zurück.
-- _Angeber-Modus an/aus_: Möchtest Du in Ruhebereichen Andere neidisch machen und dort immer eines Deiner Angeber-Mounts reiten?
+Hinter der _Magie_ von __Mounty #TLV__ steckt natürlich eine Logik und diese kannst du sogar mit ein paar Optionen (siehe _Optionen_ unten) an deine Vorlieben anpassen.
 
 ### Los geht es!
 
 Am Ende ist es ganz einfach. Wenn du __die magische Taste__ drückst, passiert folgendes:
 
-Du sitzt bereits auf einem Mount? Dann __bitte absteigen__, außer du fliegst in den Wolken und würdest Hogger vor die Füße fallen. Dann bleibe bitte einfach sitzen!
+__Du sitzt bereits auf einem Mount?__
 
-Aber Achtung: Wenn der Fallschirm-Modus aktiv ist, schmeißt __Mounty #TLV__ dich in jedem Fall aus den Sattel und du musst selbst für eine weiche Landung sorgen.
+Dann __bitte absteigen__, außer du fliegst in den Wolken und würdest Hogger vor die Füße fallen. Dann bleibe bitte einfach sitzen!
 
-Du sitzt auf keinem Mount? Dann lassen wir die Magie spielen und für dich __das perfekte Mount__ herbeizaubern lassen.
+Aber Achtung: Wenn der _Fallschirm-Modus_ aktiv ist, schmeißt __Mounty #TLV__ dich in jedem Fall aus den Sattel und du musst selbst für eine weiche Landung sorgen.
+
+__Du sitzt auf keinem Mount?__
+
+Dann lassen wir die Magie spielen und für dich __das perfekte Mount__ herbeizaubern lassen.
 
 Du hast gerade Tausende Gegner besiegt und deine Rüstung hängt in Fetzen herab. Ihre Haltbarkeit liegt unter dem von dir eingestellten Wert. Plötzlich steht ein __Reparier-Mount__ vor dir.
 
-Du bist in einer Gruppe mit Freunden und der Taximodus ist eingeschaltet? Mein Freund, wir rufen mein __Taxi-Mount__ und sausen gemeinsam davon. Los geht's!
-
-Du bist im Ruhebereich und der Angeber-Modus ist eingeschaltet? Der perfekte Zeitpunkt, alle anderen mit einem __Angeber-Mount__ zu beeindrucken.
-
-Du bist in einer Flug-Zone und in keiner Gruppe? Breite deine Flügel aus oder starte die Maschinen und hoch hinaus geht es in die Lüfte mit einem deiner liebsten __Flug-Mounts__.
+Du schwimmst klitschnass in endlosen Gewässern? Wenn der _Amphibien-Modus_ aktiviert ist, rufst du bei jedem zweiten Mal dein __Wasser-Mount__.
 
 Du bist auf den Dracheninseln in einer Drachenflugzone und hast bereits erfahren dürfen, wie es ist, _storm born_ zu sein, dann weck den __Drachen__ auf.
 
-Du bist in einer Flug-Zone, in einer Gruppe, und der Nicht-fliegen-Modus ist nicht eingeschaltet? Spring auf dein __Flug-Mount__ und jage gemeinsam mit deinen Freunden durch die Wolken.
+Du bist in einer Gruppe mit Freunden und der _Taxi-Modus_ ist eingeschaltet? Mein Freund, wir rufen mein __Taxi-Mount__ und sausen gemeinsam davon. Los geht's!
+
+Du bist im Ruhebereich und der _Angeber-Modus_ ist eingeschaltet? Der perfekte Zeitpunkt, alle anderen mit einem __Angeber-Mount__ zu beeindrucken.
+
+Du bist in einer Flug-Zone und in keiner Gruppe? Breite deine Flügel aus oder starte die Maschinen und hoch hinaus geht es in die Lüfte mit einem deiner liebsten __Flug-Mounts__.
+
+
+Du bist in einer Flug-Zone, in einer Gruppe, und der _Nicht-fliegen-Modus_ ist nicht eingeschaltet? Spring auf dein __Flug-Mount__ und jage gemeinsam mit deinen Freunden durch die Wolken.
 
 Wie traurig: du darfst oder kannst nicht fliegen, und es kommt noch schlimmer: Du schwimmst im kalten Wasser. Immerhin kannst du dein __Wasser-Mount__ rufen, das dich schnell zurück zum Strand bringt.
 
@@ -101,16 +103,17 @@ Magisch, oder? Dank __Mounty #TLV__.
 >\
 >__Du sitzt auf einem Mount ...__\
 >... mit den Füßen oder Rädern auf dem Boden -> _Du sitzt ab_\
->... und fliegst, und Fallschirm-Modus ist aktiv -> _Du sitzt ab_\
+>... und fliegst, und _Fallschirm-Modus_ ist aktiv -> _Du sitzt ab_\
 >... und fliegst -> _nichts passiert_\
 >\
 >__Du sitzt auf keinem Mount ...__\
 >Die Haltbarkeit deiner Rüstung ist unter xx% -> _Reparier-Mount-\
->Du bist in einer Gruppe, Taxi-Modus ist an -> _Taxi-Mount_\
+>Du schwimmst im Wasser, _Amphibien-Modus_ ist an -> (jedes zweite Mal) _Wasser_Mount_\
 >Du bist auf den Dracheninseln in einer Drachenflugzone -> _Drachen_\
->Du bist im Ruhebereich, Angeber-Modus ist an -> _Angeber-Mount_\
+>Du bist in einer Gruppe, _Taxi-Modus_ ist an -> _Taxi-Mount_\
+>Du bist im Ruhebereich, _Angeber-Modus_ ist an -> _Angeber-Mount_\
 >Du bist in einer Flug-Zone, allein -> _Flug-Mount_\
->Du bist in einer Flug-Zone, in einer Gruppe und der Nicht-fliegen-Modus ist aus -> _Flug-Mount_\
+>Du bist in einer Flug-Zone, in einer Gruppe und der _Nicht-fliegen-Modus_ ist aus -> _Flug-Mount_\
 >Du schwimmst im Wasser -> _Wasser-Mount_\
 >sonst -> _Boden-Mount_
 
@@ -145,13 +148,22 @@ __ACHTUNG:__ __Mounty #TLV__ __überprüft nie__, ob deine Zuordnungen sinnvoll 
 
 ## Optionen
 
-- __Zufall__ - Falls _eingeschaltet_, wird ein zufälliges Mount aus der jeweiligen _Kategorie_ ausgewählt. Falls _ausgeschaltet_, kommt eins nach dem anderen immer der Reihe nach und wieder von vorne.
-- __Seht her!__ - In Ruhebereichen wird automatisch eines Deiner Angeber-Mounts aus dem Sack geholt, damit alle wissen, dass Du monatelang in Zereth Mortis geangelt hast.
-- __Zusammen bleiben__ - Solang du in einer Gruppe bist: Auch wenn du fliegen könntest, du bleibst immer auf dem Boden. Was hat das für einen Sinn? Falls du einen Freund begleitest, der noch nicht fliegen kann, und diesem beim Questen, dann ist es schon fair, wenn du ihm nicht immer wieder davonfliegst, außer ...
+### Je Profil
+
+- __Zufalls-Modus__ - Falls _eingeschaltet_, wird ein zufälliges Mount aus der jeweiligen _Kategorie_ ausgewählt. Falls _ausgeschaltet_, kommt eins nach dem anderen immer der Reihe nach und dann wieder von vorne.
+- __Angeber-Modus__ - In Ruhebereichen wird automatisch eines Deiner Angeber-Mounts aus dem Sack geholt, damit alle wissen, dass Du monatelang in Zereth Mortis geangelt hast.
+- __Amphibien-Modus__ - Im Wasser zwischen Wasser- und Flug-Mount abwechseln, denn wer weiß schon, ob du tauchen oder abhauen willst.
+- __Nicht-fliegen-Modus__ - Solang du in einer Gruppe bist: Auch wenn du fliegen könntest, du bleibst immer auf dem Boden. Was hat das für einen Sinn? Falls du einen Freund beim Questen begleitest, der noch nicht fliegen kann, dann ist es schon fair, wenn du ihm nicht immer wieder davonfliegst, außer ...
 - __Taxi-Modus__ - Unterwegs mit einem Freund, der mit deiner Unterstützung vorankommen will? Solange du in einer Gruppe bist, wird immer dein Taxi-Mount gerufen, so dass dein Freund bequem aufspringen kann und sich um nichts kümmern muss. Er hat ja dich.
 - __So rufst du ...__ - Mit deinem Taxi-Mount erscheint auch dieser Aufruf im Chat, damit dein Freund die Abfahrt nicht verpasst. (Nur in einer Gruppe)
-- __Haltbarkeit__ - Hier stellst du den Wert ein, der dafür sorgt, dass dein Reparier-Mount kommt, wenn deine Rüstung aussieht wie eine Murloc-Unterhose.
-- __Debug__ - Magie in Zahlen. Siehe selbst, was __Mounty #TLV__ dir alles im Chat verrät.
+- __Service!__ - Hier stellst du den Wert ein, der dafür sorgt, dass dein Reparier-Mount automatisch kommt, wenn deine Rüstung aussieht wie eine Murloc-Unterhose.
+
+
+### Charakter übergreifend
+
+- __Fallschirm-Modus__ - Immer und in jedem Fall absitzen, egal wie hoch du fliegst und tief du fällst. Falls deaktiviert, hält __Mounty #TLV__ dich fest im Sattel, während du fliegst.
+- __Auto-öffnen-Modus__ - Das Optionsfenster öffnet und schließt sich automatisch zusammen mit Deiner Reittiersammlung.
+- __Debug-Modus__ - Magie in Text und Zahlen. Siehe selbst, was __Mounty #TLV__ dir alles im Chat verrät. Allerdings nur auf Englisch, wie für echte Nerds.
 
 ### Profile
 
@@ -159,7 +171,7 @@ Wie in vielen anderen Addons kannst Du verschiedene Profile anlegen.
 
 Außerdem kannst du je Charakter zwischen _individuellen Profilen_ oder _accountweiten Profilen_ wählen. Und du kannt Profile sogar zwischen _global_ und _accountweit_ hin und her kopieren. Safety first: Profile werden weder gelöscht noch überschrieben. Falls doppelt, werden sie umbenannt. 
 
-In der Reittiersammlung ist auch ein neuer Button, um __Mounty #TLV__ von dort aus zu öffnen. Diesen kannst  du verschieben oder ausblenden.
+In der Reittiersammlung ist auch ein neuer Button, um __Mounty #TLV__ von dort aus zu öffnen. Diesen kannst du verschieben oder ausblenden.
 
 ## Kommandozeile
 
@@ -175,7 +187,7 @@ _/mounty_ - um das Optionsfenster zu öffnen
 
 __Optionen umschalten__
 
-_/mounty set alternate on|off_ (Abwechselnd schwimmen und fliegen)\
+_/mounty set amphibian on|off_ (Abwechselnd schwimmen und fliegen)\
 _/mounty set auto on|off_ (Optionen automatisch öffnen)\
 _/mounty set debug on|off_ (Debug Infos anzeigen)\
 _/mounty set parachute on|off_ (Immer absitzen, bei jeder Höhe)\

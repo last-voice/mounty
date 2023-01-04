@@ -7,10 +7,12 @@ v2.6
 - If the player is currently casting any spell, Mounty won't do anything no more
 - Dragonflight check modified because of a user's feedback of strange behaviour (different approach now)
 - Optimized check for usability of mounts at current time and place
+- New logic: Dragonflight before taxi mount (see README)
 - Command line help
 - Much better command line handling
 - Minor improvements
 - Minor bug fixes
+- README updated and improved
 
 v2.5.5
 - Introducing optional parachute mode - dismount anyway, no matter how high you fly and deep the fall (cheers to Khedrak, again)
