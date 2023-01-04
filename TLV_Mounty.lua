@@ -1938,45 +1938,45 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
         if okay then
 
-            if arg1 == "debug" then
+            if arg1 == "alternate" then
 
-                _Mounty_A.DebugMode = (arg2 == "on")
-                TLVlib:Chat(L["chat.Debug"] .. suffix)
+                Mounty.CurrentProfile.AlternateSwimming = (arg2 == "on")
+                TLVlib:Chat(L["chat.AlternateSwimming"] .. suffix)
 
             elseif arg1 == "auto" then
 
                 _Mounty_A.AutoOpen = (arg2 == "on")
                 TLVlib:Chat(L["chat.Autoopen"] .. suffix)
 
+            elseif arg1 == "debug" then
+
+                _Mounty_A.DebugMode = (arg2 == "on")
+                TLVlib:Chat(L["chat.Debug"] .. suffix)
+
             elseif arg1 == "parachute" then
 
                 _Mounty_A.Parachute = (arg2 == "on")
                 TLVlib:Chat(L["chat.Parachute"] .. suffix)
-
-            elseif arg1 == "together" then
-
-                Mounty.CurrentProfile.Together = (arg2 == "on")
-                TLVlib:Chat(L["chat.Together"] .. suffix)
-
-            elseif arg1 == "swim" then
-
-                Mounty.CurrentProfile.AlternateSwimming = (arg2 == "on")
-                TLVlib:Chat(L["chat.AlternateSwimming"] .. suffix)
-
-            elseif arg1 == "showoff" then
-
-                Mounty.CurrentProfile.ShowOff = (arg2 == "on")
-                TLVlib:Chat(L["chat.Showoff"] .. suffix)
 
             elseif arg1 == "random" then
 
                 Mounty.CurrentProfile.Random = (arg2 == "on")
                 TLVlib:Chat(L["chat.Random"] .. suffix)
 
+            elseif arg1 == "showoff" then
+
+                Mounty.CurrentProfile.ShowOff = (arg2 == "on")
+                TLVlib:Chat(L["chat.Showoff"] .. suffix)
+
             elseif arg1 == "taxi" then
 
                 Mounty.CurrentProfile.TaxiMode = (arg2 == "on")
                 TLVlib:Chat(L["chat.Taxi"] .. suffix)
+
+            elseif arg1 == "together" then
+
+                Mounty.CurrentProfile.Together = (arg2 == "on")
+                TLVlib:Chat(L["chat.Together"] .. suffix)
 
             else
 
@@ -1992,7 +1992,7 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
         end
 
-    elseif mode == "dbg" then
+    -- elseif mode == "dbg" then
 
         --    TLVlib:TableDebug(Mounty.QuickStartFrame)
 

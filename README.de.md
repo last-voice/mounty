@@ -175,14 +175,14 @@ _/mounty_ - um das Optionsfenster zu öffnen
 
 __Optionen umschalten__
 
+_/mounty set alternate on|off_ (Abwechselnd schwimmen und fliegen)\
 _/mounty set auto on|off_ (Optionen automatisch öffnen)\
 _/mounty set debug on|off_ (Debug Infos anzeigen)\
 _/mounty set parachute on|off_ (Immer absitzen, bei jeder Höhe)\
 _/mounty set random on|off_ (Zufällig oder in Reihenfolge)\
 _/mounty set showoff on|off_ (Angeber, Angeber!)\
-_/mounty set swim on|off_ (Lieber schwimmen als fliegen)\
 _/mounty set taxi on|off_ (Taxi-Mounts verwenden)\
-_/mounty set together on|off_ (Zusammen bleiben)\
+_/mounty set together on|off_ (Zusammen bleiben)
 
 __Mounts beschwören__
 
@@ -192,10 +192,10 @@ _/mounty dragonflight_ - beschwört ein Dragonflight-Mount\
 _/mounty fly_ - beschwört ein Flug-Mount\
 _/mounty ground_ - beschwört ein Boden-Mount\
 _/mounty repair_ - beschwört ein Reparier-Mount\
-_/mounty random_ - beschwört ein zufälliges Mount
+_/mounty random_ - beschwört ein zufälliges Mount\
 _/mounty showoff_ - beschwört ein Angeber-Mount\
 _/mounty taxi_ - beschwört ein Taxi-Mount\
-_/mounty water_ - beschwört ein Wasser-Mount\
+_/mounty water_ - beschwört ein Wasser-Mount
 
 __Profile__
 

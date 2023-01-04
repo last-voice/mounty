@@ -94,7 +94,7 @@ L["help"] = [[It's a kind of magic ...
 |cfff0b040Reittier beschwören|r
 /mounty magic||dragonflight||fly||ground||random||repair||showoff||taxi||water
 |cfff0b040Optionen setzen|r
-/mounty set auto||debug||parachute||random||showoff||swim||taxi||together on||off
+/mounty set alternate||auto||debug||parachute||random||showoff||taxi||together on||off
 |cfff0b040Profile|r
 /mounty profile (Aktuelles Profil anzeigen)
 /mounty profile Heart (Profil Heart auswählen oder erstellen)

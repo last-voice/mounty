@@ -90,7 +90,7 @@ L["help"] = [[It's a kind of magic ...
 |cfff0b040Summon mount|r
 /mounty magic||dragonflight||fly||ground||random||repair||showoff||taxi||water
 |cfff0b040Set options|r
-/mounty set auto||debug||parachute||random||showoff||swim||taxi||together on||off
+/mounty set alternate||auto||debug||parachute||random||showoff||taxi||together on||off
 |cfff0b040Profiles|r
 /mounty profile (Show current profile)
 /mounty profile Heart (Select or create profile Heart)
