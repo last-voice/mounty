@@ -84,33 +84,26 @@ L["button.Help"] = "Help"
 
 L["Mount journal - Open Mounty"] = "Mounty #TLV"
 
-L["help"] = [[Insert coin and try again!\n
-/mounty  - to open the options frame\n
-/mounty magic - to let Mounty #TLV's magic happen\n
-/mounty ground - to summon ground mount\n
-/mounty fly - to summon fly mount\n
-/mounty water - to summon water mount\n
-/mounty repair - to summon repair mount\n
-/mounty taxi - to summon taxi mount\n
-/mounty showoff - to summon show off mount\n
-/mounty random - to summon random mount\n
-/mounty random on|off (Random or cycle throught)\n
-/mounty showoff on|off (Show off, show off!)\n
-/mounty parachute on|off (Dismount at any height)\n
-/mounty together on|off (Let's stay together)\n
-/mounty swim on|off (Rather swim than fly)\n
-/mounty taxi on|off (Use taxi mounts)\n
-/mounty auto on|off (Auto open options frame)\n
-/mounty debug on|off (Show debug info)\n
-/mounty profile - to show the current used profile\n
-/mounty profile Heart - to switch to or create the profile Heart\n
-/mounty version - to show the current version of the addon]]
+L["help"] = [[It's a kind of magic ...
+|cfff0b040Open options frame|r
+/mounty
+|cfff0b040Summon mount|r
+/mounty magic||dragonflight||fly||ground||random||repair||showoff||taxi||water
+|cfff0b040Set options|r
+/mounty set auto||debug||parachute||random||showoff||swim||taxi||together on||off
+|cfff0b040Profiles|r
+/mounty profile (Show current profile)
+/mounty profile Heart (Select or create profile Heart)
+|cfff0b040Show version|r
+/mounty version
+]]
 
 L["quick.title"] = "Quick start"
-L["quick.text"] = [[- Pull your favourite mounts from the mount journal into the categories of Mounty #TLV.\n
-- Open WoW's settings for key bindings, select Mounty #TLV and configure your magic key to mount.\n
-- Press your magic key to pick up the perfect mount for here and now.\n
-- Enjoy Mounty #TLV and take a look and all the other options and possibilities.\n\n
+L["quick.text"] = [[- Pull your favourite mounts from the mount journal into the categories of Mounty #TLV.
+- Open WoW's settings for key bindings, select Mounty #TLV and configure your magic key to mount.
+- Press your magic key to pick up the perfect mount for here and now.
+- Enjoy Mounty #TLV and take a look and all the other options and possibilities.
+
 Take a look at the README for all details.]]
 
 L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.md"

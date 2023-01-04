@@ -4,9 +4,10 @@ Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
 v2.6
 - New option to alternate between water mount and flying mounts whilst swimming
-- Mounty will not do anything anymore if player is already casting any spell
-- Dragonflight check modified because of a user'S feedback of strange behaviour (different approach)
-- Optimized check for usability of mounts at time and place
+- If the player is currently casting any spell, Mounty won't do anything no more
+- Dragonflight check modified because of a user's feedback of strange behaviour (different approach now)
+- Optimized check for usability of mounts at current time and place
+- Command line help
 - Much better command line handling
 - Minor improvements
 - Minor bug fixes
@@ -41,7 +42,7 @@ v2.5.2.1
 
 v2.5.2
 - Now all categories have their own key binding
-- Also there a 3 more categories custom 1 to 3 for your free use
+- Also there a 3 more categories custom 1 to 3 for your free useK
 - Refactored code again for more OOP
 - README will be up to date soon
 

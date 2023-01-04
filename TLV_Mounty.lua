@@ -1331,6 +1331,10 @@ end
 
 function Mounty:OptionsRender()
 
+    if not Mounty.OptionsFrame:IsVisible() then
+        return
+    end
+
     Mounty.OptionsFrame_Random:SetChecked(Mounty.CurrentProfile.Random)
     Mounty.OptionsFrame_Together:SetChecked(Mounty.CurrentProfile.Together)
     Mounty.OptionsFrame_AlternateSwimming:SetChecked(Mounty.CurrentProfile.AlternateSwimming)
@@ -2007,11 +2011,15 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
         Mounty:Mount(mode)
 
+    else
+
+        okay = false
+
     end
 
     if not okay then
 
-        TLVlib:Chat(L["help"])
+        TLVlib:Chat(gsub(L["help"], "||", "|cfff0b040|||r"))
 
     end
 

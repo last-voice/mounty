@@ -88,33 +88,26 @@ L["button.Help"] = "Hilfe"
 
 L["Mount journal - Open Mounty"] = "Mounty #TLV"
 
-L["help"] = [[Wie bitte?\n
-/mounty  - um das Optionsfenster zu öffnen\n
-/mounty magic - und Mounty #TLV wirkt seinen Zauber\n
-/mounty ground - beschwört ein Boden-Mount\n
-/mounty fly - beschwört ein Flug-Mount\n
-/mounty water - beschwört ein Wasser-Mount\n
-/mounty repair - beschwört ein Reparier-Mount\n
-/mounty taxi - beschwört ein Taxi-Mount\n
-/mounty showoff - beschwört ein Angeber-Mount\n
-/mounty random - beschwört ein zufälliges Mount\n
-/mounty random on|off (Zufällig oder in Reihenfolge)\n
-/mounty showoff on|off (Angeber, Angeber!)\n
-/mounty parachute on|off (Immer absitzen, bei jeder Höhe)\n
-/mounty together on|off (Zusammen bleiben)\n
-/mounty swim on|off (Lieber schwimmen als fliegen)\n
-/mounty taxi on|off (Taxi-Mounts verwenden)\n
-/mounty auto on|off (Optionen automatisch öffnen)\n
-/mounty debug on|off (Debug Infos anzeigen)\n
-/mounty profile - zeigt das aktuelle Profil\n
-/mounty profile Heart - schaltet auf das Profil Heart um und erstellt es falls nicht vorhanden\n
-/mounty version - zeigt die aktuelle Version des Addons]]
+L["help"] = [[It's a kind of magic ...
+|cfff0b040Optionsfenster öffnen|r
+/mounty
+|cfff0b040Reittier beschwören|r
+/mounty magic||dragonflight||fly||ground||random||repair||showoff||taxi||water
+|cfff0b040Optionen setzen|r
+/mounty set auto||debug||parachute||random||showoff||swim||taxi||together on||off
+|cfff0b040Profile|r
+/mounty profile (Aktuelles Profil anzeigen)
+/mounty profile Heart (Profil Heart auswählen oder erstellen)
+|cfff0b040Version|r
+/mounty version
+]]
 
 L["quick.title"] = "Quick-Start"
-L["quick.text"] = [[- Ziehe deine liebsten Reittiere mit der Maus in die entsprechenden Kategorien von Mounty #TLV.\n
-- Öffne WoWs Tastaturbelegungen, wähle Mounty #TLV und konfiguriere deine magische Taste.\n
-- Drücke deine magische Taste um hier und jetzt immer das perfekte Reittier zu rufen.\n
-- Genieße Mounty #TLV und schau dir gerne auch alle weiteren Optionen und Mögichkeiten an.\n\n
+L["quick.text"] = [[- Ziehe deine liebsten Reittiere mit der Maus in die entsprechenden Kategorien von Mounty #TLV.
+- Öffne WoWs Tastaturbelegungen, wähle Mounty #TLV und konfiguriere deine magische Taste.
+- Drücke deine magische Taste um hier und jetzt immer das perfekte Reittier zu rufen.
+- Genieße Mounty #TLV und schau dir gerne auch alle weiteren Optionen und Mögichkeiten an.
+
 In der README findest du eine detaillierte Beschreibung.]]
 
 L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.de.md"

@@ -108,7 +108,7 @@ Magic done. By __Mounty #TLV__.
 >__You are not mounted ...__\
 >Your durability is lower than xx% (see options) -> _Repair mount_\
 >You are party member, _taxi mode_ is on -> _Taxi mount_\
->You're on the Dragon isles and in a dragon flight zone -> _Dragon_
+>You're on the Dragon isles and in a flight zone -> _Dragon_
 >You are in a resting area, _show off mode_ is active -> _Show off mount_\
 >You're in a flight zone, all alone -> _Fly mount_\
 >You're in a flight zone with friends and _together mode_ is off -> _Fly mount_\
@@ -176,26 +176,27 @@ _/mounty_ - to open the options frame
 
 __Switch options__
 
-_/mounty random on|off_ (Random or cycle throught)\
-_/mounty showoff on|off_ (Show off, show off!)\
-_/mounty parachute on|off_ (Dismount at any height)\
-_/mounty together on|off_ (Let's stay together)\
-_/mounty swim on|off_ (Rather swim than fly)\
-_/mounty taxi on|off_ (Use taxi mounts)\
-_/mounty auto on|off_ (Auto open options frame)\
-_/mounty debug on|off_ (Show debug info)\
+_/mounty set auto on|off_ (Auto open options frame)\
+_/mounty set debug on|off_ (Show debug info)\
+_/mounty set parachute on|off_ (Dismount at any height)\
+_/mounty set random on|off_ (Random or cycle throught)\
+_/mounty set showoff on|off_ (Show off, show off!)\
+_/mounty set swim on|off_ (Rather swim than fly)\
+_/mounty set taxi on|off_ (Use taxi mounts)\
+_/mounty set together on|off_ (Let's stay together)\
 
 __Summoning__
 
 _/mounty magic_ - to let __Mounty #TLV's__ magic happen
 
-_/mounty ground_ - to summon ground mount\
+_/mounty dragonflight_ - to summon a Dragonflight mount\
 _/mounty fly_ - to summon fly mount\
-_/mounty water_ - to summon water mount\
-_/mounty repair_ - to summon repair mount\
-_/mounty taxi_ - to summon taxi mount\
-_/mounty showoff_ - to summon show off mount\
+_/mounty ground_ - to summon ground mount\
 _/mounty random_ - to summon random mount
+_/mounty repair_ - to summon repair mount\
+_/mounty showoff_ - to summon show off mount\
+_/mounty taxi_ - to summon taxi mount\
+_/mounty water_ - to summon water mount\
 
 __Profiles__
 
