@@ -75,7 +75,7 @@ But beware: If _parachute mode_ ist enabled, __Mounty #TLV__ will dismount you a
 
 __You have not mounted yet?__
 
-Then let's do the real magic and get you __the mount you crave__ for.
+Then let's do _the real magic_ and get you __the mount you crave__ for.
 
 You just killed thousands of enemies and your durability is lower than the threshold via options? Summon your __repair mount__ and be reborn.
 
@@ -101,12 +101,12 @@ Magic done. By __Mounty #TLV__.
 
 >__Magic key is pressed, so now ...__\
 >\
->__You are not mounted ...__\
+>__You are on a mount ...__\
 >... and not flying -> _Dismount_\
 >... and flying, with parachute enabled -> _Dismount_\
 >... and flying -> _Do nothing_\
 >\
->__You are not mounted ...__\
+>__You have not mounted ...__\
 >Your durability is lower than xx% (see options) -> _Repair mount_\
 >You are swimming, _Amphibia mode_ is on -> (every second time) _Water mount_\
 >You are on the Dragon isles and in a flight zone -> _Dragon_

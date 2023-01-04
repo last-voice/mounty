@@ -74,7 +74,7 @@ Aber Achtung: Wenn der _Fallschirm-Modus_ aktiv ist, schmeißt __Mounty #TLV__ d
 
 __Du sitzt auf keinem Mount?__
 
-Dann lassen wir die Magie spielen und für dich __das perfekte Mount__ herbeizaubern lassen.
+Dann lassen wir die _wahre Magie_ spielen und für dich __das perfekte Mount__ herbeizaubern lassen.
 
 Du hast gerade Tausende Gegner besiegt und deine Rüstung hängt in Fetzen herab. Ihre Haltbarkeit liegt unter dem von dir eingestellten Wert. Plötzlich steht ein __Reparier-Mount__ vor dir.
 
@@ -87,7 +87,6 @@ Du bist in einer Gruppe mit Freunden und der _Taxi-Modus_ ist eingeschaltet? Mei
 Du bist im Ruhebereich und der _Angeber-Modus_ ist eingeschaltet? Der perfekte Zeitpunkt, alle anderen mit einem __Angeber-Mount__ zu beeindrucken.
 
 Du bist in einer Flug-Zone und in keiner Gruppe? Breite deine Flügel aus oder starte die Maschinen und hoch hinaus geht es in die Lüfte mit einem deiner liebsten __Flug-Mounts__.
-
 
 Du bist in einer Flug-Zone, in einer Gruppe, und der _Nicht-fliegen-Modus_ ist nicht eingeschaltet? Spring auf dein __Flug-Mount__ und jage gemeinsam mit deinen Freunden durch die Wolken.
 

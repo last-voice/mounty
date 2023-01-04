@@ -363,9 +363,7 @@ function Mounty:KeyHandler(keypress)
 
         TLVlib:Debug("Magic key")
 
-        if not alone and together then
-            flyable = false
-        end
+        local mode
 
         if not amphibian then
             Mounty.ForceWaterMount = false
@@ -379,10 +377,6 @@ function Mounty:KeyHandler(keypress)
             end
 
         end
-
-        TLVlib:Debug("ForceWaterMount: " .. tostring(Mounty.ForceWaterMount))
-
-        local mode
 
         if Mounty:Durability() < Mounty.CurrentProfile.DurabilityMin then
 
@@ -404,7 +398,11 @@ function Mounty:KeyHandler(keypress)
 
             mode = "showoff"
 
-        elseif flyable then
+        elseif flyable and alone then
+
+            mode = "fly"
+
+        elseif flyable and not alone and not together then
 
             mode = "fly"
 
@@ -415,13 +413,14 @@ function Mounty:KeyHandler(keypress)
         else
 
             mode = "ground"
+
         end
 
         Mounty:Mount(mode)
 
     else
 
-        TLVlib:Debug("Dedicated key")
+        TLVlib:Debug("Special key")
 
         Mounty:Mount(keypress)
 
@@ -1992,7 +1991,7 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
         end
 
-    -- elseif mode == "dbg" then
+        -- elseif mode == "dbg" then
 
         --    TLVlib:TableDebug(Mounty.QuickStartFrame)
 
