@@ -109,7 +109,7 @@ Take a look at the README for all details.]]
 
 L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.md"
 
-L["upgrade.popup"] = "Introducing |cfff07070parachute mode|r.\nAt your own risk!"
+L["upgrade.popup"] = "Introducing |cfff07070Amphibia mode|r.\nHold your breath!\n\n(See CHANGELOG for more updates.)"
 
 local _, TLV_AddOn = ...
 TLV_AddOn.L = L

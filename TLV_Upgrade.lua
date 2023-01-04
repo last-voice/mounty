@@ -86,22 +86,6 @@ function Mounty:Upgrade()
 
     end
 
-    -- 110
-
-    --if _DataAccount ~= nil then
-    --
-    --    if _DataAccount.UpgradeTo110 == nil then
-    --
-    --        -- Upgrade to 110
-    --
-    --        _DataAccount.UpgradeTo110 = true
-    --
-    --        Mounty:Alert(L["upgrade.popup"])
-    --
-    --    end
-    --
-    --end
-
     if _DataAccount ~= nil then
         -- do not use generic names for SavedVariables !!!
         _Mounty_A = TLVlib:TableDuplicate(_DataAccount)
@@ -120,15 +104,15 @@ function Mounty:Upgrade()
 
     if _Mounty_A ~= nil then
 
+        -- Upgrade to 110 -- Zombie
+        _Mounty_A.UpgradeTo110 = nil
+
         local version = _Mounty_A.Version or ""
 
-        local alert_if_lower = "v020505"
+        local alert_if_lower = "v0206"
 
         if version < alert_if_lower then
 
-            -- Upgrade to 110
-
-            _Mounty_A.UpgradeTo110 = nil
             _Mounty_A.Version = alert_if_lower
 
             TLVlib:Alert(L["upgrade.popup"])

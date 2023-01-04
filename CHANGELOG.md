@@ -44,7 +44,7 @@ v2.5.2.1
 
 v2.5.2
 - Now all categories have their own key binding
-- Also there a 3 more categories custom 1 to 3 for your free useK
+- Also there a 3 more categories custom 1 to 3 for your free use
 - Refactored code again for more OOP
 - README will be up to date soon
 

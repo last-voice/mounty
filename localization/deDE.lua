@@ -113,7 +113,7 @@ In der README findest du eine detaillierte Beschreibung.]]
 
 L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.de.md"
 
-L["upgrade.popup"] = "Jetzt mit |cfff07070Fallschirm-Modus|r.\nAuf eigene Gefahr!"
+L["upgrade.popup"] = "Jetzt mit |cfff07070Amphibien-Modus|r.\nLuft anhalten!\n\n(Im CHANGELOG findest du weitere Updates.)"
 
 local _, TLV_AddOn = ...
 TLV_AddOn.L = setmetatable(L, { __index = TLV_AddOn.L })
