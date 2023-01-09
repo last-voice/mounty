@@ -85,11 +85,62 @@ L["button.Help"] = "Help"
 
 L["Mount journal - Open Mounty"] = "Mounty #TLV"
 
+L["why.repair"] = "Your durability is below %d%%."
+L["why.repair.no"] = "Your durability is fine."
+L["why.repair.use"] = "So Mounty #TLV will try to summon a repair mount."
+L["why.repair.empty"] = "But you have not assigned a repair mount to be summoned."
+L["why.amphibian"] = "You are swimming and amphibian mode is active."
+L["why.amphibian.use"] = "So this time a water mount is chosen."
+L["why.amphibian.empty"] = "Since you don't have a water mount assigned, none can be chosen."
+L["why.dragonflight"] = "This is a good place cause dragons can be used."
+L["why.dragonflight.no"] = "Sadly, this is no area where dragons can be used or you haven't got one yet."
+L["why.dragonflight.use"] = "Let's try to call a dragon, then."
+L["why.dragonflight.empty"] = "And this is a bad idea, because you don't seem to have one assigned."
+L["why.taxi"] = "With a friend at your side and taxi mode active."
+L["why.taxi.no1"] = "You are in no group, so why be a taxi?"
+L["why.taxi.no2"] = "You are in company but the taxi mode is not active."
+L["why.taxi.use"] = "So you are polite and invite your friend for a ride and call a taxi mount."
+L["why.taxi.empty"] = "If you would have had assigned a taxi mount, you'd rather carry your friend around. But you haven't."
+L["why.taxi.call"] = "But let's call your friend to hopp on first."
+L["why.showoff"] = "This is a resting area and you want to show off."
+L["why.showoff.no1"] = "No resting area, no show off."
+L["why.showoff.no2"] = "Although in a resting area, you just don't want to show off."
+L["why.showoff.no3"] = "To show off in this resting area you should get out of the water first."
+L["why.showoff.use"] = "Mounty #TLV will try summon one of your beautiful show off mounts."
+L["why.showoff.empty"] = "But there is no show off mount found in Mounty #TLV's category."
+L["why.showoff.flyable"] = "And for it's a flying area, only your flying show off mounts will be chosen of."
+L["why.fly"] = "Up, up, up, my friend. You can fly in this area."
+L["why.fly.no"] = "Over here flying is no option. Or you haven't learned it yet."
+L["why.fly.no.together"] = "But since you are in company and want to stay on the ground together you won't take off."
+L["why.fly.ok1"] = "And you are on your own."
+L["why.fly.ok2"] = "And you don't have to stay on the ground with your company."
+L["why.fly.use"] = "We better try to quickly summon a flying mount."
+L["why.fly.empty"] = "On the other hand you have no flying mount assigned in Mounty #TLV."
+L["why.water"] = "You are swimming."
+L["why.water.no"] = "You are on dry land. And least your feet touch the ground."
+L["why.water.use"] = "There are only a few water mounts to summon. Let's choose one."
+L["why.water.empty"] = "No water mount can be found in Mounty #TLV, so none can be summoned."
+L["why.ground.use"] = "No magic needed. A ground mount seems to be best. Let's get one."
+L["why.usable.all"] = "All of your %d assigned mounts are usable here and now."
+L["why.usable.some"] = "At this time and place you can use %d of your %d assigned mounts."
+L["why.usable.none"] = "None of your %d assigned mounts can be used by now for any reason."
+L["why.usable.null"] = "Mounty #TLV has not found any assigned mount in this category."
+L["why.fallback.ground"] = "So we try to summon a ground mount then."
+L["why.fallback.fly"] = "As a fallback Mounty #TLV will switch to flying mounts instead."
+L["why.fallback.random"] = "The last straw is to summon any random mount out of your mount journal."
+L["why.pick.random"] = "Out of these a random one will be picked."
+L["why.pick.iterator"] = "The next in line of these will be picked."
+L["why.picked"] = "And finally this is your mount: |cfff07070%s|r. Enjoy the ride!"
+L["why.out"] = "|cfff07070Tell me why!|r"
+L["why.out.none"] = "I can't tell you why. No history entry found."
+
 L["help"] = [[It's a kind of magic ...
 |cfff0b040Open options frame|r
 /mounty
 |cfff0b040Summon mount|r
 /mounty magic||dragonflight||fly||ground||random||repair||showoff||taxi||water
+|cfff0b040Tell me why|r
+/mounty why 1-%d (Why was the former mount chosen?)
 |cfff0b040Set options|r
 /mounty set amphibian||auto||debug||parachute||random||showoff||taxi||together on||off
 |cfff0b040Profiles|r

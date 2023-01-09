@@ -34,6 +34,8 @@ Mounty.CategoriesLabel = {
 Mounty.FallbackQueue = {}
 Mounty.FallbackAlready = {}
 
+Mounty.WhyHistory = 10
+
 Mounty.TestDragon = nil
 
 function Mounty:IsDebug ()
@@ -52,6 +54,36 @@ function Mounty:CheckIfCasting ()
     end
 
     return false
+
+end
+
+function Mounty:Why (why)
+
+    if why == "" then
+
+        Mounty.TellMeWhy = ""
+
+    elseif why == "close" then
+
+        TLVlib:Chat(L["why.out"] .. "\n\n" .. Mounty.TellMeWhy)
+
+        for i = Mounty.WhyHistory, 2, -1 do
+            if _Mounty_C.Whys[i - 1] ~= nil then
+                _Mounty_C.Whys[i] = _Mounty_C.Whys[i - 1]
+            end
+        end
+
+        _Mounty_C.Whys[1] = os.date("%d.%m.%Y %H:%M") .. "\n\n" .. Mounty.TellMeWhy
+
+    else
+
+        if Mounty.TellMeWhy == "" then
+            Mounty.TellMeWhy = why
+        else
+            Mounty.TellMeWhy = Mounty.TellMeWhy .. " " .. why
+        end
+
+    end
 
 end
 
@@ -88,30 +120,37 @@ function Mounty:Fallback(category)
     elseif not Mounty.FallbackAlready[Mounty.FallbackQueue[2]] then
 
         FallbackTo = Mounty.FallbackQueue[2]
+
     end
 
     if FallbackTo == Mounty.TypeFlying then
 
         TLVlib:Debug("Fallback: '" .. L["mode.Flying"] .. "'")
+
         return Mounty.TypeFlying
 
     elseif FallbackTo == Mounty.TypeGround then
 
         TLVlib:Debug("Fallback: '" .. L["mode.Ground"] .. "'")
+
         return Mounty.TypeGround
+
     end
 
     TLVlib:Debug("Fallback: '" .. L["mode.Random"] .. "'")
+
     return 0
+
 end
 
-function Mounty:SelectMountByCategory(category, only_flyable_showoffs)
+function Mounty:SelectMountByCategory(category, only_flyable_showoffs, tellmewhy)
 
     if category == 0 then
         return 0
     end
 
     local ids = {}
+    local assigned = 0
     local count = 0
     local picked
     local usable
@@ -121,6 +160,8 @@ function Mounty:SelectMountByCategory(category, only_flyable_showoffs)
     for i = 1, Mounty.NumMountsExpanded do
 
         if Mounty.CurrentProfile.Mounts[category][i] > 0 then
+
+            assigned = assigned + 1
 
             usable = IsUsableSpell(Mounty.CurrentProfile.Mounts[category][i])
 
@@ -150,25 +191,68 @@ function Mounty:SelectMountByCategory(category, only_flyable_showoffs)
 
     if count > 0 then
 
+        if tellmewhy then
+            if count == assigned then
+                Mounty:Why(string.format(L["why.usable.all"], assigned))
+            else
+                Mounty:Why(string.format(L["why.usable.some"], count, assigned))
+            end
+        end
+
         if Mounty.CurrentProfile.Random then
+
+            if tellmewhy and count > 1 then
+                Mounty:Why(string.format(L["why.pick.random"], assigned))
+            end
+
             picked = math.random(count)
+
         else
+
+            if tellmewhy and count > 1 then
+                Mounty:Why(string.format(L["why.pick.iterator"], assigned))
+            end
+
             if Mounty.CurrentProfile.Iterator[category] < count then
                 Mounty.CurrentProfile.Iterator[category] = Mounty.CurrentProfile.Iterator[category] + 1
             else
                 Mounty.CurrentProfile.Iterator[category] = 1
             end
+
             picked = Mounty.CurrentProfile.Iterator[category]
+
         end
 
         TLVlib:Debug("Selected: " .. picked .. " of " .. count)
 
         return ids[picked]
+
     end
 
     TLVlib:Debug("No (usable) mount found in category.")
 
-    return Mounty:SelectMountByCategory(Mounty:Fallback(category), false)
+    local fallback = Mounty:Fallback(category)
+
+    if tellmewhy then
+
+        if assigned > 0 then
+            Mounty:Why(string.format(L["why.usable.none"], assigned))
+        else
+            Mounty:Why(string.format(L["why.usable.null"]))
+        end
+
+        if fallback == Mounty.TypeGround then
+            Mounty:Why(L["why.fallback.ground"])
+        elseif fallback == Mounty.TypeFlying then
+            Mounty:Why(L["why.fallback.fly"])
+        else
+            Mounty:Why(L["why.fallback.random"])
+        end
+
+    end
+
+    return Mounty:SelectMountByCategory(fallback, false, tellmewhy)
+
 end
 
 function Mounty:MountSpellID(mountID)
@@ -196,7 +280,7 @@ function Mounty:YouCanRideDragonsHere()
 
     local ridingmounts = C_MountJournal.GetCollectedDragonridingMounts()
 
-    if (ridingmounts[1] ~= nil) then
+    if ridingmounts[1] ~= nil then
         -- dragonride mount found in collection
 
         -- local isUsable, error = C_MountJournal.GetMountUsabilityByID(ridingmounts[1], false); always true, weil das mount grundsätzlich benutzt werden kann ???
@@ -206,7 +290,7 @@ function Mounty:YouCanRideDragonsHere()
 
         local isUsable = IsUsableSpell(spellID)
 
-        if (isUsable) then
+        if isUsable then
             TLVlib:Debug("Dragon '" .. name .. "' found and you can ride it here.")
         end
 
@@ -218,13 +302,13 @@ function Mounty:YouCanRideDragonsHere()
 
 end
 
-function Mounty:Mount(mode)
+function Mounty:Mount(mode, tellmewhy)
 
     local mountID = 0
     local spellID = 0
     local only_flyable_showoffs = false
 
-    if (Mounty:CheckIfCasting()) then
+    if Mounty:CheckIfCasting() then
         return
     end
 
@@ -250,7 +334,13 @@ function Mounty:Mount(mode)
 
         if IsInGroup() and not IsMounted() then
             if Mounty.CurrentProfile.Hello ~= "" then
+
+                if tellmewhy then
+                    Mounty:Why(L["why.taxi.call"])
+                end
+
                 SendChatMessage(Mounty.CurrentProfile.Hello)
+
             end
         end
 
@@ -273,7 +363,13 @@ function Mounty:Mount(mode)
         category = Mounty.TypeShowOff
 
         if Mounty:UserCanFlyHere() then
+
+            if tellmewhy then
+                Mounty:Why(L["why.showoff.flyable"])
+            end
+
             only_flyable_showoffs = true
+
         end
 
     elseif mode == "random" then
@@ -295,17 +391,30 @@ function Mounty:Mount(mode)
             Mounty.FallbackQueue = { Mounty.TypeGround, Mounty.TypeFlying }
         end
 
-        spellID = Mounty:SelectMountByCategory(category, only_flyable_showoffs)
+        spellID = Mounty:SelectMountByCategory(category, only_flyable_showoffs, tellmewhy)
 
         if spellID > 0 then
+
             mountID = C_MountJournal.GetMountFromSpell(spellID)
+
+            if tellmewhy then
+
+                local mname = C_MountJournal.GetMountInfoByID(mountID)
+                Mounty:Why(string.format(L["why.picked"], mname))
+
+                Mounty:Why('close')
+
+            end
+
         end
+
     end
 
     TLVlib:Debug("mountID: " .. mountID)
     TLVlib:Debug("spellID: " .. spellID)
 
     C_MountJournal.SummonByID(mountID)
+
 end
 
 function Mounty:KeyHandler(keypress)
@@ -323,7 +432,7 @@ function Mounty:KeyHandler(keypress)
     local showoff = Mounty.CurrentProfile.ShowOff
     local parachute = _Mounty_A.Parachute
 
-    if (Mounty:CheckIfCasting()) then
+    if Mounty:CheckIfCasting() then
         return
     end
 
@@ -363,14 +472,12 @@ function Mounty:KeyHandler(keypress)
 
         TLVlib:Debug("Magic key")
 
-        local mode
-
         if not amphibian then
             Mounty.ForceWaterMount = false
         else
 
             -- amphibian
-            if (swimming) then
+            if swimming then
                 Mounty.ForceWaterMount = not Mounty.ForceWaterMount
             else
                 Mounty.ForceWaterMount = false
@@ -378,51 +485,289 @@ function Mounty:KeyHandler(keypress)
 
         end
 
-        if Mounty:Durability() < Mounty.CurrentProfile.DurabilityMin then
+        -- let's decide
 
-            mode = "repair"
+        local mode = ""
 
-        elseif swimming and Mounty.ForceWaterMount then
+        -- durability ?
 
-            mode = "water"
+        if mode == "" then
 
-        elseif dragonflight then
+            if Mounty:Durability() < Mounty.CurrentProfile.DurabilityMin then
 
-            mode = "dragonflight"
+                Mounty:Why(string.format(L["why.repair"], Mounty.CurrentProfile.DurabilityMin))
 
-        elseif not alone and taximode then
+                if Mounty:HasCategory(Mounty.TypeRepair) then
 
-            mode = "taxi"
+                    mode = "repair"
 
-        elseif resting and showoff and not swimming then
+                    Mounty:Why(L["why.repair.use"])
 
-            mode = "showoff"
+                else
 
-        elseif flyable and alone then
+                    Mounty:Why(L["why.repair.empty"])
 
-            mode = "fly"
+                end
 
-        elseif flyable and not alone and not together then
+            else
 
-            mode = "fly"
+                Mounty:Why(L["why.repair.no"])
 
-        elseif swimming then
-
-            mode = "water"
-
-        else
-
-            mode = "ground"
+            end
 
         end
 
-        Mounty:Mount(mode)
+        -- alternate water mount?
+
+        if mode == "" then
+
+            if swimming and Mounty.ForceWaterMount then
+
+                Mounty:Why(L["why.amphibian"])
+
+                if Mounty:HasCategory(Mounty.TypeWater) then
+
+                    mode = "water"
+
+                    Mounty:Why(L["why.amphibian.use"])
+
+                else
+
+                    Mounty:Why(L["why.amphibian.empty"])
+
+                end
+
+            end
+
+        end
+
+        -- dragonflight
+
+        if mode == "" then
+
+            if dragonflight then
+
+                Mounty:Why(L["why.dragonflight"])
+
+                if Mounty:HasCategory(Mounty.TypeDragonflight) then
+
+                    mode = "dragonflight"
+
+                    Mounty:Why(L["why.dragonflight.use"])
+
+                else
+
+                    Mounty:Why(L["why.dragonflight.empty"])
+
+                end
+
+            else
+
+                Mounty:Why(L["why.dragonflight.no"])
+
+            end
+
+        end
+
+        -- taxi
+
+        if mode == "" then
+
+            if not alone and taximode then
+
+                Mounty:Why(L["why.taxi"])
+
+                if Mounty:HasCategory(Mounty.TypeTaxi) then
+
+                    mode = "taxi"
+
+                    Mounty:Why(L["why.taxi.use"])
+
+                else
+
+                    Mounty:Why(L["why.taxi.empty"])
+
+                end
+
+            else
+
+                if alone then
+                    Mounty:Why(L["why.taxi.no1"])
+                else
+                    Mounty:Why(L["why.taxi.no2"])
+                end
+
+            end
+
+        end
+
+        -- show off
+
+        if mode == "" then
+
+            if resting and showoff and not swimming then
+
+                Mounty:Why(L["why.showoff"])
+
+                if Mounty:HasCategory(Mounty.TypeShowOff) then
+
+                    mode = "showoff"
+
+                    Mounty:Why(L["why.showoff.use"])
+
+                else
+
+                    Mounty:Why(L["why.showoff.empty"])
+
+                end
+
+            else
+
+                if not resting then
+                    Mounty:Why(L["why.showoff.no1"])
+                elseif not showoff then
+                    Mounty:Why(L["why.showoff.no2"])
+                else
+                    Mounty:Why(L["why.showoff.no3"])
+                end
+
+            end
+
+        end
+
+        -- flyable
+
+        if mode == "" then
+
+            if flyable then
+
+                Mounty:Why(L["why.fly"])
+
+                if not alone and together then
+
+                    Mounty:Why(L["why.fly.no.together"])
+
+                else
+
+                    if alone then
+
+                        Mounty:Why(L["why.fly.ok1"])
+
+                    else
+
+                        Mounty:Why(L["why.fly.ok2"])
+
+                    end
+
+                    if Mounty:HasCategory(Mounty.TypeFlying) then
+
+                        mode = "fly"
+
+                        Mounty:Why(L["why.fly.use"])
+
+                    else
+
+                        Mounty:Why(L["why.fly.empty"])
+
+                    end
+
+                end
+
+            else
+
+                Mounty:Why(L["why.fly.no"])
+
+            end
+
+        end
+
+        -- swimming
+
+        if mode == "" then
+
+            if swimming then
+
+                Mounty:Why(L["why.water"])
+
+                if Mounty:HasCategory(Mounty.TypeWater) then
+
+                    mode = "water"
+
+                    Mounty:Why(L["why.water.use"])
+
+                else
+
+                    Mounty:Why(L["why.water.empty"])
+
+                end
+
+            else
+
+                Mounty:Why(L["why.water.no"])
+
+            end
+
+        end
+
+        -- ground
+
+        if mode == "" then
+
+            mode = "ground"
+
+            Mounty:Why(L["why.ground.use"])
+
+        end
+
+        --if mode == "" then
+        --
+        --    if Mounty:Durability() < Mounty.CurrentProfile.DurabilityMin then
+        --
+        --        mode = "repair"
+        --
+        --    elseif swimming and Mounty.ForceWaterMount then
+        --
+        --        mode = "water"
+        --
+        --    elseif dragonflight then
+        --
+        --        mode = "dragonflight"
+        --
+        --    elseif not alone and taximode then
+        --
+        --        mode = "taxi"
+        --
+        --    elseif resting and showoff and not swimming then
+        --
+        --        mode = "showoff"
+        --
+        --    elseif flyable and alone then
+        --
+        --        mode = "fly"
+        --
+        --    elseif flyable and not alone and not together then
+        --
+        --        mode = "fly"
+        --
+        --    elseif swimming then
+        --
+        --        mode = "water"
+        --
+        --    else
+        --
+        --        mode = "ground"
+        --
+        --    end
+        --
+        --end
+
+        Mounty:Mount(mode, true)
 
     else
 
         TLVlib:Debug("Special key")
 
-        Mounty:Mount(keypress)
+        Mounty:Mount(keypress, false)
 
     end
 
@@ -438,14 +783,14 @@ function Mounty:PickupMountBySpellID(pickupSpellID)
 
         local _, spellID = C_MountJournal.GetDisplayedMountInfo(i)
 
-        if (spellID == pickupSpellID) then
+        if spellID == pickupSpellID then
             pickup_ID = i
             break
         end
 
     end
 
-    if (pickup_ID ~= -1) then
+    if pickup_ID ~= -1 then
 
         C_MountJournal.Pickup(pickup_ID)
 
@@ -523,7 +868,7 @@ function Mounty:CopyMount(calling, expanded)
         return
     end
 
-    if (Mounty:PickupMountBySpellID(Mounty.CurrentProfile.Mounts[category][index])) then
+    if Mounty:PickupMountBySpellID(Mounty.CurrentProfile.Mounts[category][index]) then
 
         TLVlib:Debug("Mount picked up: " .. category .. " " .. index)
 
@@ -1760,6 +2105,10 @@ function Mounty:InitSavedVariables()
         _Mounty_C.Profiles = {}
     end
 
+    if _Mounty_C.Whys == nil then
+        _Mounty_C.Whys = {}
+    end
+
     if _Mounty_A.Profiles == nil then
         _Mounty_A.Profiles = {}
     end
@@ -1917,6 +2266,30 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
             end
         end
 
+    elseif mode == "why" then
+
+        arg1 = tonumber(arg1)
+
+        if (arg1 > 0 and arg1 <= Mounty.WhyHistory) then
+
+            if (_Mounty_C.Whys[arg1]) then
+
+                TLVlib:Chat(L["why.out"] .. "\n\n" .. _Mounty_C.Whys[arg1])
+
+            else
+
+                TLVlib:Chat(L["why.out.none"])
+
+            end
+
+
+        else
+
+            okay = false
+
+        end
+
+
     elseif mode == "set" then
 
         local suffix
@@ -2008,7 +2381,7 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
             or mode == "custom3"
     then
 
-        Mounty:Mount(mode)
+        Mounty:Mount(mode, true)
 
     else
 
@@ -2018,7 +2391,13 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
     if not okay then
 
-        TLVlib:Chat(gsub(L["help"], "||", "|cfff0b040|||r"))
+        local help = L["help"]
+
+        help = gsub(help, "||", "|cfff0b040|||r")
+
+        help = string.format(help, Mounty.WhyHistory)
+
+        TLVlib:Chat(help)
 
     end
 

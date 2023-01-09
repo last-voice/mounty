@@ -27,7 +27,7 @@ v2.5.3.2
 v2.5.3.1
 - stupid me :-/
 
-v2.5.3
+v2.5.3<
 - SORRY, bad bug prevented Mounty to upgrade from older versions. This is now fixed.
 - Also changed the too generic name of saved variable.
 
