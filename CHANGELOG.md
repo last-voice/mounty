@@ -3,8 +3,7 @@
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
 v2.7
-- Why mode
-- Wording in German 
+- Why mode (And that's awesome, I promise!)
 
 v2.6
 - New option to alternate between water mount and flying mounts whilst swimming
