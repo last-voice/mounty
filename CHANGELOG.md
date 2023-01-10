@@ -2,6 +2,10 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.7
+- Why mode
+- Wording in German 
+
 v2.6
 - New option to alternate between water mount and flying mounts whilst swimming
 - If the player is currently casting any spell, Mounty won't do anything no more

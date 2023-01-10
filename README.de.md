@@ -49,7 +49,7 @@ __Mounty #TLV__ unterscheidet zwischen __7 Kategorien für deine Mounts__:
 - __Wasser-Mounts__ - Es gibt oder gab Mounts, die sogar auf dem Wasser gehen konnten. In jedem Fall aber gibt es Mounts, die im Wasser schneller schwimmen als alle anderen, damit du nicht zu lange die Luft anhalten musst.
 - __Reparier-Mounts__ - Du weißt, welche ich damit meine und du hast so eins auch. - oder musst du immer wieder stundenlang bis zum nächsten Amboss laufen, um deine Rüstung wieder zum Glänzen zu bringen?
 - __Taxi-Mounts__ - Ein Beifahrer-Platz für einen guten Freund ist perfekt für gemeinsames Questen, farmen und kämpfen Hand in Hand. Vor allen Dingen, wenn dein Taxi Flügel hat, und dein Freund noch nicht gelernt hat zu fliegen. Er wird dir auf ewig dankbar sein.
-- __Angeber-Mounts__ - Du hast Stunden, Tage, sogar Wochen damit verbracht, dieses eine ganz besondere Mount deiner Träume zu ergattern. Es wird nie wieder ein besseres Mount geben. Vielleicht ab morgen wieder. Für heute aber musst du allen zeigen: Es ist für immer deins!
+- __Protz-Mounts__ - Du hast Stunden, Tage, sogar Wochen damit verbracht, dieses eine ganz besondere Mount deiner Träume zu ergattern. Es wird nie wieder ein besseres Mount geben. Vielleicht ab morgen wieder. Für heute aber musst du allen zeigen: Es ist für immer deins!
 
 Du kannst __jeder dieser Kategorien 110 verschiedene Lieblings-Mounts__ zuordnen. Einfach aus der Reittiersammlung heraus mit der Maus herüberziehen.
 Und du kannst __diese eine magische Taste__ belegen, die für dich zaubern wird.
@@ -84,7 +84,7 @@ Du bist auf den Dracheninseln in einer Drachenflugzone und hast bereits erfahren
 
 Du bist in einer Gruppe mit Freunden und der _Taxi-Modus_ ist eingeschaltet? Mein Freund, wir rufen mein __Taxi-Mount__ und sausen gemeinsam davon. Los geht's!
 
-Du bist im Ruhebereich und der _Angeber-Modus_ ist eingeschaltet? Der perfekte Zeitpunkt, alle anderen mit einem __Angeber-Mount__ zu beeindrucken.
+Du bist im Ruhebereich und der _Protz-Modus_ ist eingeschaltet? Der perfekte Zeitpunkt, alle anderen mit einem __Protz-Mount__ zu beeindrucken.
 
 Du bist in einer Flug-Zone und in keiner Gruppe? Breite deine Flügel aus oder starte die Maschinen und hoch hinaus geht es in die Lüfte mit einem deiner liebsten __Flug-Mounts__.
 
@@ -110,7 +110,7 @@ Magisch, oder? Dank __Mounty #TLV__.
 >Du schwimmst im Wasser, _Amphibien-Modus_ ist an -> (jedes zweite Mal) _Wasser_Mount_\
 >Du bist auf den Dracheninseln in einer Drachenflugzone -> _Drachen_\
 >Du bist in einer Gruppe, _Taxi-Modus_ ist an -> _Taxi-Mount_\
->Du bist im Ruhebereich, _Angeber-Modus_ ist an -> _Angeber-Mount_\
+>Du bist im Ruhebereich, _Protz-Modus_ ist an -> _Protz-Mount_\
 >Du bist in einer Flug-Zone, allein -> _Flug-Mount_\
 >Du bist in einer Flug-Zone, in einer Gruppe und der _Nicht-fliegen-Modus_ ist aus -> _Flug-Mount_\
 >Du schwimmst im Wasser -> _Wasser-Mount_\
@@ -127,7 +127,7 @@ Wenn eine Kategorie leer ist, wird stattdessen eines deiner __Flug-Mounts__ ausg
 ### Sonderfälle
 
 - Sonderfall 1: Flug-Mounts und Drachen werden nur dann gerufen, wenn Du auch gelernt hast, diese zu reiten.
-- Sonderfall 2: In Ruhebereichen, in denen du fliegen kannst, werden nur fliegende Angeber-Mounts ausgewählt.
+- Sonderfall 2: In Ruhebereichen, in denen du fliegen kannst, werden nur fliegende Protz-Mounts ausgewählt.
 
 # Konfigurieren und benutzen
 
@@ -150,7 +150,7 @@ __ACHTUNG:__ __Mounty #TLV__ __überprüft nie__, ob deine Zuordnungen sinnvoll 
 ### Je Profil
 
 - __Zufalls-Modus__ - Falls _eingeschaltet_, wird ein zufälliges Mount aus der jeweiligen _Kategorie_ ausgewählt. Falls _ausgeschaltet_, kommt eins nach dem anderen immer der Reihe nach und dann wieder von vorne.
-- __Angeber-Modus__ - In Ruhebereichen wird automatisch eines Deiner Angeber-Mounts aus dem Sack geholt, damit alle wissen, dass Du monatelang in Zereth Mortis geangelt hast.
+- __Protz-Modus__ - In Ruhebereichen wird automatisch eines Deiner Protz-Mounts aus dem Sack geholt, damit alle wissen, dass Du monatelang in Zereth Mortis geangelt hast.
 - __Amphibien-Modus__ - Im Wasser zwischen Wasser- und Flug-Mount abwechseln, denn wer weiß schon, ob du tauchen oder abhauen willst.
 - __Nicht-fliegen-Modus__ - Solang du in einer Gruppe bist: Auch wenn du fliegen könntest, du bleibst immer auf dem Boden. Was hat das für einen Sinn? Falls du einen Freund beim Questen begleitest, der noch nicht fliegen kann, dann ist es schon fair, wenn du ihm nicht immer wieder davonfliegst, außer ...
 - __Taxi-Modus__ - Unterwegs mit einem Freund, der mit deiner Unterstützung vorankommen will? Solange du in einer Gruppe bist, wird immer dein Taxi-Mount gerufen, so dass dein Freund bequem aufspringen kann und sich um nichts kümmern muss. Er hat ja dich.
@@ -191,7 +191,7 @@ _/mounty set auto on|off_ (Optionen automatisch öffnen)\
 _/mounty set debug on|off_ (Debug Infos anzeigen)\
 _/mounty set parachute on|off_ (Immer absitzen, bei jeder Höhe)\
 _/mounty set random on|off_ (Zufällig oder in Reihenfolge)\
-_/mounty set showoff on|off_ (Angeber, Angeber!)\
+_/mounty set showoff on|off_ (Protzerei!)\
 _/mounty set taxi on|off_ (Taxi-Mounts verwenden)\
 _/mounty set together on|off_ (Zusammen bleiben)
 
@@ -204,7 +204,7 @@ _/mounty fly_ - beschwört ein Flug-Mount\
 _/mounty ground_ - beschwört ein Boden-Mount\
 _/mounty repair_ - beschwört ein Reparier-Mount\
 _/mounty random_ - beschwört ein zufälliges Mount\
-_/mounty showoff_ - beschwört ein Angeber-Mount\
+_/mounty showoff_ - beschwört ein Protz-Mount\
 _/mounty taxi_ - beschwört ein Taxi-Mount\
 _/mounty water_ - beschwört ein Wasser-Mount
 
@@ -226,7 +226,7 @@ Hier zum Beispiel meine Konfiguration:
 - SHIFT-# -> _Taxi-Mount_
 - ALT-# -> _Wasser-Mount_
 - CTRL-ALT-# -> _Boden-Mount_
-- CTRL-Space -> _Angeber-Mount_
+- CTRL-Space -> _Protz-Mount_
 
 # Dankeschön!
 

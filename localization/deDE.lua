@@ -1,4 +1,4 @@
-if (GetLocale() ~= "deDE") then
+if (GetLocale() ~= "desDE") then
     return
 end
 
@@ -11,7 +11,7 @@ BINDING_NAME_MOUNTY_DRAGONFLIGHT = "Dragonflight"
 BINDING_NAME_MOUNTY_WATER = "Wasser-Mount"
 BINDING_NAME_MOUNTY_TAXI = "Taxi-Mount"
 BINDING_NAME_MOUNTY_REPAIR = "Reparier-Mount"
-BINDING_NAME_MOUNTY_SHOWOFF = "Angeben!"
+BINDING_NAME_MOUNTY_SHOWOFF = "Protzen!"
 BINDING_NAME_MOUNTY_RANDOM = "Zufälliges Mount"
 BINDING_NAME_MOUNTY_DISMOUNT = "Absteigen!"
 BINDING_NAME_MOUNTY_CUSTOM1 = "|cfff07070Custom 1|r"
@@ -24,20 +24,22 @@ L["mode.Dragonflight"] = "Dragonflight"
 L["mode.Water"] = "Schwimmen"
 L["mode.Repair"] = "Reparieren"
 L["mode.Taxi"] = "Taxi"
-L["mode.Show off"] = "Angeberei"
+L["mode.Show off"] = "Protzerei"
 L["mode.Random"] = "Zufällig"
 L["mode.Custom1"] = "|cfff07070Custom 1|r"
 L["mode.Custom2"] = "|cfff07070Custom 2|r"
 L["mode.Custom3"] = "|cfff07070Custom 3|r"
 
+L["options.Why"] = "Warum-Modus - Auswahl wird im Chat erklärt"
+L["options.WhyShort"] = "Kurze Erklärung"
 L["options.Random"] = "Zufalls-Modus - Zufällig anstatt eins nach dem anderen"
-L["options.Look"] = "Angeber-Modus - In Ruhebereichen mit Angeber-Mounts protzen"
+L["options.Look"] = "Protz-Modus - In Ruhebereichen mit Protz-Mounts protzen"
 L["options.Together"] = "Nicht-fliegen-Modus - In der Gruppe am Boden bleiben und nicht fliegen"
 L["options.Amphibian"] = "Amphibien-Modus - Im Wasser abwechselnd Wasser- und Flug-Mounts rufen"
 L["options.Taxi"] = "Taxi-Modus - In einer Gruppe immer dein Taxi-Reittier rufen"
 L["options.Hello"] = "So rufst du deinen Taxi-Gast"
 L["options.Hello-Default"] = "Taxi!"
-L["options.Durability"] = "Service! - Das Reparier-Mount kommt bei weniger als %d%% Rüstung."
+L["options.Durability"] = "Service! - Das Reparier-Mount kommt bei weniger als %d%% Haltbarkeit."
 L["options.Profile"] = "Profil"
 L["options.ShareProfiles"] = "Profile mit deinen anderen Charakteren teilen"
 L["options.Parachute"] = "Fallschirm-Modus - Immer absitzen, egal wie hoch du fliegst und tief du fällst"
@@ -70,7 +72,7 @@ L["chat.Autoopen"] = "Auto öffnen: "
 L["chat.Debug"] = "Debug: "
 L["chat.Parachute"] = "Fallschirm-Modus: "
 L["chat.Random"] = "Zufall: "
-L["chat.Showoff"] = "Angeberei: "
+L["chat.Showoff"] = "Protzerei: "
 L["chat.Taxi"] = "Taxi-Modus: "
 L["chat.Together"] = "Zusammen bleiben: "
 
@@ -87,19 +89,125 @@ L["button.CopyA2C"] = "Account>Char"
 L["button.Journal"] = "Reittiere"
 L["button.Help"] = "Hilfe"
 
+L["why.long.repair"] = "Deine |hRüstung|r ist unter %d%%."
+L["why.long.repair.no"] = "Deine |hRüstung|r ist ok."
+L["why.long.repair.use"] = "Hier ist dein |hReparier-Mount|r."
+L["why.long.repair.empty"] = "Ups, du hast noch kein Reparier-Mount zugeordnet."
+L["why.long.amphibian"] = "Du |hschwimmst und der Amphibien-Modus|r ist aktiv."
+L["why.long.amphibian.use"] = "Dieses Mal ist dein |hWasser-Mount|r an der Reihe."
+L["why.long.amphibian.empty"] = "Wenn Du denn Mounty #TLV eines zugewiesen hättest."
+L["why.long.dragonflight"] = "Hier und jetzt kannst du |hDrachen reiten|r."
+L["why.long.dragonflight.no"] = "Schade, hier sind |hDrachen verboten|r oder du hast noch keinen."
+L["why.long.dragonflight.use"] = "Dann wollen wir mal den |hDrachen|r wecken."
+L["why.long.dragonflight.empty"] = "Allerdings schlummert noch keiner in Mounty #TLV."
+L["why.long.taxi"] = "Der |hTaxi-Modus|r ist aktiv und du hast Begleitung."
+L["why.long.taxi.no1"] = "|hAllein unterwegs|r, warum also ein Taxi anbieten?"
+L["why.long.taxi.no2"] = "Du bist zwar in einer Gruppe unterwegs, aber der |hTaxi-Modus ist nicht aktiv|r."
+L["why.long.taxi.use"] = "Also sind wir hilfsbereit und rufen unser |hTaxi-Mount|r."
+L["why.long.taxi.empty"] = "Es kommt aber keins, denn in Mounty #TLV ist keines zu finden."
+L["why.long.taxi.call"] = "Zuerst aber bitten wir deine Begleitung, |haufzuspringen|r."
+L["why.long.showoff"] = "Prima, ein |hRuhebereich|r und du gibst gerne mal an."
+L["why.long.showoff.no1"] = "|hKein Ruhebereich|h, keine Protzerei."
+L["why.long.showoff.no2"] = "Obwohl hier ein Ruhebereich ist möchtest du |hnicht so gerne protzen|r."
+L["why.long.showoff.no3"] = "Um anzugeben müsstest du kurz |haus dem Wasser steigen|r."
+L["why.long.showoff.use"] = "Mounty #TLV wird also eines deiner atemberaubenden |hProtz-Mounts|r beschwören."
+L["why.long.showoff.empty"] = "Was nicht so einfach ist, denn die Kategorie ist leer."
+L["why.long.showoff.flyable"] = "Und weil du hier |hfliegen|r kannst, kommen auch nur fliegende Protz-Mounts infrage."
+L["why.long.fly"] = "Lass uns abheben, du |hkannst hier fliegen|r."
+L["why.long.fly.no"] = "Hier und jetzt ist |hFliegen keine Option|r für dich."
+L["why.long.fly.no.together"] = "Halt, Stopp. Du möchtest ja |hmit deiner Gruppe zusammen am Boden bleiben|r."
+L["why.long.fly.ok1"] = "Und du bist |hallein|r."
+L["why.long.fly.ok2"] = "Mit deiner Gruppe am Boden bleiben möchtest du auch nicht."
+L["why.long.fly.use"] = "Hier kommt also dein |hFlug-Mount|r."
+L["why.long.fly.empty"] = "Oh, kommt es nicht, denn du hast Mounty #TLV noch keines zugewiesen."
+L["why.long.water"] = "Du |hschwimmst|r."
+L["why.long.water.no"] = "|hFester Boden|r unter den Füßen."
+L["why.long.water.use"] = "Es gibt ja ein paar spezielle |hWasser-Mounts|r. Suchen wir eines davon aus."
+L["why.long.water.empty"] = "Deine Auswahl an Wasser-Mounts in Mounty #TLV ist allerdings leer."
+L["why.long.ground.use"] = "Aler Magie zum Trotz: Ein |hBoden-Mount|r scheint die einzige Wahl. Nehmen wir eins."
+L["why.long.ground.empty"] = "|hDas endet nicht gut|r. Selbst ein Boden-Mount ist in Mounty #TLV nicht zu finden."
+L["why.long.usable.all"] = "Alle |h%d zugewiesenen|r Mounts sind hier und jetzt |hnutzbar|r."
+L["why.long.usable.some"] = "Hier und jetzt kannst du |h%d deiner %d zugewiesenen|r Mounts nutzen."
+L["why.long.usable.none"] = "|Keines|r deiner |h%d zugewiesenen|r Mounts sind aus Gründen hier nicht nutzbar."
+L["why.long.usable.null"] = "Mounty #TLV hat in der Kategorie |hkein einziges Mount|r gefunden."
+L["why.long.fallback.ground"] = "Als Fallback beschören wir nun also ein |hBoden-Mount|r."
+L["why.long.fallback.fly"] = "Versuchen wir es mit einem |hFlug-Mount|r als |hFallback|r."
+L["why.long.fallback.random"] = "Die allerletzte Option bleibt |hirgend ein zufälliges Mount|r aus deiner Reittiersammlung."
+L["why.long.pick.random"] = "Davon soll es ein |hzufälliges|r sein."
+L["why.long.pick.iterator"] = "Das |hnächste in der Reihe|r ist nun dran."
+L["why.long.picked"] = "Und hier ist dein Mount: |h%s|r. Auf geht's!"
+L["why.long.picked.journal"] = "|hNun denn|r. Da ist es."
+L["why.long.out"] = "|hWieso, weshalb, warum?|r\n%s"
+L["why.long.out.none"] = "Keine Ahnung, die Historie ist leer."
+
+L["why.short.repair"] = "Haltbarkeit < %d%%"
+L["why.short.repair.no"] = "Haltbarkeit ok"
+L["why.short.repair.use"] = "Rufe Reparier-Mount"
+L["why.short.repair.empty"] = "nix zugewiesen"
+L["why.short.amphibian"] = "im Wasser & Amphibien-Modus"
+L["why.short.amphibian.use"] = "Rufe Wasser-Mount"
+L["why.short.amphibian.empty"] = "nix zugewiesen"
+L["why.short.dragonflight"] = "Dragonflight"
+L["why.short.dragonflight.no"] = "kein Dragonflight"
+L["why.short.dragonflight.use"] = "Rufe Drachen"
+L["why.short.dragonflight.empty"] = "nix zugewiesen"
+L["why.short.taxi"] = "in Gruppe & Taxi-Modus"
+L["why.short.taxi.no1"] = "keine Gruppe = kein Taxi"
+L["why.short.taxi.no2"] = "in Gruppe & kein Taxi-Modus"
+L["why.short.taxi.use"] = "Rufe Tyxi-Mount"
+L["why.short.taxi.empty"] = "nix zugewiesen"
+L["why.short.taxi.call"] = "Spring auf!"
+L["why.short.showoff"] = "Ruhebereich & Protzerei"
+L["why.short.showoff.no1"] = "kein Ruhebereich = keine Protzerei"
+L["why.short.showoff.no2"] = "Protzerei deaktiviert"
+L["why.short.showoff.no3"] = "im Wasser = keine Protzerei"
+L["why.short.showoff.use"] = "Rufe Protz-Mount"
+L["why.short.showoff.empty"] = "nix zugewiesen"
+L["why.short.showoff.flyable"] = "nur fliegende Protz-Mount"
+L["why.short.fly"] = "Flugbereich"
+L["why.short.fly.no"] = "kein Flugbereich"
+L["why.short.fly.no.together"] = "in Gruppe & zusammen bleiben"
+L["why.short.fly.ok1"] = "ganz allein"
+L["why.short.fly.ok2"] = "in Gruppe & nicht zusammen bleiben"
+L["why.short.fly.use"] = "Rufe Flug-Mount"
+L["why.short.fly.empty"] = "nix zugewiesen"
+L["why.short.water"] = "im Wasser"
+L["why.short.water.no"] = "auf festem Boden"
+L["why.short.water.use"] = "Rufe Wasser-Mount"
+L["why.short.water.empty"] = "nix zugewiesen"
+L["why.short.ground.use"] = "Rufe Boden-Mount"
+L["why.short.ground.empty"] = "nix zugewiesen"
+L["why.short.usable.all"] = "alle %d nutzbar"
+L["why.short.usable.some"] = "%d von %d nutzbar"
+L["why.short.usable.none"] = "keins von %d nutzbar"
+L["why.short.usable.null"] = "kein Mount in der Kategorie"
+L["why.short.fallback.ground"] = "Fallback: Boden-Mount"
+L["why.short.fallback.fly"] = "Fallback: Flug-Mount"
+L["why.short.fallback.random"] = "letzte Option: Irgendein zufälliges Mount"
+L["why.short.pick.random"] = "zufällige Auswahl"
+L["why.short.pick.iterator"] = "das nächste bitte"
+L["why.short.picked"] = "also: |h%s|r"
+L["why.short.picked.journal"] = "also: |hzufälliges Mount|r"
+L["why.short.out"] = "|hWieso, weshalb, warum?|r\n%s"
+L["why.short.out.none"] = "Keine Ahnung, die Historie ist leer."
+
 L["Mount journal - Open Mounty"] = "Mounty #TLV"
 
 L["help"] = [[It's a kind of magic ...
-|cfff0b040Optionsfenster öffnen|r
+|hOptionsfenster öffnen|r
 /mounty
-|cfff0b040Reittier beschwören|r
-/mounty magic||dragonflight||fly||ground||random||repair||showoff||taxi||water
-|cfff0b040Optionen setzen|r
-/mounty set amphibian||auto||debug||parachute||random||showoff||taxi||together on||off
-|cfff0b040Profile|r
+|hReittier beschwören|r
+/mounty magic|ddragonflight|dfly|dground|drandom|drepair|dshowoff|dtaxi|dwater
+|hWieso, weshalb, warum?|r
+/mounty why (Historie anzeigen)
+/mounty why short|long (Format setzen)
+/mounty why 1-%d (Zeige Eintrag aus Historie, 1 = neueste)
+|hOptionen setzen|r
+/mounty set amphibian|dauto|ddebug|dparachute|drandom|dshowoff|dtaxi|dtogether|dwhy on|doff
+|hProfile|r
 /mounty profile (Aktuelles Profil anzeigen)
 /mounty profile Heart (Profil Heart auswählen oder erstellen)
-|cfff0b040Version|r
+|hVersion|r
 /mounty version
 ]]
 

@@ -35,12 +35,22 @@ Mounty.FallbackQueue = {}
 Mounty.FallbackAlready = {}
 
 Mounty.WhyHistory = 10
+Mounty.TellMeWhy = ""
 
 Mounty.TestDragon = nil
 
 function Mounty:IsDebug ()
 
     return _Mounty_A.DebugMode or false
+
+end
+
+function Mounty:Color (s)
+
+    s = gsub(s, "|d", "|cfff0b040|||r")
+    s = gsub(s, "|h", "|cfff0b040")
+
+    return s
 
 end
 
@@ -65,7 +75,7 @@ function Mounty:Why (why)
 
     elseif why == "close" then
 
-        TLVlib:Chat(L["why.out"] .. "\n\n" .. Mounty.TellMeWhy)
+        Mounty.TellMeWhy = "|h" .. date("%d.%m.%Y %H:%M") .. "|r: " .. Mounty.TellMeWhy
 
         for i = Mounty.WhyHistory, 2, -1 do
             if _Mounty_C.Whys[i - 1] ~= nil then
@@ -73,17 +83,37 @@ function Mounty:Why (why)
             end
         end
 
-        _Mounty_C.Whys[1] = os.date("%d.%m.%Y %H:%M") .. "\n\n" .. Mounty.TellMeWhy
+        _Mounty_C.Whys[1] = Mounty.TellMeWhy
+
+        if (Mounty.CurrentProfile.Why) then
+            TLVlib:Chat(Mounty:Color(string.format(L["why.out"], Mounty.TellMeWhy)))
+        end
 
     else
 
         if Mounty.TellMeWhy == "" then
             Mounty.TellMeWhy = why
-        else
-            Mounty.TellMeWhy = Mounty.TellMeWhy .. " " .. why
+        elseif Mounty.CurrentProfile.WhyShort then
+        Mounty.TellMeWhy = Mounty.TellMeWhy .. " |h>|r " .. why
+            else
+        Mounty.TellMeWhy = Mounty.TellMeWhy .. " " .. why
         end
 
     end
+
+end
+
+function Mounty:HasCategory (category)
+
+    for i = 1, Mounty.NumMountsExpanded do
+
+        if Mounty.CurrentProfile.Mounts[category][i] > 0 then
+            return true
+        end
+
+    end
+
+    return false
 
 end
 
@@ -143,7 +173,7 @@ function Mounty:Fallback(category)
 
 end
 
-function Mounty:SelectMountByCategory(category, only_flyable_showoffs, tellmewhy)
+function Mounty:SelectMountByCategory(category, only_flyable_showoffs)
 
     if category == 0 then
         return 0
@@ -191,17 +221,15 @@ function Mounty:SelectMountByCategory(category, only_flyable_showoffs, tellmewhy
 
     if count > 0 then
 
-        if tellmewhy then
-            if count == assigned then
-                Mounty:Why(string.format(L["why.usable.all"], assigned))
-            else
-                Mounty:Why(string.format(L["why.usable.some"], count, assigned))
-            end
+        if count == assigned then
+            Mounty:Why(string.format(L["why.usable.all"], assigned))
+        else
+            Mounty:Why(string.format(L["why.usable.some"], count, assigned))
         end
 
         if Mounty.CurrentProfile.Random then
 
-            if tellmewhy and count > 1 then
+            if count > 1 then
                 Mounty:Why(string.format(L["why.pick.random"], assigned))
             end
 
@@ -209,7 +237,7 @@ function Mounty:SelectMountByCategory(category, only_flyable_showoffs, tellmewhy
 
         else
 
-            if tellmewhy and count > 1 then
+            if count > 1 then
                 Mounty:Why(string.format(L["why.pick.iterator"], assigned))
             end
 
@@ -233,25 +261,21 @@ function Mounty:SelectMountByCategory(category, only_flyable_showoffs, tellmewhy
 
     local fallback = Mounty:Fallback(category)
 
-    if tellmewhy then
-
-        if assigned > 0 then
-            Mounty:Why(string.format(L["why.usable.none"], assigned))
-        else
-            Mounty:Why(string.format(L["why.usable.null"]))
-        end
-
-        if fallback == Mounty.TypeGround then
-            Mounty:Why(L["why.fallback.ground"])
-        elseif fallback == Mounty.TypeFlying then
-            Mounty:Why(L["why.fallback.fly"])
-        else
-            Mounty:Why(L["why.fallback.random"])
-        end
-
+    if assigned > 0 then
+        Mounty:Why(string.format(L["why.usable.none"], assigned))
+    else
+        Mounty:Why(string.format(L["why.usable.null"]))
     end
 
-    return Mounty:SelectMountByCategory(fallback, false, tellmewhy)
+    if fallback == Mounty.TypeGround then
+        Mounty:Why(L["why.fallback.ground"])
+    elseif fallback == Mounty.TypeFlying then
+        Mounty:Why(L["why.fallback.fly"])
+    else
+        Mounty:Why(L["why.fallback.random"])
+    end
+
+    return Mounty:SelectMountByCategory(fallback, false)
 
 end
 
@@ -302,7 +326,7 @@ function Mounty:YouCanRideDragonsHere()
 
 end
 
-function Mounty:Mount(mode, tellmewhy)
+function Mounty:Mount(mode)
 
     local mountID = 0
     local spellID = 0
@@ -335,9 +359,7 @@ function Mounty:Mount(mode, tellmewhy)
         if IsInGroup() and not IsMounted() then
             if Mounty.CurrentProfile.Hello ~= "" then
 
-                if tellmewhy then
-                    Mounty:Why(L["why.taxi.call"])
-                end
+                Mounty:Why(L["why.taxi.call"])
 
                 SendChatMessage(Mounty.CurrentProfile.Hello)
 
@@ -364,9 +386,7 @@ function Mounty:Mount(mode, tellmewhy)
 
         if Mounty:UserCanFlyHere() then
 
-            if tellmewhy then
-                Mounty:Why(L["why.showoff.flyable"])
-            end
+            Mounty:Why(L["why.showoff.flyable"])
 
             only_flyable_showoffs = true
 
@@ -391,20 +411,18 @@ function Mounty:Mount(mode, tellmewhy)
             Mounty.FallbackQueue = { Mounty.TypeGround, Mounty.TypeFlying }
         end
 
-        spellID = Mounty:SelectMountByCategory(category, only_flyable_showoffs, tellmewhy)
+        spellID = Mounty:SelectMountByCategory(category, only_flyable_showoffs)
 
         if spellID > 0 then
 
             mountID = C_MountJournal.GetMountFromSpell(spellID)
 
-            if tellmewhy then
+            local mname = C_MountJournal.GetMountInfoByID(mountID)
+            Mounty:Why(string.format(L["why.picked"], mname))
 
-                local mname = C_MountJournal.GetMountInfoByID(mountID)
-                Mounty:Why(string.format(L["why.picked"], mname))
+        else
 
-                Mounty:Why('close')
-
-            end
+            Mounty:Why(string.format(L["why.picked.journal"], mname))
 
         end
 
@@ -486,6 +504,8 @@ function Mounty:KeyHandler(keypress)
         end
 
         -- let's decide
+
+        Mounty:Why("")
 
         local mode = ""
 
@@ -717,6 +737,12 @@ function Mounty:KeyHandler(keypress)
 
             Mounty:Why(L["why.ground.use"])
 
+            if not Mounty:HasCategory(Mounty.TypeGround) then
+
+                Mounty:Why(L["why.ground.empty"])
+
+            end
+
         end
 
         --if mode == "" then
@@ -761,13 +787,15 @@ function Mounty:KeyHandler(keypress)
         --
         --end
 
-        Mounty:Mount(mode, true)
+        Mounty:Mount(mode)
+
+        Mounty:Why('close')
 
     else
 
         TLVlib:Debug("Special key")
 
-        Mounty:Mount(keypress, false)
+        Mounty:Mount(keypress)
 
     end
 
@@ -1077,8 +1105,29 @@ function Mounty:InitOptionsFrame()
     top = top - delta * 4
 
     temp = Mounty.OptionsFrame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-    temp:SetPoint("TOPLEFT", 102, top - 3)
+    temp:SetPoint("TOPLEFT", 96, top - 3)
     temp:SetText(L["options.Helptext"])
+
+    -- Why checkboxex
+
+    top = top - 22
+
+    Mounty.OptionsFrame_Why = CreateFrame("CheckButton", "Mounty_OptionsFrame_Why", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    Mounty.OptionsFrame_Why:SetPoint("TOPLEFT", 16, top)
+    Mounty_OptionsFrame_WhyText:SetText(L["options.Why"])
+    Mounty.OptionsFrame_Why:SetScript("OnClick", function(calling)
+        Mounty.CurrentProfile.Why = not Mounty.CurrentProfile.Why
+        calling:SetChecked(Mounty.CurrentProfile.Why)
+    end)
+
+    Mounty.OptionsFrame_WhyShort = CreateFrame("CheckButton", "Mounty_OptionsFrame_WhyShort", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    Mounty.OptionsFrame_WhyShort:SetPoint("TOPLEFT", 220, top)
+    Mounty_OptionsFrame_WhyShortText:SetText(L["options.WhyShort"])
+    Mounty.OptionsFrame_WhyShort:SetScript("OnClick", function(calling)
+        Mounty.CurrentProfile.WhyShort = not Mounty.CurrentProfile.WhyShort
+        calling:SetChecked(Mounty.CurrentProfile.WhyShort)
+        Mounty:InitWhy()
+    end)
 
     -- Random checkbox
 
@@ -1983,6 +2032,14 @@ function Mounty:SelectProfile(p)
         Mounty.Profiles[p].DurabilityMin = 75
     end
 
+    if Mounty.Profiles[p].Why == nil then
+        Mounty.Profiles[p].Why = false
+    end
+
+    if Mounty.Profiles[p].WhyShort == nil then
+        Mounty.Profiles[p].WhyShort = false
+    end
+
     if Mounty.Profiles[p].Hello == nil then
         Mounty.Profiles[p].Hello = L["options.Hello-Default"]
     end
@@ -2083,6 +2140,30 @@ function Mounty:CopyProfiles(mode)
     local popup = StaticPopup_Show("Mounty_Copy_Profiles", L["profile.copy-" .. mode])
     if popup then
         popup.data = mode -- setzt data im Objekt auf mode
+    end
+
+end
+
+function Mounty:InitWhy()
+
+    local prefix
+
+    if Mounty.CurrentProfile.WhyShort then
+        prefix = 'why.short.'
+    else
+        prefix = 'why.long.'
+    end
+
+    for ix, s in pairs(L) do
+
+        if string.sub(ix, 1, 6) == prefix then
+
+            TLVlib:Debug(ix)
+            TLVlib:Debug("why." .. string.sub(ix, 7))
+
+            L["why." .. string.sub(ix, 7)] = s
+
+        end
     end
 
 end
@@ -2216,6 +2297,8 @@ function Mounty:Init (event, arg1)
 
         Mounty:InitSavedVariables()
 
+        Mounty:InitWhy()
+
         Mounty:InitFrames()
 
         self:UnregisterEvent("ADDON_LOADED")
@@ -2268,20 +2351,41 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
     elseif mode == "why" then
 
-        arg1 = tonumber(arg1)
+        local argn = tonumber(arg1) or 0
 
-        if (arg1 > 0 and arg1 <= Mounty.WhyHistory) then
+        if arg1 == "" then
 
-            if (_Mounty_C.Whys[arg1]) then
+            for i = Mounty.WhyHistory, 1, -1 do
+                if _Mounty_C.Whys[i] ~= nil then
+                    TLVlib:Chat(Mounty:Color(string.format(L["why.out"], _Mounty_C.Whys[i])))
+                end
+            end
 
-                TLVlib:Chat(L["why.out"] .. "\n\n" .. _Mounty_C.Whys[arg1])
+        elseif arg1 == "short" then
+
+            Mounty.CurrentProfile.WhyShort = true
+            Mounty:InitWhy()
+
+            TLVlib:Chat(L["chat.WhyShortOn"])
+
+        elseif arg1 == "long" then
+
+            Mounty.CurrentProfile.WhyShort = false
+            Mounty:InitWhy()
+
+            TLVlib:Chat(L["chat.WhyShortOff"])
+
+        elseif argn > 0 and argn <= Mounty.WhyHistory then
+
+            if _Mounty_C.Whys[argn] then
+
+                TLVlib:Chat(Mounty:Color(string.format(L["why.out"], _Mounty_C.Whys[argn])))
 
             else
 
                 TLVlib:Chat(L["why.out.none"])
 
             end
-
 
         else
 
@@ -2350,6 +2454,11 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
                 Mounty.CurrentProfile.Together = (arg2 == "on")
                 TLVlib:Chat(L["chat.Together"] .. suffix)
 
+            elseif arg1 == "why" then
+
+                Mounty.CurrentProfile.Why = (arg2 == "on")
+                TLVlib:Chat(L["chat.Why"] .. suffix)
+
             else
 
                 okay = false
@@ -2381,7 +2490,7 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
             or mode == "custom3"
     then
 
-        Mounty:Mount(mode, true)
+        Mounty:Mount(mode)
 
     else
 
@@ -2391,13 +2500,7 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
     if not okay then
 
-        local help = L["help"]
-
-        help = gsub(help, "||", "|cfff0b040|||r")
-
-        help = string.format(help, Mounty.WhyHistory)
-
-        TLVlib:Chat(help)
+        TLVlib:Chat(Mounty:Color(string.format(L["help"], Mounty.WhyHistory)))
 
     end
 
