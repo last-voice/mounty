@@ -201,9 +201,10 @@ L["help"] = [[It's a kind of magic ...
 |hSummon mount|r
 /mounty magic|ddragonflight|dfly|dground|drandom|drepair|dshowoff|dtaxi|dwater
 |hTell me why|r
-/mounty why short|long (Set format)
-/mounty why (Show all history entries)
-/mounty why 1-%d (Show history entry, 1 = youngest)
+/mounty why (Show the current entry)
+/mounty why 1-%d (Show an older entry)
+/mounty why all (Show full history)
+/mounty why short|long (Set output format)
 |hSet options|r
 /mounty set amphibian|dauto|ddebug|dparachute|drandom|dshowoff|dtaxi|dtogether|dwhy on|doff
 |hProfiles|r
@@ -223,8 +224,7 @@ Take a look at the README for all details.]]
 
 L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.md"
 
-L["upgrade.popup"] = "Introducing |cfff07070Amphibia mode|r.\nHold your breath!\n\n(See CHANGELOG for more updates.)"
-L["upgrade.popup"] = "Superb, this new |cfff07070Why mode|r incl. history.\nCheck it out asap!\n\n(Activate in options or type '/mounty help' in chat after pressing the magic key.)"
+L["upgrade.popup"] = "Superb, this new |cfff07070Why mode|r incl. history.\nCheck it out asap!\n\n(Activate in options or\ntype '/mounty help' in chat window.)\n\nDonations welcome. See README."
 
 local _, TLV_AddOn = ...
 TLV_AddOn.L = L

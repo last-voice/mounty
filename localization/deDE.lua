@@ -202,9 +202,10 @@ L["help"] = [[It's a kind of magic ...
 |hReittier beschwören|r
 /mounty magic|ddragonflight|dfly|dground|drandom|drepair|dshowoff|dtaxi|dwater
 |hWieso, weshalb, warum?|r
-/mounty why short|long (Format setzen)
-/mounty why (Ganze Historie anzeigen)
-/mounty why 1-%d (Zeige Eintrag aus Historie, 1 = neueste)
+/mounty why (Das zuletzt gewählte Mount erläutern)
+/mounty why 2-%d (Zeige einen älteren Eintrag der Historie an)
+/mounty why all (Zeige die ganze Historie an)
+/mounty why short|long (Welches Ausgabeformat?)
 |hOptionen setzen|r
 /mounty set amphibian|dauto|ddebug|dparachute|drandom|dshowoff|dtaxi|dtogether|dwhy on|doff
 |hProfile|r
@@ -224,7 +225,7 @@ In der README findest du eine detaillierte Beschreibung.]]
 
 L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.de.md"
 
-L["upgrade.popup"] = "Voll toll, der neue |cfff07070Warum-Modus|r inkl. Historie.\nSofort ausprobieren!\n\n(In den Optionen einschalten oder im Chat '/mounty help' eingeben.)"
+L["upgrade.popup"] = "Voll toll, der neue |cfff07070Warum-Modus|r inkl. Historie.\nSofort ausprobieren!\n\n(In den Optionen einschalten oder\nim Chat '/mounty help' eingeben.)\n\nSpenden sind willkommen. Siehe README."
 
 local _, TLV_AddOn = ...
 TLV_AddOn.L = setmetatable(L, { __index = TLV_AddOn.L })

@@ -2,8 +2,6 @@
 
 ## In jeder Situation das perfekte Mount!
 
-** Seit v2.3 sind die Drachen erwacht
-
 ---
 
 Hier findest Du das Add-on:
@@ -34,6 +32,14 @@ Dann ist __Mounty #TLV__ genau das richtige Add-on für dich und mit nur __einem
 6. Genieße __Mounty #TLV__ und schau dir gerne auch alle weiteren Optionen und Mögichkeiten an.
 
 ---
+
+## Spenden
+
+Mounty #TLV ist ganz großer Spaß. Mittlerweile steckt auch viel Arbeit drin. Ich freue mich über jede Spende, weil die den Spaß noch größer macht. Und die Arbeit ein klein wenig leichter. ;)
+
+Paypal: thank.you.tlv@gmail.com
+
+Ganz dickes Dankeschön!
 
 # Anleitung
 
@@ -129,6 +135,18 @@ Wenn eine Kategorie leer ist, wird stattdessen eines deiner __Flug-Mounts__ ausg
 - Sonderfall 1: Flug-Mounts und Drachen werden nur dann gerufen, wenn Du auch gelernt hast, diese zu reiten.
 - Sonderfall 2: In Ruhebereichen, in denen du fliegen kannst, werden nur fliegende Protz-Mounts ausgewählt.
 
+### Und warum wurde genau dieses Mount gerufen?
+
+Die Magie ist komplex. Aber auch ganz transparent.
+
+__Mounty #TLV__ speichert eine Historie der letzten 10 magisch gerufenen Mounts, und die kannst du dir jederzeit anschauen.
+
+Tippe _/mounty why_, um den letzten Eintrag anzusehen.
+Tippe _/mounty why 2-10_, um einen älteren Eintrag anzusehen.
+Tippe _/mounty why all_, um alle Einträge anzusehen.
+
+Außerdem kannst du den _Warum-Modus_ aktivieren. Dann kommt die Erklärung jedesmal ganz automatisch. (Siehe: Optionen)
+
 # Konfigurieren und benutzen
 
 Tippe __/mounty im Chat__ und das Optionsfenster öffnet sich.
@@ -149,6 +167,7 @@ __ACHTUNG:__ __Mounty #TLV__ __überprüft nie__, ob deine Zuordnungen sinnvoll 
 
 ### Je Profil
 
+- __Warum-Modus__ - Jedes Mal, nachdem __Mounty #TLV__ dir magisch ein Mount herbeigerufen hat, erklärt es dir ganz genau, warum es dieses eine Mount geworden ist.
 - __Zufalls-Modus__ - Falls _eingeschaltet_, wird ein zufälliges Mount aus der jeweiligen _Kategorie_ ausgewählt. Falls _ausgeschaltet_, kommt eins nach dem anderen immer der Reihe nach und dann wieder von vorne.
 - __Protz-Modus__ - In Ruhebereichen wird automatisch eines Deiner Protz-Mounts aus dem Sack geholt, damit alle wissen, dass Du monatelang in Zereth Mortis geangelt hast.
 - __Amphibien-Modus__ - Im Wasser zwischen Wasser- und Flug-Mount abwechseln, denn wer weiß schon, ob du tauchen oder abhauen willst.
@@ -194,6 +213,7 @@ _/mounty set random on|off_ (Zufällig oder in Reihenfolge)\
 _/mounty set showoff on|off_ (Protzerei!)\
 _/mounty set taxi on|off_ (Taxi-Mounts verwenden)\
 _/mounty set together on|off_ (Zusammen bleiben)
+_/mounty set why on|off_ (Wieso, weshalb, warum jedesmal automatisch ausgeben)
 
 __Mounts beschwören__
 
@@ -207,6 +227,13 @@ _/mounty random_ - beschwört ein zufälliges Mount\
 _/mounty showoff_ - beschwört ein Protz-Mount\
 _/mounty taxi_ - beschwört ein Taxi-Mount\
 _/mounty water_ - beschwört ein Wasser-Mount
+
+__Wieso, weshalb, warum?__
+
+_/mounty why_ - das zuletzt gewählte Mount erläutern\
+_/mounty why 2-10_ - zeige einen älteren Eintrag der Historie an\
+_/mounty why all_ - zeige die ganze Historie an\
+_/mounty why short|long - welches Ausgabeformat?
 
 __Profile__
 

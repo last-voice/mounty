@@ -2,8 +2,6 @@
 
 ## Always the perfect mount in any given situation!
 
-** Since v2.3 ready to wake some dragons
-
 ---
 
 The add on can be found here:
@@ -34,6 +32,14 @@ All this can be done with __Mounty #TLV__ and all this will happen _magically_ w
 6. Enjoy __Mounty #TLV__ and take a look and all the other options and possibilities.
 
 ---
+
+## Donations
+
+Mounty #TLV is big fun. But also became a lot of work. So I'm happy abount any donation, which makes the fun even bigger and the work a little lighter. ;)
+
+Paypal: thank.you.tlv@gmail.com 
+
+Thank you so much!
 
 # Manual
 
@@ -79,7 +85,7 @@ Then let's do _the real magic_ and get you __the mount you crave__ for.
 
 You just killed thousands of enemies and your durability is lower than the threshold via options? Summon your __repair mount__ and be reborn.
 
-You're soaking wet, swimming and surrounded by endless water? If _amphibian mode_ is active, your __water mount__ will appear every second summoning!
+You're soaking wet, swimming and surrounded by endless water? If _amphibian mode_ is active, your __water mount__ will appear every second summoning! 
 
 You're on the Dragon isles in a dragon flight zone and you already experienced what it is like to be storm born? Mate, its time to wake the __dragon__!
 
@@ -130,6 +136,18 @@ If a category is empty, it will then select one of your __flying mounts__. And i
 - Exception 1: As long as you haven't given to fly yet, ground mounts will always be prefered before dragons and fly mounts.
 - Exception 2: In flyable resting areas only flyable show off mounts will be chosen.
 
+### And why was a certain mount chosen?
+
+The magic is kind of complex but it it transparent too.
+
+__Mounty #TLV__ will keep a history of it's last 10 summonings and you can take it look at it anytime.
+
+Type _/mounty why_ to see the newest (= last) entry.
+Type _/mounty why 2-10_ to see an older entry.
+Type _/mounty why all_ to see all entries.
+
+You can also switch on _Why mode_ to show the explanation automatically in the chat window after each summoning. (See: _Options_)
+
 # How to configure and use
 
 Type __/mounty in the chat__ and the options frame will open.
@@ -150,6 +168,7 @@ __WARNING:__ __Mounty #TLV__ __does never check__ if your assignments per catego
 
 ### Per profile
 
+- __Why mode__ - Every time after _magically_ summoning a mount __Mounty #TLV__ will tell you exactly, why the resulting mount has been chosen.
 - __Random mode__ - If _on_, __Mounty #TLV__ will randomly summon a mount of the selected _category_. If _off_ then it will cycle through one by one.
 - __Show off mode__ - In resting areas everybody should see one of your show off mounts. Because everybody must know, that you went fishing in Zereth Mortis for hundreds of hours, just to get this one and only jelly fish.
 - __Amphibian mode__ - Whilst swimming, alternate between water and flying mounts, because you might want to dive or you might want to fly away. Who knows?
@@ -183,6 +202,31 @@ __Version__
 
 _/mounty version_ - to show the current version of the addon
 
+__Summoning__
+
+_/mounty magic_ - to let __Mounty #TLV's__ magic happen
+
+_/mounty dragonflight_ - to summon a Dragonflight mount\
+_/mounty fly_ - to summon fly mount\
+_/mounty ground_ - to summon ground mount\
+_/mounty random_ - to summon random mount\
+_/mounty repair_ - to summon repair mount\
+_/mounty showoff_ - to summon show off mount\
+_/mounty taxi_ - to summon taxi mount\
+_/mounty water_ - to summon water mount
+
+__Tell me why!__
+
+_/mounty why_ - to show the current entry\
+_/mounty why 2-10_ - to show an older entry\
+_/mounty why all_ - to show all entries\
+_/mounty why short|long - to set the output format
+
+__Profiles__
+
+_/mounty profile_ - to show the current used profile\
+_/mounty profile Heart_ - to switch to or create the profile Heart\
+
 __Options__
 
 _/mounty_ - to open the options frame
@@ -197,24 +241,7 @@ _/mounty set random on|off_ (Random or cycle throught)\
 _/mounty set showoff on|off_ (Show off, show off!)\
 _/mounty set taxi on|off_ (Use taxi mounts)\
 _/mounty set together on|off_ (Let's stay together)
-
-__Summoning__
-
-_/mounty magic_ - to let __Mounty #TLV's__ magic happen
-
-_/mounty dragonflight_ - to summon a Dragonflight mount\
-_/mounty fly_ - to summon fly mount\
-_/mounty ground_ - to summon ground mount\
-_/mounty random_ - to summon random mount\
-_/mounty repair_ - to summon repair mount\
-_/mounty showoff_ - to summon show off mount\
-_/mounty taxi_ - to summon taxi mount\
-_/mounty water_ - to summon water mount
-
-__Profiles__
-
-_/mounty profile_ - to show the current used profile\
-_/mounty profile Heart_ - to switch to or create the profile Heart\
+_/mounty set why on|off_ (Output 'Why?' every time automatically)
 
 ## Binding keys
 

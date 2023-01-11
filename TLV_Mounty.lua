@@ -817,48 +817,6 @@ function Mounty:KeyHandler(keypress)
 
         end
 
-        --if mode == "" then
-        --
-        --    if Mounty:Durability() < Mounty.CurrentProfile.DurabilityMin then
-        --
-        --        mode = "repair"
-        --
-        --    elseif swimming and Mounty.ForceWaterMount then
-        --
-        --        mode = "water"
-        --
-        --    elseif dragonflight then
-        --
-        --        mode = "dragonflight"
-        --
-        --    elseif not alone and taximode then
-        --
-        --        mode = "taxi"
-        --
-        --    elseif resting and showoff and not swimming then
-        --
-        --        mode = "showoff"
-        --
-        --    elseif flyable and alone then
-        --
-        --        mode = "fly"
-        --
-        --    elseif flyable and not alone and not together then
-        --
-        --        mode = "fly"
-        --
-        --    elseif swimming then
-        --
-        --        mode = "water"
-        --
-        --    else
-        --
-        --        mode = "ground"
-        --
-        --    end
-        --
-        --end
-
         Mounty:Mount(mode)
 
         Mounty:Why('#eod')
@@ -2089,12 +2047,8 @@ function Mounty:SelectProfile(p)
         Mounty.Profiles[p].Amphibian = false
     end
 
-    if Mounty.Profiles[p].DoNotShowOff == nil then
-        Mounty.Profiles[p].DoNotShowOff = false
-    end
-
     if Mounty.Profiles[p].ShowOff == nil then
-        Mounty.Profiles[p].ShowOff = not Mounty.Profiles[p].DoNotShowOff
+        Mounty.Profiles[p].ShowOff = false
     end
 
     if Mounty.Profiles[p].Random == nil then
