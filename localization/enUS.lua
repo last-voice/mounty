@@ -26,10 +26,10 @@ L["mode.Custom1"] = "|cfff07070Custom 1|r"
 L["mode.Custom2"] = "|cfff07070Custom 2|r"
 L["mode.Custom3"] = "|cfff07070Custom 3|r"
 
-L["options.Why"] = "Why mode - Choice explained in chat"
-L["options.WhyShort"] = "Short explanation"
+L["options.Why"] = "Why mode - Always explain choice in chat"
+L["options.WhyShort"] = "Shorter explanation"
 L["options.Random"] = "Random mode - Choose random mount instead of one by one"
-L["options.Look"] = "Show off mode - Show off in resting areas"
+L["options.Look"] = "Show off mode - Show off in resting areas (except Dragonflight)"
 L["options.Together"] = "Together mode tay together whilst in group and don't summon flying mounts"
 L["options.Amphibian"] = "Amphibian mode - Whilst swimming alternate between water and flying mounts"
 L["options.Taxi"] = "Taxi mode - Always summon taxi mount when in group"
@@ -88,12 +88,13 @@ L["button.CopyA2C"] = "Account>Char"
 L["button.Journal"] = "Mount journal"
 L["button.Help"] = "Help"
 
-L["why.long.repair"] = "Your |hdurability|r is below %s%%."
-L["why.long.repair.no"] = "Your |hdurability|r is fine."
+L["why.long.repair"] = "Your |hdurability is below %s%%|r."
+L["why.long.repair.no"] = "Your |hdurability is fine|r."
 L["why.long.repair.use"] = "So Mounty #TLV will help out with a |hrepair mount|r."
 L["why.long.repair.empty"] = "Ooops, you have no assigned repair mount to be summoned."
 L["why.long.amphibian"] = "You are |hswimming and amphibian mode|r is active."
 L["why.long.amphibian.use"] = "So a |hwater mount|r is next to be chosen."
+L["why.long.amphibian.alt"] = "We alternate and |hskip the water mount|r this time."
 L["why.long.amphibian.empty"] = "If you only had assigned one."
 L["why.long.dragonflight"] = "This is a good place because |hDragonflight|r is possible."
 L["why.long.dragonflight.no"] = "Too sad, this area is |hnot for Dragonflight|r. Or you haven't got a dragon yet."
@@ -110,8 +111,8 @@ L["why.long.showoff.no1"] = "|hNo resting area|h, no show off."
 L["why.long.showoff.no2"] = "Although in a resting area, you just |hdon't want to show off|r."
 L["why.long.showoff.no3"] = "To show off over here you should |hget out of the water|r first."
 L["why.long.showoff.use"] = "So Mounty #TLV will now try summon one of your awesome |hshow off mounts|r."
-L["why.long.showoff.empty"] = "But cannot find one in it's category." -- cx2do
-L["why.long.showoff.flyable"] = "And for here is a |hflying area|r, only your flying show off mounts will be chosen of." -- cx2do
+L["why.long.showoff.empty"] = "But cannot find one in it's category."
+L["why.long.showoff.flyable"] = "And for here is a |hflying area|r, only your flying show off mounts will be chosen of."
 L["why.long.fly"] = "Up, up, up, my friend. |hYou can fly|r in this area."
 L["why.long.fly.no"] = "Over here |hflying is no option|r for you."
 L["why.long.fly.no.together"] = "Ooops, stop, you've chosen to |hstay on the ground together|r with your group."
@@ -120,11 +121,12 @@ L["why.long.fly.ok2"] = "And you don't want to stay on the ground with your comp
 L["why.long.fly.use"] = "We better hurry to summon a |hflying mount|r."
 L["why.long.fly.empty"] = "If only you would have had assiged some in Mounty #TLV."
 L["why.long.water"] = "You are |hswimming|r."
-L["why.long.water.no"] = "You are on |hdry land|r. And least your feet touch the ground."
+L["why.long.water.no"] = "And least you are |hnot floating in cold water|r."
 L["why.long.water.use"] = "And there are some special |hwater mounts|r to summon. Let's choose one."
 L["why.long.water.empty"] = "You don't have a water mount assigned?"
 L["why.long.ground.use"] = "Simple magic: A |hground mount|r seems to be best. Let's get one."
 L["why.long.ground.empty"] = "|hNow this won't end well|r. You do not even have any ground mounts assigned in Mounty #TLV."
+L["why.long.usable.one"] = "The |hone|r you have can be used."
 L["why.long.usable.all"] = "|hAll|r of these |h%s|r mounts are usable here and now."
 L["why.long.usable.some"] = "At this time and place you can use |h%s of %s|r of these."
 L["why.long.usable.none"] = "|hNone|r of these |h%s|r can be used by now for any reason."
@@ -143,6 +145,7 @@ L["why.short.repair.use"] = "summon repair mount"
 L["why.short.repair.empty"] = "none assigned"
 L["why.short.amphibian"] = "swimming & amphibian mode"
 L["why.short.amphibian.use"] = "summon water mount"
+L["why.short.amphibian.alt"] = "skip water mount"
 L["why.short.amphibian.empty"] = "none assigned"
 L["why.short.dragonflight"] = "dragonflight area"
 L["why.short.dragonflight.no"] = "no dragonflight area"
@@ -169,11 +172,12 @@ L["why.short.fly.ok2"] = "company & not stay together"
 L["why.short.fly.use"] = "summon flying mount"
 L["why.short.fly.empty"] = "none assigned"
 L["why.short.water"] = "swimming"
-L["why.short.water.no"] = "on dry land"
+L["why.short.water.no"] = "not swimming"
 L["why.short.water.use"] = "summon water mount"
 L["why.short.water.empty"] = "none assigned"
 L["why.short.ground.use"] = "summon ground mount"
 L["why.short.ground.empty"] = "none assigned"
+L["why.short.usable.one"] = "is usable"
 L["why.short.usable.all"] = "all %s usable"
 L["why.short.usable.some"] = "%s of %s usable"
 L["why.short.usable.none"] = "none of %s usable"
@@ -197,8 +201,8 @@ L["help"] = [[It's a kind of magic ...
 |hSummon mount|r
 /mounty magic|ddragonflight|dfly|dground|drandom|drepair|dshowoff|dtaxi|dwater
 |hTell me why|r
-/mounty why (Show all history entries)
 /mounty why short|long (Set format)
+/mounty why (Show all history entries)
 /mounty why 1-%d (Show history entry, 1 = youngest)
 |hSet options|r
 /mounty set amphibian|dauto|ddebug|dparachute|drandom|dshowoff|dtaxi|dtogether|dwhy on|doff
@@ -220,6 +224,7 @@ Take a look at the README for all details.]]
 L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.md"
 
 L["upgrade.popup"] = "Introducing |cfff07070Amphibia mode|r.\nHold your breath!\n\n(See CHANGELOG for more updates.)"
+L["upgrade.popup"] = "Superb, this new |cfff07070Why mode|r incl. history.\nCheck it out asap!\n\n(Activate in options or type '/mounty help' in chat after pressing the magic key.)"
 
 local _, TLV_AddOn = ...
 TLV_AddOn.L = L

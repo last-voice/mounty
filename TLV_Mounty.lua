@@ -286,7 +286,11 @@ function Mounty:SelectMountByCategory(category, only_flyable_showoffs)
     if count > 0 then
 
         if count == assigned then
-            Mounty:Why("usable.all", assigned)
+            if count == 1 then
+                Mounty:Why("usable.one")
+            else
+                Mounty:Why("usable.all", assigned)
+            end
         else
             Mounty:Why("usable.some", count, assigned)
         end
@@ -601,19 +605,27 @@ function Mounty:KeyHandler(keypress)
 
         if mode == "" then
 
-            if swimming and Mounty.ForceWaterMount then
+            if swimming and amphibian then
 
                 Mounty:Why("amphibian")
 
-                if Mounty:HasCategory(Mounty.TypeWater) then
+                if Mounty.ForceWaterMount then
 
-                    mode = "water"
+                    if Mounty:HasCategory(Mounty.TypeWater) then
 
-                    Mounty:Why("amphibian.use")
+                        mode = "water"
+
+                        Mounty:Why("amphibian.use")
+
+                    else
+
+                        Mounty:Why("amphibian.empty")
+
+                    end
 
                 else
 
-                    Mounty:Why("amphibian.empty")
+                    Mounty:Why("amphibian.alt")
 
                 end
 
@@ -1181,7 +1193,7 @@ function Mounty:InitOptionsFrame()
     end)
 
     Mounty.OptionsFrame_WhyShort = CreateFrame("CheckButton", "Mounty_OptionsFrame_WhyShort", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
-    Mounty.OptionsFrame_WhyShort:SetPoint("TOPLEFT", 220, top)
+    Mounty.OptionsFrame_WhyShort:SetPoint("TOPLEFT", 240, top)
     Mounty_OptionsFrame_WhyShortText:SetText(L["options.WhyShort"])
     Mounty.OptionsFrame_WhyShort:SetScript("OnClick", function(calling)
         Mounty.CurrentProfile.WhyShort = not Mounty.CurrentProfile.WhyShort
@@ -1787,6 +1799,8 @@ function Mounty:OptionsRender()
         return
     end
 
+    Mounty.OptionsFrame_Why:SetChecked(Mounty.CurrentProfile.Why)
+    Mounty.OptionsFrame_WhyShort:SetChecked(Mounty.CurrentProfile.WhyShort)
     Mounty.OptionsFrame_Random:SetChecked(Mounty.CurrentProfile.Random)
     Mounty.OptionsFrame_Together:SetChecked(Mounty.CurrentProfile.Together)
     Mounty.OptionsFrame_Amphibian:SetChecked(Mounty.CurrentProfile.Amphibian)
@@ -2221,9 +2235,9 @@ function Mounty:InitSavedVariables()
         _Mounty_C.Profiles = {}
     end
 
-    --cx2do    if _Mounty_C.WhyHistory == nil then
-    _Mounty_C.WhyHistory = {}
-    --    end
+    if _Mounty_C.WhyHistory == nil then
+        _Mounty_C.WhyHistory = {}
+    end
 
     if _Mounty_A.Profiles == nil then
         _Mounty_A.Profiles = {}

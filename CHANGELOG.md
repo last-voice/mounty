@@ -2,8 +2,11 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.7.0.1
+- minor changes
+
 v2.7
-- Why mode (And that's awesome, I promise!)
+- New Why mode (And that's awesome, I promise!)
 
 v2.6
 - New option to alternate between water mount and flying mounts whilst swimming
