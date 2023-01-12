@@ -137,7 +137,7 @@ L["why.long.fallback.random"] = "The last straw is to summon |hany random mount|
 L["why.long.pick.random"] = "Out of these a |hrandom|r one will be picked."
 L["why.long.pick.iterator"] = "The |hnext in line|r of these will be picked."
 L["why.long.picked"] = "And so finally this is your mount: |h%s|r. Enjoy the ride!"
-L["why.long.picked.journal"] = "|hSo be it|r. Enjoy the ride!"
+L["why.long.lost"] = "|hLost|r. Found no usable mount at all!"
 
 L["why.short.repair"] = "durability < %s%%"
 L["why.short.repair.no"] = "durability ok"
@@ -188,7 +188,7 @@ L["why.short.fallback.random"] = "last straw: any random mount"
 L["why.short.pick.random"] = "random pick"
 L["why.short.pick.iterator"] = "next in line"
 L["why.short.picked"] = "choice: |h%s|r"
-L["why.short.picked.journal"] = "choice: |hrandom mount|r"
+L["why.short.lost"] = "no usable mount at all!"
 
 L["why.out.header"] = "|hThis is why!|r"
 L["why.out.none"] = "I can't tell you why. No history entry found."
@@ -224,7 +224,7 @@ Take a look at the README for all details.]]
 
 L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.md"
 
-L["upgrade.popup"] = "Superb, this new |cfff07070Why mode|r incl. history.\nCheck it out asap!\n\n(Activate in options or\ntype '/mounty help' in chat window.)\n\nDonations welcome. See README."
+L["upgrade.popup"] = "Superb, this new |cfff07070Why mode|r incl. history.\nCheck it out asap!\n\n(Activate in options or\ntype '/mounty help' in chat window.)\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nDonations welcome. See README."
 
 local _, TLV_AddOn = ...
 TLV_AddOn.L = L

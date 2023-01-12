@@ -138,7 +138,7 @@ L["why.long.fallback.random"] = "Die allerletzte Option bleibt |hirgend ein zuf�
 L["why.long.pick.random"] = "Davon soll es ein |hzufälliges|r sein."
 L["why.long.pick.iterator"] = "Das |hnächste in der Reihe|r ist nun dran."
 L["why.long.picked"] = "Und hier ist dein Mount: |h%s|r. Auf geht's!"
-L["why.long.picked.journal"] = "|hNun denn|r. Da ist es."
+L["why.long.lost"] = "|hLost|r. Kein Mount gefunden!"
 
 L["why.short.repair"] = "Haltbarkeit < %s%%"
 L["why.short.repair.no"] = "Haltbarkeit ok"
@@ -189,7 +189,7 @@ L["why.short.fallback.random"] = "letzte Option: Irgendein zufälliges Mount"
 L["why.short.pick.random"] = "zufällige Auswahl"
 L["why.short.pick.iterator"] = "das nächste bitte"
 L["why.short.picked"] = "also: |h%s|r"
-L["why.short.picked.journal"] = "also: |hzufälliges Mount|r"
+L["why.short.lost"] = "kein Mount gefunden!"
 
 L["why.out.header"] = "|hWieso, weshalb, warum?|r"
 L["why.out.none"] = "Keine Ahnung, die Historie ist leer."
@@ -225,7 +225,7 @@ In der README findest du eine detaillierte Beschreibung.]]
 
 L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.de.md"
 
-L["upgrade.popup"] = "Voll toll, der neue |cfff07070Warum-Modus|r inkl. Historie.\nSofort ausprobieren!\n\n(In den Optionen einschalten oder\nim Chat '/mounty help' eingeben.)\n\nSpenden sind willkommen. Siehe README."
+L["upgrade.popup"] = "Voll toll, der neue |cfff07070Warum-Modus|r inkl. Historie.\nSofort ausprobieren!\n\n(In den Optionen einschalten oder\nim Chat '/mounty help' eingeben.)\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nSpenden sind willkommen. Siehe README."
 
 local _, TLV_AddOn = ...
 TLV_AddOn.L = setmetatable(L, { __index = TLV_AddOn.L })
