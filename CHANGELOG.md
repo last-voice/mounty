@@ -2,10 +2,8 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
-v2.7.0.4
-- minor changes
-- minor fixes
-- further improvements
+v2.7.0.5
+- minor changes, minor fixes, minor improvements
 
 v2.7
 - The new 'Why mode' is awesome, I promise!
@@ -36,7 +34,7 @@ v2.5.3.2
 v2.5.3.1
 - stupid me :-/
 
-v2.5.3<
+v2.5.3
 - SORRY, bad bug prevented Mounty to upgrade from older versions. This is now fixed.
 - Also changed the too generic name of saved variable.
 

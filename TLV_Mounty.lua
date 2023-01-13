@@ -94,42 +94,52 @@ function Mounty:WhyOut (which, silent)
 
     end
 
-    local verbose = ""
+    local out = ""
 
-    local prefix = ""
-    local delim = ""
-
-    local date = "|h" .. (_Mounty_C.WhyHistory[which].date or "???") .. "|r"
+    local prefix = "why.long."
+    local delim = " "
+    local nl = "\n- "
 
     if _Mounty_A.WhyAutoShort then
         prefix = "why.short."
         delim = " |h>|r "
-    else
-        prefix = "why.long."
-        delim = " "
+        nl = ""
     end
+
+    local date = "|h" .. (_Mounty_C.WhyHistory[which].date or "???") .. "|r"
 
     for _, entry in ipairs(_Mounty_C.WhyHistory[which].log) do
 
         local ix, arg1, arg2 = entry[1], entry[2], entry[3]
 
-        local line = L[prefix .. ix] or ""
+        if (ix == "\n") then
 
-        if line ~= "" then
+            out = out .. nl
 
-            line = string.format(line, arg1, arg2)
+        else
 
-            if verbose == "" then
-                verbose = line
-            else
-                verbose = verbose .. delim .. line
+            local line = L[prefix .. ix] or ""
+
+            if line ~= "" then
+
+                line = string.format(line, arg1, arg2)
+
+                if out == "" then
+                    out = line
+                else
+                    out = out .. delim .. line
+                end
+
             end
 
         end
 
     end
 
-    TLVlib:Chat(L["why.out.header"] .. "\n" .. Mounty:Color(date .. ": " .. verbose))
+    -- no spaces at beginning of line
+    out = gsub(out, "\n ", "\n")
+
+    TLVlib:Chat(L["why.out.header"] .. "\n" .. Mounty:Color(date .. ": " .. out))
 
 end
 
@@ -231,57 +241,6 @@ function Mounty:AnyRandom()
     end
 
     return 0, ""
-
-end
-
-function Mounty:FallbackReset()
-
-    Mounty.FallbackAlready = {}
-
-    if Mounty:UserCanFlyHere() then
-        Mounty.FallbackQueue = { Mounty.TypeFlying, Mounty.TypeGround }
-    else
-        Mounty.FallbackQueue = { Mounty.TypeGround, Mounty.TypeFlying }
-    end
-
-end
-
-function Mounty:Fallback(category)
-
-    Mounty.FallbackAlready[category] = true
-
-    local FallbackTo = 0
-
-    if not Mounty.FallbackAlready[Mounty.FallbackQueue[1]] then
-
-        FallbackTo = Mounty.FallbackQueue[1]
-
-    elseif not Mounty.FallbackAlready[Mounty.FallbackQueue[2]] then
-
-        FallbackTo = Mounty.FallbackQueue[2]
-
-    end
-
-    if FallbackTo == Mounty.TypeFlying then
-
-        TLVlib:Debug("Fallback: Flying mount")
-        Mounty:Why("fallback.fly")
-
-        return Mounty.TypeFlying
-
-    elseif FallbackTo == Mounty.TypeGround then
-
-        TLVlib:Debug("Fallback: Ground mount")
-        Mounty:Why("fallback.ground")
-
-        return Mounty.TypeGround
-
-    end
-
-    TLVlib:Debug("Fallback: Random mount")
-    Mounty:Why("fallback.random")
-
-    return 0
 
 end
 
@@ -514,11 +473,39 @@ function Mounty:Mount(mode, magic)
         -- fallback only if magic
         if magic then
 
-            Mounty:FallbackReset()
+            Mounty.FallbackAlready = {}
+
+            if Mounty:UserCanFlyHere() then
+                Mounty.FallbackQueue = { Mounty.TypeFlying, Mounty.TypeGround }
+            else
+                Mounty.FallbackQueue = { Mounty.TypeGround, Mounty.TypeFlying }
+            end
 
             while spellID == 0 do
 
-                category = Mounty:Fallback(category)
+                Mounty.FallbackAlready[category] = true
+
+                category = 0
+
+                if not Mounty.FallbackAlready[Mounty.FallbackQueue[1]] then
+                    category = Mounty.FallbackQueue[1]
+                elseif not Mounty.FallbackAlready[Mounty.FallbackQueue[2]] then
+                    category = Mounty.FallbackQueue[2]
+                end
+
+                if category == 0 then
+                    TLVlib:Debug("Fallback: Random mount")
+                    Mounty:Why("\n")
+                    Mounty:Why("fallback.random")
+                elseif category == Mounty.TypeFlying then
+                    TLVlib:Debug("Fallback: Flying mount")
+                    Mounty:Why("\n")
+                    Mounty:Why("fallback.fly")
+                elseif category == Mounty.TypeGround then
+                    TLVlib:Debug("Fallback: Ground mount")
+                    Mounty:Why("\n")
+                    Mounty:Why("fallback.ground")
+                end
 
                 if category > 0 then
                     spellID = Mounty:SelectMountByCategory(category)
@@ -537,6 +524,7 @@ function Mounty:Mount(mode, magic)
             mountID = C_MountJournal.GetMountFromSpell(spellID)
             mountName = C_MountJournal.GetMountInfoByID(mountID)
 
+            Mounty:Why("\n")
             Mounty:Why("picked", mountName)
 
         else
@@ -560,6 +548,7 @@ function Mounty:Mount(mode, magic)
 
         else
 
+            Mounty:Why("\n")
             Mounty:Why("picked", mountName)
 
         end
@@ -578,7 +567,7 @@ function Mounty:Mount(mode, magic)
 
 end
 
-function Mounty:KeyHandler(keypress)
+function Mounty:Run(keypress)
 
     local mounted = IsMounted()
     local flying = IsFlying()
@@ -655,6 +644,9 @@ function Mounty:KeyHandler(keypress)
         -- durability ?
 
         if mode == "" then
+            -- der harmony wegen ;)
+
+            Mounty:Why("\n")
 
             if Mounty:Durability() < Mounty.CurrentProfile.DurabilityMin then
 
@@ -684,7 +676,10 @@ function Mounty:KeyHandler(keypress)
 
         if mode == "" then
 
+
             if swimming and amphibian then
+
+                Mounty:Why("\n")
 
                 Mounty:Why("amphibian")
 
@@ -716,6 +711,8 @@ function Mounty:KeyHandler(keypress)
 
         if mode == "" then
 
+            Mounty:Why("\n")
+
             if dragonflight then
 
                 Mounty:Why("dragonflight")
@@ -743,6 +740,8 @@ function Mounty:KeyHandler(keypress)
         -- taxi
 
         if mode == "" then
+
+            Mounty:Why("\n")
 
             if not alone and taximode then
 
@@ -775,6 +774,8 @@ function Mounty:KeyHandler(keypress)
         -- show off
 
         if mode == "" then
+
+            Mounty:Why("\n")
 
             if resting and showoff and not swimming then
 
@@ -809,6 +810,8 @@ function Mounty:KeyHandler(keypress)
         -- flyable
 
         if mode == "" then
+
+            Mounty:Why("\n")
 
             if flyable then
 
@@ -856,6 +859,8 @@ function Mounty:KeyHandler(keypress)
 
         if mode == "" then
 
+            Mounty:Why("\n")
+
             if swimming then
 
                 Mounty:Why("water")
@@ -885,6 +890,8 @@ function Mounty:KeyHandler(keypress)
         if mode == "" then
 
             mode = "ground"
+
+            Mounty:Why("\n")
 
             Mounty:Why("ground.use")
 
@@ -1110,6 +1117,7 @@ function Mounty:InitOptionsFrame()
     local temp
 
     local delta = 8
+    local delta_checkboxes = 18
 
     Mounty.OptionsFrame = CreateFrame("Frame", nil, UIParent, "SettingsFrameTemplate")
 
@@ -1191,7 +1199,7 @@ function Mounty:InitOptionsFrame()
 
         end
 
-        temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", 64 + (plusi + 1) * 32 + 2, top, 24, 32, "+")
+        temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", 64 + (plusi + 1) * 32 + 2, top, 40, 32, "+ 100")
         temp.MountyCategory = category
         temp:SetScript("OnClick", function(calling)
 
@@ -1221,7 +1229,7 @@ function Mounty:InitOptionsFrame()
 
     -- Random checkbox
 
-    top = top - 22
+    top = top - delta_checkboxes
 
     Mounty.OptionsFrame_Random = CreateFrame("CheckButton", "Mounty_OptionsFrame_Random", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     Mounty.OptionsFrame_Random:SetPoint("TOPLEFT", 16, top)
@@ -1233,7 +1241,7 @@ function Mounty:InitOptionsFrame()
 
     -- ShowOff checkbox
 
-    top = top - 22
+    top = top - delta_checkboxes
 
     Mounty.OptionsFrame_ShowOff = CreateFrame("CheckButton", "Mounty_OptionsFrame_ShowOff", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     Mounty.OptionsFrame_ShowOff:SetPoint("TOPLEFT", 16, top)
@@ -1245,7 +1253,7 @@ function Mounty:InitOptionsFrame()
 
     -- Amphibian checkbox
 
-    top = top - 22
+    top = top - delta_checkboxes
 
     Mounty.OptionsFrame_Amphibian = CreateFrame("CheckButton", "Mounty_OptionsFrame_Amphibian", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     Mounty.OptionsFrame_Amphibian:SetPoint("TOPLEFT", 16, top)
@@ -1257,7 +1265,7 @@ function Mounty:InitOptionsFrame()
 
     -- Together checkbox
 
-    top = top - 22
+    top = top - delta_checkboxes
 
     Mounty.OptionsFrame_Together = CreateFrame("CheckButton", "Mounty_OptionsFrame_Together", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     Mounty.OptionsFrame_Together:SetPoint("TOPLEFT", 16, top)
@@ -1269,7 +1277,7 @@ function Mounty:InitOptionsFrame()
 
     -- TaxiMode checkbox
 
-    top = top - 22
+    top = top - delta_checkboxes
 
     Mounty.OptionsFrame_TaxiMode = CreateFrame("CheckButton", "Mounty_OptionsFrame_TaxiMode", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     Mounty.OptionsFrame_TaxiMode:SetPoint("TOPLEFT", 16, top)
@@ -1325,7 +1333,8 @@ function Mounty:InitOptionsFrame()
 
     -- Current profile
 
-    top = top - delta * 6
+    top = top - delta * 5
+    top = top - 6 -- label
 
     Mounty.OptionsFrame_ProfileDropdown = CreateFrame("FRAME", nil, Mounty.OptionsFrame, "UIDropDownMenuTemplate")
     Mounty.OptionsFrame_ProfileDropdown:SetPoint("TOPLEFT", 0, top + 6);
@@ -1389,7 +1398,7 @@ function Mounty:InitOptionsFrame()
 
     -- Share profiles checkbox
 
-    top = top - 22
+    top = top - delta_checkboxes
 
     Mounty.OptionsFrame_ShareProfiles = CreateFrame("CheckButton", "Mounty_OptionsFrame_ShareProfiles", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     Mounty.OptionsFrame_ShareProfiles:SetPoint("TOPLEFT", 16, top)
@@ -1414,9 +1423,39 @@ function Mounty:InitOptionsFrame()
         Mounty:CopyProfiles("a>c")
     end)
 
-    -- Parachute checkbox
+    -- Trennlinie
 
     top = top - delta * 4
+
+    temp = Mounty.OptionsFrame:CreateLine()
+    temp:SetColorTexture(0.5, 0.5, 0.5, 1)
+    temp:SetThickness(1)
+    temp:SetStartPoint("TOPLEFT", 10, top+4)
+    temp:SetEndPoint("TOPRIGHT", -8, top+4)
+
+    -- Why checkboxes
+
+    top = top - delta * 0
+
+    Mounty.OptionsFrame_Why = CreateFrame("CheckButton", "Mounty_OptionsFrame_Why", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    Mounty.OptionsFrame_Why:SetPoint("TOPLEFT", 16, top)
+    Mounty_OptionsFrame_WhyText:SetText(L["options.Why"])
+    Mounty.OptionsFrame_Why:SetScript("OnClick", function(calling)
+        _Mounty_A.WhyAuto = not _Mounty_A.WhyAuto
+        calling:SetChecked(_Mounty_A.WhyAuto)
+    end)
+
+    Mounty.OptionsFrame_WhyAutoShort = CreateFrame("CheckButton", "Mounty_OptionsFrame_WhyAutoShort", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    Mounty.OptionsFrame_WhyAutoShort:SetPoint("TOPLEFT", 240, top)
+    Mounty_OptionsFrame_WhyAutoShortText:SetText(L["options.WhyAutoShort"])
+    Mounty.OptionsFrame_WhyAutoShort:SetScript("OnClick", function(calling)
+        _Mounty_A.WhyAutoShort = not _Mounty_A.WhyAutoShort
+        calling:SetChecked(_Mounty_A.WhyAutoShort)
+    end)
+
+    -- Parachute checkbox
+
+    top = top - delta_checkboxes
 
     Mounty.OptionsFrame_Parachute = CreateFrame("CheckButton", "Mounty_OptionsFrame_Parachute", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     Mounty.OptionsFrame_Parachute:SetPoint("TOPLEFT", 16, top)
@@ -1428,7 +1467,7 @@ function Mounty:InitOptionsFrame()
 
     -- Auto open checkbox
 
-    top = top - 22
+    top = top - delta_checkboxes
 
     Mounty.OptionsFrame_AutoOpen = CreateFrame("CheckButton", "Mounty_OptionsFrame_AutoOpen", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     Mounty.OptionsFrame_AutoOpen:SetPoint("TOPLEFT", 16, top)
@@ -1457,29 +1496,9 @@ function Mounty:InitOptionsFrame()
         Mounty:OptionsRender()
     end)
 
-    -- Why checkboxex
-
-    top = top - delta * 4
-
-    Mounty.OptionsFrame_Why = CreateFrame("CheckButton", "Mounty_OptionsFrame_Why", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
-    Mounty.OptionsFrame_Why:SetPoint("TOPLEFT", 16, top)
-    Mounty_OptionsFrame_WhyText:SetText(L["options.Why"])
-    Mounty.OptionsFrame_Why:SetScript("OnClick", function(calling)
-        _Mounty_A.WhyAuto = not _Mounty_A.WhyAuto
-        calling:SetChecked(_Mounty_A.WhyAuto)
-    end)
-
-    Mounty.OptionsFrame_WhyShort = CreateFrame("CheckButton", "Mounty_OptionsFrame_WhyShort", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
-    Mounty.OptionsFrame_WhyShort:SetPoint("TOPLEFT", 240, top)
-    Mounty_OptionsFrame_WhyShortText:SetText(L["options.WhyShort"])
-    Mounty.OptionsFrame_WhyShort:SetScript("OnClick", function(calling)
-        _Mounty_A.WhyAutoShort = not _Mounty_A.WhyAutoShort
-        calling:SetChecked(_Mounty_A.WhyAutoShort)
-    end)
-
     -- DebugMode checkbox
 
-    top = top - 22
+    top = top - delta * 4
 
     Mounty.OptionsFrame_DebugMode = CreateFrame("CheckButton", "Mounty_OptionsFrame_DebugMode", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
     Mounty.OptionsFrame_DebugMode:SetPoint("TOPLEFT", 16, top)
@@ -1838,7 +1857,6 @@ function Mounty:OptionsRender()
         return
     end
 
-    Mounty.OptionsFrame_WhyShort:SetChecked(Mounty.CurrentProfile.WhyShort)
     Mounty.OptionsFrame_Random:SetChecked(Mounty.CurrentProfile.Random)
     Mounty.OptionsFrame_Together:SetChecked(Mounty.CurrentProfile.Together)
     Mounty.OptionsFrame_Amphibian:SetChecked(Mounty.CurrentProfile.Amphibian)
@@ -1852,6 +1870,7 @@ function Mounty:OptionsRender()
 
     Mounty.OptionsFrame_Parachute:SetChecked(_Mounty_A.Parachute)
     Mounty.OptionsFrame_Why:SetChecked(_Mounty_A.WhyAuto)
+    Mounty.OptionsFrame_WhyAutoShort:SetChecked(_Mounty_A.WhyAutoShort)
     Mounty.OptionsFrame_DebugMode:SetChecked(_Mounty_A.DebugMode)
     Mounty.OptionsFrame_AutoOpen:SetChecked(_Mounty_A.AutoOpen)
 
@@ -2345,7 +2364,7 @@ function Mounty:OnHide ()
 end
 
 function MountyKeyHandler(keypress)
-    Mounty:KeyHandler(keypress)
+    Mounty:Run(keypress)
 end
 
 EventRegistry:RegisterCallback("MountJournal.OnShow", function()
@@ -2414,7 +2433,7 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
     elseif mode == "magic" then
 
-        Mounty:KeyHandler()
+        Mounty:Run()
 
     elseif mode == "version" then
 
@@ -2443,13 +2462,13 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
             _Mounty_A.WhyAutoShort = true
 
-            TLVlib:Chat(L["chat.WhyShortOn"])
+            TLVlib:Chat(L["chat.WhyAutoShortOn"])
 
         elseif arg1 == "long" then
 
             _Mounty_A.WhyAutoShort = false
 
-            TLVlib:Chat(L["chat.WhyShortOff"])
+            TLVlib:Chat(L["chat.WhyAutoShortOff"])
 
         elseif argn > 0 and argn <= Mounty.WhyHistoryMax then
 
