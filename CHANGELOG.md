@@ -2,12 +2,12 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
-v2.7.0.5
-- minor changes, minor fixes, minor improvements
-
 v2.7
 - The new 'Why mode' is awesome, I promise!
-- Any(!) donations welcome to thank.you.tlv@gmail.com ;)
+- no automatic order of mounts in the grid anymore; more freedom to the users. ^^
+- minor changes, minor fixes, minor improvements
+- Any donations via Paypal to thank.you.tlv@gmail.com are welcome. Of course no must! Thank you ;)
+
 
 v2.6
 - New option to alternate between water mount and flying mounts whilst swimming

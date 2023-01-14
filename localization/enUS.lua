@@ -35,7 +35,7 @@ L["options.Amphibian"] = "Amphibian mode - Whilst swimming alternate between wat
 L["options.Taxi"] = "Taxi mode - Always summon taxi mount when in group"
 L["options.Hello"] = "How to call your taxi passenger"
 L["options.Hello-Default"] = "Taxi!"
-L["options.Durability"] = "Service! - Summon your repair mount if durability is below %d%%."
+L["options.Durability"] = "Service! - Summon your repair mount if durability is below %d %%."
 L["options.Profile"] = "Profile"
 L["options.ShareProfiles"] = "Share profiles with your other characters"
 L["options.Parachute"] = "Parachute mode - Dismount anyway, no matter how high you fly and deep the fall"
@@ -71,9 +71,8 @@ L["chat.Random"] = "Random: "
 L["chat.Showoff"] = "Show off mode: "
 L["chat.Taxi"] = "Taxi mode: "
 L["chat.Together"] = "Together mode: "
-L["chat.Why"] = "Why mode: "
-L["chat.WhyAutoShortOn"] = "Why format: |cff00f010short|r."
-L["chat.WhyAutoShortOff"] = "Why format: |cff00f010long|r."
+L["chat.WhyAuto"] = "Why mode automatically: "
+L["chat.WhyAutoShort"] = "Why mode in short format: "
 
 L["on"] = "on"
 L["off"] = "off"
@@ -88,8 +87,8 @@ L["button.CopyA2C"] = "Account>Char"
 L["button.Journal"] = "Mount journal"
 L["button.Help"] = "Help"
 
-L["why.long.repair"] = "Your |hdurability is below %s%%|r."
-L["why.long.repair.no"] = "Your |hdurability is fine|r. The repair mount is not needed."
+L["why.long.repair"] = "Your |hdurability is below %s %%|r."
+L["why.long.repair.no"] = "Your |hdurability is at least at %s %%|r. No need for the repair mount."
 L["why.long.repair.use"] = "So Mounty #TLV will help out with a |hrepair mount|r."
 L["why.long.repair.empty"] = "Ooops, you have no assigned repair mount to be summoned."
 L["why.long.amphibian"] = "You are |hswimming and amphibian mode|r is active."
@@ -101,7 +100,7 @@ L["why.long.dragonflight.no"] = "Too sad, this area is |hnot for Dragonflight|r.
 L["why.long.dragonflight.use"] = "Let's try to call a |hdragon|r, then."
 L["why.long.dragonflight.empty"] = "No answer, since you don't seem to have assigned them, yet."
 L["why.long.taxi"] = "With a friend on your side and |htaxi mode|r active."
-L["why.long.taxi.no1"] = "You are in |hno group|r, so why offer a taxi?"
+L["why.long.taxi.no1"] = "You are in |hno group|r, so why call a taxi for two?"
 L["why.long.taxi.no2"] = "You are in company but the |htaxi mode is not active|r."
 L["why.long.taxi.use"] = "So you're helping out with a ride and call your |htaxi mount|r."
 L["why.long.taxi.empty"] = "Don't wait too long. None is coming because none is assigned."
@@ -139,8 +138,8 @@ L["why.long.pick.iterator"] = "The |hnext in line|r of these will be picked."
 L["why.long.picked"] = "And so finally this is your mount: |h%s|r. Enjoy the ride!"
 L["why.long.lost"] = "|hLost|r. Found no usable mount at all!"
 
-L["why.short.repair"] = "durability < %s%%"
-L["why.short.repair.no"] = "durability ok"
+L["why.short.repair"] = "durability < %s %%"
+L["why.short.repair.no"] = "durability >= %s %%"
 L["why.short.repair.use"] = "summon repair mount"
 L["why.short.repair.empty"] = "none assigned"
 L["why.short.amphibian"] = "swimming & amphibian mode"
@@ -204,9 +203,8 @@ L["help"] = [[It's a kind of magic ...
 /mounty why (Show the current entry)
 /mounty why 1-%d (Show an older entry)
 /mounty why all (Show full history)
-/mounty why short|long (Set output format)
 |hSet options|r
-/mounty set amphibian|dauto|ddebug|dparachute|drandom|dshowoff|dtaxi|dtogether|dwhy on|doff
+/mounty set amphibian|dauto|ddebug|dparachute|drandom|dshowoff|dtaxi|dtogether|dwhy|dwhyshort on|doff
 |hProfiles|r
 /mounty profile (Show current profile)
 /mounty profile Heart (Select or create profile Heart)
@@ -224,7 +222,9 @@ Take a look at the README for all details.]]
 
 L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.md"
 
-L["upgrade.popup"] = "Superb, this new |cfff07070Why mode|r incl. history.\nCheck it out asap!\n\n(Activate in options or\ntype '/mounty help' in chat window.)\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nDonations welcome. See README."
+L["why.example"] = "This was just a one time only example of the |cfff07070Why mode|r. Won't happen again. Type |cfff07070/mounty why|r or |cfff07070/mounty why 2-10|r anytime to get an explanation of it's last choices or activate the |cfff07070automatic why mode|r in Mounty #TLV's the options."
+
+L["upgrade.popup"] = "Awesome new |cfff07070Why mode|r, I promise.\nCheck it out asap!\n\n(Activate in options or\ntype '/mounty why' in chat window.\nType '/mounty help' for more.)\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nAny donations are welcome. See README."
 
 local _, TLV_AddOn = ...
 TLV_AddOn.L = L

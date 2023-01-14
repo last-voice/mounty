@@ -110,7 +110,7 @@ function Mounty:WhyOut (which, silent)
 
     for _, entry in ipairs(_Mounty_C.WhyHistory[which].log) do
 
-        local ix, arg1, arg2 = entry[1], entry[2], entry[3]
+        local ix, arg1, arg2 = entry[1], entry[2] or "", entry[3] or ""
 
         if (ix == "\n") then
 
@@ -159,8 +159,16 @@ function Mounty:Why (why, arg1, arg2)
 
         _Mounty_C.WhyHistory[1] = Mounty.ThisIsWhy
 
-        if _Mounty_A.WhyAuto then
+        if _Mounty_A.WhyAuto or not _Mounty_A.WhyAutoExample then
+
             Mounty:WhyOut()
+
+            if not _Mounty_A.WhyAuto then
+                TLVlib:Chat(L["why.example"])
+            end
+
+            _Mounty_A.WhyAutoExample = true; -- example will only show once
+
         end
 
     else
@@ -666,7 +674,7 @@ function Mounty:Run(keypress)
 
             else
 
-                Mounty:Why("repair.no")
+                Mounty:Why("repair.no", Mounty.CurrentProfile.DurabilityMin)
 
             end
 
@@ -1041,19 +1049,21 @@ function Mounty:RemoveMount(calling, expanded)
 
     TLVlib:Debug("Mount removed: " .. category .. " " .. index)
 
-    if index < Mounty.NumMounts then
+    Mounty.CurrentProfile.Mounts[category][index] = 0
 
-        for i = index, Mounty.NumMounts - 1 do
-            Mounty.CurrentProfile.Mounts[category][i] = Mounty.CurrentProfile.Mounts[category][i + 1]
-        end
-
-        Mounty.CurrentProfile.Mounts[category][Mounty.NumMounts] = 0
-
-    else
-
-        Mounty.CurrentProfile.Mounts[category][index] = 0
-
-    end
+    --if index < Mounty.NumMounts then
+    --
+    --    for i = index, Mounty.NumMounts - 1 do
+    --        Mounty.CurrentProfile.Mounts[category][i] = Mounty.CurrentProfile.Mounts[category][i + 1]
+    --    end
+    --
+    --    Mounty.CurrentProfile.Mounts[category][Mounty.NumMounts] = 0
+    --
+    --else
+    --
+    --    Mounty.CurrentProfile.Mounts[category][index] = 0
+    --
+    --end
 
     Mounty:OptionsRenderButtons()
 
@@ -1199,7 +1209,7 @@ function Mounty:InitOptionsFrame()
 
         end
 
-        temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", 64 + (plusi + 1) * 32 + 2, top, 40, 32, "+ 100")
+        temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", 64 + (plusi + 1) * 32 + 2, top, 54, 32, "+ 100")
         temp.MountyCategory = category
         temp:SetScript("OnClick", function(calling)
 
@@ -1430,8 +1440,8 @@ function Mounty:InitOptionsFrame()
     temp = Mounty.OptionsFrame:CreateLine()
     temp:SetColorTexture(0.5, 0.5, 0.5, 1)
     temp:SetThickness(1)
-    temp:SetStartPoint("TOPLEFT", 10, top+4)
-    temp:SetEndPoint("TOPRIGHT", -8, top+4)
+    temp:SetStartPoint("TOPLEFT", 10, top + 4)
+    temp:SetEndPoint("TOPRIGHT", -8, top + 4)
 
     -- Why checkboxes
 
@@ -1446,7 +1456,7 @@ function Mounty:InitOptionsFrame()
     end)
 
     Mounty.OptionsFrame_WhyAutoShort = CreateFrame("CheckButton", "Mounty_OptionsFrame_WhyAutoShort", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
-    Mounty.OptionsFrame_WhyAutoShort:SetPoint("TOPLEFT", 240, top)
+    Mounty.OptionsFrame_WhyAutoShort:SetPoint("TOPLEFT", 300, top)
     Mounty_OptionsFrame_WhyAutoShortText:SetText(L["options.WhyAutoShort"])
     Mounty.OptionsFrame_WhyAutoShort:SetScript("OnClick", function(calling)
         _Mounty_A.WhyAutoShort = not _Mounty_A.WhyAutoShort
@@ -2328,6 +2338,10 @@ function Mounty:InitSavedVariables()
         _Mounty_A.WhyAutoShort = false
     end
 
+    if _Mounty_A.WhyAutoExample == nil then
+        _Mounty_A.WhyAutoExample = false
+    end
+
     if _Mounty_A.AutoOpen == nil then
         _Mounty_A.AutoOpen = true
     end
@@ -2452,27 +2466,19 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
     elseif mode == "why" then
 
-        local argn = tonumber(arg1) or 0
+        local arg1n = tonumber(arg1) or 0
 
         if arg1 == "" then
 
+            Mounty:WhyOut(1)
+
+        elseif arg1 == "all" then
+
             Mounty:WhyOut("all")
 
-        elseif arg1 == "short" then
+        elseif arg1n > 0 and arg1n <= Mounty.WhyHistoryMax then
 
-            _Mounty_A.WhyAutoShort = true
-
-            TLVlib:Chat(L["chat.WhyAutoShortOn"])
-
-        elseif arg1 == "long" then
-
-            _Mounty_A.WhyAutoShort = false
-
-            TLVlib:Chat(L["chat.WhyAutoShortOff"])
-
-        elseif argn > 0 and argn <= Mounty.WhyHistoryMax then
-
-            Mounty:WhyOut(argn)
+            Mounty:WhyOut(arg1n)
 
         else
 
@@ -2544,7 +2550,12 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
             elseif arg1 == "why" then
 
                 _Mounty_A.WhyAuto = (arg2 == "on")
-                TLVlib:Chat(L["chat.Why"] .. suffix)
+                TLVlib:Chat(L["chat.WhyAuto"] .. suffix)
+
+            elseif arg1 == "whyshort" then
+
+                _Mounty_A.WhyAutoShort = (arg2 == "on")
+                TLVlib:Chat(L["chat.WhyAutoShort"] .. suffix)
 
             else
 

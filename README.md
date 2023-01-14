@@ -220,7 +220,6 @@ __Tell me why!__
 _/mounty why_ - to show the current entry\
 _/mounty why 2-10_ - to show an older entry\
 _/mounty why all_ - to show all entries\
-_/mounty why short|long - to set the output format
 
 __Profiles__
 
@@ -242,6 +241,7 @@ _/mounty set showoff on|off_ (Show off, show off!)\
 _/mounty set taxi on|off_ (Use taxi mounts)\
 _/mounty set together on|off_ (Let's stay together)
 _/mounty set why on|off_ (Output 'Why?' every time automatically)
+_/mounty set whyshort on|off (Set the output format to short or long)
 
 ## Binding keys
 

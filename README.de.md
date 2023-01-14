@@ -199,22 +199,6 @@ __Version__
 
 _/mounty version_ - zeigt die aktuelle Version des Addons
 
-__Optionen__
-
-_/mounty_ - um das Optionsfenster zu öffnen
-
-__Optionen umschalten__
-
-_/mounty set amphibian on|off_ (Abwechselnd schwimmen und fliegen)\
-_/mounty set auto on|off_ (Optionen automatisch öffnen)\
-_/mounty set debug on|off_ (Debug Infos anzeigen)\
-_/mounty set parachute on|off_ (Immer absitzen, bei jeder Höhe)\
-_/mounty set random on|off_ (Zufällig oder in Reihenfolge)\
-_/mounty set showoff on|off_ (Protzerei!)\
-_/mounty set taxi on|off_ (Taxi-Mounts verwenden)\
-_/mounty set together on|off_ (Zusammen bleiben)
-_/mounty set why on|off_ (Wieso, weshalb, warum jedesmal automatisch ausgeben)
-
 __Mounts beschwören__
 
 _/mounty magic_ - und __Mounty #TLV__ wirkt seinen Zauber
@@ -233,12 +217,28 @@ __Wieso, weshalb, warum?__
 _/mounty why_ - das zuletzt gewählte Mount erläutern\
 _/mounty why 2-10_ - zeige einen älteren Eintrag der Historie an\
 _/mounty why all_ - zeige die ganze Historie an\
-_/mounty why short|long - welches Ausgabeformat?
 
 __Profile__
 
 _/mounty profile_ - zeigt das aktuelle Profil\
 _/mounty profile Heart_ - schaltet auf das Profil Heart um und erstellt es falls nicht vorhanden\
+
+__Optionen__
+
+_/mounty_ - um das Optionsfenster zu öffnen
+
+__Optionen umschalten__
+
+_/mounty set amphibian on|off_ (Abwechselnd schwimmen und fliegen)\
+_/mounty set auto on|off_ (Optionen automatisch öffnen)\
+_/mounty set debug on|off_ (Debug Infos anzeigen)\
+_/mounty set parachute on|off_ (Immer absitzen, bei jeder Höhe)\
+_/mounty set random on|off_ (Zufällig oder in Reihenfolge)\
+_/mounty set showoff on|off_ (Protzerei!)\
+_/mounty set taxi on|off_ (Taxi-Mounts verwenden)\
+_/mounty set together on|off_ (Zusammen bleiben)
+_/mounty set why on|off_ (Wieso, weshalb, warum jedesmal automatisch ausgeben)
+_/mounty set whyshort on|off - (Kurzes oder langes Ausgabeformat)
 
 ## Tastaturbelegung
 
