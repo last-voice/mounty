@@ -2,8 +2,9 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
-v2.7.0.1
+v2.7.0.2
 - Fixed history bug in why mode
+- why mode wording
 
 v2.7
 - The new 'Why mode' is awesome, I promise!
