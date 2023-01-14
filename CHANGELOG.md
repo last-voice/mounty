@@ -2,6 +2,9 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.7.0.1
+- Fixed history bug in why mode
+
 v2.7
 - The new 'Why mode' is awesome, I promise!
 - no automatic order of mounts in the grid anymore; more freedom to the users. ^^

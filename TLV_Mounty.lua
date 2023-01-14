@@ -84,7 +84,7 @@ function Mounty:WhyOut (which, silent)
         return
     end
 
-    if _Mounty_C.WhyHistory[which] == nil then
+    if _Mounty_C.WhyHistoryLog[which] == nil then
 
         if not silent then
             TLVlib:Chat(L["why.out.none"])
@@ -106,9 +106,9 @@ function Mounty:WhyOut (which, silent)
         nl = ""
     end
 
-    local date = "|h" .. (_Mounty_C.WhyHistory[which].date or "???") .. "|r"
+    local date = "|h" .. (_Mounty_C.WhyHistoryLog[which].date or "???") .. "|r"
 
-    for _, entry in ipairs(_Mounty_C.WhyHistory[which].log) do
+    for _, entry in ipairs(_Mounty_C.WhyHistoryLog[which].log) do
 
         local ix, arg1, arg2 = entry[1], entry[2] or "", entry[3] or ""
 
@@ -152,12 +152,14 @@ function Mounty:Why (why, arg1, arg2)
     elseif why == "#eod" then
 
         for i = Mounty.WhyHistoryMax, 2, -1 do
-            if _Mounty_C.WhyHistory[i - 1] ~= nil then
-                _Mounty_C.WhyHistory[i] = _Mounty_C.WhyHistory[i - 1]
+            if _Mounty_C.WhyHistoryLog[i - 1] ~= nil then
+                _Mounty_C.WhyHistoryLog[i] = TLVlib:TableDuplicate(_Mounty_C.WhyHistoryLog[i - 1])
             end
         end
 
-        _Mounty_C.WhyHistory[1] = Mounty.ThisIsWhy
+        _Mounty_C.WhyHistoryLog[1] = TLVlib:TableDuplicate(Mounty.ThisIsWhy)
+
+        Mounty.ThisIsWhy = nil
 
         if _Mounty_A.WhyAuto or not _Mounty_A.WhyAutoExample then
 
@@ -2291,8 +2293,8 @@ function Mounty:InitSavedVariables()
         _Mounty_C.Profiles = {}
     end
 
-    if _Mounty_C.WhyHistory == nil then
-        _Mounty_C.WhyHistory = {}
+    if _Mounty_C.WhyHistoryLog == nil then
+        _Mounty_C.WhyHistoryLog = {}
     end
 
     if _Mounty_A.Profiles == nil then

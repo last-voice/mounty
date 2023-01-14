@@ -109,7 +109,7 @@ function Mounty:Upgrade()
 
         local version = _Mounty_A.Version or ""
 
-        local alert_if_lower = "v020706"
+        local alert_if_lower = "v0207"
 
         if version < alert_if_lower then
 
