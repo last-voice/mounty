@@ -5,6 +5,7 @@ Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 v2.7.0.3
 - Now also checks if a mount is collected and usable regarding faction
 - Now also checks if the player is falling or already casting a spell when pressing magic key
+- chosen category now displayed in why mode choice too
 - minor fixes + changes
 
 v2.7.0.2

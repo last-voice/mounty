@@ -31,6 +31,16 @@ Mounty.CategoriesLabel = {
     [10] = L["mode.Custom3"]
 }
 
+Mounty.CategoriesMounts = {
+    [1] = L["mount.Ground"],
+    [2] = L["mount.Flying"],
+    [3] = L["mount.Dragonflight"],
+    [4] = L["mount.Water"],
+    [5] = L["mount.Repair"],
+    [6] = L["mount.Taxi"],
+    [7] = L["mount.Show off"]
+}
+
 Mounty.FallbackQueue = {}
 Mounty.FallbackAlready = {}
 
@@ -407,9 +417,6 @@ end
 
 function Mounty:Mount(mode, magic)
 
-    local mountID = 0
-    local mountName = ""
-    local spellID = 0
     local only_flyable_showoffs = false
 
     if not Mounty:CheckCircumstances() then
@@ -481,6 +488,10 @@ function Mounty:Mount(mode, magic)
     TLVlib:Debug("Mode: " .. mode)
     TLVlib:Debug("Category: " .. category)
 
+    local mountID = 0
+    local spellID = 0
+    local mountName = ""
+
     if category > 0 then
 
         spellID = Mounty:SelectMountByCategory(category, only_flyable_showoffs)
@@ -540,7 +551,7 @@ function Mounty:Mount(mode, magic)
             mountName = C_MountJournal.GetMountInfoByID(mountID)
 
             Mounty:Why("\n")
-            Mounty:Why("picked", mountName)
+            Mounty:Why("picked", tostring(Mounty.CategoriesMounts[category]), mountName)
 
         else
 
@@ -564,7 +575,7 @@ function Mounty:Mount(mode, magic)
         else
 
             Mounty:Why("\n")
-            Mounty:Why("picked", mountName)
+            Mounty:Why("picked", L["mount.Random"], mountName)
 
         end
 
