@@ -2,7 +2,12 @@
 
 Full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
-v2.7.0.1
+v2.7.0.3
+- Now also checks if a mount is collected and usable regarding faction
+- Now also checks if the player is falling or already casting a spell when pressing magic key
+- minor fixes + changes
+
+v2.7.0.2
 - Fixed history bug in why mode
 - why mode wording
 
@@ -11,7 +16,6 @@ v2.7
 - no automatic order of mounts in the grid anymore; more freedom to the users. ^^
 - minor changes, minor fixes, minor improvements
 - Any donations via Paypal to thank.you.tlv@gmail.com are welcome. Of course no must! Thank you ;)
-
 
 v2.6
 - New option to alternate between water mount and flying mounts whilst swimming

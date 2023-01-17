@@ -16,7 +16,7 @@ DEUTSCH? -> Das __deutsche README__ findest Du hier: https://github.com/last-voi
 You are in a flight zone, swimming in the water or joined by a friend, who can't fly jet?\
 You want to ride on, but your armor is low and you should repair asap?\
 You want to show off with these awesome mounts, which nobody else has got (except, everybody got it;)?\
-You got some favorite mounts for all these occasions and just want to be surprised, which mount will summon next?
+You got some favourite mounts for all these occasions and just want to be surprised, which mount will summon next?
 
 All this can be done with __Mounty #TLV__ and all this will happen _magically_ with just __1 single key__ pressed.
 
@@ -57,7 +57,7 @@ __Mounty #TLV__ offers __7 categories__ for your mounts:
 - __Taxi mounts__ - A passenger's seat for a good friend is perfect for questing, farming, and fighting together hand in hand. Especially when your taxi has wings, and your friend doesn't know how to fly. He'll never forget your helping wing erm hand.
 - __Show off mounts__ - You spent hours, days, weeks to get this special one, the mount of your dreams. There will never be a better one. Until tomorrow. But for now, everybody around must see: You got it!
 
-You can assign up to __110 different favorite mounts to every category__ per drag & drop from your mount collection.
+You can assign up to __110 different favourite mounts to every category__ per drag & drop from your mount collection.
 
 And you can assign this __one and only magic key__, which does its magic when pressed.
 
@@ -91,9 +91,9 @@ You're on the Dragon isles in a dragon flight zone and you already experienced w
 
 You hang around with friends and your _taxi mode_ is on? My friend, we call for a __taxi mount__ to ride away together. Hop on!
 
-You are in a resting area and _show off mode_ is activated? Time to impress everyone around with one of your favorite __show off mounts__.
+You are in a resting area and _show off mode_ is activated? Time to impress everyone around with one of your favourite __show off mounts__.
 
-You're in a flight zone, all alone? Spread your wings or start your engines and up, up, up it goes with your favorite __fly mount__.
+You're in a flight zone, all alone? Spread your wings or start your engines and up, up, up it goes with your favourite __fly mount__.
 
 You're in a flight zone with friends but didn't activate _together mode_? Jump on your __fly mount__ and race the skies with your friends.
 
@@ -129,7 +129,7 @@ __Mounty #TLV__ will choose the perfect category as described above. But there m
 
 In this case there is a _fallback_:
 
-If a category is empty, it will then select one of your __flying mounts__. And if there are none, too, it will select one of your __ground mounts__. And if those are also missing, then there is only one last thing __Mounty #TLV__ can do for you: Randomly summon __any mount out of your whole collection__, preferring your favorites if there are any.
+If a category is empty, it will then select one of your __flying mounts__. And if there are none, too, it will select one of your __ground mounts__. And if those are also missing, then there is only one last thing __Mounty #TLV__ can do for you: Randomly summon __any mount out of your whole collection__, preferring your favourites if there are any.
 
 ### Exceptions
 
@@ -156,13 +156,15 @@ __Mounty #TLV__'s option frame will also open __automatically with the mount jou
 
 And __Mounty #TLV__'s option frame can be opened __by clicking a button__ in the mount journal's bottom right corner.
 
-__Drag & drop__ all your favorite mounts into the categories of your choice. Click right on a mount to remove it from a category.
+__Drag & drop__ all your favourite mounts into the categories of your choice. Click right on a mount to remove it from a category.
 
 You may __copy__ an already assigned mount to another category by __double clicking__.
 
 Using the __plus button__ you can open another frame to assign __additional 100 mounts__ to a category. Here you can also easily __transfer all filtered mounts from the mount journal__ into a category with 1 click, erm 2 clicks.
 
 __WARNING:__ __Mounty #TLV__ __does never check__ if your assignments per category make any sense! You can assign any mount to every category. So: Please be reasonable!
+
+And __Mounty #TLV__ will only summon mounts of a chosen category that can be used at that moment - regarding faction, class, or else.
 
 ## Options
 

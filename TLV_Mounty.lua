@@ -51,16 +51,23 @@ function Mounty:Color (s)
 
 end
 
-function Mounty:CheckIfCasting ()
+function Mounty:CheckCircumstances ()
 
     if UnitCastingInfo("player") ~= nil then
 
         TLVlib:Debug("You are already casting a spell.")
-        return true
+        return false
 
     end
 
-    return false
+    if IsFalling() then
+
+        TLVlib:Debug("Bad idea. You are falling.")
+        return false
+
+    end
+
+    return true
 
 end
 
@@ -112,7 +119,7 @@ function Mounty:WhyOut (which, silent)
 
         local ix, arg1, arg2 = entry[1], entry[2] or "", entry[3] or ""
 
-        if (ix == "\n") then
+        if ix == "\n" then
 
             out = out .. nl
 
@@ -264,9 +271,6 @@ function Mounty:SelectMountByCategory(category, only_flyable_showoffs)
     local assigned = 0
     local count = 0
     local picked
-    local usable
-    local mountID
-    local mname
 
     for i = 1, Mounty.NumMountsExpanded do
 
@@ -274,10 +278,11 @@ function Mounty:SelectMountByCategory(category, only_flyable_showoffs)
 
             assigned = assigned + 1
 
-            usable = IsUsableSpell(Mounty.CurrentProfile.Mounts[category][i])
+            local usable_spell = IsUsableSpell(Mounty.CurrentProfile.Mounts[category][i])
+            local mountID = C_MountJournal.GetMountFromSpell(Mounty.CurrentProfile.Mounts[category][i])
+            local mname, _, _, _, isUsable, _, _, _, _, _, isCollected = C_MountJournal.GetMountInfoByID(mountID)
 
-            mountID = C_MountJournal.GetMountFromSpell(Mounty.CurrentProfile.Mounts[category][i])
-            mname = C_MountJournal.GetMountInfoByID(mountID)
+            local usable = usable_spell and isUsable and isCollected
 
             if usable and only_flyable_showoffs then
 
@@ -407,7 +412,7 @@ function Mounty:Mount(mode, magic)
     local spellID = 0
     local only_flyable_showoffs = false
 
-    if Mounty:CheckIfCasting() then
+    if not Mounty:CheckCircumstances() then
         return
     end
 
@@ -592,7 +597,7 @@ function Mounty:Run(keypress)
     local showoff = Mounty.CurrentProfile.ShowOff
     local parachute = _Mounty_A.Parachute
 
-    if Mounty:CheckIfCasting() then
+    if not Mounty:CheckCircumstances() then
         return
     end
 
@@ -2001,19 +2006,19 @@ end
 
 function Mounty:ProfileNameDefault ()
 
-    local profiles = Mounty:ProfilesSorted()
+    local first = Mounty:ProfilesSorted(true)
 
-    local default = profiles[1]
-
-    if Mounty.Profiles[default] == nil then
-        default = UnitName("player")
+    if first == nil or first == "" then
+        first = UnitName("player")
+    elseif Mounty.Profiles[first] == nil then
+        first = UnitName("player")
     end
 
-    if not Mounty:ProfileCheckName(default) then
-        default = "Mounty"
+    if not Mounty:ProfileCheckName(first) then
+        first = "Mounty"
     end
 
-    return default
+    return first
 
 end
 
@@ -2206,7 +2211,7 @@ function Mounty:SelectProfile(p)
 
 end
 
-function Mounty:ProfilesSorted (joined)
+function Mounty:ProfilesSorted (first)
 
     local profiles = {}
 
@@ -2218,11 +2223,11 @@ function Mounty:ProfilesSorted (joined)
 
     table.sort(profiles)
 
-    if joined then
-        profiles = table.concat(profiles, " ")
+    if first then
+        return profiles[1]
+    else
+        return profiles
     end
-
-    return profiles
 
 end
 
@@ -2312,16 +2317,7 @@ function Mounty:InitSavedVariables()
     end
 
     if _Mounty_C.CurrentProfile == nil then
-
-        local profiles = Mounty:ProfilesSorted()
-
-        _Mounty_C.CurrentProfile = profiles[1]
-
-        if Mounty.Profiles[_Mounty_C.CurrentProfile] == nil then
-            _Mounty_C.CurrentProfile = Mounty:ProfileNameDefault()
-
-        end
-
+        _Mounty_C.CurrentProfile = Mounty:ProfileNameDefault()
     end
 
     if _Mounty_A.Parachute == nil then
@@ -2573,9 +2569,18 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
         end
 
-        -- elseif mode == "dbg" then
-
-        --    TLVlib:TableDebug(Mounty.QuickStartFrame)
+        --elseif mode == "dbg" then
+        --
+        --    local a1 = {}
+        --
+        --    local a2 = {}
+        --
+        --    local ix = a1[5]
+        --
+        --    local fn = a2[ix]
+        --
+        --    TLVlib:Debug("ix: " .. tostring(ix))
+        --    TLVlib:Debug("fn: " .. tostring(fn))
 
     elseif mode == "dragonflight"
             or mode == "fly"

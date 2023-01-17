@@ -130,10 +130,10 @@ In diesem Fall gibt es einen _Fallback_:
 
 Wenn eine Kategorie leer ist, wird stattdessen eines deiner __Flug-Mounts__ ausgesucht. Solltest du auch dort keins zugeordnet haben, greift die Magie auf deine __Boden-Mounts__ zurück. Und wenn auch die fehlen, kann __Mounty #TLV__ nur noch eines für dich tun: Zufällig __irgendeins deiner gesamten Reittiersammlung__ auswählen, wobei immerhin deine Favoriten bevorzugt werden.
 
-### Sonderfälle
+### Besonderheiten
 
-- Sonderfall 1: Flug-Mounts und Drachen werden nur dann gerufen, wenn Du auch gelernt hast, diese zu reiten.
-- Sonderfall 2: In Ruhebereichen, in denen du fliegen kannst, werden nur fliegende Protz-Mounts ausgewählt.
+- Besonderheit 1: Flug-Mounts und Drachen werden nur dann gerufen, wenn Du auch gelernt hast, diese zu reiten.
+- Besonderheit 2: In Ruhebereichen, in denen du fliegen kannst, werden nur fliegende Protz-Mounts ausgewählt.
 
 ### Und warum wurde genau dieses Mount gerufen?
 
@@ -162,6 +162,8 @@ Du kannst zugeordnete Mounts auch __per Doppelklick kopieren__.
 Mit dem __Plus-Button__ kannst Du ein weiteres Fenster öffnen, um einer Kategorie __100 weitere Mounts__ zuzuordnen. Dort kannst Du auch bequem __alle in der Reittiersammlung gefilterten Mounts in einem Rutsch übernehmen__.
 
 __ACHTUNG:__ __Mounty #TLV__ __überprüft nie__, ob deine Zuordnungen sinnvoll sind! Du kannst grundsätzlich jedes Mount in jede Kategorie packen. Also: Mach' bitte keinen Unsinn!
+
+__Mounty #TLV__ wird aus einer gewählten Kategorie auch nur die Mounts bewschören, die du __in dem Moment auch aktiv nutzen__ kannst. Abhängig von deiner Klasse, Fraktion oder anderem.
 
 ## Optionen
 
