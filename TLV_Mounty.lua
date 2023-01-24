@@ -77,6 +77,20 @@ function Mounty:CheckCircumstances ()
 
     end
 
+    if not TLVlib:IsInTrueZone() then
+
+        TLVlib:Debug("Not arrived in a true zone yet.")
+        return false
+
+    end
+
+    if not Mounty:AnyUsable() then
+
+        TLVlib:Debug("Can't use any mount here at all.")
+        return false
+
+    end
+
     return true
 
 end
@@ -241,6 +255,25 @@ function Mounty:Durability()
     return durability
 end
 
+function Mounty:AnyUsable()
+
+    C_MountJournal.SetDefaultFilters()
+
+    for i = 1, C_MountJournal.GetNumDisplayedMounts() do
+
+        local mname, spellID, _, _, isUsable = C_MountJournal.GetDisplayedMountInfo(i)
+        -- isUsable muss sein, weil auch Mounts gelistet werden, die nicht im Besitz sind
+
+        if isUsable and IsUsableSpell(spellID) then
+            return true
+        end
+
+    end
+
+    return false
+
+end
+
 function Mounty:AnyRandom()
 
     local journaled = {}
@@ -399,12 +432,16 @@ function Mounty:YouCanRideDragonsHere()
 
     if ridingmounts[1] ~= nil then
 
+        local mapID = C_Map.GetBestMapForUnit("player")
+
         local name, spellID = C_MountJournal.GetMountInfoByID(ridingmounts[1])
 
         local isUsable = IsUsableSpell(spellID)
 
         if isUsable then
-            TLVlib:Debug("Dragon '" .. name .. "' found and you can ride it here.")
+            TLVlib:Debug("Dragon '" .. name .. "' found and you can ride it here [area id:" .. tostring(mapID) .. "].")
+        else
+            TLVlib:Debug("Dragon '" .. name .. "' found but you can't ride it in this area [id:" .. tostring(mapID) .. "].")
         end
 
         return isUsable
@@ -417,11 +454,11 @@ end
 
 function Mounty:Mount(mode, magic)
 
-    local only_flyable_showoffs = false
-
     if not Mounty:CheckCircumstances() then
         return
     end
+
+    local only_flyable_showoffs = false
 
     local category = Mounty.TypeGround
 
@@ -497,7 +534,7 @@ function Mounty:Mount(mode, magic)
         spellID = Mounty:SelectMountByCategory(category, only_flyable_showoffs)
 
         -- fallback only if magic
-        if magic then
+        if spellID == 0 and magic then
 
             Mounty.FallbackAlready = {}
 
@@ -541,6 +578,10 @@ function Mounty:Mount(mode, magic)
 
             end
 
+            if spellID == -1 then
+                spellID = 0
+            end
+
         end
 
         if spellID > 0 then
@@ -553,16 +594,12 @@ function Mounty:Mount(mode, magic)
             Mounty:Why("\n")
             Mounty:Why("picked", tostring(Mounty.CategoriesMounts[category]), mountName)
 
-        else
-
-            spellID = 0
-
         end
 
     end
 
     -- no random if not magic
-    if magic and mountID == 0 then
+    if mountID == 0 and magic then
 
         mountID, mountName = Mounty:AnyRandom()
 
@@ -595,22 +632,13 @@ end
 
 function Mounty:Run(keypress)
 
-    local mounted = IsMounted()
-    local flying = IsFlying()
-    local resting = IsResting()
-    local dragonflight = Mounty:YouCanRideDragonsHere()
-    local alone = not IsInGroup()
-    local flyable = Mounty:UserCanFlyHere()
-    local swimming = IsSwimming()
-    local taximode = Mounty.CurrentProfile.TaxiMode
-    local together = Mounty.CurrentProfile.Together
-    local amphibian = Mounty.CurrentProfile.Amphibian
-    local showoff = Mounty.CurrentProfile.ShowOff
-    local parachute = _Mounty_A.Parachute
-
     if not Mounty:CheckCircumstances() then
         return
     end
+
+    local mounted = IsMounted()
+    local flying = IsFlying()
+    local parachute = _Mounty_A.Parachute
 
     if keypress == nil then
         keypress = "magic"
@@ -643,6 +671,16 @@ function Mounty:Run(keypress)
         end
 
     end
+
+    local resting = IsResting()
+    local dragonflight = Mounty:YouCanRideDragonsHere()
+    local alone = not IsInGroup()
+    local flyable = Mounty:UserCanFlyHere()
+    local swimming = IsSwimming()
+    local taximode = Mounty.CurrentProfile.TaxiMode
+    local together = Mounty.CurrentProfile.Together
+    local amphibian = Mounty.CurrentProfile.Amphibian
+    local showoff = Mounty.CurrentProfile.ShowOff
 
     if keypress == "magic" then
 
@@ -1545,7 +1583,7 @@ function Mounty:InitOptionsFrame()
 
     -- Open Quick start
 
-    temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left + 40 + 96, top, 98, 22, L["button.Help"])
+    temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left + 40, top, 98, 22, L["button.Help"])
     temp:SetScript("OnClick", function()
         if Mounty.QuickStartFrame:IsVisible() then
             Mounty.QuickStartFrame:Hide()
@@ -1554,8 +1592,14 @@ function Mounty:InitOptionsFrame()
         end
     end)
 
-    Mounty.OptionsFrame:SetHeight(-top + 34)
+    -- Close
 
+    temp = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left + 40 + 96, top, 98, 22, L["button.Close"])
+    temp:SetScript("OnClick", function()
+        Mounty.OptionsFrame:Hide()
+    end)
+
+    Mounty.OptionsFrame:SetHeight(-top + 34)
 
 end
 
@@ -2383,6 +2427,11 @@ function Mounty:OnShow ()
 end
 
 function Mounty:OnHide ()
+
+    -- auto open and close mounty with mount journal
+    if _Mounty_A.AutoOpen then
+        CollectionsJournal:Hide()
+    end
 
 end
 
