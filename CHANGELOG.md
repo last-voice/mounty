@@ -2,6 +2,9 @@
 
 full changelog: https://github.com/last-voice/mounty/blob/main/changelog.md
 
+v2.7.1.1
+- bugfix - dismount didn't work anymore when in situations where mounting is not possible, i.e. in combat. now fixed. 
+
 v2.7.1
 - after using portals, the map ip is set to the continent for a second. this is now checked before summoning.
 - optimized the workflow and condition checks for better debugging  

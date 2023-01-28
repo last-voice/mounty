@@ -632,10 +632,6 @@ end
 
 function Mounty:Run(keypress)
 
-    if not Mounty:CheckCircumstances() then
-        return
-    end
-
     local mounted = IsMounted()
     local flying = IsFlying()
     local parachute = _Mounty_A.Parachute
@@ -670,6 +666,10 @@ function Mounty:Run(keypress)
             return
         end
 
+    end
+
+    if not Mounty:CheckCircumstances() then
+        return
     end
 
     local resting = IsResting()
