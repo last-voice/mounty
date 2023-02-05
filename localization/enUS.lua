@@ -86,6 +86,8 @@ L["chat.WhyAutoShort"] = "Why mode in short format: "
 L["on"] = "on"
 L["off"] = "off"
 
+L["cannot mount"] = "You cannot mount here and now."
+
 L["button.OK"] = "OK"
 L["button.Add"] = "Add"
 L["button.Duplicate"] = "Copy"

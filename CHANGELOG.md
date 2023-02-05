@@ -2,6 +2,15 @@
 
 full changelog: https://github.com/last-voice/mounty/blob/main/changelog.md
 
+v2.7.1.3
+- fixed bug when switching tabs in collections journals
+- cleaned up SavedVariables
+- interface: 100005
+
+v2.7.1.2
+- new chat message when mounting seems impossible
+- some pimp my code
+
 v2.7.1.1
 - bugfix - dismount didn't work anymore when in situations where mounting is not possible, i.e. in combat. now fixed. 
 

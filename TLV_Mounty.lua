@@ -454,10 +454,6 @@ end
 
 function Mounty:Mount(mode, magic)
 
-    if not Mounty:CheckCircumstances() then
-        return
-    end
-
     local only_flyable_showoffs = false
 
     local category = Mounty.TypeGround
@@ -522,7 +518,6 @@ function Mounty:Mount(mode, magic)
 
     end
 
-    TLVlib:Debug("Mode: " .. mode)
     TLVlib:Debug("Category: " .. category)
 
     local mountID = 0
@@ -630,20 +625,20 @@ function Mounty:Mount(mode, magic)
 
 end
 
-function Mounty:Run(keypress)
+function Mounty:Run(mode)
 
     local mounted = IsMounted()
     local flying = IsFlying()
     local parachute = _Mounty_A.Parachute
 
-    if keypress == nil then
-        keypress = "magic"
+    if mode == nil then
+        mode = "magic"
     end
 
     TLVlib:Debug("--- --° -°° °°° °.° ..° ... °.. °.° °°° °°- °-- ---")
-    TLVlib:Debug("Key pressed: " .. keypress)
+    TLVlib:Debug("Mode: " .. mode)
 
-    if keypress == "forceoff" then
+    if mode == "forceoff" then
 
         if mounted then
             Dismount()
@@ -662,13 +657,14 @@ function Mounty:Run(keypress)
 
         Dismount()
 
-        if keypress == "magic" then
+        if mode == "magic" then
             return
         end
 
     end
 
     if not Mounty:CheckCircumstances() then
+        TLVlib:Chat(L["cannot mount"])
         return
     end
 
@@ -682,9 +678,11 @@ function Mounty:Run(keypress)
     local amphibian = Mounty.CurrentProfile.Amphibian
     local showoff = Mounty.CurrentProfile.ShowOff
 
-    if keypress == "magic" then
+    if mode == "magic" then
 
         -- magic
+
+        mode = ""
 
         if not amphibian then
             Mounty.ForceWaterMount = false
@@ -702,8 +700,6 @@ function Mounty:Run(keypress)
         Mounty:Why("") -- reset
 
         -- let's decide
-
-        local mode = ""
 
         -- durability ?
 
@@ -977,7 +973,7 @@ function Mounty:Run(keypress)
 
         TLVlib:Debug("Special key")
 
-        Mounty:Mount(keypress)
+        Mounty:Mount(mode)
 
     end
 
@@ -2428,15 +2424,17 @@ end
 
 function Mounty:OnHide ()
 
+    -- NO! Closes CollectionsJournal when switching tabs!
+
     -- auto open and close mounty with mount journal
-    if _Mounty_A.AutoOpen then
-        CollectionsJournal:Hide()
-    end
+    -- if _Mounty_A.AutoOpen then
+        -- CollectionsJournal:Hide()
+    -- end
 
 end
 
-function MountyKeyHandler(keypress)
-    Mounty:Run(keypress)
+function MountyKeyHandler(mode)
+    Mounty:Run(mode)
 end
 
 EventRegistry:RegisterCallback("MountJournal.OnShow", function()
@@ -2655,7 +2653,7 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
             or mode == "custom3"
     then
 
-        Mounty:Mount(mode)
+        Mounty:Run(mode)
 
     else
 
