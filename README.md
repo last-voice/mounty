@@ -115,7 +115,7 @@ Magic done. By __Mounty #TLV__.
 >__You have not mounted ...__\
 >Your durability is lower than xx% (see options) -> _Repair mount_\
 >You are swimming, _Amphibia mode_ is on -> (every second time) _Water mount_\
->You are on the Dragon isles and in a flight zone -> _Dragon_
+>You are on the Dragon isles and in a flight zone -> _Dragon_ \
 >You are a party member, _taxi mode_ is on -> _Taxi mount_\
 >You are in a resting area, _show off mode_ is active -> _Show off mount_\
 >You are in a flight zone, all alone -> _Fly mount_\
