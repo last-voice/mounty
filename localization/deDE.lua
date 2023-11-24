@@ -127,7 +127,7 @@ L["why.long.showoff.no2"] = "Obwohl hier ein Ruhebereich ist möchtest du |hnich
 L["why.long.showoff.no3"] = "Um anzugeben müsstest du kurz |haus dem Wasser steigen|r."
 L["why.long.showoff.use"] = "Mounty #TLV wird also eines deiner atemberaubenden |hProtz-Mounts|r beschwören."
 L["why.long.showoff.empty"] = "Was nicht so einfach ist, denn die Kategorie ist leer."
-L["why.long.showoff.flyable"] = "Und weil du hier |hfliegen|r kannst, gibt es auch eines mit Flügeln."
+L["why.long.category.flyable"] = "Und weil du hier |hfliegen|r kannst, gibt es auch eines mit Flügeln."
 L["why.long.fly"] = "Lass uns abheben, du |hkannst hier fliegen|r."
 L["why.long.fly.no"] = "Hier und jetzt ist |hFliegen keine Option|r für dich."
 L["why.long.fly.no.together"] = "Halt, Stopp. Du möchtest ja |hmit deiner Gruppe zusammen am Boden bleiben|r."
@@ -178,7 +178,7 @@ L["why.short.showoff.no2"] = "Protzerei deaktiviert"
 L["why.short.showoff.no3"] = "im Wasser = keine Protzerei"
 L["why.short.showoff.use"] = "rufe Protz-Mount"
 L["why.short.showoff.empty"] = "nix zugewiesen"
-L["why.short.showoff.flyable"] = "nur fliegende Protz-Mount"
+L["why.short.category.flyable"] = "nur fliegende Mounts"
 L["why.short.fly"] = "Flugbereich"
 L["why.short.fly.no"] = "kein Flugbereich"
 L["why.short.fly.no.together"] = "in Gruppe & zusammen bleiben"
@@ -240,7 +240,8 @@ L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.de.md"
 
 L["why.example"] = "Das gerade war ein einmaliges Beispiel für den |cfff07070Warum-Modus|r. Kommt nicht nochmal. Tippe |cfff07070/mounty why|r oder |cfff07070/mounty why 2-10|r jederzeit im Chat, um Erklärungen für die letzten Mounts zu bekommen. Oder aktiviere den |cfff07070automatischen Warum-Modus|r in den Optionen von Mounty #TLV."
 
-L["upgrade.popup"] = "Voll toll, der neue |cfff07070Warum-Modus|r inkl. Historie.\nSofort ausprobieren!\n\n(In den Optionen einschalten oder\nim Chat '/mounty why' eingeben.\nTippe '/mounty help' für mehr.)\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nKleine Spenden sind willkommen. Siehe README."
+--L["upgrade.popup"] = "Voll toll, der neue |cfff07070Warum-Modus|r inkl. Historie.\nSofort ausprobieren!\n\n(In den Optionen einschalten oder\nim Chat '/mounty why' eingeben.\nTippe '/mounty help' für mehr.)\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nKleine Spenden sind willkommen. Siehe README."
+L["upgrade.popup"] = "Auch in der |cfff07070Jahrhunderschwelle|r werden nun Reittiere gerufen. Allerdings war dafür ein kleiner Workaround notwendig, denn laut WOW-API befindet ihr euch dort eigentlich im |cfff07070Nirgendwo|r.\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nKleine Spenden sind willkommen. Siehe README."
 
 local _, TLV_AddOn = ...
 TLV_AddOn.L = setmetatable(L, { __index = TLV_AddOn.L })

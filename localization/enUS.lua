@@ -123,7 +123,7 @@ L["why.long.showoff.no2"] = "Although in a resting area, you just |hdon't want t
 L["why.long.showoff.no3"] = "To show off over here you should |hget out of the water|r first."
 L["why.long.showoff.use"] = "So Mounty #TLV will now try summon one of your awesome |hshow off mounts|r."
 L["why.long.showoff.empty"] = "But cannot find one in it's category."
-L["why.long.showoff.flyable"] = "And for here is a |hflying area|r, only your flying show off mounts will be chosen of."
+L["why.long.category.flyable"] = "And for here is a |hflying area|r, only your flying mounts will be chosen of."
 L["why.long.fly"] = "Up, up, up, my friend. |hYou can fly|r in this area."
 L["why.long.fly.no"] = "Over here |hflying is no option|r for you."
 L["why.long.fly.no.together"] = "Ooops, stop, you've chosen to |hstay on the ground together|r with your group."
@@ -174,7 +174,7 @@ L["why.short.showoff.no2"] = "show off is off"
 L["why.short.showoff.no3"] = "swimming = no show off"
 L["why.short.showoff.use"] = "summon show off mount"
 L["why.short.showoff.empty"] = "none assigned"
-L["why.short.showoff.flyable"] = "only flying show off mounts"
+L["why.short.category.flyable"] = "only flying mounts"
 L["why.short.fly"] = "flyable area"
 L["why.short.fly.no"] = "no flyable area"
 L["why.short.fly.no.together"] = "company & stay together"
@@ -236,7 +236,8 @@ L["readme.URL"] = "https://github.com/last-voice/mounty/blob/main/README.md"
 
 L["why.example"] = "This was just a one time only example of the |cfff07070Why mode|r. Won't happen again. Type |cfff07070/mounty why|r or |cfff07070/mounty why 2-10|r anytime to get an explanation of it's last choices or activate the |cfff07070automatic why mode|r in Mounty #TLV's the options."
 
-L["upgrade.popup"] = "Awesome new |cfff07070Why mode|r, I promise.\nCheck it out asap!\n\n(Activate in options or\ntype '/mounty why' in chat window.\nType '/mounty help' for more.)\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nAny donations are welcome. See README."
+-- L["upgrade.popup"] = "Awesome new |cfff07070Why mode|r, I promise.\nCheck it out asap!\n\n(Activate in options or\ntype '/mounty why' in chat window.\nType '/mounty help' for more.)\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nAny donations are welcome. See README."
+L["upgrade.popup"] = "Now mounts are summoned in |cfff07070Millenial's Threshold|r, too. But it needed a work around, because the WOW-API says, you're in |cfff07070Twilight Zone|r over there.\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nAny donations are welcome. See README."
 
 local _, TLV_AddOn = ...
 TLV_AddOn.L = L

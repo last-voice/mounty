@@ -77,16 +77,20 @@ function Mounty:CheckCircumstances ()
 
     end
 
-    if not TLVlib:IsInTrueZone() then
-
-        TLVlib:Debug("Not arrived in a true zone yet.")
-        return false
-
-    end
-
     if not Mounty:AnyUsable() then
 
         TLVlib:Debug("Can't use any mount here at all.")
+        return false
+
+    else
+
+        return true -- Hotfix, because TLVlib:IsInTrueZone() won't work in Millennial's Threshold, yet.
+
+    end
+
+    if not TLVlib:IsInTrueZone() then
+
+        TLVlib:Debug("Not arrived in a true zone yet.")
         return false
 
     end
@@ -304,7 +308,7 @@ function Mounty:AnyRandom()
 
 end
 
-function Mounty:SelectMountByCategory(category, only_flyable_showoffs)
+function Mounty:SelectMountByCategory(category, only_flyable_in_category)
 
     if category == 0 then
         return 0
@@ -327,7 +331,7 @@ function Mounty:SelectMountByCategory(category, only_flyable_showoffs)
 
             local usable = usable_spell and isUsable and isCollected
 
-            if usable and only_flyable_showoffs then
+            if usable and only_flyable_in_category then
 
                 local _, _, _, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
 
@@ -412,13 +416,13 @@ function Mounty:MountSpellID(mountID)
     return spellID
 end
 
-function Mounty:MountUsableBySpellID(spellID)
-
-    local mountID = C_MountJournal.GetMountFromSpell(spellID)
-    local _, _, icon = C_MountJournal.GetMountInfoByID(mountID)
-
-    return icon
-end
+--function Mounty:MountUsableBySpellID(spellID)
+--
+--    local mountID = C_MountJournal.GetMountFromSpell(spellID)
+--    local _, _, icon = C_MountJournal.GetMountInfoByID(mountID)
+--
+--    return icon
+--end
 
 function Mounty:UserCanFlyHere()
 
@@ -454,7 +458,7 @@ end
 
 function Mounty:Mount(mode, magic)
 
-    local only_flyable_showoffs = false
+    local only_flyable_in_category = false
 
     local category = Mounty.TypeGround
 
@@ -486,6 +490,15 @@ function Mounty:Mount(mode, magic)
             end
         end
 
+        if Mounty:UserCanFlyHere() then
+
+            Mounty:Why("category.flyable")
+
+            only_flyable_in_category = true
+
+        end
+
+
         category = Mounty.TypeTaxi
 
     elseif mode == "custom1" then
@@ -506,9 +519,9 @@ function Mounty:Mount(mode, magic)
 
         if Mounty:UserCanFlyHere() then
 
-            Mounty:Why("showoff.flyable")
+            Mounty:Why("category.flyable")
 
-            only_flyable_showoffs = true
+            only_flyable_in_category = true
 
         end
 
@@ -526,7 +539,7 @@ function Mounty:Mount(mode, magic)
 
     if category > 0 then
 
-        spellID = Mounty:SelectMountByCategory(category, only_flyable_showoffs)
+        spellID = Mounty:SelectMountByCategory(category, only_flyable_in_category)
 
         -- fallback only if magic
         if spellID == 0 and magic then

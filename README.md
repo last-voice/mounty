@@ -115,7 +115,7 @@ Magic done. By __Mounty #TLV__.
 >__You have not mounted ...__\
 >Your durability is lower than xx% (see options) -> _Repair mount_\
 >You are swimming, _Amphibia mode_ is on -> (every second time) _Water mount_\
->You are on the Dragon isles and in a flight zone -> _Dragon_
+>You are on the Dragon isles and in a flight zone -> _Dragon_\
 >You are a party member, _taxi mode_ is on -> _Taxi mount_\
 >You are in a resting area, _show off mode_ is active -> _Show off mount_\
 >You are in a flight zone, all alone -> _Fly mount_\
@@ -135,6 +135,7 @@ If a category is empty, it will then select one of your __flying mounts__. And i
 
 - Exception 1: As long as you haven't given to fly yet, ground mounts will always be prefered before dragons and fly mounts.
 - Exception 2: In flyable resting areas only flyable show off mounts will be chosen.
+- Exception 3: In flyable areas only flyable taxi mounts will be chosen.
 
 ### And why was a certain mount chosen?
 
@@ -221,12 +222,12 @@ __Tell me why!__
 
 _/mounty why_ - to show the current entry\
 _/mounty why 2-10_ - to show an older entry\
-_/mounty why all_ - to show all entries\
+_/mounty why all_ - to show all entries
 
 __Profiles__
 
 _/mounty profile_ - to show the current used profile\
-_/mounty profile Heart_ - to switch to or create the profile Heart\
+_/mounty profile Heart_ - to switch to or create the profile Heart
 
 __Options__
 
@@ -241,8 +242,8 @@ _/mounty set parachute on|off_ (Dismount at any height)\
 _/mounty set random on|off_ (Random or cycle throught)\
 _/mounty set showoff on|off_ (Show off, show off!)\
 _/mounty set taxi on|off_ (Use taxi mounts)\
-_/mounty set together on|off_ (Let's stay together)
-_/mounty set why on|off_ (Output 'Why?' every time automatically)
+_/mounty set together on|off_ (Let's stay together)\
+_/mounty set why on|off_ (Output 'Why?' every time automatically)\
 _/mounty set whyshort on|off (Set the output format to short or long)
 
 ## Binding keys

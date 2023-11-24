@@ -134,6 +134,7 @@ Wenn eine Kategorie leer ist, wird stattdessen eines deiner __Flug-Mounts__ ausg
 
 - Besonderheit 1: Flug-Mounts und Drachen werden nur dann gerufen, wenn Du auch gelernt hast, diese zu reiten.
 - Besonderheit 2: In Ruhebereichen, in denen du fliegen kannst, werden nur fliegende Protz-Mounts ausgewählt.
+- Besonderheit 3: In Bereichen, in denen du fliegen kannst, werden nur fliegende Taxi-Mounts ausgewählt.
 
 ### Und warum wurde genau dieses Mount gerufen?
 
@@ -218,12 +219,12 @@ __Wieso, weshalb, warum?__
 
 _/mounty why_ - das zuletzt gewählte Mount erläutern\
 _/mounty why 2-10_ - zeige einen älteren Eintrag der Historie an\
-_/mounty why all_ - zeige die ganze Historie an\
+_/mounty why all_ - zeige die ganze Historie an
 
 __Profile__
 
 _/mounty profile_ - zeigt das aktuelle Profil\
-_/mounty profile Heart_ - schaltet auf das Profil Heart um und erstellt es falls nicht vorhanden\
+_/mounty profile Heart_ - schaltet auf das Profil Heart um und erstellt es falls nicht vorhanden
 
 __Optionen__
 
@@ -238,8 +239,8 @@ _/mounty set parachute on|off_ (Immer absitzen, bei jeder Höhe)\
 _/mounty set random on|off_ (Zufällig oder in Reihenfolge)\
 _/mounty set showoff on|off_ (Protzerei!)\
 _/mounty set taxi on|off_ (Taxi-Mounts verwenden)\
-_/mounty set together on|off_ (Zusammen bleiben)
-_/mounty set why on|off_ (Wieso, weshalb, warum jedesmal automatisch ausgeben)
+_/mounty set together on|off_ (Zusammen bleiben)\
+_/mounty set why on|off_ (Wieso, weshalb, warum jedesmal automatisch ausgeben)\
 _/mounty set whyshort on|off - (Kurzes oder langes Ausgabeformat)
 
 ## Tastaturbelegung

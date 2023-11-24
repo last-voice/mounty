@@ -9,9 +9,13 @@ function Mounty:Upgrade()
 
     if _Mounty_A ~= nil then
 
-        local version = _Mounty_A.Version or ""
+        local version = _Mounty_A.Version or "00000000"
 
-        local alert_if_lower = "v0207"
+        if string.len(version) ~= 8 then
+            version = "00000000"
+        end
+
+        local alert_if_lower = "02070105"
 
         if version < alert_if_lower then
 

@@ -1,6 +1,24 @@
 ## Mounty #TLV changelog
 
-full changelog: https://github.com/last-voice/mounty/blob/main/changelog.md
+full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
+
+v2.7.1.9
+- testing auto packaging of CurseForge
+
+v2.7.1.8
+- Minor upgrade info bugfix, again ^^
+
+v2.7.1.7
+- Missing backslashes in README (ty! to https://github.com/HugoVG)
+
+v2.7.1.6
+- Minor upgrade info bugfix
+
+v2.7.1.5
+- Hotfix, because C_Map.GetBestMapForUnit won't return anything whilst in Millennial's Threshold
+
+v2.7.1.4
+- In flyable areas only flying taxi mounts will be chosen
 
 v2.7.1.3
 - fixed bug when switching tabs in collections journals
