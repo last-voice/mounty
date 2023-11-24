@@ -2,7 +2,7 @@
 
 full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
-v2.7.1.9
+v2.7.2
 - testing auto packaging of CurseForge
 
 v2.7.1.8
