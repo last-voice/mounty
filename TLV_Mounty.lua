@@ -225,6 +225,27 @@ function Mounty:Why (why, arg1, arg2)
 
 end
 
+function Mounty:DebugListAllMounts()
+
+    local count = 0
+
+    C_MountJournal.SetDefaultFilters()
+
+    for i = 1, C_MountJournal.GetNumDisplayedMounts() do
+
+        local mname, spellID, _, _, isUsable, _, _, _, _, _, _, mountID = C_MountJournal.GetDisplayedMountInfo(i)
+        local _, _, _, isSelfMount, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
+
+        TLVlib:Debug("Mount: " .. "[" .. mountID .. "] " .. mname .. " mountTypeID=" .. tostring(mountTypeID))
+
+        count = count + 1
+
+    end
+
+    TLVlib:Debug("Mounts in journal: " .. tostring(count))
+
+end
+
 function Mounty:HasCategory (category)
 
     for i = 1, Mounty.NumMountsExpanded do
@@ -335,9 +356,11 @@ function Mounty:SelectMountByCategory(category, only_flyable_in_category)
 
                 local _, _, _, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
 
-                if mountTypeID ~= 248 then
-                    -- 248 = mostly flyable
-                    -- 402 = dragonflight, but why?
+               if mountID ~= 407 and mountID ~= 455 and mountTypeID ~= 248 then
+                    -- mountID 407 = Sandstone Drake
+                    -- mountID = 455 Obsidian Nightwing
+                    -- mountTypeID 248 = mostly flyable
+                    -- mountTypeID 402 = dragonflight, but why? dragonflight <~=> flyable area
                     usable = false
                 end
             end
@@ -497,7 +520,6 @@ function Mounty:Mount(mode, magic)
             only_flyable_in_category = true
 
         end
-
 
         category = Mounty.TypeTaxi
 
@@ -2640,18 +2662,9 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
         end
 
-        --elseif mode == "dbg" then
-        --
-        --    local a1 = {}
-        --
-        --    local a2 = {}
-        --
-        --    local ix = a1[5]
-        --
-        --    local fn = a2[ix]
-        --
-        --    TLVlib:Debug("ix: " .. tostring(ix))
-        --    TLVlib:Debug("fn: " .. tostring(fn))
+    -- elseif mode == "dbg" then
+
+        -- Mounty:DebugListAllMounts ()
 
     elseif mode == "dragonflight"
             or mode == "fly"

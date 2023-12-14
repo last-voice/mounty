@@ -2,7 +2,10 @@
 
 full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
-v2.7.2.2
+v2.7.3
+- The transforming mounts Sandstone Drake and Obsidian Nightwing will now correctly be recognized as flyable (cheers to khedrak, once again)
+
+- v2.7.2.2
 - testing auto packaging of CurseForge
 
 v2.7.2
