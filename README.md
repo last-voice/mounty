@@ -12,7 +12,6 @@ The add on can be found here:
 DEUTSCH? -> Das __deutsche README__ findest Du hier: https://github.com/last-voice/mounty/blob/main/README.de.md
 
 ---
-
 You are in a flight zone, swimming in the water or joined by a friend, who can't fly jet?\
 You want to ride on, but your armor is low and you should repair asap?\
 You want to show off with these awesome mounts, which nobody else has got (except, everybody got it;)?\
@@ -139,7 +138,7 @@ If a category is empty, it will then select one of your __flying mounts__. And i
 
 ### And why was a certain mount chosen?
 
-The magic is kind of complex but it it transparent too.
+The magic is kind of complex but it is transparent too.
 
 __Mounty #TLV__ will keep a history of it's last 10 summonings and you can take it look at it anytime.
 
@@ -212,7 +211,7 @@ _/mounty magic_ - to let __Mounty #TLV's__ magic happen
 _/mounty dragonflight_ - to summon a Dragonflight mount\
 _/mounty fly_ - to summon fly mount\
 _/mounty ground_ - to summon ground mount\
-_/mounty random_ - to summon random mount\
+_/mounty surprise_ - to summon a random mount out of whole journal\
 _/mounty repair_ - to summon repair mount\
 _/mounty showoff_ - to summon show off mount\
 _/mounty taxi_ - to summon taxi mount\

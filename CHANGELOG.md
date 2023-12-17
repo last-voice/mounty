@@ -2,29 +2,35 @@
 
 full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.7.4
+- the detection of the players ability to use flight mounts was buggy. fixed it. (thanks to Paco-4272)
+- chat command '/mounty random' did not work at all. fixed it. 
+- chat command '/mounty random' now also changed to '/mounty surprise'.
+- improved debug output and minor typos in README.md
+
 v2.7.3
 - The transforming mounts Sandstone Drake and Obsidian Nightwing will now correctly be recognized as flyable (cheers to khedrak, once again)
 
-- v2.7.2.2
+v2.7.2.2
 - testing auto packaging of CurseForge
 
 v2.7.2
 - testing auto packaging of CurseForge
 
 v2.7.1.8
-- Minor upgrade info bugfix, again ^^
+- minor upgrade info bugfix, again ^^
 
 v2.7.1.7
-- Missing backslashes in README (ty! to https://github.com/HugoVG)
+- missing backslashes in README (ty! to https://github.com/HugoVG)
 
 v2.7.1.6
-- Minor upgrade info bugfix
+- minor upgrade info bugfix
 
 v2.7.1.5
-- Hotfix, because C_Map.GetBestMapForUnit won't return anything whilst in Millennial's Threshold
+- hotfix, because C_Map.GetBestMapForUnit won't return anything whilst in Millennial's Threshold
 
 v2.7.1.4
-- In flyable areas only flying taxi mounts will be chosen
+- in flyable areas only flying taxi mounts will be chosen
 
 v2.7.1.3
 - fixed bug when switching tabs in collections journals

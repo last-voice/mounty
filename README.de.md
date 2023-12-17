@@ -210,7 +210,7 @@ _/mounty dragonflight_ - beschwört ein Dragonflight-Mount\
 _/mounty fly_ - beschwört ein Flug-Mount\
 _/mounty ground_ - beschwört ein Boden-Mount\
 _/mounty repair_ - beschwört ein Reparier-Mount\
-_/mounty random_ - beschwört ein zufälliges Mount\
+_/mounty surprise_ - beschwört ein zufälliges Mount aus der Reittiersammlung\
 _/mounty showoff_ - beschwört ein Protz-Mount\
 _/mounty taxi_ - beschwört ein Taxi-Mount\
 _/mounty water_ - beschwört ein Wasser-Mount

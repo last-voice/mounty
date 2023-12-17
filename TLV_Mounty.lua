@@ -299,7 +299,7 @@ function Mounty:AnyUsable()
 
 end
 
-function Mounty:AnyRandom()
+function Mounty:AnyRandomOfJournal()
 
     local journaled = {}
     local count = 0
@@ -356,7 +356,7 @@ function Mounty:SelectMountByCategory(category, only_flyable_in_category)
 
                 local _, _, _, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
 
-               if mountID ~= 407 and mountID ~= 455 and mountTypeID ~= 248 then
+                if mountID ~= 407 and mountID ~= 455 and mountTypeID ~= 248 then
                     -- mountID 407 = Sandstone Drake
                     -- mountID = 455 Obsidian Nightwing
                     -- mountTypeID 248 = mostly flyable
@@ -449,8 +449,8 @@ end
 
 function Mounty:UserCanFlyHere()
 
-    return IsFlyableArea() and (C_Spell.DoesSpellExist(34090) or C_Spell.DoesSpellExist(90265)) -- riding has been learned
-    --    return IsFlyableArea() and (IsPlayerSpell(34090) or IsPlayerSpell(90265)) -- riding has been learned
+    return IsFlyableArea() and (IsPlayerSpell(34090) or IsPlayerSpell(90265)) -- flying has been learned
+
 end
 
 function Mounty:YouCanRideDragonsHere()
@@ -480,6 +480,12 @@ function Mounty:YouCanRideDragonsHere()
 end
 
 function Mounty:Mount(mode, magic)
+
+    if (magic) then
+        TLVlib:Debug("Mode: " .. mode .. ' (a kind of magic)')
+    else
+        TLVlib:Debug("Mode: " .. mode .. ' (selected by player)')
+    end
 
     local only_flyable_in_category = false
 
@@ -547,7 +553,7 @@ function Mounty:Mount(mode, magic)
 
         end
 
-    elseif mode == "random" then
+    elseif mode == "surprise" then
 
         category = 0
 
@@ -628,10 +634,10 @@ function Mounty:Mount(mode, magic)
 
     end
 
-    -- no random if not magic
-    if mountID == 0 and magic then
+    -- any journal mount if magic didn't deliver or 'surprise' was chosen by player
+    if (mountID == 0 and magic) or (mode == "surprise") then
 
-        mountID, mountName = Mounty:AnyRandom()
+        mountID, mountName = Mounty:AnyRandomOfJournal()
 
         if mountID == 0 then
 
@@ -1005,8 +1011,6 @@ function Mounty:Run(mode)
         end
 
     else
-
-        TLVlib:Debug("Special key")
 
         Mounty:Mount(mode)
 
@@ -2463,7 +2467,7 @@ function Mounty:OnHide ()
 
     -- auto open and close mounty with mount journal
     -- if _Mounty_A.AutoOpen then
-        -- CollectionsJournal:Hide()
+    -- CollectionsJournal:Hide()
     -- end
 
 end
@@ -2662,7 +2666,7 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
         end
 
-    -- elseif mode == "dbg" then
+        -- elseif mode == "dbg" then
 
         -- Mounty:DebugListAllMounts ()
 
@@ -2673,7 +2677,7 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
             or mode == "repair"
             or mode == "taxi"
             or mode == "showoff"
-            or mode == "random"
+            or mode == "surprise"
             or mode == "custom1"
             or mode == "custom2"
             or mode == "custom3"
