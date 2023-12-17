@@ -308,10 +308,9 @@ function Mounty:AnyRandomOfJournal()
 
     for i = 1, C_MountJournal.GetNumDisplayedMounts() do
 
-        local mname, spellID, _, _, isUsable, _, _, _, _, _, _, mountID = C_MountJournal.GetDisplayedMountInfo(i)
-        -- isUsable muss sein, weil auch Mounts gelistet werden, die nicht im Besitz sind
+        local mname, spellID, _, _, isUsable, _, _, _, _, _, isCollected, mountID = C_MountJournal.GetDisplayedMountInfo(i)
 
-        if isUsable and IsUsableSpell(spellID) then
+        if IsUsableSpell(spellID) and isUsable and isCollected then
             count = count + 1
             journaled[count] = { mountID, mname }
         end
@@ -437,15 +436,8 @@ function Mounty:MountSpellID(mountID)
     local _, spellID = C_MountJournal.GetMountInfoByID(mountID)
 
     return spellID
-end
 
---function Mounty:MountUsableBySpellID(spellID)
---
---    local mountID = C_MountJournal.GetMountFromSpell(spellID)
---    local _, _, icon = C_MountJournal.GetMountInfoByID(mountID)
---
---    return icon
---end
+end
 
 function Mounty:UserCanFlyHere()
 

@@ -2,6 +2,9 @@
 
 full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.7.4.1
+- minor code improvement
+
 v2.7.4
 - the detection of the players ability to use flight mounts was buggy. fixed it. (thanks to Paco-4272)
 - chat command '/mounty random' did not work at all. fixed it. 
