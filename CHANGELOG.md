@@ -2,6 +2,10 @@
 
 full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.7.4.3
+- dragon riding and flyable mounts issues
+- Interface 100205
+
 v2.7.4.2
 - check for dragon flight now also includes check of flyable area.
 

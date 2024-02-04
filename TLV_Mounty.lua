@@ -355,11 +355,11 @@ function Mounty:SelectMountByCategory(category, only_flyable_in_category)
 
                 local _, _, _, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
 
-                if mountID ~= 407 and mountID ~= 455 and mountTypeID ~= 248 then
+                if mountID ~= 407 and mountID ~= 455 and mountTypeID ~= 248 and mountTypeID ~= 402 then
                     -- mountID 407 = Sandstone Drake
                     -- mountID = 455 Obsidian Nightwing
                     -- mountTypeID 248 = mostly flyable
-                    -- mountTypeID 402 = dragonflight, but why? dragonflight <~=> flyable area
+                    -- mountTypeID 402 = dragonflight
                     usable = false
                 end
             end
@@ -445,7 +445,7 @@ function Mounty:UserCanFlyHere()
 
 end
 
-function Mounty:YouCanRideDragonsHere(flyable)
+function Mounty:YouCanRideDragonsHere()
 
     if not IsFlyableArea () then
         return false
@@ -707,7 +707,7 @@ function Mounty:Run(mode)
 
     local resting = IsResting()
     local flyable = Mounty:UserCanFlyHere()
-    local dragonflight = Mounty:YouCanRideDragonsHere(flyable)
+    local dragonflight = Mounty:YouCanRideDragonsHere()
     local alone = not IsInGroup()
     local swimming = IsSwimming()
     local taximode = Mounty.CurrentProfile.TaxiMode
