@@ -2,6 +2,9 @@
 
 full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.7.4.2
+- check for dragon flight now also includes check of flyable area.
+
 v2.7.4.1
 - minor code improvement
 

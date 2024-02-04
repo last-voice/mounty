@@ -445,7 +445,11 @@ function Mounty:UserCanFlyHere()
 
 end
 
-function Mounty:YouCanRideDragonsHere()
+function Mounty:YouCanRideDragonsHere(flyable)
+
+    if not IsFlyableArea () then
+        return false
+    end
 
     local ridingmounts = C_MountJournal.GetCollectedDragonridingMounts()
 
@@ -702,9 +706,9 @@ function Mounty:Run(mode)
     end
 
     local resting = IsResting()
-    local dragonflight = Mounty:YouCanRideDragonsHere()
-    local alone = not IsInGroup()
     local flyable = Mounty:UserCanFlyHere()
+    local dragonflight = Mounty:YouCanRideDragonsHere(flyable)
+    local alone = not IsInGroup()
     local swimming = IsSwimming()
     local taximode = Mounty.CurrentProfile.TaxiMode
     local together = Mounty.CurrentProfile.Together
@@ -768,7 +772,6 @@ function Mounty:Run(mode)
         -- alternate water mount?
 
         if mode == "" then
-
 
             if swimming and amphibian then
 
