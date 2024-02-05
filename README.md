@@ -132,9 +132,10 @@ If a category is empty, it will then select one of your __flying mounts__. And i
 
 ### Exceptions
 
-- Exception 1: As long as you haven't given to fly yet, ground mounts will always be prefered before dragons and fly mounts.
-- Exception 2: In flyable resting areas only flyable show off mounts will be chosen.
-- Exception 3: In flyable areas only flyable taxi mounts will be chosen.
+- Exception 1: Dragonflight mounts will be used instead of flying mounts if Dragonflight mode is activated in options.
+- Exception 2: As long as you haven't given to fly yet, ground mounts will always be prefered before dragons and fly mounts.
+- Exception 3: In flyable resting areas only flyable show off mounts will be chosen.
+- Exception 4: In flyable areas only flyable taxi mounts will be chosen.
 
 ### And why was a certain mount chosen?
 
@@ -237,6 +238,7 @@ __Switch options__
 _/mounty set amphibian on|off_ (Alternate between swimming and flying)\
 _/mounty set auto on|off_ (Auto open options frame)\
 _/mounty set debug on|off_ (Show debug info)\
+_/mounty set dragonflight on|off_ (Summon dragons to fly)\
 _/mounty set parachute on|off_ (Dismount at any height)\
 _/mounty set random on|off_ (Random or cycle throught)\
 _/mounty set showoff on|off_ (Show off, show off!)\

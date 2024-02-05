@@ -447,7 +447,13 @@ end
 
 function Mounty:YouCanRideDragonsHere()
 
-    if not IsFlyableArea () then
+    if IsFlyableArea() then
+        -- a normal flying area which is no dragon flight area
+        return false
+    end
+
+    if not IsPlayerSpell(376777) then
+        -- dragon riding hasn't been learned, yet
         return false
     end
 
@@ -710,6 +716,7 @@ function Mounty:Run(mode)
     local dragonflight = Mounty:YouCanRideDragonsHere()
     local alone = not IsInGroup()
     local swimming = IsSwimming()
+    local dragonmode = Mounty.CurrentProfile.Dragon
     local taximode = Mounty.CurrentProfile.TaxiMode
     local together = Mounty.CurrentProfile.Together
     local amphibian = Mounty.CurrentProfile.Amphibian
@@ -929,7 +936,13 @@ function Mounty:Run(mode)
 
                     end
 
-                    if Mounty:HasCategory(Mounty.TypeFlying) then
+                    if dragonmode and Mounty:HasCategory(Mounty.TypeDragonflight) then
+
+                        mode = "dragonflight"
+
+                        Mounty:Why("fly.use.dragon")
+
+                    elseif Mounty:HasCategory(Mounty.TypeFlying) then
 
                         mode = "fly"
 
@@ -1333,6 +1346,18 @@ function Mounty:InitOptionsFrame()
     Mounty.OptionsFrame_Random:SetScript("OnClick", function(calling)
         Mounty.CurrentProfile.Random = not Mounty.CurrentProfile.Random
         calling:SetChecked(Mounty.CurrentProfile.Random)
+    end)
+
+    -- Dragon checkbox
+
+    top = top - delta_checkboxes
+
+    Mounty.OptionsFrame_Dragon = CreateFrame("CheckButton", "Mounty_OptionsFrame_Dragon", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    Mounty.OptionsFrame_Dragon:SetPoint("TOPLEFT", 16, top)
+    Mounty_OptionsFrame_DragonText:SetText(L["options.Dragon"])
+    Mounty.OptionsFrame_Dragon:SetScript("OnClick", function(calling)
+        Mounty.CurrentProfile.Dragon = not Mounty.CurrentProfile.Dragon
+        calling:SetChecked(Mounty.CurrentProfile.Dragon)
     end)
 
     -- ShowOff checkbox
@@ -1960,6 +1985,7 @@ function Mounty:OptionsRender()
     end
 
     Mounty.OptionsFrame_Random:SetChecked(Mounty.CurrentProfile.Random)
+    Mounty.OptionsFrame_Dragon:SetChecked(Mounty.CurrentProfile.Dragon)
     Mounty.OptionsFrame_Together:SetChecked(Mounty.CurrentProfile.Together)
     Mounty.OptionsFrame_Amphibian:SetChecked(Mounty.CurrentProfile.Amphibian)
     Mounty.OptionsFrame_ShowOff:SetChecked(Mounty.CurrentProfile.ShowOff)
@@ -2255,6 +2281,10 @@ function Mounty:SelectProfile(p)
 
     if Mounty.Profiles[p].Random == nil then
         Mounty.Profiles[p].Random = false
+    end
+
+    if Mounty.Profiles[p].Dragon == nil then
+        Mounty.Profiles[p].Dragon = false
     end
 
     if Mounty.Profiles[p].DurabilityMin == nil then
@@ -2621,6 +2651,11 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
                 Mounty.CurrentProfile.Random = (arg2 == "on")
                 TLVlib:Chat(L["chat.Random"] .. suffix)
+
+            elseif arg1 == "dragonflight" then
+
+                Mounty.CurrentProfile.Dragon = (arg2 == "on")
+                TLVlib:Chat(L["chat.Dragon"] .. suffix)
 
             elseif arg1 == "showoff" then
 

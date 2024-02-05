@@ -132,9 +132,10 @@ Wenn eine Kategorie leer ist, wird stattdessen eines deiner __Flug-Mounts__ ausg
 
 ### Besonderheiten
 
-- Besonderheit 1: Flug-Mounts und Drachen werden nur dann gerufen, wenn Du auch gelernt hast, diese zu reiten.
-- Besonderheit 2: In Ruhebereichen, in denen du fliegen kannst, werden nur fliegende Protz-Mounts ausgewählt.
-- Besonderheit 3: In Bereichen, in denen du fliegen kannst, werden nur fliegende Taxi-Mounts ausgewählt.
+- Besonderheit 1: Drachen kommen statt Flug-Mounts zum Einsatz, wenn Du den Dragonflight-Modus aktiviert hast.
+- Besonderheit 2: Flug-Mounts und Drachen werden nur dann gerufen, wenn Du auch gelernt hast, diese zu reiten.
+- Besonderheit 3: In Ruhebereichen, in denen du fliegen kannst, werden nur fliegende Protz-Mounts ausgewählt.
+- Besonderheit 4: In Bereichen, in denen du fliegen kannst, werden nur fliegende Taxi-Mounts ausgewählt.
 
 ### Und warum wurde genau dieses Mount gerufen?
 
@@ -235,6 +236,7 @@ __Optionen umschalten__
 _/mounty set amphibian on|off_ (Abwechselnd schwimmen und fliegen)\
 _/mounty set auto on|off_ (Optionen automatisch öffnen)\
 _/mounty set debug on|off_ (Debug Infos anzeigen)\
+_/mounty set dragonflight on|off_ (Dragonflight-Modus)\
 _/mounty set parachute on|off_ (Immer absitzen, bei jeder Höhe)\
 _/mounty set random on|off_ (Zufällig oder in Reihenfolge)\
 _/mounty set showoff on|off_ (Protzerei!)\
