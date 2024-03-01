@@ -2,6 +2,9 @@
 
 full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.7.6.2
+- fixed stupid bug
+
 v2.7.6.1
 - dragon riding and flyable mounts issues again - next try
 - better selection of show off and taxi mounts when in flying areas

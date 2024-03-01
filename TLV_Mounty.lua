@@ -941,7 +941,6 @@ function Mounty:Run(mode)
 
                             Mounty:Why("fly.prefer.dragon")  -- new
 
-
                             fly_mode = "dragonflight"
 
                         else
@@ -980,7 +979,7 @@ function Mounty:Run(mode)
 
                         end
 
-                    elseif fly_mode == "dragon" then
+                    elseif fly_mode == "dragonflight" then
 
                         if Mounty:HasCategory(Mounty.TypeDragonflight) then
 
