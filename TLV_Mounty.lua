@@ -233,8 +233,8 @@ function Mounty:DebugListAllMounts()
 
     for i = 1, C_MountJournal.GetNumDisplayedMounts() do
 
-        local mname, spellID, _, _, isUsable, _, _, _, _, _, _, mountID = C_MountJournal.GetDisplayedMountInfo(i)
-        local _, _, _, isSelfMount, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
+        local mname, _, _, _, _, _, _, _, _, _, _, mountID = C_MountJournal.GetDisplayedMountInfo(i)
+        local _, _, _, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
 
         TLVlib:Debug("Mount: " .. "[" .. mountID .. "] " .. mname .. " mountTypeID=" .. tostring(mountTypeID))
 
@@ -286,7 +286,7 @@ function Mounty:AnyUsable()
 
     for i = 1, C_MountJournal.GetNumDisplayedMounts() do
 
-        local mname, spellID, _, _, isUsable = C_MountJournal.GetDisplayedMountInfo(i)
+        local _, spellID, _, _, isUsable = C_MountJournal.GetDisplayedMountInfo(i)
         -- isUsable muss sein, weil auch Mounts gelistet werden, die nicht im Besitz sind
 
         if isUsable and IsUsableSpell(spellID) then
@@ -351,15 +351,24 @@ function Mounty:SelectMountByCategory(category, only_flyable_in_category)
 
             local usable = usable_spell and isUsable and isCollected
 
-            if usable and only_flyable_in_category then
+            if usable and only_flyable_in_category == "dragon" then
 
                 local _, _, _, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
 
-                if mountID ~= 407 and mountID ~= 455 and mountTypeID ~= 248 and mountTypeID ~= 402 then
-                    -- mountID 407 = Sandstone Drake
-                    -- mountID = 455 Obsidian Nightwing
-                    -- mountTypeID 248 = mostly flyable
+                if mountTypeID ~= 402 then
                     -- mountTypeID 402 = dragonflight
+                    usable = false
+                end
+            end
+
+            if usable and only_flyable_in_category == "normal" then
+
+                local _, _, _, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
+
+                if mountID ~= 407 and mountID ~= 455 and mountTypeID ~= 248 then
+                    -- mountID 407 = Sandstone Drake
+                    -- mountID 455 = Obsidian Nightwing
+                    -- mountTypeID 248 = mostly flyable
                     usable = false
                 end
             end
@@ -419,12 +428,20 @@ function Mounty:SelectMountByCategory(category, only_flyable_in_category)
 
     -- count == 0
 
-    TLVlib:Debug("No (usable) mount found in category.")
+    if only_flyable_in_category ~= "" then
 
-    if assigned > 0 then
-        Mounty:Why("usable.none", assigned)
+        TLVlib:Debug("No (usable) mount found in category. (only looking for '" .. only_flyable_in_category .. "')")
+
     else
-        Mounty:Why("usable.null")
+
+        TLVlib:Debug("No (usable) mount found in category.")
+
+        if assigned > 0 then
+            Mounty:Why("usable.none", assigned)
+        else
+            Mounty:Why("usable.null")
+        end
+
     end
 
     return 0
@@ -459,7 +476,7 @@ function Mounty:Mount(mode, magic)
         TLVlib:Debug("Mode: " .. mode .. ' (selected by player)')
     end
 
-    local only_flyable_in_category = false
+    local check_only_flyable_in_category = false
 
     local category = Mounty.TypeGround
 
@@ -491,13 +508,7 @@ function Mounty:Mount(mode, magic)
             end
         end
 
-        if Mounty:UserCanFlyHere() then
-
-            Mounty:Why("category.flyable")
-
-            only_flyable_in_category = true
-
-        end
+        check_only_flyable_in_category = true
 
         category = Mounty.TypeTaxi
 
@@ -517,17 +528,44 @@ function Mounty:Mount(mode, magic)
 
         category = Mounty.TypeShowOff
 
-        if Mounty:UserCanFlyHere() then
-
-            Mounty:Why("category.flyable")
-
-            only_flyable_in_category = true
-
-        end
+        check_only_flyable_in_category = true
 
     elseif mode == "surprise" then
 
         category = 0
+
+    end
+
+    local only_flyable_in_category_1 = ''
+    local only_flyable_in_category_2 = ''
+
+    if check_only_flyable_in_category then
+
+        if Mounty:UserCanFlyHere() and Mounty:UserCanRideDragonsHere() then
+
+            Mounty:Why("category.flyable.both")
+
+            if Mounty.CurrentProfile.Dragon then
+                only_flyable_in_category_1 = 'dragon'
+                only_flyable_in_category_2 = 'normal'
+            else
+                only_flyable_in_category_1 = 'normal'
+                only_flyable_in_category_2 = 'dragon'
+            end
+
+        elseif Mounty:UserCanRideDragonsHere() then
+
+            Mounty:Why("category.flyable.dragon")
+
+            only_flyable_in_category_1 = 'dragon'
+
+        elseif Mounty:UserCanFlyHere() then
+
+            Mounty:Why("category.flyable.normal")
+
+            only_flyable_in_category_1 = 'normal'
+
+        end
 
     end
 
@@ -539,7 +577,17 @@ function Mounty:Mount(mode, magic)
 
     if category > 0 then
 
-        spellID = Mounty:SelectMountByCategory(category, only_flyable_in_category)
+        if only_flyable_in_category_1 then
+            spellID = Mounty:SelectMountByCategory(category, only_flyable_in_category_1)
+        end
+
+        if spellID == 0 and only_flyable_in_category_2 then
+            spellID = Mounty:SelectMountByCategory(category, only_flyable_in_category_2)
+        end
+
+        if spellID == 0 then
+            spellID = Mounty:SelectMountByCategory(category)
+        end
 
         -- fallback only if magic
         if spellID == 0 and magic then
