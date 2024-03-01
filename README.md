@@ -86,15 +86,13 @@ You just killed thousands of enemies and your durability is lower than the thres
 
 You're soaking wet, swimming and surrounded by endless water? If _amphibian mode_ is active, your __water mount__ will appear every second summoning! 
 
-You're on the Dragon isles in a dragon flight zone and you already experienced what it is like to be storm born? Mate, its time to wake the __dragon__!
-
 You hang around with friends and your _taxi mode_ is on? My friend, we call for a __taxi mount__ to ride away together. Hop on!
 
 You are in a resting area and _show off mode_ is activated? Time to impress everyone around with one of your favourite __show off mounts__.
 
-You're in a flight zone, all alone? Spread your wings or start your engines and up, up, up it goes with your favourite __fly mount__.
+You're in a flight zone, all alone? Spread your wings, wake the dragon or start your engines and up, up, up it goes with your favourite __Dragonflight mount__ or __fly mount__.
 
-You're in a flight zone with friends but didn't activate _together mode_? Jump on your __fly mount__ and race the skies with your friends.
+You're in a flight zone with friends but didn't activate _together mode_? Jump on your __fly mount__ or __Dragonflight mount__ and race the skies with your friends.
 
 It is sad that you can't fly, and it gets worse, cause you're floating in cold water, but at least now you will summon your __water mount__ to get back to the beach asap.
 
@@ -114,11 +112,10 @@ Magic done. By __Mounty #TLV__.
 >__You have not mounted ...__\
 >Your durability is lower than xx% (see options) -> _Repair mount_\
 >You are swimming, _Amphibia mode_ is on -> (every second time) _Water mount_\
->You are on the Dragon isles and in a flight zone -> _Dragon_\
 >You are a party member, _taxi mode_ is on -> _Taxi mount_\
 >You are in a resting area, _show off mode_ is active -> _Show off mount_\
->You are in a flight zone, all alone -> _Fly mount_\
->You are in a flight zone with friends and _together mode_ is off -> _Fly mount_\
+>You are in a flight zone, all alone -> _Dragon_ or _Fly mount_\
+>You are in a flight zone with friends and _together mode_ is off -> _Dragon_ or _Fly mount_\
 >You are swimming -> _Water mount_\
 >else -> _Ground mount_
 

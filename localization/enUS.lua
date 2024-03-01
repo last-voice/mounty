@@ -147,6 +147,8 @@ L["why.long.usable.one"] = "The |hone|r you have can be used."
 L["why.long.usable.all"] = "|hAll %s|r are usable here and now."
 L["why.long.usable.some"] = "At this time and place you can only use |h%s of %s|r."
 L["why.long.usable.none"] = "But |hnone of %s|r can be used right now."
+L["why.long.usable.none.normal"] = "|hAll %s|r are no |hflying mounts|r."
+L["why.long.usable.none.dragon"] = "The |h%s|r are without any |hdragon|r."
 L["why.long.usable.null"] = "But Mounty #TLV has |hnot found any|r."
 L["why.long.fallback.ground"] = "So we try to summon a |hground mount|r as |hfallback|r then."
 L["why.long.fallback.fly"] = "As a |hfallback|r Mounty #TLV will switch to |hflying mounts|r instead."
@@ -206,6 +208,8 @@ L["why.short.usable.one"] = "is usable"
 L["why.short.usable.all"] = "all %s usable"
 L["why.short.usable.some"] = "%s of %s usable"
 L["why.short.usable.none"] = "none of %s usable"
+L["why.short.usable.none.normal"] = "none of %s are flying mounts"
+L["why.short.usable.none.dragon"] = "none of %s are dragons"
 L["why.short.usable.null"] = "none found"
 L["why.short.fallback.ground"] = "fallback: ground mount"
 L["why.short.fallback.fly"] = "fallback: flying mount"
@@ -252,7 +256,8 @@ L["why.example"] = "This was just a one time only example of the |cfff07070Why m
 
 -- L["upgrade.popup"] = "Awesome new |cfff07070Why mode|r, I promise.\nCheck it out asap!\n\n(Activate in options or\ntype '/mounty why' in chat window.\nType '/mounty help' for more.)\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nAny donations are welcome. See README."
 -- L["upgrade.popup"] = "Now mounts are summoned in |cfff07070Millenial's Threshold|r, too. But it needed a work around, because the WOW-API says, you're in |cfff07070Twilight Zone|r over there.\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nAny donations are welcome. See README."
-L["upgrade.popup"] = "Dragons everywhere, but only if you activated |cfff07070Dragonflight mode|r.\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nAny donations are welcome. See README."
+-- L["upgrade.popup"] = "Dragons everywhere, but only if you activated |cfff07070Dragonflight mode|r.\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nAny donations are welcome. See README."
+L["upgrade.popup"] = "Totally refactored magic!\n\nAnother try to get a grip on dragons and flying mounts anywhere, anytime and anyhow.\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nAny donations are welcome. See README."
 
 local _, TLV_AddOn = ...
 TLV_AddOn.L = L

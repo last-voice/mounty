@@ -428,11 +428,20 @@ function Mounty:SelectMountByCategory(category, only_flyable_in_category)
 
     -- count == 0
 
-    if only_flyable_in_category ~= "" then
+    if only_flyable_in_category == "normal" then
 
-        TLVlib:Debug("No (usable) mount found in category. (only looking for '" .. only_flyable_in_category .. "')")
+        TLVlib:Debug("No (usable) flying mount found in category.")
+
+        Mounty:Why("usable.none.normal", assigned)
+
+    elseif only_flyable_in_category == "dragon" then
+
+        TLVlib:Debug("No (usable) Dragonflight mount found in category.")
+
+        Mounty:Why("usable.none.dragon", assigned)
 
     else
+        -- only_flyable_in_category == ""
 
         TLVlib:Debug("No (usable) mount found in category.")
 

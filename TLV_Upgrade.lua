@@ -15,7 +15,7 @@ function Mounty:Upgrade()
             version = "00000000"
         end
 
-        local alert_if_lower = "02070500"
+        local alert_if_lower = "02070601"
 
         if version < alert_if_lower then
 

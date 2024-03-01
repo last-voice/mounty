@@ -86,15 +86,13 @@ Du hast gerade Tausende Gegner besiegt und deine Rüstung hängt in Fetzen herab
 
 Du schwimmst klitschnass in endlosen Gewässern? Wenn der _Amphibien-Modus_ aktiviert ist, rufst du bei jedem zweiten Mal dein __Wasser-Mount__.
 
-Du bist auf den Dracheninseln in einer Drachenflugzone und hast bereits erfahren dürfen, wie es ist, _storm born_ zu sein, dann weck den __Drachen__ auf.
-
 Du bist in einer Gruppe mit Freunden und der _Taxi-Modus_ ist eingeschaltet? Mein Freund, wir rufen mein __Taxi-Mount__ und sausen gemeinsam davon. Los geht's!
 
 Du bist im Ruhebereich und der _Protz-Modus_ ist eingeschaltet? Der perfekte Zeitpunkt, alle anderen mit einem __Protz-Mount__ zu beeindrucken.
 
-Du bist in einer Flug-Zone und in keiner Gruppe? Breite deine Flügel aus oder starte die Maschinen und hoch hinaus geht es in die Lüfte mit einem deiner liebsten __Flug-Mounts__.
+Du bist in einer Flug-Zone und in keiner Gruppe? Breite deine Flügel aus, wecke den Drachen oder starte die Maschinen und hoch hinaus geht es in die Lüfte mit einem deiner liebsten __Flug-Mounts__ oder __Dragonflight-Mounts__.
 
-Du bist in einer Flug-Zone, in einer Gruppe, und der _Nicht-fliegen-Modus_ ist nicht eingeschaltet? Spring auf dein __Flug-Mount__ und jage gemeinsam mit deinen Freunden durch die Wolken.
+Du bist in einer Flug-Zone, in einer Gruppe, und der _Nicht-fliegen-Modus_ ist nicht eingeschaltet? Spring auf dein __Flug-Mount__ oder __Dragonflight-Mount__ und jage gemeinsam mit deinen Freunden durch die Wolken.
 
 Wie traurig: du darfst oder kannst nicht fliegen, und es kommt noch schlimmer: Du schwimmst im kalten Wasser. Immerhin kannst du dein __Wasser-Mount__ rufen, das dich schnell zurück zum Strand bringt.
 
@@ -114,11 +112,10 @@ Magisch, oder? Dank __Mounty #TLV__.
 >__Du sitzt auf keinem Mount ...__\
 >Die Haltbarkeit deiner Rüstung ist unter xx% -> _Reparier-Mount-\
 >Du schwimmst im Wasser, _Amphibien-Modus_ ist an -> (jedes zweite Mal) _Wasser_Mount_\
->Du bist auf den Dracheninseln in einer Drachenflugzone -> _Drachen_\
 >Du bist in einer Gruppe, _Taxi-Modus_ ist an -> _Taxi-Mount_\
 >Du bist im Ruhebereich, _Protz-Modus_ ist an -> _Protz-Mount_\
->Du bist in einer Flug-Zone, allein -> _Flug-Mount_\
->Du bist in einer Flug-Zone, in einer Gruppe und der _Nicht-fliegen-Modus_ ist aus -> _Flug-Mount_\
+>Du bist in einer Flug-Zone, allein -> _Flug-Mount_ oder _Dragonflight-Mount_\
+>Du bist in einer Flug-Zone, in einer Gruppe und der _Nicht-fliegen-Modus_ ist aus -> _Flug-Mount_ oder _Dragonflight-Mount_\
 >Du schwimmst im Wasser -> _Wasser-Mount_\
 >sonst -> _Boden-Mount_
 
@@ -134,8 +131,8 @@ Wenn eine Kategorie leer ist, wird stattdessen eines deiner __Flug-Mounts__ ausg
 
 - Besonderheit 1: Drachen kommen statt Flug-Mounts zum Einsatz, wenn Du den Dragonflight-Modus aktiviert hast.
 - Besonderheit 2: Flug-Mounts und Drachen werden nur dann gerufen, wenn Du auch gelernt hast, diese zu reiten.
-- Besonderheit 3: In Ruhebereichen, in denen du fliegen kannst, werden nur fliegende Protz-Mounts ausgewählt.
-- Besonderheit 4: In Bereichen, in denen du fliegen kannst, werden nur fliegende Taxi-Mounts ausgewählt.
+- Besonderheit 3: In Ruhebereichen, in denen du fliegen kannst, werden nur fliegende Protz-Mounts oder protzige Drachen ausgewählt.
+- Besonderheit 4: In Bereichen, in denen du fliegen kannst, werden nur fliegende Taxi-Mounts oder protzige Drachen-Taxis ausgewählt.
 
 ### Und warum wurde genau dieses Mount gerufen?
 

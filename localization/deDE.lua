@@ -151,6 +151,8 @@ L["why.long.usable.one"] = "|hDas einzige|r, das du hast, ist nutzbar."
 L["why.long.usable.all"] = "|hAlle %s|r sind hier und jetzt nutzbar."
 L["why.long.usable.some"] = "Hier sind gerade nur |h%s von %s|r einsetzbar."
 L["why.long.usable.none"] = "Doch |hkeins der %s|r ist hier gerade nutzbar."
+L["why.long.usable.none.normal"] = "Doch |hkeins der %s|r ist ein Flug-Mount."
+L["why.long.usable.none.dragon"] = "Unter den |h%s|r ist allerdings |hkein Drache|r."
 L["why.long.usable.null"] = "Mounty #TLV hat aber |hkein einziges gefunden|r."
 L["why.long.fallback.ground"] = "Als |hFallback|r beschören wir nun also ein |hBoden-Mount|r."
 L["why.long.fallback.fly"] = "Alternativ versuchen wir es mit einem |hFlug-Mount|r als |hFallback|r."
@@ -206,6 +208,8 @@ L["why.short.usable.one"] = "ist nutzbar"
 L["why.short.usable.all"] = "alle %s nutzbar"
 L["why.short.usable.some"] = "%s von %s nutzbar"
 L["why.short.usable.none"] = "keins von %s nutzbar"
+L["why.short.usable.none.normal"] = "kein Flug-Mount unter den %s"
+L["why.short.usable.none.dragon"] = "kein Drache unter den %s"
 L["why.short.usable.null"] = "keins gefunden"
 L["why.short.fallback.ground"] = "Fallback: Boden-Mount"
 L["why.short.fallback.fly"] = "Fallback: Flug-Mount"
@@ -252,7 +256,8 @@ L["why.example"] = "Das gerade war ein einmaliges Beispiel für den |cfff07070Wa
 
 -- L["upgrade.popup"] = "Voll toll, der neue |cfff07070Warum-Modus|r inkl. Historie.\nSofort ausprobieren!\n\n(In den Optionen einschalten oder\nim Chat '/mounty why' eingeben.\nTippe '/mounty help' für mehr.)\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nKleine Spenden sind willkommen. Siehe README."
 -- L["upgrade.popup"] = "Auch in der |cfff07070Jahrhunderschwelle|r werden nun Reittiere gerufen. Allerdings war dafür ein kleiner Workaround notwendig, denn laut WOW-API befindet ihr euch dort eigentlich im |cfff07070Nirgendwo|r.\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nKleine Spenden sind willkommen. Siehe README."
-L["upgrade.popup"] = "Überall Drachen, aber nur wenn Du den |cfff07070Dragonflight-Modus|r aktiviert hast.\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nKleine Spenden sind willkommen. Siehe README."
+-- L["upgrade.popup"] = "Überall Drachen, aber nur wenn Du den |cfff07070Dragonflight-Modus|r aktiviert hast.\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nKleine Spenden sind willkommen. Siehe README."
+L["upgrade.popup"] = "Komplett neue Magie!\n\nEin neuer Versuch die Drachen und guten, alten Flug-Mounts unter einen Flügel, erm, Hut zu bekommen.\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nKleine Spenden sind willkommen. Siehe README."
 
 local _, TLV_AddOn = ...
 TLV_AddOn.L = setmetatable(L, { __index = TLV_AddOn.L })
