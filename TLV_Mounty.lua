@@ -441,43 +441,13 @@ end
 
 function Mounty:UserCanFlyHere()
 
-    return IsFlyableArea() and (IsPlayerSpell(34090) or IsPlayerSpell(90265)) -- flying has been learned
+    return IsFlyableArea() and (IsPlayerSpell(34090) or IsPlayerSpell(90265)) -- flying can be done
 
 end
 
-function Mounty:YouCanRideDragonsHere()
+function Mounty:UserCanRideDragonsHere()
 
-    if IsFlyableArea() then
-        -- a normal flying area which is no dragon flight area
-        return false
-    end
-
-    if not IsPlayerSpell(376777) then
-        -- dragon riding hasn't been learned, yet
-        return false
-    end
-
-    local ridingmounts = C_MountJournal.GetCollectedDragonridingMounts()
-
-    if ridingmounts[1] ~= nil then
-
-        local mapID = C_Map.GetBestMapForUnit("player")
-
-        local name, spellID = C_MountJournal.GetMountInfoByID(ridingmounts[1])
-
-        local isUsable = IsUsableSpell(spellID)
-
-        if isUsable then
-            TLVlib:Debug("Dragon '" .. name .. "' found and you can ride it here [area id:" .. tostring(mapID) .. "].")
-        else
-            TLVlib:Debug("Dragon '" .. name .. "' found but you can't ride it in this area [id:" .. tostring(mapID) .. "].")
-        end
-
-        return isUsable
-
-    end
-
-    return false
+    return IsAdvancedFlyableArea() and IsPlayerSpell(376777) and IsOutdoors() -- dragonriding can be done
 
 end
 
@@ -712,8 +682,8 @@ function Mounty:Run(mode)
     end
 
     local resting = IsResting()
-    local flyable = Mounty:UserCanFlyHere()
-    local dragonflight = Mounty:YouCanRideDragonsHere()
+    local flyable_normal = Mounty:UserCanFlyHere()
+    local flyable_dragons = Mounty:UserCanRideDragonsHere()
     local alone = not IsInGroup()
     local swimming = IsSwimming()
     local dragonmode = Mounty.CurrentProfile.Dragon
@@ -810,36 +780,6 @@ function Mounty:Run(mode)
 
         end
 
-        -- dragonflight
-
-        if mode == "" then
-
-            Mounty:Why("\n")
-
-            if dragonflight then
-
-                Mounty:Why("dragonflight")
-
-                if Mounty:HasCategory(Mounty.TypeDragonflight) then
-
-                    mode = "dragonflight"
-
-                    Mounty:Why("dragonflight.use")
-
-                else
-
-                    Mounty:Why("dragonflight.empty")
-
-                end
-
-            else
-
-                Mounty:Why("dragonflight.no")
-
-            end
-
-        end
-
         -- taxi
 
         if mode == "" then
@@ -910,15 +850,15 @@ function Mounty:Run(mode)
 
         end
 
-        -- flyable
+        -- flyable or dragonflight
 
         if mode == "" then
 
             Mounty:Why("\n")
 
-            if flyable then
+            if flyable_normal or flyable_dragons then
 
-                Mounty:Why("fly")
+                Mounty:Why("fly.any") -- new
 
                 if not alone and together then
 
@@ -936,21 +876,66 @@ function Mounty:Run(mode)
 
                     end
 
-                    if dragonmode and Mounty:HasCategory(Mounty.TypeDragonflight) then
+                    local fly_mode = ""
 
-                        mode = "dragonflight"
+                    if flyable_normal and flyable_dragons then
 
-                        Mounty:Why("fly.use.dragon")
+                        if dragonmode then
 
-                    elseif Mounty:HasCategory(Mounty.TypeFlying) then
+                            Mounty:Why("fly.prefer.dragon")  -- new
 
-                        mode = "fly"
 
-                        Mounty:Why("fly.use")
+                            fly_mode = "dragonflight"
 
-                    else
+                        else
 
-                        Mounty:Why("fly.empty")
+                            Mounty:Why("fly.prefer.normal")  -- new
+
+                            fly_mode = "fly"
+
+                        end
+
+                    elseif not flyable_normal and flyable_dragons then
+
+                        Mounty:Why("fly.only.dragon")  -- new
+
+                        fly_mode = "dragonflight"
+
+                    elseif flyable_normal and not flyable_dragons then
+
+                        Mounty:Why("fly.only.normal")  -- new
+
+                        fly_mode = "fly"
+
+                    end
+
+                    if fly_mode == "fly" then
+
+                        if Mounty:HasCategory(Mounty.TypeFlying) then
+
+                            mode = "fly"
+
+                            Mounty:Why("fly.use") -- check
+
+                        else
+
+                            Mounty:Why("fly.empty") -- check
+
+                        end
+
+                    elseif fly_mode == "dragon" then
+
+                        if Mounty:HasCategory(Mounty.TypeDragonflight) then
+
+                            mode = "dragonflight"
+
+                            Mounty:Why("fly.dragon.use") -- new
+
+                        else
+
+                            Mounty:Why("fly.dragon.empty") --new
+
+                        end
 
                     end
 
@@ -958,7 +943,7 @@ function Mounty:Run(mode)
 
             else
 
-                Mounty:Why("fly.no")
+                Mounty:Why("fly.none") -- new
 
             end
 
@@ -2728,4 +2713,3 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
     end
 
 end
-
