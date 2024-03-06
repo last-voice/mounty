@@ -5,8 +5,9 @@
 ---
 
 Hier findest Du das Add-on:
-- https://github.com/last-voice/mounty/
 - https://www.curseforge.com/wow/addons/mounty-tlv/
+- https://www.wowinterface.com/downloads/info26652-MountyTLV.html
+- https://github.com/last-voice/mounty/
 - https://wowup.io/addons/2797812
 
 ENGLISH? -> The __english README__ can be found here: https://github.com/last-voice/mounty/blob/main/README.md
@@ -129,8 +130,8 @@ Wenn eine Kategorie leer ist, wird stattdessen eines deiner __Flug-Mounts__ ausg
 
 ### Besonderheiten
 
-- Besonderheit 1: Drachen kommen statt Flug-Mounts zum Einsatz, wenn Du den Dragonflight-Modus aktiviert hast.
-- Besonderheit 2: Flug-Mounts und Drachen werden nur dann gerufen, wenn Du auch gelernt hast, diese zu reiten.
+- Besonderheit 1: Drachen kommen statt Flug-Mounts zum Einsatz, wenn du den Dragonflight-Modus aktiviert hast.
+- Besonderheit 2: Flug-Mounts und Drachen werden nur dann gerufen, wenn du auch gelernt hast, diese zu reiten.
 - Besonderheit 3: In Ruhebereichen, in denen du fliegen kannst, werden nur fliegende Protz-Mounts oder protzige Drachen ausgewählt.
 - Besonderheit 4: In Bereichen, in denen du fliegen kannst, werden nur fliegende Taxi-Mounts oder protzige Drachen-Taxis ausgewählt.
 
@@ -152,13 +153,13 @@ Tippe __/mounty im Chat__ und das Optionsfenster öffnet sich.
 
 Das Optionsfenster öffnet sich auch __automatisch zusammen mit Deiner Reittiersammlung__, sofern die Option nicht deaktiviert ist.
 
-Außerdem kannst Du die Optionen auch mit einem __Button in der Reittiersammlung__ (unten/rechts) öffnen.
+Außerdem kannst du die Optionen auch mit einem __Button in der Reittiersammlung__ (unten/rechts) öffnen.
 
 Ziehe mit der Maus deine favorisierten Mounts in die Kategorien deiner Wahl. Mit einem Rechtsklick kannst du einzelne Mounts wieder entfernen.
 
 Du kannst zugeordnete Mounts auch __per Doppelklick kopieren__.
 
-Mit dem __Plus-Button__ kannst Du ein weiteres Fenster öffnen, um einer Kategorie __100 weitere Mounts__ zuzuordnen. Dort kannst Du auch bequem __alle in der Reittiersammlung gefilterten Mounts in einem Rutsch übernehmen__.
+Mit dem __Plus-Button__ kannst du ein weiteres Fenster öffnen, um einer Kategorie __100 weitere Mounts__ zuzuordnen. Dort kannst du auch bequem __alle in der Reittiersammlung gefilterten Mounts in einem Rutsch übernehmen__.
 
 __ACHTUNG:__ __Mounty #TLV__ __überprüft nie__, ob deine Zuordnungen sinnvoll sind! Du kannst grundsätzlich jedes Mount in jede Kategorie packen. Also: Mach' bitte keinen Unsinn!
 
@@ -170,7 +171,7 @@ __Mounty #TLV__ wird aus einer gewählten Kategorie auch nur die Mounts bewschö
 
 - __Warum-Modus__ - Jedes Mal, nachdem __Mounty #TLV__ dir magisch ein Mount herbeigerufen hat, erklärt es dir ganz genau, warum es dieses eine Mount geworden ist.
 - __Zufalls-Modus__ - Falls _eingeschaltet_, wird ein zufälliges Mount aus der jeweiligen _Kategorie_ ausgewählt. Falls _ausgeschaltet_, kommt eins nach dem anderen immer der Reihe nach und dann wieder von vorne.
-- __Protz-Modus__ - In Ruhebereichen wird automatisch eines Deiner Protz-Mounts aus dem Sack geholt, damit alle wissen, dass Du monatelang in Zereth Mortis geangelt hast.
+- __Protz-Modus__ - In Ruhebereichen wird automatisch eines Deiner Protz-Mounts aus dem Sack geholt, damit alle wissen, dass du monatelang in Zereth Mortis geangelt hast.
 - __Amphibien-Modus__ - Im Wasser zwischen Wasser- und Flug-Mount abwechseln, denn wer weiß schon, ob du tauchen oder abhauen willst.
 - __Nicht-fliegen-Modus__ - Solang du in einer Gruppe bist: Auch wenn du fliegen könntest, du bleibst immer auf dem Boden. Was hat das für einen Sinn? Falls du einen Freund beim Questen begleitest, der noch nicht fliegen kann, dann ist es schon fair, wenn du ihm nicht immer wieder davonfliegst, außer ...
 - __Taxi-Modus__ - Unterwegs mit einem Freund, der mit deiner Unterstützung vorankommen will? Solange du in einer Gruppe bist, wird immer dein Taxi-Mount gerufen, so dass dein Freund bequem aufspringen kann und sich um nichts kümmern muss. Er hat ja dich.
@@ -186,7 +187,7 @@ __Mounty #TLV__ wird aus einer gewählten Kategorie auch nur die Mounts bewschö
 
 ### Profile
 
-Wie in vielen anderen Addons kannst Du verschiedene Profile anlegen.
+Wie in vielen anderen Addons kannst du verschiedene Profile anlegen.
 
 Außerdem kannst du je Charakter zwischen _individuellen Profilen_ oder _accountweiten Profilen_ wählen. Und du kannt Profile sogar zwischen _global_ und _accountweit_ hin und her kopieren. Safety first: Profile werden weder gelöscht noch überschrieben. Falls doppelt, werden sie umbenannt. 
 
@@ -194,7 +195,7 @@ In der Reittiersammlung ist auch ein neuer Button, um __Mounty #TLV__ von dort a
 
 ## Kommandozeile
 
-Für den Chat oder Deine Makros:
+Für den Chat oder deine Makros:
 
 __Version__
 
