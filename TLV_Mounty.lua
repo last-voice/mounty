@@ -470,15 +470,25 @@ function Mounty:MountSpellID(mountID)
 
 end
 
+function Mounty:IsTemporalAnomaly ()
+
+    -- at the beginning of Pandaria Time Running
+
+    local aura = C_UnitAuras.GetPlayerAuraBySpellID(145389)
+
+    return aura ~= nil
+
+end
+
 function Mounty:UserCanFlyHere()
 
-    return IsFlyableArea() and (IsPlayerSpell(34090) or IsPlayerSpell(90265)) -- flying can be done
+    return not Mounty:IsTemporalAnomaly() and IsFlyableArea() and (IsPlayerSpell(34090) or IsPlayerSpell(90265)) -- flying can be done
 
 end
 
 function Mounty:UserCanRideDragonsHere()
 
-    return IsAdvancedFlyableArea() and IsPlayerSpell(376777) and IsOutdoors() -- dragonriding can be done
+    return not Mounty:IsTemporalAnomaly() and IsAdvancedFlyableArea() and IsPlayerSpell(376777) and IsOutdoors() -- dragonriding can be done
 
 end
 

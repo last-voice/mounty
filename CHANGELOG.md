@@ -2,6 +2,9 @@
 
 full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.7.7
+- fixed issues because of remix: mists of pandaria
+
 v2.7.6.3
 - some README nicyness
 
