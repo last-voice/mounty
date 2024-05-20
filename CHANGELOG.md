@@ -2,6 +2,9 @@
 
 full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v2.7.6.3
+- some README nicyness
+
 v2.7.6.2
 - fixed stupid bug
 

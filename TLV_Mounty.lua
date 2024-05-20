@@ -273,9 +273,14 @@ function Mounty:Durability()
         end
     end
 
-    local durability = math.floor((100 * curTotal / maxTotal) + 0.5)
+    local durability = 100
 
-    TLVlib:Debug("Durability: |cfff01000" .. durability .. "%|r")
+    if maxTotal > 0 then
+        durability = math.floor((100 * curTotal / maxTotal) + 0.5)
+        TLVlib:Debug("Durability: |cfff01000" .. curTotal .. "|r (current) | |cfff01000" .. maxTotal .. "|r (max) | |cfff01000" .. durability .. " %|r")
+    else
+        TLVlib:Debug("Durability: (no durable items found) | |cfff01000" .. durability .. " %|r")
+    end
 
     return durability
 end
@@ -1484,8 +1489,8 @@ function Mounty:InitOptionsFrame()
     Mounty.OptionsFrame_DurabilityMin:SetWidth(440)
     Mounty.OptionsFrame_DurabilityMin:SetHeight(16)
     Mounty.OptionsFrame_DurabilityMin:SetPoint("TOPLEFT", 25, top)
-    Mounty_OptionsFrame_DurabilityMinLow:SetText("50%")
-    Mounty_OptionsFrame_DurabilityMinHigh:SetText("100%")
+    Mounty_OptionsFrame_DurabilityMinLow:SetText("50 %")
+    Mounty_OptionsFrame_DurabilityMinHigh:SetText("100 %")
     Mounty.OptionsFrame_DurabilityMin:SetMinMaxValues(50, 100)
     Mounty.OptionsFrame_DurabilityMin:SetValueStep(1)
     Mounty.OptionsFrame_DurabilityMin:SetScript("OnValueChanged", function(_, value)
