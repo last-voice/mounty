@@ -315,6 +315,23 @@ function Mounty:SkyRidingMode()
 
 end
 
+function Mounty:MountInfosBySpellID (spellID)
+
+    local usable_spell = C_Spell.IsSpellUsable(spellID)
+
+    local mountID = C_MountJournal.GetMountFromSpell(Mounty.CurrentProfile.Mounts[category][i])
+    local mname, _, _, _, isUsable, _, _, _, _, _, isCollected = C_MountJournal.GetMountInfoByID(mountID)
+
+    local _, _, _, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
+
+    local isSkyRidingMount = (mountTypeID == 402)
+
+    local isFlyMount = not (mountID ~= 407 and mountID ~= 455 and mountTypeID ~= 248)
+
+    return mountID, mname, usable_spell, isUsable, isCollected, isFlyMount, isSkyRidingMount
+
+end
+
 function Mounty:HasAnyUsableInCollection()
 
     C_MountJournal.SetDefaultFilters()
@@ -381,33 +398,21 @@ function Mounty:SelectMountByCategory(category, only_flyable)
 
             assigned = assigned + 1
 
-            local usable_spell = C_Spell.IsSpellUsable(Mounty.CurrentProfile.Mounts[category][i])
-            local mountID = C_MountJournal.GetMountFromSpell(Mounty.CurrentProfile.Mounts[category][i])
-            local mname, _, _, _, isUsable, _, _, _, _, _, isCollected = C_MountJournal.GetMountInfoByID(mountID)
+            local mountID, mname, usable_spell, isUsable, isCollected, isFlyMount, isSkyRidingMount = Mounty:MountInfosBySpellID(Mounty.CurrentProfile.Mounts[category][i])
 
             local usable = usable_spell and isUsable and isCollected
-
-            mountTypeID = 0
 
             if usable and only_flyable then
 
                 if Mounty:SkyRidingMode() then
 
-                    _, _, _, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
-
-                    if mountTypeID ~= 402 then
-                        -- mountTypeID 402 = dragonflight
+                    if not isSkyRidingMount then
                         usable = false
                     end
 
                 else
 
-                    _, _, _, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
-
-                    if mountID ~= 407 and mountID ~= 455 and mountTypeID ~= 248 then
-                        -- mountID 407 = Sandstone Drake
-                        -- mountID 455 = Obsidian Nightwing
-                        -- mountTypeID 248 = mostly flyable
+                    if not isFlyMount then
                         usable = false
                     end
 
