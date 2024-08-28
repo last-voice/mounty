@@ -320,7 +320,7 @@ function Mounty:MountInfosBySpellID (spellID)
     local usable_spell = C_Spell.IsSpellUsable(spellID)
 
     local mountID = C_MountJournal.GetMountFromSpell(Mounty.CurrentProfile.Mounts[category][i])
-    local mname, _, _, _, isUsable, _, _, _, _, _, isCollected = C_MountJournal.GetMountInfoByID(mountID)
+    local mname, _, _, _, isUsable, _, _, _, _, hideOnChar, isCollected = C_MountJournal.GetMountInfoByID(mountID)
 
     local _, _, _, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
 
@@ -328,7 +328,9 @@ function Mounty:MountInfosBySpellID (spellID)
 
     local isFlyMount = not (mountID ~= 407 and mountID ~= 455 and mountTypeID ~= 248)
 
-    return mountID, mname, usable_spell, isUsable, isCollected, isFlyMount, isSkyRidingMount
+    local usable = usable_spell and isUsable and isCollected and hideOnChar ~= true
+
+    return mountID, mname, usable, isFlyMount, isSkyRidingMount
 
 end
 
@@ -398,9 +400,7 @@ function Mounty:SelectMountByCategory(category, only_flyable)
 
             assigned = assigned + 1
 
-            local mountID, mname, usable_spell, isUsable, isCollected, isFlyMount, isSkyRidingMount = Mounty:MountInfosBySpellID(Mounty.CurrentProfile.Mounts[category][i])
-
-            local usable = usable_spell and isUsable and isCollected
+            local mountID, mname, usable, isFlyMount, isSkyRidingMount = Mounty:MountInfosBySpellID(Mounty.CurrentProfile.Mounts[category][i])
 
             if usable and only_flyable then
 
@@ -420,15 +420,7 @@ function Mounty:SelectMountByCategory(category, only_flyable)
 
             end
 
-            local mountType
-
-            if mountTypeID > 0 then
-                mountType = MountsJournalFrame.journal.mountTypes[mountTypeID]
-            else
-                mountType = -1
-            end
-
-            TLVlib:Debug("Usable: " .. "[" .. mountID .. ", " .. mountTypeID .. ", " .. mountType .. "] " .. mname .. " -> " .. tostring(usable))
+            TLVlib:Debug("Usable: " .. "[" .. mountID .. ", " .. mountTypeID .. "] " .. mname .. " -> " .. tostring(usable))
 
             if usable then
                 count = count + 1
@@ -1871,7 +1863,7 @@ function Mounty:AddMountsFromJournalToCategory()
 
                         if not Mounty:AlreadyInCategory(category, spellID) then
 
-                            local _, spellID, _, _, _, _, _, _, _, _, isCollected = C_MountJournal.GetMountInfoByID(mountID);
+                            local _, spellID, _, _, _, _, _, _, _, hideOnChar, isCollected = C_MountJournal.GetMountInfoByID(mountID);
 
                             if isCollected and hideOnChar ~= true then
 
