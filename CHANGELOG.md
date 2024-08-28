@@ -2,6 +2,9 @@
 
 full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v3.0.0
+- hopefully good adjustments to new flying policies
+
 v2.7.8
 - hotfix to make it run at least
 

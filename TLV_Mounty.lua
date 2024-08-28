@@ -9,7 +9,7 @@ Mounty.NumMountsExpanded = 110
 
 Mounty.TypeGround = 1
 Mounty.TypeFlying = 2
-Mounty.TypeDragonflight = 3
+Mounty.TypeSkyRiding = 3
 Mounty.TypeWater = 4
 Mounty.TypeRepair = 5
 Mounty.TypeTaxi = 6
@@ -43,6 +43,8 @@ Mounty.CategoriesMounts = {
 
 Mounty.FallbackQueue = {}
 Mounty.FallbackAlready = {}
+
+Mounty.FlyingMounts = {}
 
 Mounty.WhyHistoryMax = 10
 
@@ -246,6 +248,61 @@ function Mounty:DebugListAllMounts()
 
 end
 
+function Mounty:InitFlyingMounts()
+
+    -- via https://www.wowinterface.com/forums/showthread.php?p=344246
+
+    -- Store current mount journal filter settings for restoring.
+
+    local collectedFilters = {}
+    collectedFilters[LE_MOUNT_JOURNAL_FILTER_COLLECTED] = C_MountJournal.GetCollectedFilterSetting(LE_MOUNT_JOURNAL_FILTER_COLLECTED)
+    collectedFilters[LE_MOUNT_JOURNAL_FILTER_NOT_COLLECTED] = C_MountJournal.GetCollectedFilterSetting(LE_MOUNT_JOURNAL_FILTER_NOT_COLLECTED)
+    collectedFilters[LE_MOUNT_JOURNAL_FILTER_UNUSABLE] = C_MountJournal.GetCollectedFilterSetting(LE_MOUNT_JOURNAL_FILTER_UNUSABLE)
+
+    local typeFilters = {}
+    for filterIndex = 1, Enum.MountTypeMeta.NumValues do
+        typeFilters[filterIndex] = C_MountJournal.IsTypeChecked(filterIndex)
+    end
+
+    local sourceFilters = {}
+    for filterIndex = 1, C_PetJournal.GetNumPetSources() do
+        if C_MountJournal.IsValidSourceFilter(filterIndex) then
+            sourceFilters[filterIndex] = C_MountJournal.IsSourceChecked(filterIndex)
+        end
+    end
+
+
+    -- Set filters to flying mounts.
+    C_MountJournal.SetDefaultFilters()
+    C_MountJournal.SetCollectedFilterSetting(LE_MOUNT_JOURNAL_FILTER_UNUSABLE, true)  -- Include unusable.
+    C_MountJournal.SetTypeFilter(1, false)   -- No Ground.
+    C_MountJournal.SetTypeFilter(3, false)   -- No Aquatic.
+
+
+    -- Create table of flying mount IDs.
+    for displayIndex = 1, C_MountJournal.GetNumDisplayedMounts() do
+        local mountId = select(12, C_MountJournal.GetDisplayedMountInfo(displayIndex))
+        Mounty.FlyingMounts[mountId] = true
+    end
+
+    -- Restore the mount journal filter settings.
+
+    C_MountJournal.SetCollectedFilterSetting(LE_MOUNT_JOURNAL_FILTER_COLLECTED, collectedFilters[LE_MOUNT_JOURNAL_FILTER_COLLECTED])
+    C_MountJournal.SetCollectedFilterSetting(LE_MOUNT_JOURNAL_FILTER_NOT_COLLECTED, collectedFilters[LE_MOUNT_JOURNAL_FILTER_NOT_COLLECTED])
+    C_MountJournal.SetCollectedFilterSetting(LE_MOUNT_JOURNAL_FILTER_UNUSABLE, collectedFilters[LE_MOUNT_JOURNAL_FILTER_UNUSABLE])
+
+    for filterIndex = 1, Enum.MountTypeMeta.NumValues do
+        C_MountJournal.SetTypeFilter(filterIndex, typeFilters[filterIndex])
+    end
+
+    for filterIndex = 1, C_PetJournal.GetNumPetSources() do
+        if C_MountJournal.IsValidSourceFilter(filterIndex) then
+            C_MountJournal.SetSourceFilter(filterIndex, sourceFilters[filterIndex])
+        end
+    end
+
+end
+
 function Mounty:HasCategory (category)
 
     for i = 1, Mounty.NumMountsExpanded do
@@ -319,18 +376,18 @@ function Mounty:MountInfosBySpellID (spellID)
 
     local usable_spell = C_Spell.IsSpellUsable(spellID)
 
-    local mountID = C_MountJournal.GetMountFromSpell(Mounty.CurrentProfile.Mounts[category][i])
-    local mname, _, _, _, isUsable, _, _, _, _, hideOnChar, isCollected = C_MountJournal.GetMountInfoByID(mountID)
+    local mountID = C_MountJournal.GetMountFromSpell(spellID)
+    local mname, _, _, _, isUsable, _, _, _, _, hideOnChar, isCollected, _, isSteadyFlight = C_MountJournal.GetMountInfoByID(mountID)
 
     local _, _, _, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
 
-    local isSkyRidingMount = (mountTypeID == 402)
+    local isFlyMount = Mounty.FlyingMounts[mountID]
 
-    local isFlyMount = not (mountID ~= 407 and mountID ~= 455 and mountTypeID ~= 248)
+    local isSkyRidingMount = isFlyMount and not isSteadyFlight
 
     local usable = usable_spell and isUsable and isCollected and hideOnChar ~= true
 
-    return mountID, mname, usable, isFlyMount, isSkyRidingMount
+    return mountID, mname, usable, mountTypeID, isFlyMount, isSkyRidingMount
 
 end
 
@@ -392,7 +449,6 @@ function Mounty:SelectMountByCategory(category, only_flyable)
     local assigned = 0
     local count = 0
     local picked
-    local mountTypeID
 
     for i = 1, Mounty.NumMountsExpanded do
 
@@ -400,7 +456,7 @@ function Mounty:SelectMountByCategory(category, only_flyable)
 
             assigned = assigned + 1
 
-            local mountID, mname, usable, isFlyMount, isSkyRidingMount = Mounty:MountInfosBySpellID(Mounty.CurrentProfile.Mounts[category][i])
+            local mountID, mname, usable, mountTypeID, isFlyMount, isSkyRidingMount = Mounty:MountInfosBySpellID(Mounty.CurrentProfile.Mounts[category][i])
 
             if usable and only_flyable then
 
@@ -509,9 +565,9 @@ function Mounty:Mount(mode, magic)
 
     local category = Mounty.TypeGround
 
-    if mode == "dragonflight" then
+    if mode == "skyriding" then
 
-        category = Mounty.TypeDragonflight
+        category = Mounty.TypeSkyRiding
 
     elseif mode == "fly" then
 
@@ -736,11 +792,10 @@ function Mounty:Run(mode)
     end
 
     local resting = IsResting()
-    local flyable_normal = Mounty:UserCanFlyHere()
-    local flyable_dragons = Mounty:UserCanRideDragonsHere()
+    local flyable = Mounty:UserCanFlyHere()
     local alone = not IsInGroup()
     local swimming = IsSwimming()
-    local dragonmode = Mounty.CurrentProfile.Dragon
+    local skyriding_mode = Mounty:SkyRidingMode()
     local taximode = Mounty.CurrentProfile.TaxiMode
     local together = Mounty.CurrentProfile.Together
     local amphibian = Mounty.CurrentProfile.Amphibian
@@ -904,13 +959,13 @@ function Mounty:Run(mode)
 
         end
 
-        -- flyable or dragonflight
+        -- flyable
 
         if mode == "" then
 
             Mounty:Why("\n")
 
-            if flyable_normal or flyable_dragons then
+            if flyable then
 
                 Mounty:Why("fly.any") -- new
 
@@ -932,13 +987,13 @@ function Mounty:Run(mode)
 
                     local fly_mode = ""
 
-                    if flyable_normal and flyable_dragons then
+                    if flyable then
 
-                        if dragonmode then
+                        if skyriding_mode then
 
-                            Mounty:Why("fly.prefer.dragon")  -- new
+                            Mounty:Why("fly.prefer.skyriding")  -- new
 
-                            fly_mode = "dragonflight"
+                            fly_mode = "skyriding"
 
                         else
 
@@ -947,18 +1002,6 @@ function Mounty:Run(mode)
                             fly_mode = "fly"
 
                         end
-
-                    elseif not flyable_normal and flyable_dragons then
-
-                        Mounty:Why("fly.only.dragon")  -- new
-
-                        fly_mode = "dragonflight"
-
-                    elseif flyable_normal and not flyable_dragons then
-
-                        Mounty:Why("fly.only.normal")  -- new
-
-                        fly_mode = "fly"
 
                     end
 
@@ -976,17 +1019,17 @@ function Mounty:Run(mode)
 
                         end
 
-                    elseif fly_mode == "dragonflight" then
+                    elseif fly_mode == "skyriding" then
 
-                        if Mounty:HasCategory(Mounty.TypeDragonflight) then
+                        if Mounty:HasCategory(Mounty.TypeSkyRiding) then
 
-                            mode = "dragonflight"
+                            mode = "skyriding"
 
-                            Mounty:Why("fly.dragon.use") -- new
+                            Mounty:Why("fly.skyriding.use") -- new
 
                         else
 
-                            Mounty:Why("fly.dragon.empty") --new
+                            Mounty:Why("fly.skyriding.empty") --new
 
                         end
 
@@ -2557,6 +2600,8 @@ function Mounty:Init (event, arg1)
 
         Mounty:InitFrames()
 
+        Mounty:InitFlyingMounts()
+
         self:UnregisterEvent("ADDON_LOADED")
 
     end
@@ -2716,7 +2761,7 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
         -- Mounty:DebugListAllMounts ()
 
-    elseif mode == "dragonflight"
+    elseif mode == "skyriding"
             or mode == "fly"
             or mode == "ground"
             or mode == "water"
