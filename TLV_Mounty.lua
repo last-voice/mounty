@@ -21,7 +21,7 @@ Mounty.TypeCustom3 = 10
 Mounty.CategoriesLabel = {
     [1] = L["mode.Ground"],
     [2] = L["mode.Flying"],
-    [3] = L["mode.Dragonflight"],
+    [3] = L["mode.Skyriding"],
     [4] = L["mode.Water"],
     [5] = L["mode.Repair"],
     [6] = L["mode.Taxi"],
@@ -34,7 +34,7 @@ Mounty.CategoriesLabel = {
 Mounty.CategoriesMounts = {
     [1] = L["mount.Ground"],
     [2] = L["mount.Flying"],
-    [3] = L["mount.Dragonflight"],
+    [3] = L["mount.Skyriding"],
     [4] = L["mount.Water"],
     [5] = L["mount.Repair"],
     [6] = L["mount.Taxi"],
@@ -77,7 +77,7 @@ function Mounty:CheckCircumstances ()
 
     end
 
-    if not Mounty:AnyUsable() then
+    if not Mounty:HasAnyUsableInCollection() then
 
         TLVlib:Debug("Can't use any mount here at all.")
         return false
@@ -285,7 +285,37 @@ function Mounty:Durability()
     return durability
 end
 
-function Mounty:AnyUsable()
+function Mounty:MountSpellID(mountID)
+
+    local _, spellID = C_MountJournal.GetMountInfoByID(mountID)
+
+    return spellID
+
+end
+
+function Mounty:IsTemporalAnomaly ()
+
+    -- at the beginning of Pandaria Time Running
+
+    local aura = C_UnitAuras.GetPlayerAuraBySpellID(145389)
+
+    return aura ~= nil
+
+end
+
+function Mounty:UserCanFlyHere()
+
+    return not Mounty:IsTemporalAnomaly() and IsFlyableArea() and (IsPlayerSpell(34090) or IsPlayerSpell(90265)) -- flying can be done
+
+end
+
+function Mounty:SkyRidingMode()
+
+    return IsPlayerSpell(404464) -- SkayRiding mode ist active
+
+end
+
+function Mounty:HasAnyUsableInCollection()
 
     C_MountJournal.SetDefaultFilters()
 
@@ -294,7 +324,7 @@ function Mounty:AnyUsable()
         local _, spellID, _, _, isUsable = C_MountJournal.GetDisplayedMountInfo(i)
         -- isUsable muss sein, weil auch Mounts gelistet werden, die nicht im Besitz sind
 
-        if isUsable and IsUsableSpell(spellID) then
+        if isUsable and C_Spell.IsSpellUsable(spellID) then
             return true
         end
 
@@ -315,7 +345,7 @@ function Mounty:AnyRandomOfJournal()
 
         local mname, spellID, _, _, isUsable, _, _, _, _, _, isCollected, mountID = C_MountJournal.GetDisplayedMountInfo(i)
 
-        if IsUsableSpell(spellID) and isUsable and isCollected then
+        if C_Spell.IsSpellUsable(spellID) and isUsable and isCollected then
             count = count + 1
             journaled[count] = { mountID, mname }
         end
@@ -333,7 +363,7 @@ function Mounty:AnyRandomOfJournal()
 
 end
 
-function Mounty:SelectMountByCategory(category, only_flyable_in_category)
+function Mounty:SelectMountByCategory(category, only_flyable)
 
     if category == 0 then
         return 0
@@ -343,6 +373,7 @@ function Mounty:SelectMountByCategory(category, only_flyable_in_category)
     local assigned = 0
     local count = 0
     local picked
+    local mountTypeID
 
     for i = 1, Mounty.NumMountsExpanded do
 
@@ -350,35 +381,49 @@ function Mounty:SelectMountByCategory(category, only_flyable_in_category)
 
             assigned = assigned + 1
 
-            local usable_spell = IsUsableSpell(Mounty.CurrentProfile.Mounts[category][i])
+            local usable_spell = C_Spell.IsSpellUsable(Mounty.CurrentProfile.Mounts[category][i])
             local mountID = C_MountJournal.GetMountFromSpell(Mounty.CurrentProfile.Mounts[category][i])
             local mname, _, _, _, isUsable, _, _, _, _, _, isCollected = C_MountJournal.GetMountInfoByID(mountID)
 
             local usable = usable_spell and isUsable and isCollected
 
-            if usable and only_flyable_in_category == "dragon" then
+            mountTypeID = 0
 
-                local _, _, _, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
+            if usable and only_flyable then
 
-                if mountTypeID ~= 402 then
-                    -- mountTypeID 402 = dragonflight
-                    usable = false
+                if Mounty:SkyRidingMode() then
+
+                    _, _, _, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
+
+                    if mountTypeID ~= 402 then
+                        -- mountTypeID 402 = dragonflight
+                        usable = false
+                    end
+
+                else
+
+                    _, _, _, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
+
+                    if mountID ~= 407 and mountID ~= 455 and mountTypeID ~= 248 then
+                        -- mountID 407 = Sandstone Drake
+                        -- mountID 455 = Obsidian Nightwing
+                        -- mountTypeID 248 = mostly flyable
+                        usable = false
+                    end
+
                 end
+
             end
 
-            if usable and only_flyable_in_category == "normal" then
+            local mountType
 
-                local _, _, _, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
-
-                if mountID ~= 407 and mountID ~= 455 and mountTypeID ~= 248 then
-                    -- mountID 407 = Sandstone Drake
-                    -- mountID 455 = Obsidian Nightwing
-                    -- mountTypeID 248 = mostly flyable
-                    usable = false
-                end
+            if mountTypeID > 0 then
+                mountType = MountsJournalFrame.journal.mountTypes[mountTypeID]
+            else
+                mountType = -1
             end
 
-            TLVlib:Debug("Usable: " .. "[" .. mountID .. "] " .. mname .. " -> " .. tostring(usable))
+            TLVlib:Debug("Usable: " .. "[" .. mountID .. ", " .. mountTypeID .. ", " .. mountType .. "] " .. mname .. " -> " .. tostring(usable))
 
             if usable then
                 count = count + 1
@@ -433,20 +478,13 @@ function Mounty:SelectMountByCategory(category, only_flyable_in_category)
 
     -- count == 0
 
-    if only_flyable_in_category == "normal" then
+    if only_flyable then
 
         TLVlib:Debug("No (usable) flying mount found in category.")
 
-        Mounty:Why("usable.none.normal", assigned)
-
-    elseif only_flyable_in_category == "dragon" then
-
-        TLVlib:Debug("No (usable) Dragonflight mount found in category.")
-
-        Mounty:Why("usable.none.dragon", assigned)
+        Mounty:Why("usable.none.fly", assigned)
 
     else
-        -- only_flyable_in_category == ""
 
         TLVlib:Debug("No (usable) mount found in category.")
 
@@ -462,36 +500,6 @@ function Mounty:SelectMountByCategory(category, only_flyable_in_category)
 
 end
 
-function Mounty:MountSpellID(mountID)
-
-    local _, spellID = C_MountJournal.GetMountInfoByID(mountID)
-
-    return spellID
-
-end
-
-function Mounty:IsTemporalAnomaly ()
-
-    -- at the beginning of Pandaria Time Running
-
-    local aura = C_UnitAuras.GetPlayerAuraBySpellID(145389)
-
-    return aura ~= nil
-
-end
-
-function Mounty:UserCanFlyHere()
-
-    return not Mounty:IsTemporalAnomaly() and IsFlyableArea() and (IsPlayerSpell(34090) or IsPlayerSpell(90265)) -- flying can be done
-
-end
-
-function Mounty:UserCanRideDragonsHere()
-
-    return not Mounty:IsTemporalAnomaly() and IsAdvancedFlyableArea() and IsPlayerSpell(376777) and IsOutdoors() -- dragonriding can be done
-
-end
-
 function Mounty:Mount(mode, magic)
 
     if (magic) then
@@ -500,7 +508,7 @@ function Mounty:Mount(mode, magic)
         TLVlib:Debug("Mode: " .. mode .. ' (selected by player)')
     end
 
-    local check_only_flyable_in_category = false
+    local check_only_flyable = false
 
     local category = Mounty.TypeGround
 
@@ -532,7 +540,7 @@ function Mounty:Mount(mode, magic)
             end
         end
 
-        check_only_flyable_in_category = true
+        check_only_flyable = true
 
         category = Mounty.TypeTaxi
 
@@ -552,7 +560,7 @@ function Mounty:Mount(mode, magic)
 
         category = Mounty.TypeShowOff
 
-        check_only_flyable_in_category = true
+        check_only_flyable = true
 
     elseif mode == "surprise" then
 
@@ -560,34 +568,15 @@ function Mounty:Mount(mode, magic)
 
     end
 
-    local only_flyable_in_category_1 = ''
-    local only_flyable_in_category_2 = ''
+    local only_flyable = false
 
-    if check_only_flyable_in_category then
+    if check_only_flyable then
 
-        if Mounty:UserCanFlyHere() and Mounty:UserCanRideDragonsHere() then
+        if Mounty:UserCanFlyHere() then
 
-            Mounty:Why("category.flyable.both")
+            Mounty:Why("only.flyable")
 
-            if Mounty.CurrentProfile.Dragon then
-                only_flyable_in_category_1 = 'dragon'
-                only_flyable_in_category_2 = 'normal'
-            else
-                only_flyable_in_category_1 = 'normal'
-                only_flyable_in_category_2 = 'dragon'
-            end
-
-        elseif Mounty:UserCanRideDragonsHere() then
-
-            Mounty:Why("category.flyable.dragon")
-
-            only_flyable_in_category_1 = 'dragon'
-
-        elseif Mounty:UserCanFlyHere() then
-
-            Mounty:Why("category.flyable.normal")
-
-            only_flyable_in_category_1 = 'normal'
+            only_flyable = true
 
         end
 
@@ -601,12 +590,8 @@ function Mounty:Mount(mode, magic)
 
     if category > 0 then
 
-        if only_flyable_in_category_1 then
-            spellID = Mounty:SelectMountByCategory(category, only_flyable_in_category_1)
-        end
-
-        if spellID == 0 and only_flyable_in_category_2 then
-            spellID = Mounty:SelectMountByCategory(category, only_flyable_in_category_2)
+        if only_flyable then
+            spellID = Mounty:SelectMountByCategory(category, only_flyable)
         end
 
         if spellID == 0 then
@@ -1404,18 +1389,6 @@ function Mounty:InitOptionsFrame()
         calling:SetChecked(Mounty.CurrentProfile.Random)
     end)
 
-    -- Dragon checkbox
-
-    top = top - delta_checkboxes
-
-    Mounty.OptionsFrame_Dragon = CreateFrame("CheckButton", "Mounty_OptionsFrame_Dragon", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
-    Mounty.OptionsFrame_Dragon:SetPoint("TOPLEFT", 16, top)
-    Mounty_OptionsFrame_DragonText:SetText(L["options.Dragon"])
-    Mounty.OptionsFrame_Dragon:SetScript("OnClick", function(calling)
-        Mounty.CurrentProfile.Dragon = not Mounty.CurrentProfile.Dragon
-        calling:SetChecked(Mounty.CurrentProfile.Dragon)
-    end)
-
     -- ShowOff checkbox
 
     top = top - delta_checkboxes
@@ -2041,7 +2014,6 @@ function Mounty:OptionsRender()
     end
 
     Mounty.OptionsFrame_Random:SetChecked(Mounty.CurrentProfile.Random)
-    Mounty.OptionsFrame_Dragon:SetChecked(Mounty.CurrentProfile.Dragon)
     Mounty.OptionsFrame_Together:SetChecked(Mounty.CurrentProfile.Together)
     Mounty.OptionsFrame_Amphibian:SetChecked(Mounty.CurrentProfile.Amphibian)
     Mounty.OptionsFrame_ShowOff:SetChecked(Mounty.CurrentProfile.ShowOff)
@@ -2105,7 +2077,7 @@ function Mounty:OptionsRenderButtons()
                 Mounty.OptionsFrame_Buttons[category][i]:SetNormalTexture("")
                 Mounty.OptionsFrame_Buttons[category][i]:Disable()
             else
-                icon = GetSpellTexture(Mounty.CurrentProfile.Mounts[category][i])
+                icon = C_Spell.GetSpellTexture(Mounty.CurrentProfile.Mounts[category][i])
                 Mounty.OptionsFrame_Buttons[category][i]:SetNormalTexture(icon)
                 Mounty.OptionsFrame_Buttons[category][i]:Enable()
             end
@@ -2141,7 +2113,7 @@ function Mounty:OptionsRenderExpandedButtons()
             Mounty.ExpandedFrame_Buttons[i]:SetNormalTexture("")
             Mounty.ExpandedFrame_Buttons[i]:Disable()
         else
-            icon = GetSpellTexture(Mounty.CurrentProfile.Mounts[category][i])
+            icon = C_Spell.GetSpellTexture(Mounty.CurrentProfile.Mounts[category][i])
             Mounty.ExpandedFrame_Buttons[i]:SetNormalTexture(icon)
             Mounty.ExpandedFrame_Buttons[i]:Enable()
         end
@@ -2337,10 +2309,6 @@ function Mounty:SelectProfile(p)
 
     if Mounty.Profiles[p].Random == nil then
         Mounty.Profiles[p].Random = false
-    end
-
-    if Mounty.Profiles[p].Dragon == nil then
-        Mounty.Profiles[p].Dragon = false
     end
 
     if Mounty.Profiles[p].DurabilityMin == nil then
@@ -2707,11 +2675,6 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
                 Mounty.CurrentProfile.Random = (arg2 == "on")
                 TLVlib:Chat(L["chat.Random"] .. suffix)
-
-            elseif arg1 == "dragonflight" then
-
-                Mounty.CurrentProfile.Dragon = (arg2 == "on")
-                TLVlib:Chat(L["chat.Dragon"] .. suffix)
 
             elseif arg1 == "showoff" then
 
