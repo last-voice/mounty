@@ -350,25 +350,46 @@ function Mounty:MountSpellID(mountID)
 
 end
 
-function Mounty:IsTemporalAnomaly ()
+function Mounty:TheWarWithinPathfinderCheck ()
 
-    -- at the beginning of Pandaria Time Running
+    local zoneID = TLVlib:GetContinent()
 
-    local aura = C_UnitAuras.GetPlayerAuraBySpellID(145389)
+    if zoneID ~= 2274 and zoneID ~= 2276 then
+        return true
+    end
+
+    local _, _, _, completed = GetAchievementInfo(40231)
+
+    return completed
+
+end
+
+function Mounty:UserCanSkyrideHere()
+
+    -- return IsAdvancedFlyableArea() and IsOutdoors() and IsPlayerSpell(376777) -- sky rinding can be done
+    return IsFlyableArea() and IsPlayerSpell(376777) -- sky rinding can be done
+
+end
+
+function Mounty:UserCanSteadyFlyHere()
+
+    if not Mounty:TheWarWithinPathfinderCheck() then
+        return false
+    end
+
+    return IsFlyableArea() and (IsPlayerSpell(34090) or IsPlayerSpell(90265)) -- steady flying can be done
+
+end
+
+function Mounty:SkyRidingFirstOrOnly()
+
+    if not Mounty:UserCanSteadyFlyHere() then
+        return true
+    end
+
+    local aura = C_UnitAuras.GetPlayerAuraBySpellID(404464)
 
     return aura ~= nil
-
-end
-
-function Mounty:UserCanFlyHere()
-
-    return not Mounty:IsTemporalAnomaly() and IsFlyableArea() and (IsPlayerSpell(34090) or IsPlayerSpell(90265)) -- flying can be done
-
-end
-
-function Mounty:SkyRidingMode()
-
-    return IsPlayerSpell(404464) -- SkayRiding mode ist active
 
 end
 
@@ -460,7 +481,7 @@ function Mounty:SelectMountByCategory(category, only_flyable)
 
             if usable and only_flyable then
 
-                if Mounty:SkyRidingMode() then
+                if Mounty:SkyRidingFirstOrOnly() then
 
                     if not isSkyRidingMount then
                         usable = false
@@ -533,9 +554,19 @@ function Mounty:SelectMountByCategory(category, only_flyable)
 
     if only_flyable then
 
-        TLVlib:Debug("No (usable) flying mount found in category.")
+        if Mounty:SkyRidingFirstOrOnly() then
 
-        Mounty:Why("usable.none.fly", assigned)
+            TLVlib:Debug("No (usable) skyriding mount found in category.")
+
+            Mounty:Why("usable.none.fly.skyriding", assigned)
+
+        else
+
+            TLVlib:Debug("No (usable) steady flight mount found in category.")
+
+            Mounty:Why("usable.none.fly.steadyflight", assigned)
+
+        end
 
     else
 
@@ -555,7 +586,7 @@ end
 
 function Mounty:Mount(mode, magic)
 
-    if (magic) then
+    if magic then
         TLVlib:Debug("Mode: " .. mode .. ' (a kind of magic)')
     else
         TLVlib:Debug("Mode: " .. mode .. ' (selected by player)')
@@ -625,7 +656,7 @@ function Mounty:Mount(mode, magic)
 
     if check_only_flyable then
 
-        if Mounty:UserCanFlyHere() then
+        if Mounty:UserCanSteadyFlyHere() or Mounty:UserCanSkyrideHere() then
 
             Mounty:Why("only.flyable")
 
@@ -656,10 +687,18 @@ function Mounty:Mount(mode, magic)
 
             Mounty.FallbackAlready = {}
 
-            if Mounty:UserCanFlyHere() then
-                Mounty.FallbackQueue = { Mounty.TypeFlying, Mounty.TypeGround }
+            if Mounty:UserCanSkyrideHere() then
+                if Mounty:UserCanSteadyFlyHere() then
+                    Mounty.FallbackQueue = { Mounty.TypeSkyRiding, Mounty.TypeFlying, Mounty.TypeGround }
+                else
+                    Mounty.FallbackQueue = { Mounty.TypeSkyRiding, Mounty.TypeGround, Mounty.TypeFlying }
+                end
             else
-                Mounty.FallbackQueue = { Mounty.TypeGround, Mounty.TypeFlying }
+                if Mounty:UserCanSteadyFlyHere() then
+                    Mounty.FallbackQueue = { Mounty.TypeFlying, Mounty.TypeGround, Mounty.TypeSkyRiding }
+                else
+                    Mounty.FallbackQueue = { Mounty.TypeGround, Mounty.TypeSkyRiding, Mounty.TypeFlying }
+                end
             end
 
             while spellID == 0 do
@@ -672,6 +711,8 @@ function Mounty:Mount(mode, magic)
                     category = Mounty.FallbackQueue[1]
                 elseif not Mounty.FallbackAlready[Mounty.FallbackQueue[2]] then
                     category = Mounty.FallbackQueue[2]
+                elseif not Mounty.FallbackAlready[Mounty.FallbackQueue[3]] then
+                    category = Mounty.FallbackQueue[3]
                 end
 
                 if category == 0 then
@@ -792,10 +833,11 @@ function Mounty:Run(mode)
     end
 
     local resting = IsResting()
-    local flyable = Mounty:UserCanFlyHere()
     local alone = not IsInGroup()
     local swimming = IsSwimming()
-    local skyriding_mode = Mounty:SkyRidingMode()
+    local skyride = Mounty:UserCanSkyrideHere()
+    local steadyflight = Mounty:UserCanSteadyFlyHere()
+    local skyriding_first_or_only = Mounty:SkyRidingFirstOrOnly()
     local taximode = Mounty.CurrentProfile.TaxiMode
     local together = Mounty.CurrentProfile.Together
     local amphibian = Mounty.CurrentProfile.Amphibian
@@ -959,13 +1001,13 @@ function Mounty:Run(mode)
 
         end
 
-        -- flyable
+        -- flyable = steadyflight or skyride
 
         if mode == "" then
 
             Mounty:Why("\n")
 
-            if flyable then
+            if steadyflight or skyride then
 
                 Mounty:Why("fly.any") -- new
 
@@ -987,21 +1029,21 @@ function Mounty:Run(mode)
 
                     local fly_mode = ""
 
-                    if flyable then
+                    if skyriding_first_or_only then
 
-                        if skyriding_mode then
-
+                        if steadyflight then
                             Mounty:Why("fly.prefer.skyriding")  -- new
-
-                            fly_mode = "skyriding"
-
                         else
-
-                            Mounty:Why("fly.prefer.normal")  -- new
-
-                            fly_mode = "fly"
-
+                            Mounty:Why("fly.only.skyriding")  -- new
                         end
+
+                        fly_mode = "skyriding"
+
+                    else
+
+                        Mounty:Why("fly.prefer.steadyflight")  -- new
+
+                        fly_mode = "fly"
 
                     end
 
