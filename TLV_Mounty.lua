@@ -802,6 +802,8 @@ function Mounty:Run(mode)
     TLVlib:Debug("--- --° -°° °°° °.° ..° ... °.. °.° °°° °°- °-- ---")
     TLVlib:Debug("Mode: " .. mode)
 
+    TLVlib.GetContinent (true) -- debug
+
     if mode == "forceoff" then
 
         if mounted then
