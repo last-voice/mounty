@@ -2,6 +2,9 @@
 
 full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v3.0.2
+- debug now includes zone info
+
 v3.0.1
 - taken care of the war within pathfinder
 
