@@ -2,7 +2,12 @@
 
 full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
-v3.0.3
+v3.0.5
+- finally I made it to Khaz Algar myself to be able to debug properly
+- fixed magic logic ... hopefully finally ... sigh ...
+- new option: debug full (or less)
+
+v3.0.4
 - debug now includes zone info
 
 v3.0.1

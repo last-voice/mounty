@@ -54,6 +54,12 @@ function Mounty:IsDebug ()
 
 end
 
+function Mounty:IsDebugFull ()
+
+    return _Mounty_A.DebugModeFull or false
+
+end
+
 function Mounty:Color (s)
 
     s = gsub(s, "|d", "|cfff0b040|||r")
@@ -84,9 +90,9 @@ function Mounty:CheckCircumstances ()
         TLVlib:Debug("Can't use any mount here at all.")
         return false
 
-    else
+        --    else
 
-        return true -- Hotfix, because TLVlib:IsInTrueZone() won't work in Millennial's Threshold, yet.
+        --        return true -- Hotfix, because TLVlib:IsInTrueZone() won't work in Millennia's Threshold, yet.
 
     end
 
@@ -354,7 +360,8 @@ function Mounty:TheWarWithinPathfinderCheck ()
 
     local zoneID = TLVlib:GetContinent()
 
-    if zoneID ~= 2274 and zoneID ~= 2276 then
+    if zoneID ~= 2274 then
+        -- Khaz Algar
         return true
     end
 
@@ -366,8 +373,7 @@ end
 
 function Mounty:UserCanSkyrideHere()
 
-    -- return IsAdvancedFlyableArea() and IsOutdoors() and IsPlayerSpell(376777) -- sky rinding can be done
-    return IsFlyableArea() and IsPlayerSpell(376777) -- sky rinding can be done
+    return IsAdvancedFlyableArea() and IsOutdoors() and IsPlayerSpell(376777) -- sky rinding can be done
 
 end
 
@@ -467,74 +473,78 @@ function Mounty:SelectMountByCategory(category, only_flyable)
     end
 
     local ids = {}
-    local assigned = 0
-    local count = 0
+    local assigned_count = 0
+    local usable_count = 0
     local picked
 
     for i = 1, Mounty.NumMountsExpanded do
 
         if Mounty.CurrentProfile.Mounts[category][i] > 0 then
 
-            assigned = assigned + 1
+            assigned_count = assigned_count + 1
 
-            local mountID, mname, usable, mountTypeID, isFlyMount, isSkyRidingMount = Mounty:MountInfosBySpellID(Mounty.CurrentProfile.Mounts[category][i])
+            local mountID, mname, is_usable, mountTypeID, isFlyMount, isSkyRidingMount = Mounty:MountInfosBySpellID(Mounty.CurrentProfile.Mounts[category][i])
 
-            if usable and only_flyable then
+            if is_usable and only_flyable then
 
                 if Mounty:SkyRidingFirstOrOnly() then
 
                     if not isSkyRidingMount then
-                        usable = false
+                        is_usable = false
                     end
 
                 else
 
                     if not isFlyMount then
-                        usable = false
+                        is_usable = false
                     end
 
                 end
 
             end
 
-            TLVlib:Debug("Usable: " .. "[" .. mountID .. ", " .. mountTypeID .. "] " .. mname .. " -> " .. tostring(usable))
+            if (Mounty:IsDebugFull()) then
+                TLVlib:Debug("Usable: [" .. mountID .. ", " .. mountTypeID .. "] " .. mname .. " -> " .. tostring(is_usable))
+            end
 
-            if usable then
-                count = count + 1
-                ids[count] = Mounty.CurrentProfile.Mounts[category][i]
+            if is_usable then
+                usable_count = usable_count + 1
+                ids[usable_count] = Mounty.CurrentProfile.Mounts[category][i]
             end
 
         end
 
     end
 
-    if count > 0 then
+    TLVlib:Debug("Mounts: " .. tostring(usable_count) .. " of " .. tostring(assigned_count) .. " are usable.")
 
-        if count == assigned then
-            if count == 1 then
+    if usable_count > 0 then
+
+        if usable_count == assigned_count then
+            if usable_count == 1 then
                 Mounty:Why("usable.one")
             else
-                Mounty:Why("usable.all", assigned)
+                Mounty:Why("usable.all", assigned_count)
             end
         else
-            Mounty:Why("usable.some", count, assigned)
+            Mounty:Why("usable.some", usable_count, assigned_count)
         end
 
         if Mounty.CurrentProfile.Random then
 
-            if count > 1 then
-                Mounty:Why("pick.random", assigned)
+            if usable_count > 1 then
+                Mounty:Why("pick.random", assigned_count)
             end
 
-            picked = math.random(count)
+            picked = math.random(usable_count)
 
         else
 
-            if count > 1 then
-                Mounty:Why("pick.iterator", assigned)
+            if usable_count > 1 then
+                Mounty:Why("pick.iterator", assigned_count)
             end
 
-            if Mounty.CurrentProfile.Iterator[category] < count then
+            if Mounty.CurrentProfile.Iterator[category] < usable_count then
                 Mounty.CurrentProfile.Iterator[category] = Mounty.CurrentProfile.Iterator[category] + 1
             else
                 Mounty.CurrentProfile.Iterator[category] = 1
@@ -544,7 +554,7 @@ function Mounty:SelectMountByCategory(category, only_flyable)
 
         end
 
-        TLVlib:Debug("Selected: " .. picked .. " of " .. count)
+        TLVlib:Debug("Selected: " .. picked .. " of " .. usable_count)
 
         return ids[picked]
 
@@ -558,13 +568,13 @@ function Mounty:SelectMountByCategory(category, only_flyable)
 
             TLVlib:Debug("No (usable) skyriding mount found in category.")
 
-            Mounty:Why("usable.none.fly.skyriding", assigned)
+            Mounty:Why("usable.none.fly.skyriding", assigned_count)
 
         else
 
             TLVlib:Debug("No (usable) steady flight mount found in category.")
 
-            Mounty:Why("usable.none.fly.steadyflight", assigned)
+            Mounty:Why("usable.none.fly.steadyflight", assigned_count)
 
         end
 
@@ -572,8 +582,8 @@ function Mounty:SelectMountByCategory(category, only_flyable)
 
         TLVlib:Debug("No (usable) mount found in category.")
 
-        if assigned > 0 then
-            Mounty:Why("usable.none", assigned)
+        if assigned_count > 0 then
+            Mounty:Why("usable.none", assigned_count)
         else
             Mounty:Why("usable.null")
         end
@@ -658,7 +668,11 @@ function Mounty:Mount(mode, magic)
 
         if Mounty:UserCanSteadyFlyHere() or Mounty:UserCanSkyrideHere() then
 
-            Mounty:Why("only.flyable")
+            if Mounty:SkyRidingFirstOrOnly() then
+                Mounty:Why("only.flyable.skyriding")
+            else
+                Mounty:Why("only.flyable.steadyflight")
+            end
 
             only_flyable = true
 
@@ -802,8 +816,6 @@ function Mounty:Run(mode)
     TLVlib:Debug("--- --° -°° °°° °.° ..° ... °.. °.° °°° °°- °-- ---")
     TLVlib:Debug("Mode: " .. mode)
 
-    TLVlib.GetContinent (true) -- debug
-
     if mode == "forceoff" then
 
         if mounted then
@@ -828,6 +840,8 @@ function Mounty:Run(mode)
         end
 
     end
+
+    TLVlib:GetContinent(true) -- debug
 
     if not Mounty:CheckCircumstances() then
         TLVlib:Chat(L["cannot mount"])
@@ -1742,6 +1756,18 @@ function Mounty:InitOptionsFrame()
         calling:SetChecked(_Mounty_A.DebugMode)
     end)
 
+    -- DebugModeFull checkbox
+
+    top = top - delta_checkboxes
+
+    Mounty.OptionsFrame_DebugModeFull = CreateFrame("CheckButton", "Mounty_OptionsFrame_DebugModeFull", Mounty.OptionsFrame, "InterfaceOptionsCheckButtonTemplate")
+    Mounty.OptionsFrame_DebugModeFull:SetPoint("TOPLEFT", 16, top)
+    Mounty_OptionsFrame_DebugModeFullText:SetText(L["options.DebugFull"])
+    Mounty.OptionsFrame_DebugModeFull:SetScript("OnClick", function(calling)
+        _Mounty_A.DebugModeFull = not _Mounty_A.DebugModeFull
+        calling:SetChecked(_Mounty_A.DebugModeFull)
+    end)
+
     -- Open Mounts
 
     Mounty.OptionsFrame_JournalButton = TLVlib:Button(Mounty.OptionsFrame, "TOPLEFT", left + 40, top, 98, 22, L["button.Journal"])
@@ -2112,6 +2138,7 @@ function Mounty:OptionsRender()
     Mounty.OptionsFrame_Why:SetChecked(_Mounty_A.WhyAuto)
     Mounty.OptionsFrame_WhyAutoShort:SetChecked(_Mounty_A.WhyAutoShort)
     Mounty.OptionsFrame_DebugMode:SetChecked(_Mounty_A.DebugMode)
+    Mounty.OptionsFrame_DebugModeFull:SetChecked(_Mounty_A.DebugModeFull)
     Mounty.OptionsFrame_AutoOpen:SetChecked(_Mounty_A.AutoOpen)
 
     Mounty.OptionsFrame_Profile:SetText("")
@@ -2551,6 +2578,10 @@ function Mounty:InitSavedVariables()
         _Mounty_A.DebugMode = false
     end
 
+    if _Mounty_A.DebugModeFull == nil then
+        _Mounty_A.DebugModeFull = false
+    end
+
     if _Mounty_A.WhyAuto == nil then
         _Mounty_A.WhyAuto = false
     end
@@ -2751,6 +2782,11 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
                 _Mounty_A.DebugMode = (arg2 == "on")
                 TLVlib:Chat(L["chat.Debug"] .. suffix)
+
+            elseif arg1 == "DebugFull" then
+
+                _Mounty_A.DebugModeFull = (arg2 == "on")
+                TLVlib:Chat(L["chat.DebugFull"] .. suffix)
 
             elseif arg1 == "parachute" then
 
