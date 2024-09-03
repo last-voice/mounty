@@ -2,6 +2,9 @@
 
 full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
+v3.0.5.1
+- minor debug output change
+
 v3.0.5
 - finally I made it to Khaz Algar myself to be able to debug properly
 - fixed magic logic ... hopefully finally ... sigh ...

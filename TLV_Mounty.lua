@@ -516,7 +516,11 @@ function Mounty:SelectMountByCategory(category, only_flyable)
 
     end
 
-    TLVlib:Debug("Mounts: " .. tostring(usable_count) .. " of " .. tostring(assigned_count) .. " are usable.")
+    if (Mounty:IsDebugFull()) then
+        TLVlib:Debug("Mounts: " .. tostring(usable_count) .. " of " .. tostring(assigned_count) .. " are usable.")
+    else
+        TLVlib:Debug("Mounts: " .. tostring(usable_count) .. " of " .. tostring(assigned_count) .. " are usable. (Enable full debug mode for a detailed list.)")
+    end
 
     if usable_count > 0 then
 
@@ -2783,7 +2787,7 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
                 _Mounty_A.DebugMode = (arg2 == "on")
                 TLVlib:Chat(L["chat.Debug"] .. suffix)
 
-            elseif arg1 == "DebugFull" then
+            elseif arg1 == "debugfull" then
 
                 _Mounty_A.DebugModeFull = (arg2 == "on")
                 TLVlib:Chat(L["chat.DebugFull"] .. suffix)
