@@ -2,7 +2,7 @@
 
 full changelog: https://github.com/last-voice/mounty/blob/main/CHANGELOG.md
 
-v3.0.7
+v3.0.7.1
 - workaround:
   - when in Khaz Algar and no Pathfinder: Skyriding only outside and not in instances
   - in any other case: Skyriding possible, if IsFlyableArea returns true 
