@@ -50,7 +50,7 @@ L["options.ShareProfiles"] = "Share profiles with your other characters"
 L["options.Parachute"] = "Parachute mode - Dismount anyway, no matter how high you fly and deep the fall"
 L["options.Autoopen"] = "Auto open mode - Auto open and close with mount journal"
 L["options.Debug"] = "Debug mode - Show lots of weird data in the chat"
-L["options.DebugFull"] = "Debug mode (full) - Also list mounts"
+L["options.DebugFull"] = "Full debug mode - Also list mounts"
 L["options.JournalButtonOffset"] = "Offset of the button in mount journal: %d (1 to hide)."
 L["options.Helptext"] = "Drag mounts into here | Double click = Copy | Right click = Delete"
 L["options.popup.Already"] = "The mount is already assigned to this category."
@@ -252,7 +252,8 @@ L["why.example"] = "This was just a one time only example of the |cfff07070Why m
 -- L["upgrade.popup"] = "Now mounts are summoned in |cfff07070Millenial's Threshold|r, too. But it needed a work around, because the WOW-API says, you're in |cfff07070Twilight Zone|r over there.\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nAny donations are welcome. See README."
 -- L["upgrade.popup"] = "Dragons everywhere, but only if you activated |cfff07070Dragonflight mode|r.\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nAny donations are welcome. See README."
 -- L["upgrade.popup"] = "Totally refactored magic!\n\nAnother try to get a grip on dragons and flying mounts anywhere, anytime and anyhow.\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nAny donations are welcome. See README."
-L["upgrade.popup"] = "v3.0.5!\n\nFinally reached Khaz Algar myself to properly code, debug and ... fly.\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nAny donations are welcome. See README."
+-- L["upgrade.popup"] = "v3.0.5!\n\nFinally reached Khaz Algar myself to properly code, debug and ... fly.\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nAny donations are welcome. See README."
+L["upgrade.popup"] = "v3.0.7!\n\nWorkaround for magic: When in Khaz Algar and no Pathfinder: Skyriding only outside and not in instances. In any other case: Skyriding possible, if IsFlyableArea returns true. Hope, it's good enough for now.\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nAny donations are welcome. See README."
 
 local _, TLV_AddOn = ...
 TLV_AddOn.L = L

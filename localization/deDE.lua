@@ -54,7 +54,7 @@ L["options.ShareProfiles"] = "Profile mit deinen anderen Charakteren teilen"
 L["options.Parachute"] = "Fallschirm-Modus - Immer absitzen, egal wie hoch du fliegst und tief du fällst"
 L["options.Autoopen"] = "Auto-öffnen-Modus - Automatisch mit der Reittiersammlung öffnen und schließen"
 L["options.Debug"] = "Debug-Modus - Zeige wilde Infos im Chat (nur englisch)"
-L["options.DebugFull"] = "Debug-Modus (voll) - Auch Mounts auflisten"
+L["options.DebugFull"] = "Voller Debug-Modus - Auch Mounts auflisten"
 L["options.JournalButtonOffset"] = "Offset des Buttons in der Reittiersammlung: %d (1 = verstecken)"
 L["options.Helptext"] = "Mounts reinziehen | Doppelklick = Kopieren | Rechtsklick = Löschen"
 L["options.popup.Already"] = "Das Reittier ist bereits in dieser Kategorie."
@@ -254,7 +254,8 @@ L["why.example"] = "Das gerade war ein einmaliges Beispiel für den |cfff07070Wa
 -- L["upgrade.popup"] = "Auch in der |cfff07070Jahrhunderschwelle|r werden nun Reittiere gerufen. Allerdings war dafür ein kleiner Workaround notwendig, denn laut WOW-API befindet ihr euch dort eigentlich im |cfff07070Nirgendwo|r.\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nKleine Spenden sind willkommen. Siehe README."
 -- L["upgrade.popup"] = "Überall Drachen, aber nur wenn Du den |cfff07070Dragonflight-Modus|r aktiviert hast.\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nKleine Spenden sind willkommen. Siehe README."
 -- L["upgrade.popup"] = "Komplett neue Magie!\n\nEin neuer Versuch die Drachen und guten, alten Flug-Mounts unter einen Flügel, erm, Hut zu bekommen.\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nKleine Spenden sind willkommen. Siehe README."
-L["upgrade.popup"] = "v3.0.5!\n\nBin nun auch in Khaz Algar angekommen und kann ordentlich coden, debuggen und ... fliegen.\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nKleine Spenden sind willkommen. Siehe README."
+-- L["upgrade.popup"] = "v3.0.5!\n\nBin nun auch in Khaz Algar angekommen und kann ordentlich coden, debuggen und ... fliegen.\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nKleine Spenden sind willkommen. Siehe README."
+L["upgrade.popup"] = "v3.0.7!\n\nWorkaround für magic: Wenn in Khaz Algar und kein Pathfinder: Skyriding nur draußen und wenn nicht in einer Instanz. In allen anderen Fällen: Skyriding möglich, wenn IsFlyableArea true zurückgibt. Ich hoffe, das tut's erstmal.\n\n--° -°° °°° °.° ..° ... °.. °.° °°° °°- °--\n\nAny donations are welcome. See README."
 
 local _, TLV_AddOn = ...
 TLV_AddOn.L = setmetatable(L, { __index = TLV_AddOn.L })

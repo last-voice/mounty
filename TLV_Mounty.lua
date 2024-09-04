@@ -48,6 +48,46 @@ Mounty.FlyingMounts = {}
 
 Mounty.WhyHistoryMax = 10
 
+function Mounty:DebugInfo ()
+
+    TLVlib:Debug('TLVlib:GetContinent (true): ' .. tostring(TLVlib:GetContinent(true)))
+    TLVlib:Debug('TLVlib:IsInTrueZone(): ' .. tostring(TLVlib:IsInTrueZone()))
+    TLVlib:Debug('C_MountJournal.IsDragonridingUnlocked(): ' .. tostring(C_MountJournal.IsDragonridingUnlocked()))
+    TLVlib:Debug('Mounty:HasAnyUsableInCollection(): ' .. tostring(Mounty:HasAnyUsableInCollection()))
+    TLVlib:Debug('Mounty:UserCanSkyrideHere(): ' .. tostring(Mounty:UserCanSkyrideHere()))
+    TLVlib:Debug('Mounty:UserCanSteadyFlyHere(): ' .. tostring(Mounty:UserCanSteadyFlyHere()))
+    TLVlib:Debug('Mounty:SkyRidingFirstOrOnly(): ' .. tostring(Mounty:SkyRidingFirstOrOnly()))
+    TLVlib:Debug('IsPlayerSpell(376777) - Skyriding Basics: ' .. tostring(IsPlayerSpell(376777)))
+    TLVlib:Debug('IsPlayerSpell(34090) - Expert Riding: ' .. tostring(IsPlayerSpell(34090)))
+    TLVlib:Debug('IsPlayerSpell(90265) - Master Riding: ' .. tostring(IsPlayerSpell(90265)))
+    TLVlib:Debug('C_UnitAuras.GetPlayerAuraBySpellID(404464) - Flight Style: Skyriding:' .. tostring(nil ~= C_UnitAuras.GetPlayerAuraBySpellID(404464)))
+    TLVlib:Debug('IsOutdoors(): ' .. tostring(IsOutdoors()))
+    TLVlib:Debug('IsAdvancedFlyableArea(): ' .. tostring(IsAdvancedFlyableArea()))
+    TLVlib:Debug('IsFlyableArea(): ' .. tostring(IsFlyableArea()))
+
+end
+
+function Mounty:DebugListAllMounts()
+
+    local count = 0
+
+    C_MountJournal.SetDefaultFilters()
+
+    for i = 1, C_MountJournal.GetNumDisplayedMounts() do
+
+        local mname, _, _, _, _, _, _, _, _, _, _, mountID = C_MountJournal.GetDisplayedMountInfo(i)
+        local _, _, _, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
+
+        TLVlib:Debug("Mount: " .. "[" .. mountID .. "] " .. mname .. " mountTypeID=" .. tostring(mountTypeID))
+
+        count = count + 1
+
+    end
+
+    TLVlib:Debug("Mounts in journal: " .. tostring(count))
+
+end
+
 function Mounty:IsDebug ()
 
     return _Mounty_A.DebugMode or false
@@ -233,27 +273,6 @@ function Mounty:Why (why, arg1, arg2)
 
 end
 
-function Mounty:DebugListAllMounts()
-
-    local count = 0
-
-    C_MountJournal.SetDefaultFilters()
-
-    for i = 1, C_MountJournal.GetNumDisplayedMounts() do
-
-        local mname, _, _, _, _, _, _, _, _, _, _, mountID = C_MountJournal.GetDisplayedMountInfo(i)
-        local _, _, _, _, mountTypeID = C_MountJournal.GetMountInfoExtraByID(mountID)
-
-        TLVlib:Debug("Mount: " .. "[" .. mountID .. "] " .. mname .. " mountTypeID=" .. tostring(mountTypeID))
-
-        count = count + 1
-
-    end
-
-    TLVlib:Debug("Mounts in journal: " .. tostring(count))
-
-end
-
 function Mounty:InitFlyingMounts()
 
     -- via https://www.wowinterface.com/forums/showthread.php?p=344246
@@ -356,30 +375,36 @@ function Mounty:MountSpellID(mountID)
 
 end
 
-function Mounty:TheWarWithinPathfinderCheck ()
-
-    local zoneID = TLVlib:GetContinent()
-
-    if zoneID ~= 2274 then
-        -- Khaz Algar
-        return true
-    end
-
-    local _, _, _, completed = GetAchievementInfo(40231)
-
-    return completed
-
-end
-
 function Mounty:UserCanSkyrideHere()
 
-    return IsAdvancedFlyableArea() and IsOutdoors() and IsPlayerSpell(376777) -- sky rinding can be done
+    if not IsOutdoors() then
+        return false
+    end
+
+    -- vermurkst
+    -- IsAdvancedFlyableArea ist immer TRUE
+    -- IsFlyableArea ist false ohne Pathfinder
+
+    -- Daher Workaround
+
+    -- Wenn in Khaz Algar und ohne Pathfinder, dann kein Skyriding in Dungeons und in Gebäuden
+
+    -- Khaz Algar and no Pathfinder
+    if TLVlib:GetContinent() == 2274 and not TLVlib:HasAchievement(40231) then
+
+        return not TLVlib:IsInInstance()
+
+    end
+
+    return IsFlyableArea() and IsAdvancedFlyableArea() and IsPlayerSpell(376777)
+
+    -- return IsAdvancedFlyableArea() and IsPlayerSpell(376777) -- sky rinding can be done
 
 end
 
 function Mounty:UserCanSteadyFlyHere()
 
-    if not Mounty:TheWarWithinPathfinderCheck() then
+    if not IsOutdoors() then
         return false
     end
 
@@ -475,6 +500,7 @@ function Mounty:SelectMountByCategory(category, only_flyable)
     local ids = {}
     local assigned_count = 0
     local usable_count = 0
+    local is_usable_verbose
     local picked
 
     for i = 1, Mounty.NumMountsExpanded do
@@ -504,7 +530,12 @@ function Mounty:SelectMountByCategory(category, only_flyable)
             end
 
             if (Mounty:IsDebugFull()) then
-                TLVlib:Debug("Usable: [" .. mountID .. ", " .. mountTypeID .. "] " .. mname .. " -> " .. tostring(is_usable))
+                if is_usable then
+                    is_usable_verbose = 'usable'
+                else
+                    is_usable_verbose = 'no'
+                end
+                TLVlib:Debug("Usable: [" .. mountID .. ", " .. mountTypeID .. "] " .. mname .. " -> " .. is_usable_verbose)
             end
 
             if is_usable then
@@ -2751,7 +2782,6 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
         end
 
-
     elseif mode == "set" then
 
         local suffix
@@ -2841,9 +2871,10 @@ SlashCmdList["TLV_MOUNTY"] = function(message)
 
         end
 
-        -- elseif mode == "dbg" then
+    elseif mode == "dbg" then
 
-        -- Mounty:DebugListAllMounts ()
+        Mounty:DebugListAllMounts()
+        Mounty:DebugInfo()
 
     elseif mode == "skyriding"
             or mode == "fly"
